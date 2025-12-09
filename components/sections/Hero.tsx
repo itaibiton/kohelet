@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import HolographicNetwork from "@/components/effects/HolographicNetwork";
 import { StatItem } from "@/components/ui/StatItem";
 import { Button } from "@/components/ui/Button";
@@ -10,6 +11,8 @@ import {
 } from "@/components/icons";
 
 export default function Hero() {
+  const [shape, setShape] = useState<"globe" | "cube">("globe");
+
   return (
     <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 z-10 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
@@ -77,7 +80,15 @@ export default function Hero() {
 
         {/* Right Column - 3D Visual */}
         <div className="relative h-[600px] flex items-center justify-center">
-          <HolographicNetwork />
+          {/* Shape Toggle Button */}
+          <button
+            onClick={() => setShape((s) => (s === "globe" ? "cube" : "globe"))}
+            className="absolute top-4 right-4 z-20 px-3 py-1.5 bg-white/5 border border-white/10 rounded-sm text-[9px] font-mono text-neutral-400 hover:text-white hover:border-white/20 transition-all uppercase tracking-widest backdrop-blur-sm"
+          >
+            {shape === "globe" ? "◇ Cube" : "○ Globe"}
+          </button>
+
+          <HolographicNetwork shape={shape} />
 
           {/* Floating Card 1 - Compile Success */}
           <div className="absolute left-0 top-1/3 p-5 bg-black/60 backdrop-blur-md border border-white/10 rounded-sm w-56 animate-pulse-slow border-l-2 border-l-blue-500 shadow-2xl">

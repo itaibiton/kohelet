@@ -8,13 +8,148 @@ interface Particle {
   z: number;
 }
 
-const GLOBE_RADIUS = 220;
-const DOT_COUNT = 600;
-const CONNECTION_DISTANCE = 40;
+interface Props {
+  shape?: "globe" | "cube";
+}
 
-export default function HolographicNetwork() {
+const GLOBE_SIZE = 180;
+const CUBE_SIZE = 140;
+const CONNECTION_DISTANCE = 50;
+
+// Easing function for smooth transitions
+function easeInOutCubic(t: number): number {
+  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+}
+
+// Initialize particles for globe using Fibonacci sphere distribution
+function initGlobeParticles(): Particle[] {
+  const particles: Particle[] = [];
+  const DOT_COUNT = 600;
+  const phi = Math.PI * (3 - Math.sqrt(5));
+
+  for (let i = 0; i < DOT_COUNT; i++) {
+    const y = 1 - (i / (DOT_COUNT - 1)) * 2;
+    const radius = Math.sqrt(1 - y * y);
+    const theta = phi * i;
+    const x = Math.cos(theta) * radius;
+    const z = Math.sin(theta) * radius;
+    particles.push({
+      x: x * GLOBE_SIZE,
+      y: y * GLOBE_SIZE,
+      z: z * GLOBE_SIZE,
+    });
+  }
+
+  return particles;
+}
+
+// Initialize particles for cube wireframe
+function initCubeParticles(): Particle[] {
+  const particles: Particle[] = [];
+  const size = CUBE_SIZE;
+  const pointsPerEdge = 15;
+
+  // 8 corners of the cube
+  const corners: [number, number, number][] = [
+    [-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1],
+    [-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1],
+  ];
+
+  // 12 edges defined by corner indices
+  const edges: [number, number][] = [
+    // Bottom face
+    [0, 1], [1, 2], [2, 3], [3, 0],
+    // Top face
+    [4, 5], [5, 6], [6, 7], [7, 4],
+    // Vertical edges
+    [0, 4], [1, 5], [2, 6], [3, 7],
+  ];
+
+  // Add corner particles (larger presence)
+  corners.forEach(([cx, cy, cz]) => {
+    particles.push({ x: cx * size, y: cy * size, z: cz * size });
+  });
+
+  // Add particles along each edge
+  edges.forEach(([startIdx, endIdx]) => {
+    const start = corners[startIdx];
+    const end = corners[endIdx];
+
+    for (let i = 1; i < pointsPerEdge; i++) {
+      const t = i / pointsPerEdge;
+      particles.push({
+        x: (start[0] + (end[0] - start[0]) * t) * size,
+        y: (start[1] + (end[1] - start[1]) * t) * size,
+        z: (start[2] + (end[2] - start[2]) * t) * size,
+      });
+    }
+  });
+
+  // Add some particles on faces for a more filled look
+  const facePointsPerAxis = 4;
+  const faces: { normal: [number, number, number]; corners: number[] }[] = [
+    { normal: [0, 0, -1], corners: [0, 1, 2, 3] }, // Front
+    { normal: [0, 0, 1], corners: [4, 5, 6, 7] },  // Back
+    { normal: [-1, 0, 0], corners: [0, 3, 7, 4] }, // Left
+    { normal: [1, 0, 0], corners: [1, 2, 6, 5] },  // Right
+    { normal: [0, -1, 0], corners: [0, 1, 5, 4] }, // Bottom
+    { normal: [0, 1, 0], corners: [2, 3, 7, 6] },  // Top
+  ];
+
+  faces.forEach((face) => {
+    const [c0, c1, c2, c3] = face.corners.map((i) => corners[i]);
+
+    for (let i = 1; i < facePointsPerAxis; i++) {
+      for (let j = 1; j < facePointsPerAxis; j++) {
+        const u = i / facePointsPerAxis;
+        const v = j / facePointsPerAxis;
+
+        // Bilinear interpolation
+        const x = (1 - u) * (1 - v) * c0[0] + u * (1 - v) * c1[0] + u * v * c2[0] + (1 - u) * v * c3[0];
+        const y = (1 - u) * (1 - v) * c0[1] + u * (1 - v) * c1[1] + u * v * c2[1] + (1 - u) * v * c3[1];
+        const z = (1 - u) * (1 - v) * c0[2] + u * (1 - v) * c1[2] + u * v * c2[2] + (1 - u) * v * c3[2];
+
+        particles.push({ x: x * size, y: y * size, z: z * size });
+      }
+    }
+  });
+
+  return particles;
+}
+
+// Normalize particle arrays to same length for morphing
+function normalizeParticleArrays(
+  from: Particle[],
+  to: Particle[]
+): { normalized1: Particle[]; normalized2: Particle[] } {
+  const maxLength = Math.max(from.length, to.length);
+  const centerPoint = { x: 0, y: 0, z: 0 };
+
+  const normalized1 = [...from];
+  const normalized2 = [...to];
+
+  // Pad shorter array with center points
+  while (normalized1.length < maxLength) {
+    normalized1.push({ ...centerPoint });
+  }
+  while (normalized2.length < maxLength) {
+    normalized2.push({ ...centerPoint });
+  }
+
+  return { normalized1, normalized2 };
+}
+
+export default function HolographicNetwork({ shape = "globe" }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+
+  // Animation state refs to avoid re-renders
+  const particlesRef = useRef<Particle[]>([]);
+  const targetParticlesRef = useRef<Particle[]>([]);
+  const startParticlesRef = useRef<Particle[]>([]);
+  const transitionProgressRef = useRef<number>(1); // Start at 1 (completed)
+  const isTransitioningRef = useRef<boolean>(false);
+  const currentShapeRef = useRef<string>(shape);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -26,21 +161,32 @@ export default function HolographicNetwork() {
 
     let animationFrameId: number;
     let rotation = 0;
-    const particles: Particle[] = [];
 
-    // Initialize particles using Fibonacci sphere distribution
-    const phi = Math.PI * (3 - Math.sqrt(5));
-    for (let i = 0; i < DOT_COUNT; i++) {
-      const y = 1 - (i / (DOT_COUNT - 1)) * 2;
-      const radius = Math.sqrt(1 - y * y);
-      const theta = phi * i;
-      const x = Math.cos(theta) * radius;
-      const z = Math.sin(theta) * radius;
-      particles.push({
-        x: x * GLOBE_RADIUS,
-        y: y * GLOBE_RADIUS,
-        z: z * GLOBE_RADIUS,
-      });
+    // Initialize particles based on initial shape
+    if (particlesRef.current.length === 0) {
+      particlesRef.current = shape === "globe" ? initGlobeParticles() : initCubeParticles();
+      currentShapeRef.current = shape;
+    }
+
+    // Check if shape changed - trigger transition
+    if (currentShapeRef.current !== shape) {
+      const newTargetParticles = shape === "globe" ? initGlobeParticles() : initCubeParticles();
+
+      // Normalize arrays to same length
+      const { normalized1, normalized2 } = normalizeParticleArrays(
+        particlesRef.current,
+        newTargetParticles
+      );
+
+      // Store start and target positions
+      startParticlesRef.current = normalized1;
+      targetParticlesRef.current = normalized2;
+      particlesRef.current = [...normalized1]; // Copy start positions
+
+      // Start transition
+      transitionProgressRef.current = 0;
+      isTransitioningRef.current = true;
+      currentShapeRef.current = shape;
     }
 
     const initCanvas = () => {
@@ -56,8 +202,34 @@ export default function HolographicNetwork() {
       const rect = container.getBoundingClientRect();
       ctx.clearRect(0, 0, rect.width, rect.height);
 
+      // Handle morphing transition
+      if (isTransitioningRef.current) {
+        transitionProgressRef.current += 0.025; // ~40 frames = ~0.67s at 60fps
+
+        if (transitionProgressRef.current >= 1) {
+          // Transition complete
+          transitionProgressRef.current = 1;
+          isTransitioningRef.current = false;
+          particlesRef.current = [...targetParticlesRef.current];
+        } else {
+          // Interpolate between start and target
+          const easedProgress = easeInOutCubic(transitionProgressRef.current);
+
+          for (let i = 0; i < particlesRef.current.length; i++) {
+            const start = startParticlesRef.current[i];
+            const target = targetParticlesRef.current[i];
+
+            particlesRef.current[i] = {
+              x: start.x + (target.x - start.x) * easedProgress,
+              y: start.y + (target.y - start.y) * easedProgress,
+              z: start.z + (target.z - start.z) * easedProgress,
+            };
+          }
+        }
+      }
+
       // Increment rotation
-      rotation += 0.002;
+      rotation += 0.004;
 
       // Transform and project particles
       const projectedParticles: Array<{
@@ -67,7 +239,7 @@ export default function HolographicNetwork() {
         original: Particle;
       }> = [];
 
-      particles.forEach((particle) => {
+      particlesRef.current.forEach((particle) => {
         // Apply Y-axis rotation
         const cosY = Math.cos(rotation);
         const sinY = Math.sin(rotation);
@@ -99,8 +271,10 @@ export default function HolographicNetwork() {
         const p1 = projectedParticles[i];
         if (p1.z2 >= 200) continue; // Only front half
 
-        // Randomly connect particles
-        if (Math.random() > 0.98) {
+        // For cube, always draw connections; for globe, random
+        const shouldConnect = shape === "cube" ? true : Math.random() > 0.98;
+
+        if (shouldConnect) {
           for (let j = i + 1; j < projectedParticles.length; j++) {
             const p2 = projectedParticles[j];
             if (p2.z2 >= 200) continue;
@@ -112,7 +286,7 @@ export default function HolographicNetwork() {
             const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
             if (distance < CONNECTION_DISTANCE) {
-              const alpha = (1 - distance / CONNECTION_DISTANCE) * 0.3;
+              const alpha = (1 - distance / CONNECTION_DISTANCE) * 0.4;
               ctx.strokeStyle = `rgba(100, 149, 237, ${alpha})`;
               ctx.lineWidth = 0.5;
               ctx.beginPath();
@@ -151,7 +325,7 @@ export default function HolographicNetwork() {
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationFrameId);
     };
-  }, []);
+  }, [shape]);
 
   return (
     <div
