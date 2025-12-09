@@ -9,12 +9,18 @@ interface Particle {
 }
 
 interface Props {
-  shape?: "globe" | "cube";
+  shape?: "globe" | "cube" | "iphone";
 }
 
 const GLOBE_SIZE = 180;
 const CUBE_SIZE = 140;
 const CONNECTION_DISTANCE = 50;
+
+// iPhone dimensions (bigger for more prominence)
+const IPHONE_HEIGHT = 320;
+const IPHONE_WIDTH = 148;
+const IPHONE_DEPTH = 20;
+const CORNER_RADIUS = 28;
 
 // Easing function for smooth transitions
 function easeInOutCubic(t: number): number {
@@ -38,6 +44,175 @@ function initGlobeParticles(): Particle[] {
       y: y * GLOBE_SIZE,
       z: z * GLOBE_SIZE,
     });
+  }
+
+  return particles;
+}
+
+// Helper function to generate rounded rectangle outline
+function generateRoundedRectOutline(
+  width: number,
+  height: number,
+  z: number,
+  cornerRadius: number,
+  pointsPerSide: number
+): Particle[] {
+  const particles: Particle[] = [];
+  const halfWidth = width / 2;
+  const halfHeight = height / 2;
+
+  // Calculate dimensions for straight edges
+  const straightWidth = width - 2 * cornerRadius;
+  const straightHeight = height - 2 * cornerRadius;
+
+  // Corner centers
+  const corners = [
+    { x: halfWidth - cornerRadius, y: halfHeight - cornerRadius },     // Top-right
+    { x: -halfWidth + cornerRadius, y: halfHeight - cornerRadius },    // Top-left
+    { x: -halfWidth + cornerRadius, y: -halfHeight + cornerRadius },   // Bottom-left
+    { x: halfWidth - cornerRadius, y: -halfHeight + cornerRadius },    // Bottom-right
+  ];
+
+  // Generate particles along each corner arc and straight edge
+  for (let i = 0; i < 4; i++) {
+    const corner = corners[i];
+    const nextCorner = corners[(i + 1) % 4];
+
+    // Corner arc (quarter circle)
+    const arcPointsCount = Math.floor(pointsPerSide / 4);
+    const startAngle = (Math.PI / 2) * i;
+
+    for (let j = 0; j < arcPointsCount; j++) {
+      const angle = startAngle + (Math.PI / 2) * (j / arcPointsCount);
+      const px = corner.x + cornerRadius * Math.cos(angle);
+      const py = corner.y + cornerRadius * Math.sin(angle);
+      particles.push({ x: px, y: py, z });
+    }
+
+    // Straight edge to next corner
+    const edgePointsCount = Math.floor(pointsPerSide / 4);
+    for (let j = 1; j < edgePointsCount; j++) {
+      const t = j / edgePointsCount;
+      const edgeStartAngle = startAngle + Math.PI / 2;
+      const edgeStartX = corner.x + cornerRadius * Math.cos(edgeStartAngle);
+      const edgeStartY = corner.y + cornerRadius * Math.sin(edgeStartAngle);
+      const edgeEndAngle = ((i + 1) * Math.PI / 2);
+      const edgeEndX = nextCorner.x + cornerRadius * Math.cos(edgeEndAngle);
+      const edgeEndY = nextCorner.y + cornerRadius * Math.sin(edgeEndAngle);
+
+      particles.push({
+        x: edgeStartX + (edgeEndX - edgeStartX) * t,
+        y: edgeStartY + (edgeEndY - edgeStartY) * t,
+        z
+      });
+    }
+  }
+
+  return particles;
+}
+
+// Initialize particles for iPhone wireframe
+function initIPhoneParticles(): Particle[] {
+  const particles: Particle[] = [];
+  const pointsPerSide = 24;
+  const halfDepth = IPHONE_DEPTH / 2;
+
+  // 1. Front face outline (rounded rectangle)
+  const frontFace = generateRoundedRectOutline(
+    IPHONE_WIDTH,
+    IPHONE_HEIGHT,
+    halfDepth,
+    CORNER_RADIUS,
+    pointsPerSide
+  );
+  particles.push(...frontFace);
+
+  // 2. Back face outline (same shape)
+  const backFace = generateRoundedRectOutline(
+    IPHONE_WIDTH,
+    IPHONE_HEIGHT,
+    -halfDepth,
+    CORNER_RADIUS,
+    pointsPerSide
+  );
+  particles.push(...backFace);
+
+  // 3. Depth edges connecting front to back
+  const depthEdges = 12; // Number of depth connection lines around perimeter
+  for (let i = 0; i < depthEdges; i++) {
+    const frontIdx = Math.floor((i / depthEdges) * frontFace.length);
+    const backIdx = Math.floor((i / depthEdges) * backFace.length);
+
+    if (frontFace[frontIdx] && backFace[backIdx]) {
+      const depthPoints = 3;
+      for (let j = 1; j < depthPoints; j++) {
+        const t = j / depthPoints;
+        particles.push({
+          x: frontFace[frontIdx].x + (backFace[backIdx].x - frontFace[frontIdx].x) * t,
+          y: frontFace[frontIdx].y + (backFace[backIdx].y - frontFace[frontIdx].y) * t,
+          z: frontFace[frontIdx].z + (backFace[backIdx].z - frontFace[frontIdx].z) * t,
+        });
+      }
+    }
+  }
+
+  // 4. Screen bezel (smaller rounded rect on front face)
+  const bezelInset = 8;
+  const screenBezel = generateRoundedRectOutline(
+    IPHONE_WIDTH - bezelInset * 2,
+    IPHONE_HEIGHT - bezelInset * 2,
+    halfDepth + 0.5,
+    CORNER_RADIUS - 6,
+    20
+  );
+  particles.push(...screenBezel);
+
+  // 5. Dynamic Island (pill/capsule shape at top center)
+  const islandWidth = 40;
+  const islandHeight = 12;
+  const islandY = IPHONE_HEIGHT / 2 - 30; // Near top
+  const islandPointsCount = 16;
+
+  for (let i = 0; i < islandPointsCount; i++) {
+    const angle = (Math.PI * 2 * i) / islandPointsCount;
+    // Create pill shape using stretched circle
+    const radiusX = islandWidth / 2;
+    const radiusY = islandHeight / 2;
+    const px = radiusX * Math.cos(angle);
+    const py = radiusY * Math.sin(angle) + islandY;
+    particles.push({ x: px, y: py, z: halfDepth + 0.5 });
+  }
+
+  // 6. Camera module (rounded square on back face, top-left)
+  const cameraSize = 35;
+  const cameraRadius = 6;
+  const cameraOffsetX = -IPHONE_WIDTH / 2 + 25;
+  const cameraOffsetY = IPHONE_HEIGHT / 2 - 25;
+
+  // Create camera outline
+  for (let i = 0; i < 4; i++) {
+    const angle = (Math.PI / 2) * i;
+
+    // Corner arc
+    const arcPoints = 4;
+    for (let j = 0; j < arcPoints; j++) {
+      const a = angle + (Math.PI / 2) * (j / arcPoints);
+      const cornerX = (i === 0 || i === 3 ? 1 : -1) * (cameraSize / 2 - cameraRadius);
+      const cornerY = (i === 0 || i === 1 ? 1 : -1) * (cameraSize / 2 - cameraRadius);
+      const px = cameraOffsetX + cornerX + cameraRadius * Math.cos(a);
+      const py = cameraOffsetY + cornerY + cameraRadius * Math.sin(a);
+      particles.push({ x: px, y: py, z: -halfDepth - 0.5 });
+    }
+  }
+
+  // Add a small lens circle in the center of camera
+  const lensRadius = 8;
+  const lensPoints = 12;
+  for (let i = 0; i < lensPoints; i++) {
+    const angle = (Math.PI * 2 * i) / lensPoints;
+    const px = cameraOffsetX + lensRadius * Math.cos(angle);
+    const py = cameraOffsetY + lensRadius * Math.sin(angle);
+    particles.push({ x: px, y: py, z: -halfDepth - 0.5 });
   }
 
   return particles;
@@ -164,13 +339,19 @@ export default function HolographicNetwork({ shape = "globe" }: Props) {
 
     // Initialize particles based on initial shape
     if (particlesRef.current.length === 0) {
-      particlesRef.current = shape === "globe" ? initGlobeParticles() : initCubeParticles();
+      particlesRef.current =
+        shape === "globe" ? initGlobeParticles() :
+        shape === "cube" ? initCubeParticles() :
+        initIPhoneParticles();
       currentShapeRef.current = shape;
     }
 
     // Check if shape changed - trigger transition
     if (currentShapeRef.current !== shape) {
-      const newTargetParticles = shape === "globe" ? initGlobeParticles() : initCubeParticles();
+      const newTargetParticles =
+        shape === "globe" ? initGlobeParticles() :
+        shape === "cube" ? initCubeParticles() :
+        initIPhoneParticles();
 
       // Normalize arrays to same length
       const { normalized1, normalized2 } = normalizeParticleArrays(
@@ -271,8 +452,8 @@ export default function HolographicNetwork({ shape = "globe" }: Props) {
         const p1 = projectedParticles[i];
         if (p1.z2 >= 200) continue; // Only front half
 
-        // For cube, always draw connections; for globe, random
-        const shouldConnect = shape === "cube" ? true : Math.random() > 0.98;
+        // For cube and iPhone, always draw connections; for globe, random
+        const shouldConnect = shape === "globe" ? Math.random() > 0.98 : true;
 
         if (shouldConnect) {
           for (let j = i + 1; j < projectedParticles.length; j++) {

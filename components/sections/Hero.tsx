@@ -10,8 +10,23 @@ import {
   ActivityIcon,
 } from "@/components/icons";
 
+const shapes = ["globe", "cube", "iphone"] as const;
+type Shape = (typeof shapes)[number];
+
 export default function Hero() {
-  const [shape, setShape] = useState<"globe" | "cube">("globe");
+  const [shape, setShape] = useState<Shape>("globe");
+
+  const cycleShape = () => {
+    const currentIndex = shapes.indexOf(shape);
+    const nextShape = shapes[(currentIndex + 1) % shapes.length];
+    setShape(nextShape);
+  };
+
+  const getNextShapeLabel = () => {
+    if (shape === "globe") return "◇ Cube";
+    if (shape === "cube") return "▢ iPhone";
+    return "○ Globe";
+  };
 
   return (
     <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 z-10 overflow-hidden">
@@ -82,10 +97,10 @@ export default function Hero() {
         <div className="relative h-[600px] flex items-center justify-center">
           {/* Shape Toggle Button */}
           <button
-            onClick={() => setShape((s) => (s === "globe" ? "cube" : "globe"))}
+            onClick={cycleShape}
             className="absolute top-4 right-4 z-20 px-3 py-1.5 bg-white/5 border border-white/10 rounded-sm text-[9px] font-mono text-neutral-400 hover:text-white hover:border-white/20 transition-all uppercase tracking-widest backdrop-blur-sm"
           >
-            {shape === "globe" ? "◇ Cube" : "○ Globe"}
+            {getNextShapeLabel()}
           </button>
 
           <HolographicNetwork shape={shape} />
