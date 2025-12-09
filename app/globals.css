@@ -1,26 +1,53 @@
 @import "tailwindcss";
 
 :root {
-  /* Kohelet Brand Colors */
-  --charcoal: #1a1a1a;
-  --charcoal-light: #2a2a2a;
-  --soft-white: #fafafa;
-  --accent-gold: #d4af37;
-  --accent-teal: #2dd4bf;
-  --text-gray: #a0a0a0;
+  /* Brand Colors */
+  --brand-dark: #020204;
+  --brand-gray: #111113;
+  --brand-surface: #08080a;
+  --brand-surface-elevated: #030305;
+
+  /* Accent Colors */
+  --accent-blue: #3b82f6;
+  --accent-blue-hover: #2563eb;
+  --accent-emerald: #10b981;
+
+  /* Text Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #a3a3a3;
+  --text-tertiary: #525252;
+  --text-muted: #737373;
+
+  /* Border Colors */
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-default: rgba(255, 255, 255, 0.1);
+  --border-hover: rgba(255, 255, 255, 0.2);
+
+  /* Fonts */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 
 @theme inline {
   /* Color Palette */
-  --color-charcoal: var(--charcoal);
-  --color-charcoal-light: var(--charcoal-light);
-  --color-soft-white: var(--soft-white);
-  --color-accent-gold: var(--accent-gold);
-  --color-accent-teal: var(--accent-teal);
-  --color-text-gray: var(--text-gray);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-gray: var(--brand-gray);
+  --color-brand-surface: var(--brand-surface);
+  --color-brand-surface-elevated: var(--brand-surface-elevated);
+  --color-accent-blue: var(--accent-blue);
+  --color-accent-blue-hover: var(--accent-blue-hover);
+  --color-accent-emerald: var(--accent-emerald);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+  --color-text-muted: var(--text-muted);
+  --color-border-subtle: var(--border-subtle);
+  --color-border-default: var(--border-default);
+  --color-border-hover: var(--border-hover);
 
   /* Typography */
-  --font-sans: var(--font-inter);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
 }
 
 html {
@@ -30,9 +57,9 @@ html {
 }
 
 body {
-  background: var(--charcoal);
-  color: var(--soft-white);
-  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  background: var(--brand-dark);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
   overflow-x: hidden;
   overflow-y: auto;
   scroll-behavior: smooth;
@@ -42,13 +69,95 @@ body {
   min-height: 100%;
 }
 
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--brand-dark);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #444;
+}
+
 /* Selection */
 ::selection {
-  background-color: var(--accent-gold);
-  color: var(--charcoal);
+  background-color: rgba(59, 130, 246, 0.3);
+  color: var(--text-primary);
 }
 
 ::-moz-selection {
-  background-color: var(--accent-gold);
-  color: var(--charcoal);
+  background-color: rgba(59, 130, 246, 0.3);
+  color: var(--text-primary);
+}
+
+/* Utility Classes */
+.clip-hud {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 12px) 0,
+    100% 12px,
+    100% 100%,
+    12px 100%,
+    0 calc(100% - 12px)
+  );
+}
+
+.tracking-tighter-custom {
+  letter-spacing: -0.04em;
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.text-glow-blue {
+  text-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+}
+
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s linear infinite;
+  background-size: 200% 100%;
+}
+
+/* Keyframe Animations */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
 }

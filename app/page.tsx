@@ -1,22 +1,24 @@
-import Navigation from "@/components/Navigation";
-import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Services from "@/components/Services";
-import Approach from "@/components/Approach";
-import WhyKohelet from "@/components/WhyKohelet";
-import Contact from "@/components/Contact";
-import Footer from "@/components/Footer";
+import Navigation from "@/components/sections/Navigation";
+import Hero from "@/components/sections/Hero";
+import Solutions from "@/components/sections/Solutions";
+import ProcessProtocol from "@/components/sections/ProcessProtocol";
+import CTA from "@/components/sections/CTA";
+import Footer from "@/components/sections/Footer";
+import Starfield from "@/components/effects/Starfield";
+import MouseGlow from "@/components/effects/MouseGlow";
+import NoiseOverlay from "@/components/effects/NoiseOverlay";
 
 export default function Home() {
   return (
-    <main className="relative w-full min-h-screen">
+    <main className="min-h-screen relative selection:bg-blue-500/30 selection:text-white">
+      <NoiseOverlay />
+      <Starfield />
+      <MouseGlow />
       <Navigation />
       <Hero />
-      <About />
-      <Services />
-      <Approach />
-      <WhyKohelet />
-      <Contact />
+      <Solutions />
+      <ProcessProtocol />
+      <CTA />
       <Footer />
     </main>
   );

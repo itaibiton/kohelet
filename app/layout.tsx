@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -8,9 +8,15 @@ const inter = Inter({
   display: "swap",
 });
 
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "Kohelet | Digital Studio",
-  description: "Crafting digital experiences that inspire. Full-stack development, UI/UX design, and brand identity.",
+  title: "Kohelet | Digital Architects",
+  description: "We engineer high-performance software ecosystems. From neural AI integration to organic search dominance.",
 };
 
 export default function RootLayout({
@@ -20,7 +26,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} antialiased`}>
+      <body className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}>
         {children}
       </body>
     </html>
