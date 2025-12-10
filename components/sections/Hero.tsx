@@ -10,7 +10,7 @@ import {
   ActivityIcon,
 } from "@/components/icons";
 
-const shapes = ["globe", "cube", "iphone"] as const;
+const shapes = ["globe", "cube", "iphone", "macbook"] as const;
 type Shape = (typeof shapes)[number];
 
 export default function Hero() {
@@ -25,11 +25,12 @@ export default function Hero() {
   const getNextShapeLabel = () => {
     if (shape === "globe") return "◇ Cube";
     if (shape === "cube") return "▢ iPhone";
+    if (shape === "iphone") return "⌨ MacBook";
     return "○ Globe";
   };
 
   return (
-    <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 z-10 overflow-hidden">
+    <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 z-10 overflow-visible">
       <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
         {/* Left Column - Content */}
         <div className="space-y-10 relative">

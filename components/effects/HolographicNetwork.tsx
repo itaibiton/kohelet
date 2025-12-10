@@ -9,7 +9,7 @@ interface Particle {
 }
 
 interface Props {
-  shape?: "globe" | "cube" | "iphone";
+  shape?: "globe" | "cube" | "iphone" | "macbook";
 }
 
 const GLOBE_SIZE = 180;
@@ -21,6 +21,14 @@ const IPHONE_HEIGHT = 320;
 const IPHONE_WIDTH = 148;
 const IPHONE_DEPTH = 20;
 const CORNER_RADIUS = 28;
+
+// MacBook dimensions
+const MACBOOK_WIDTH = 340;
+const MACBOOK_HEIGHT = 220;
+const MACBOOK_BASE_DEPTH = 12;
+const MACBOOK_SCREEN_DEPTH = 8;
+const MACBOOK_BASE_HEIGHT = 220; // Bigger base for keyboard + trackpad
+const MACBOOK_CORNER_RADIUS = 12;
 
 // Easing function for smooth transitions
 function easeInOutCubic(t: number): number {
@@ -218,6 +226,156 @@ function initIPhoneParticles(): Particle[] {
   return particles;
 }
 
+// Initialize particles for MacBook wireframe
+function initMacBookParticles(): Particle[] {
+  const particles: Particle[] = [];
+  const pointsPerEdge = 16;
+
+  // MacBook dimensions - base is FLAT (horizontal on XZ plane)
+  // Screen tilts back from hinge (rotates around X-axis)
+  const screenTilt = Math.PI * -0.05; // ~22° from vertical (natural laptop viewing angle)
+
+  // Base sits at Y=40 (slightly below center), extends in Z toward viewer
+  const baseY = 40;
+  const hingeZ = -MACBOOK_BASE_HEIGHT / 2; // Back edge of base (where screen connects)
+
+  // Helper: create rectangle outline on XZ plane (flat/horizontal)
+  const createFlatRect = (
+    width: number,
+    depth: number,
+    y: number,
+    zOffset: number = 0
+  ): Particle[] => {
+    const pts: Particle[] = [];
+    const halfW = width / 2;
+    const halfD = depth / 2;
+
+    // Simple rectangle edges (no rounded corners for simplicity)
+    // Top edge (far from viewer)
+    for (let i = 0; i <= pointsPerEdge; i++) {
+      pts.push({ x: -halfW + (i / pointsPerEdge) * width, y, z: -halfD + zOffset });
+    }
+    // Right edge
+    for (let i = 1; i <= pointsPerEdge; i++) {
+      pts.push({ x: halfW, y, z: -halfD + (i / pointsPerEdge) * depth + zOffset });
+    }
+    // Bottom edge (close to viewer)
+    for (let i = 1; i <= pointsPerEdge; i++) {
+      pts.push({ x: halfW - (i / pointsPerEdge) * width, y, z: halfD + zOffset });
+    }
+    // Left edge
+    for (let i = 1; i < pointsPerEdge; i++) {
+      pts.push({ x: -halfW, y, z: halfD - (i / pointsPerEdge) * depth + zOffset });
+    }
+    return pts;
+  };
+
+  // Helper: create tilted screen rectangle (rotates around X-axis at hinge)
+  const createTiltedRect = (
+    width: number,
+    height: number,
+    hingeY: number,
+    hingeZ: number,
+    tilt: number,
+    zOffset: number = 0
+  ): Particle[] => {
+    const pts: Particle[] = [];
+    const halfW = width / 2;
+    const halfH = height / 2;
+
+    // Screen rectangle - rotate each point around X-axis from hinge
+    const transformPoint = (localX: number, localY: number): Particle => {
+      // localY: 0 = bottom of screen (at hinge), height = top of screen
+      const rotatedY = -localY * Math.cos(tilt); // Goes up (negative Y)
+      const rotatedZ = localY * Math.sin(tilt); // Goes back (positive Z = away from viewer)
+      return {
+        x: localX,
+        y: hingeY + rotatedY,
+        z: hingeZ + rotatedZ + zOffset,
+      };
+    };
+
+    // Bottom edge (at hinge)
+    for (let i = 0; i <= pointsPerEdge; i++) {
+      pts.push(transformPoint(-halfW + (i / pointsPerEdge) * width, 0));
+    }
+    // Right edge (going up)
+    for (let i = 1; i <= pointsPerEdge; i++) {
+      pts.push(transformPoint(halfW, (i / pointsPerEdge) * height));
+    }
+    // Top edge
+    for (let i = 1; i <= pointsPerEdge; i++) {
+      pts.push(transformPoint(halfW - (i / pointsPerEdge) * width, height));
+    }
+    // Left edge (going down)
+    for (let i = 1; i < pointsPerEdge; i++) {
+      pts.push(transformPoint(-halfW, height - (i / pointsPerEdge) * height));
+    }
+    return pts;
+  };
+
+  // 1. BASE - flat horizontal rectangle (keyboard deck)
+  // Top surface
+  const baseTop = createFlatRect(MACBOOK_WIDTH, MACBOOK_BASE_HEIGHT, baseY - MACBOOK_BASE_DEPTH / 2);
+  particles.push(...baseTop);
+
+  // Bottom surface
+  const baseBottom = createFlatRect(MACBOOK_WIDTH, MACBOOK_BASE_HEIGHT, baseY + MACBOOK_BASE_DEPTH / 2);
+  particles.push(...baseBottom);
+
+  // 2. SCREEN - tilted back from hinge
+  const screenHingeY = baseY - MACBOOK_BASE_DEPTH / 2;
+  const screenHingeZ = hingeZ;
+
+  // Front face of screen
+  const screenFront = createTiltedRect(
+    MACBOOK_WIDTH, MACBOOK_HEIGHT,
+    screenHingeY, screenHingeZ,
+    screenTilt, 0
+  );
+  particles.push(...screenFront);
+
+  // Back face of screen
+  const screenBack = createTiltedRect(
+    MACBOOK_WIDTH, MACBOOK_HEIGHT,
+    screenHingeY, screenHingeZ,
+    screenTilt, -MACBOOK_SCREEN_DEPTH
+  );
+  particles.push(...screenBack);
+
+  // Screen bezel (inner rectangle)
+  const bezelInset = 10;
+  const screenBezel = createTiltedRect(
+    MACBOOK_WIDTH - bezelInset * 2,
+    MACBOOK_HEIGHT - bezelInset * 2,
+    screenHingeY + bezelInset * Math.cos(screenTilt) * 0.5,
+    screenHingeZ + bezelInset * Math.sin(screenTilt) * 0.5,
+    screenTilt, 1
+  );
+  particles.push(...screenBezel);
+
+  // 3. TRACKPAD - just 4 corners (sparse to avoid pyramid mesh)
+  const trackpadWidth = MACBOOK_WIDTH * 0.4;
+  const trackpadDepth = MACBOOK_BASE_HEIGHT * 0.2;
+  const trackpadZ = hingeZ + MACBOOK_BASE_HEIGHT * 0.65;
+  const trackpadY = baseY - MACBOOK_BASE_DEPTH / 2 - 1;
+  const halfTW = trackpadWidth / 2;
+  const halfTD = trackpadDepth / 2;
+
+  particles.push({ x: -halfTW, y: trackpadY, z: trackpadZ - halfTD });
+  particles.push({ x: halfTW, y: trackpadY, z: trackpadZ - halfTD });
+  particles.push({ x: halfTW, y: trackpadY, z: trackpadZ + halfTD });
+  particles.push({ x: -halfTW, y: trackpadY, z: trackpadZ + halfTD });
+
+  // 4. HINGE - line connecting screen to base
+  for (let i = 0; i <= 8; i++) {
+    const x = -MACBOOK_WIDTH / 2 + (i / 8) * MACBOOK_WIDTH;
+    particles.push({ x, y: screenHingeY, z: screenHingeZ });
+  }
+
+  return particles;
+}
+
 // Initialize particles for cube wireframe
 function initCubeParticles(): Particle[] {
   const particles: Particle[] = [];
@@ -341,8 +499,9 @@ export default function HolographicNetwork({ shape = "globe" }: Props) {
     if (particlesRef.current.length === 0) {
       particlesRef.current =
         shape === "globe" ? initGlobeParticles() :
-        shape === "cube" ? initCubeParticles() :
-        initIPhoneParticles();
+          shape === "cube" ? initCubeParticles() :
+            shape === "iphone" ? initIPhoneParticles() :
+              initMacBookParticles();
       currentShapeRef.current = shape;
     }
 
@@ -350,8 +509,9 @@ export default function HolographicNetwork({ shape = "globe" }: Props) {
     if (currentShapeRef.current !== shape) {
       const newTargetParticles =
         shape === "globe" ? initGlobeParticles() :
-        shape === "cube" ? initCubeParticles() :
-        initIPhoneParticles();
+          shape === "cube" ? initCubeParticles() :
+            shape === "iphone" ? initIPhoneParticles() :
+              initMacBookParticles();
 
       // Normalize arrays to same length
       const { normalized1, normalized2 } = normalizeParticleArrays(
@@ -511,7 +671,7 @@ export default function HolographicNetwork({ shape = "globe" }: Props) {
   return (
     <div
       ref={containerRef}
-      className="w-full h-[600px] flex items-center justify-center relative overflow-hidden"
+      className="w-full h-[600px] flex items-center justify-center relative overflow-visible"
     >
       <div className="absolute inset-0 bg-blue-900/5 blur-[80px] rounded-full transform scale-75 opacity-40 z-0" />
       <canvas ref={canvasRef} className="relative z-10" />
