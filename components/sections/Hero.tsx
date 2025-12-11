@@ -47,7 +47,7 @@ export default function Hero() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
             </span>
-            <span className="text-blue-400 text-[10px] font-mono uppercase tracking-widest">
+            <span className="text-blue-400 text-xs font-mono uppercase tracking-widest">
               {t("badge.text")}
             </span>
           </div>
@@ -106,7 +106,7 @@ export default function Hero() {
           {/* Shape Toggle Button */}
           <button
             onClick={cycleShape}
-            className="absolute top-4 end-4 z-20 px-3 py-1.5 bg-white/5 border border-white/10 rounded-sm text-[9px] font-mono text-neutral-400 hover:text-white hover:border-white/20 transition-all uppercase tracking-widest backdrop-blur-sm"
+            className="absolute top-4 end-4 z-20 px-3 py-1.5 bg-white/5 border border-white/10 rounded-sm text-xs font-mono text-neutral-400 hover:text-white hover:border-white/20 transition-all uppercase tracking-widest backdrop-blur-sm"
           >
             {getNextShapeLabel()}
           </button>
@@ -116,7 +116,7 @@ export default function Hero() {
           {/* Floating Card 1 - Compile Success */}
           <div className="absolute start-0 top-1/3 p-5 bg-black/60 backdrop-blur-md border border-white/10 rounded-sm w-56 animate-pulse-slow border-s-2 border-s-blue-500 shadow-2xl">
             <div className="flex justify-between items-center mb-4">
-              <span className="text-[9px] text-blue-400 font-mono tracking-widest">
+              <span className="text-[10px] text-blue-400 font-mono tracking-widest">
                 COMPILE SUCCESS
               </span>
               <ActivityIcon size={12} className="text-blue-500" />
@@ -125,7 +125,7 @@ export default function Hero() {
               <div className="h-0.5 w-full bg-white/10 overflow-hidden">
                 <div className="h-full bg-blue-500 w-[85%]"></div>
               </div>
-              <div className="flex justify-between text-[8px] font-mono text-neutral-500">
+              <div className="flex justify-between text-[10px] font-mono text-neutral-500">
                 <span>MODULE: CORE_AI</span>
                 <span>85ms</span>
               </div>
@@ -135,13 +135,13 @@ export default function Hero() {
           {/* Floating Card 2 - SEO Traffic */}
           <div className="absolute end-0 bottom-1/3 p-5 bg-black/60 backdrop-blur-md border border-white/10 rounded-sm w-56 animate-pulse-slow border-e-2 border-e-emerald-500 shadow-2xl">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-[9px] text-emerald-400 font-mono tracking-widest">
+              <span className="text-[10px] text-emerald-400 font-mono tracking-widest">
                 SEO TRAFFIC
               </span>
               <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></div>
             </div>
             <div className="text-xl font-mono text-white mb-1">+428%</div>
-            <div className="text-[9px] text-neutral-500 font-mono">
+            <div className="text-[10px] text-neutral-500 font-mono">
               Organic acquisition vector scaling exponentially.
             </div>
           </div>

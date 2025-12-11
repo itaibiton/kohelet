@@ -24,8 +24,8 @@
   --border-hover: rgba(255, 255, 255, 0.2);
 
   /* Fonts */
-  --font-sans: 'Inter', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: var(--font-heebo), 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', var(--font-heebo), monospace;
 }
 
 @theme inline {

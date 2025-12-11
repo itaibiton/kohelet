@@ -7,7 +7,7 @@ export default function Footer() {
   const t = useTranslations("footer");
 
   return (
-    <footer className="py-20 border-t border-white/10 bg-[#010101] text-xs">
+    <footer className="py-20 border-t border-white/10 bg-[#010101] text-sm relative z-10">
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12 mb-20">
         {/* Brand Column */}
         <div className="space-y-6">
@@ -17,14 +17,14 @@ export default function Footer() {
               {t("logo")}
             </span>
           </div>
-          <p className="text-neutral-400 leading-relaxed max-w-xs">
+          <p className="text-neutral-300 leading-relaxed max-w-xs font-light">
             {t("tagline")}
           </p>
         </div>
 
         {/* Services */}
         <div>
-          <h4 className="text-white font-medium uppercase tracking-wider mb-6 text-[10px]">
+          <h4 className="text-white font-medium uppercase tracking-wider mb-6 text-xs">
             {t("links.services.title")}
           </h4>
           <ul className="space-y-4">
@@ -32,7 +32,7 @@ export default function Footer() {
               <li key={idx}>
                 <a
                   href={t(`links.services.items.${idx}.href`)}
-                  className="text-neutral-400 hover:text-white transition-colors"
+                  className="text-white/70 hover:text-white hover:underline decoration-blue-500/50 underline-offset-4 transition-all"
                 >
                   {t(`links.services.items.${idx}.label`)}
                 </a>
@@ -43,7 +43,7 @@ export default function Footer() {
 
         {/* Company */}
         <div>
-          <h4 className="text-white font-medium uppercase tracking-wider mb-6 text-[10px]">
+          <h4 className="text-white font-medium uppercase tracking-wider mb-6 text-xs">
             {t("links.company.title")}
           </h4>
           <ul className="space-y-4">
@@ -51,7 +51,7 @@ export default function Footer() {
               <li key={idx}>
                 <a
                   href={t(`links.company.items.${idx}.href`)}
-                  className="text-neutral-400 hover:text-white transition-colors"
+                  className="text-white/70 hover:text-white hover:underline decoration-blue-500/50 underline-offset-4 transition-all"
                 >
                   {t(`links.company.items.${idx}.label`)}
                 </a>
@@ -62,7 +62,7 @@ export default function Footer() {
 
         {/* Social */}
         <div>
-          <h4 className="text-white font-medium uppercase tracking-wider mb-6 text-[10px]">
+          <h4 className="text-white font-medium uppercase tracking-wider mb-6 text-xs">
             {t("links.social.title")}
           </h4>
           <ul className="space-y-4">
@@ -70,9 +70,11 @@ export default function Footer() {
               <li key={idx}>
                 <a
                   href={t(`links.social.items.${idx}.href`)}
-                  className="flex items-center gap-2 text-neutral-400 hover:text-white transition-colors"
+                  className="flex items-center gap-2 text-white/70 hover:text-white transition-colors group"
                 >
-                  <ShareIcon size={14} />
+                  <span className="p-1 rounded-full bg-white/5 group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                    <ShareIcon size={12} />
+                  </span>
                   {t(`links.social.items.${idx}.label`)}
                 </a>
               </li>
@@ -81,13 +83,13 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-neutral-500 font-mono uppercase tracking-widest">
+      <div className="max-w-7xl mx-auto px-6 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-white/60 font-mono uppercase tracking-widest">
         <div>{t("copyright")}</div>
         <div className="flex gap-6">
-          <a href={t("legal.0.href")} className="hover:text-neutral-300 transition-colors">
+          <a href={t("legal.0.href")} className="hover:text-white transition-colors">
             {t("legal.0.label")}
           </a>
-          <a href={t("legal.1.href")} className="hover:text-neutral-300 transition-colors">
+          <a href={t("legal.1.href")} className="hover:text-white transition-colors">
             {t("legal.1.label")}
           </a>
         </div>

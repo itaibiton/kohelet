@@ -52,7 +52,7 @@ export default function Navigation() {
             <a
               key={item.href}
               href={item.href}
-              className="text-[10px] font-medium text-neutral-400 hover:text-white transition-colors uppercase tracking-widest relative group"
+              className="text-xs font-medium text-neutral-400 hover:text-white transition-colors uppercase tracking-widest relative group"
             >
               {item.label}
               <span className="absolute -bottom-1 start-0 w-0 h-[1px] bg-blue-500 group-hover:w-full transition-all duration-300"></span>
@@ -66,7 +66,7 @@ export default function Navigation() {
 
           <a
             href={t("cta.href")}
-            className="hidden sm:flex items-center gap-2 px-3 py-1.5 border border-white/10 text-white text-[10px] font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all rounded-sm group"
+            className="hidden sm:flex items-center gap-2 px-3 py-1.5 border border-white/10 text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all rounded-sm group"
           >
             <span>{t("cta.label")}</span>
             <ChevronRightIcon

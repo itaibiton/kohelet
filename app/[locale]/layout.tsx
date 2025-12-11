@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, JetBrains_Mono } from "next/font/google";
+import { Heebo, JetBrains_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -7,10 +7,10 @@ import { routing } from "@/i18n/routing";
 import { isRtl, type Locale } from "@/i18n/config";
 import "../globals.css";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
+const heebo = Heebo({
+  subsets: ["hebrew", "latin"],
   display: "swap",
+  variable: "--font-heebo",
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -52,9 +52,9 @@ export default async function LocaleLayout({
   const dir = isRtl(locale as Locale) ? "rtl" : "ltr";
 
   return (
-    <html lang={locale} dir={dir} className="scroll-smooth">
+    <html lang={locale} dir={dir} className={`scroll-smooth ${heebo.variable} font-sans`}>
       <body
-        className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}
+        className={`${heebo.className} ${jetbrainsMono.variable} antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
           {children}
