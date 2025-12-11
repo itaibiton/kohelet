@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import HolographicNetwork from "@/components/effects/HolographicNetwork";
 import { StatItem } from "@/components/ui/StatItem";
 import { Button } from "@/components/ui/Button";
@@ -17,6 +17,8 @@ type Shape = (typeof shapes)[number];
 export default function Hero() {
   const [shape, setShape] = useState<Shape>("globe");
   const t = useTranslations("hero");
+  const locale = useLocale();
+  const isRtl = locale === "he";
 
   const cycleShape = () => {
     const currentIndex = shapes.indexOf(shape);
@@ -35,7 +37,7 @@ export default function Hero() {
     <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 z-10 overflow-visible">
       <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
         {/* Content Column */}
-        <div className="space-y-10 relative lg:order-first rtl:lg:order-last">
+        <div className={`space-y-10 relative lg:order-first`}>
           {/* Decorative line */}
           <div className="absolute -start-12 top-0 bottom-0 w-[1px] bg-gradient-to-b from-transparent via-white/5 to-transparent hidden xl:block"></div>
 
@@ -100,7 +102,7 @@ export default function Hero() {
         </div>
 
         {/* 3D Visual Column */}
-        <div className="relative h-[600px] flex items-center justify-center lg:order-last rtl:lg:order-first">
+        <div className={`relative h-[600px] flex items-center justify-center lg:order-last`}>
           {/* Shape Toggle Button */}
           <button
             onClick={cycleShape}
