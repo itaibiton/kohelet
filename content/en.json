@@ -146,29 +146,59 @@
     ]
   },
   "testimonials": {
-    "section_title": "What They Say About Us",
-    "section_subtitle": "Clients who chose to build with us",
-    "items": [
+    "section_title": "Testimonials",
+    "section_label": "What people say",
+    "section_subtitle": "Real feedback from teams",
+    "row1": [
       {
-        "quote": "The Kohelet team understood exactly what we needed. The new website doubled our leads within two months. True professionals.",
-        "author": "Sarah Cohen",
-        "role": "CEO",
-        "company": "Tech Startup",
-        "avatar": "/testimonials/avatar-1.jpg"
+        "name": "Sarah Cohen",
+        "handle": "@sarah_builds",
+        "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=120&h=120&fit=crop&crop=faces",
+        "quote": "Kohelet took minutes to understand our vision and saved weeks of back-and-forth. The DX is top-tier."
       },
       {
-        "quote": "We worked with several studios before Kohelet. The difference is in the personal attention and quality. They truly listen and deliver above and beyond.",
-        "author": "Michael Levy",
-        "role": "Owner",
-        "company": "Retail Chain",
-        "avatar": "/testimonials/avatar-2.jpg"
+        "name": "Michael Levy",
+        "handle": "@michael_ops",
+        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=120&h=120&fit=crop&crop=faces",
+        "quote": "We shipped our website revamp 3× faster. The defaults are sensible and secure out of the box."
       },
       {
-        "quote": "The app they built for us received excellent reviews in the store. The process was smooth, transparent, and the result - amazing.",
-        "author": "Michelle Abraham",
-        "role": "VP Marketing",
-        "company": "Service Company",
-        "avatar": "/testimonials/avatar-3.jpg"
+        "name": "Michelle Abraham",
+        "handle": "@michelle_dev",
+        "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=120&h=120&fit=crop&crop=faces",
+        "quote": "The platform feels invisible—just fast, reliable delivery and clean reporting."
+      },
+      {
+        "name": "David Rosen",
+        "handle": "@davidr",
+        "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=120&h=120&fit=crop&crop=faces",
+        "quote": "Quality baked in. We finally trust our digital presence for decision-making."
+      }
+    ],
+    "row2": [
+      {
+        "name": "Noa Shapiro",
+        "handle": "@noa_tech",
+        "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=120&h=120&fit=crop&crop=faces",
+        "quote": "The design process trimmed our timelines by half. The UI stays out of the way and just works."
+      },
+      {
+        "name": "Yoni Katz",
+        "handle": "@yonik",
+        "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=120&h=120&fit=crop&crop=faces",
+        "quote": "SEO optimization, analytics, and performance tracking—without extra integration work. Huge win."
+      },
+      {
+        "name": "Tali Ben-David",
+        "handle": "@tali_labs",
+        "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=120&h=120&fit=crop&crop=faces",
+        "quote": "From concept to production with one team. Best onboarding we've had in years."
+      },
+      {
+        "name": "Oren Gold",
+        "handle": "@orengold",
+        "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=120&h=120&fit=crop&crop=faces",
+        "quote": "Clean process, helpful communication, and thoughtful solutions. It's the small things."
       }
     ]
   },

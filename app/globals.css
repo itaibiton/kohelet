@@ -161,3 +161,29 @@ body {
     background-position: 1000px 0;
   }
 }
+
+/* Marquee Animations */
+@keyframes marquee-ltr {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes marquee-rtl {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-ltr,
+  .animate-marquee-rtl {
+    animation: none !important;
+  }
+}

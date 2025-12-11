@@ -146,29 +146,59 @@
     ]
   },
   "testimonials": {
-    "section_title": "מה אומרים עלינו",
-    "section_subtitle": "לקוחות שבחרו לבנות איתנו",
-    "items": [
+    "section_title": "המלצות",
+    "section_label": "מה אומרים עלינו",
+    "section_subtitle": "פידבק אמיתי מצוותים",
+    "row1": [
       {
-        "quote": "הצוות של קהלת הבין בדיוק מה אנחנו צריכים. האתר החדש הכפיל לנו את הפניות תוך חודשיים. מקצוענים אמיתיים.",
-        "author": "רונית כהן",
-        "role": "מנכ\"לית",
-        "company": "סטארטאפ טכנולוגי",
-        "avatar": "/testimonials/avatar-1.jpg"
+        "name": "רונית כהן",
+        "handle": "@ronit_builds",
+        "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=120&h=120&fit=crop&crop=faces",
+        "quote": "קהלת הבינו את החזון שלנו תוך דקות וחסכו לנו שבועות של התכתבויות. חוויית משתמש מעולה."
       },
       {
-        "quote": "עבדנו עם כמה סטודיואים לפני קהלת. ההבדל הוא ביחס האישי ובאיכות. הם באמת מקשיבים ומספקים מעל ומעבר.",
-        "author": "יוסי לוי",
-        "role": "בעלים",
-        "company": "רשת חנויות",
-        "avatar": "/testimonials/avatar-2.jpg"
+        "name": "יוסי לוי",
+        "handle": "@yossi_ops",
+        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=120&h=120&fit=crop&crop=faces",
+        "quote": "השקנו את האתר החדש פי 3 מהר יותר. ברירות המחדל חכמות ומאובטחות מראש."
       },
       {
-        "quote": "האפליקציה שבנו לנו קיבלה ביקורות מעולות בחנות. התהליך היה חלק, השקוף והתוצאה - מדהימה.",
-        "author": "מיכל אברהם",
-        "role": "סמנכ\"לית שיווק",
-        "company": "חברת שירותים",
-        "avatar": "/testimonials/avatar-3.jpg"
+        "name": "מיכל אברהם",
+        "handle": "@michal_dev",
+        "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=120&h=120&fit=crop&crop=faces",
+        "quote": "הפלטפורמה מרגישה שקופה - פשוט אספקה מהירה ואמינה עם דוחות נקיים."
+      },
+      {
+        "name": "דוד רוזן",
+        "handle": "@davidr",
+        "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=120&h=120&fit=crop&crop=faces",
+        "quote": "איכות מובנית. סוף סוף אנחנו סומכים על הנוכחות הדיגיטלית שלנו לקבלת החלטות."
+      }
+    ],
+    "row2": [
+      {
+        "name": "נועה שפירא",
+        "handle": "@noa_tech",
+        "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=120&h=120&fit=crop&crop=faces",
+        "quote": "תהליך העיצוב קיצר את לוחות הזמנים שלנו בחצי. הממשק פשוט עובד."
+      },
+      {
+        "name": "יוני כץ",
+        "handle": "@yonik",
+        "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=120&h=120&fit=crop&crop=faces",
+        "quote": "אופטימיזציה לקידום, אנליטיקס ומעקב ביצועים - בלי עבודת אינטגרציה נוספת. ניצחון גדול."
+      },
+      {
+        "name": "טלי בן-דוד",
+        "handle": "@tali_labs",
+        "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=120&h=120&fit=crop&crop=faces",
+        "quote": "מקונספט לפרודקשן עם צוות אחד. הקליטה הטובה ביותר שהייתה לנו בשנים."
+      },
+      {
+        "name": "אורן גולד",
+        "handle": "@orengold",
+        "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=120&h=120&fit=crop&crop=faces",
+        "quote": "תהליך נקי, תקשורת מועילה ופתרונות מחושבים. זה הדברים הקטנים."
       }
     ]
   },
