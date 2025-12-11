@@ -17,7 +17,7 @@ export const FeatureCard = ({
     <div className="relative group p-6 rounded-sm bg-[#08080a] border border-white/5 overflow-hidden hover:border-white/10 transition-all duration-500 hover:-translate-y-1">
       <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-      <div className="absolute top-0 right-0 text-[9px] font-mono text-neutral-500 uppercase border border-white/10 px-1 py-0.5 rounded-sm">
+      <div className="absolute top-0 end-0 text-[9px] font-mono text-neutral-500 uppercase border border-white/10 px-1 py-0.5 rounded-sm">
         {tag}
       </div>
 

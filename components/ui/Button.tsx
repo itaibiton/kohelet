@@ -9,6 +9,7 @@ type ButtonProps = {
   children: ReactNode;
   icon?: ReactNode;
   className?: string;
+  href?: string;
 } & React.ButtonHTMLAttributes<HTMLButtonElement>;
 
 export const Button = ({
@@ -17,10 +18,11 @@ export const Button = ({
   children,
   icon,
   className,
+  href,
   ...props
 }: ButtonProps) => {
   const baseStyles =
-    "clip-hud relative overflow-hidden font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-3";
+    "clip-hud relative overflow-hidden font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-3 group";
 
   const variantStyles = {
     primary:
@@ -36,16 +38,15 @@ export const Button = ({
     lg: "px-10 py-5 text-xs",
   };
 
-  return (
-    <button
-      className={cn(
-        baseStyles,
-        variantStyles[variant],
-        sizeStyles[size],
-        className
-      )}
-      {...props}
-    >
+  const combinedClassName = cn(
+    baseStyles,
+    variantStyles[variant],
+    sizeStyles[size],
+    className
+  );
+
+  const content = (
+    <>
       {variant === "primary" && (
         <div className="absolute inset-0 opacity-0 hover:opacity-100 transition-opacity duration-300">
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full animate-shimmer" />
@@ -55,6 +56,20 @@ export const Button = ({
         {icon && <span className="flex-shrink-0">{icon}</span>}
         {children}
       </span>
+    </>
+  );
+
+  if (href) {
+    return (
+      <a href={href} className={combinedClassName}>
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <button className={combinedClassName} {...props}>
+      {content}
     </button>
   );
 };

@@ -1,0 +1,280 @@
+{
+  "meta": {
+    "title": "Kohelet | Digital Design & Development Studio",
+    "description": "We build websites, apps, and digital experiences that drive results. Custom development, stunning design, and strategy that works.",
+    "keywords": "web development, app design, UI UX, artificial intelligence, SEO, digital studio"
+  },
+  "navigation": {
+    "logo": "Kohelet",
+    "links": [
+      {
+        "label": "Services",
+        "href": "#services"
+      },
+      {
+        "label": "Process",
+        "href": "#process"
+      },
+      {
+        "label": "About",
+        "href": "#about"
+      },
+      {
+        "label": "Clients",
+        "href": "#testimonials"
+      }
+    ],
+    "cta": {
+      "label": "Let's Talk",
+      "href": "#contact"
+    }
+  },
+  "hero": {
+    "badge": {
+      "text": "Design & Development Studio",
+      "icon": "sparkles"
+    },
+    "headline": "Building Your Digital Future Together",
+    "subheadline": "We assemble all the pieces - design, development, strategy, and cutting-edge technology - into a digital product that works for you and delivers real results.",
+    "cta_primary": {
+      "label": "Get in Touch",
+      "href": "#contact"
+    },
+    "cta_secondary": {
+      "label": "Explore Services",
+      "href": "#services"
+    },
+    "stats": [
+      {
+        "value": "98%",
+        "label": "Client Satisfaction"
+      },
+      {
+        "value": "100+",
+        "label": "Projects Completed"
+      },
+      {
+        "value": "24/7",
+        "label": "Support & Service"
+      }
+    ]
+  },
+  "services": {
+    "section_title": "What We Do",
+    "section_subtitle": "Everything you need to succeed digitally, under one roof",
+    "items": [
+      {
+        "tag": "WEB",
+        "title": "Web Development",
+        "description": "Fast, modern websites optimized for every device. Built with cutting-edge technologies like Next.js and React.",
+        "icon": "globe"
+      },
+      {
+        "tag": "APP",
+        "title": "App Development",
+        "description": "iPhone and Android apps that users love. Smooth experience, excellent performance, and quality code.",
+        "icon": "smartphone"
+      },
+      {
+        "tag": "DESIGN",
+        "title": "UI/UX Design",
+        "description": "Design that speaks to your customers. Beautiful, intuitive interfaces that turn visitors into clients.",
+        "icon": "palette"
+      },
+      {
+        "tag": "AI",
+        "title": "AI Integration",
+        "description": "Smart integration of artificial intelligence into your products. Chatbots, automations, and custom solutions.",
+        "icon": "brain"
+      },
+      {
+        "tag": "GROWTH",
+        "title": "SEO & Growth",
+        "description": "We'll make sure they find you. Organic promotion, search engine optimization, and results that speak for themselves.",
+        "icon": "trending-up"
+      },
+      {
+        "tag": "STRATEGY",
+        "title": "Digital Strategy",
+        "description": "Proper planning is half the journey. We'll build a plan together that fits your business and your goals perfectly.",
+        "icon": "compass"
+      }
+    ]
+  },
+  "process": {
+    "section_title": "How It Works",
+    "section_subtitle": "A simple, transparent process from idea to launch",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Discovery Call",
+        "description": "We'll get to know your business, understand your needs and goals, and see how we can help. No commitment, just a good conversation."
+      },
+      {
+        "number": "02",
+        "title": "Planning & Design",
+        "description": "We'll build the perfect plan together. Design, present, get feedback, and improve - until you're completely satisfied."
+      },
+      {
+        "number": "03",
+        "title": "Development & Launch",
+        "description": "We'll turn the design into reality. Quality development, comprehensive testing, and smooth launch. And we're here afterwards too."
+      }
+    ]
+  },
+  "about": {
+    "section_title": "Who We Are",
+    "headline": "Kohelet - Assembling Your Digital Puzzle",
+    "description": "We're a team of designers, developers, and strategists who love what they do. Our name - Kohelet - comes from the Hebrew word 'to assemble', to gather and connect. And that's exactly what we do: we assemble all the pieces - technology, design, and strategy - into a complete, winning digital product.",
+    "values": [
+      {
+        "title": "True Partnership",
+        "description": "We're not vendors, we're partners. We accompany you every step of the way."
+      },
+      {
+        "title": "Uncompromising Quality",
+        "description": "Every pixel, every line of code - with attention to the smallest details."
+      },
+      {
+        "title": "Measurable Results",
+        "description": "Beautiful is important, but business results are what really matters."
+      },
+      {
+        "title": "Full Transparency",
+        "description": "You'll always know what's happening. No surprises, no hidden costs."
+      }
+    ]
+  },
+  "testimonials": {
+    "section_title": "What They Say About Us",
+    "section_subtitle": "Clients who chose to build with us",
+    "items": [
+      {
+        "quote": "The Kohelet team understood exactly what we needed. The new website doubled our leads within two months. True professionals.",
+        "author": "Sarah Cohen",
+        "role": "CEO",
+        "company": "Tech Startup",
+        "avatar": "/testimonials/avatar-1.jpg"
+      },
+      {
+        "quote": "We worked with several studios before Kohelet. The difference is in the personal attention and quality. They truly listen and deliver above and beyond.",
+        "author": "Michael Levy",
+        "role": "Owner",
+        "company": "Retail Chain",
+        "avatar": "/testimonials/avatar-2.jpg"
+      },
+      {
+        "quote": "The app they built for us received excellent reviews in the store. The process was smooth, transparent, and the result - amazing.",
+        "author": "Michelle Abraham",
+        "role": "VP Marketing",
+        "company": "Service Company",
+        "avatar": "/testimonials/avatar-3.jpg"
+      }
+    ]
+  },
+  "clients": {
+    "section_title": "Clients Who Trust Us",
+    "logos": [
+      {
+        "name": "Client 1",
+        "src": "/clients/logo-1.svg"
+      },
+      {
+        "name": "Client 2",
+        "src": "/clients/logo-2.svg"
+      },
+      {
+        "name": "Client 3",
+        "src": "/clients/logo-3.svg"
+      },
+      {
+        "name": "Client 4",
+        "src": "/clients/logo-4.svg"
+      },
+      {
+        "name": "Client 5",
+        "src": "/clients/logo-5.svg"
+      },
+      {
+        "name": "Client 6",
+        "src": "/clients/logo-6.svg"
+      }
+    ]
+  },
+  "cta_section": {
+    "headline": "Ready to Start?",
+    "subheadline": "Tell us about your project and we'll get back to you within 24 hours with ideas and a proposal",
+    "button": {
+      "label": "Let's Talk",
+      "href": "#contact"
+    }
+  },
+  "contact": {
+    "section_title": "Contact Us",
+    "section_subtitle": "Leave your details and we'll get back to you soon",
+    "form": {
+      "name": {
+        "label": "Full Name",
+        "placeholder": "What's your name?"
+      },
+      "email": {
+        "label": "Email",
+        "placeholder": "your@email.com"
+      },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "+1 (555) 000-0000"
+      },
+      "company": {
+        "label": "Company Name",
+        "placeholder": "Optional"
+      },
+      "message": {
+        "label": "Tell Us About Your Project",
+        "placeholder": "What are you looking for? A new website? An app? Improving something existing?"
+      },
+      "submit": {
+        "label": "Send",
+        "loading": "Sending...",
+        "success": "Message sent successfully! We'll get back to you soon.",
+        "error": "Oops, something went wrong. Please try again or give us a call."
+      }
+    }
+  },
+  "footer": {
+    "logo": "Kohelet",
+    "tagline": "Building your digital future",
+    "links": {
+      "services": {
+        "title": "Services",
+        "items": [
+          { "label": "Web Development", "href": "#services" },
+          { "label": "App Development", "href": "#services" },
+          { "label": "UI/UX Design", "href": "#services" },
+          { "label": "AI Integration", "href": "#services" }
+        ]
+      },
+      "company": {
+        "title": "Company",
+        "items": [
+          { "label": "About Us", "href": "#about" },
+          { "label": "Our Process", "href": "#process" },
+          { "label": "Contact", "href": "#contact" }
+        ]
+      },
+      "social": {
+        "title": "Follow Us",
+        "items": [
+          { "label": "LinkedIn", "href": "#", "icon": "linkedin" },
+          { "label": "Instagram", "href": "#", "icon": "instagram" },
+          { "label": "Twitter", "href": "#", "icon": "twitter" }
+        ]
+      }
+    },
+    "copyright": "© 2024 Kohelet. All rights reserved.",
+    "legal": [
+      { "label": "Terms of Service", "href": "/terms" },
+      { "label": "Privacy Policy", "href": "/privacy" }
+    ]
+  }
+}
