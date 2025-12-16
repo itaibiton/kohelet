@@ -14,7 +14,7 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="py-32 relative z-10 bg-[#020204]">
+    <section id="about" className="py-32 relative z-10 ">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16 items-start">
           {/* Content */}

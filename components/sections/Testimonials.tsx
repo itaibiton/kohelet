@@ -5,7 +5,8 @@ import { QuoteIcon, CheckCircleIcon } from "@/components/icons";
 
 interface Testimonial {
   name: string;
-  handle: string;
+  title: string;
+  company: string;
   avatar: string;
   quote: string;
 }
@@ -26,7 +27,9 @@ function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
             </span>
             <CheckCircleIcon size={14} className="text-blue-400" />
           </div>
-          <p className="text-xs text-neutral-400">{testimonial.handle}</p>
+          <p className="text-xs text-neutral-400">
+            {testimonial.title} @ {testimonial.company}
+          </p>
         </div>
       </div>
       <p className="mt-4 text-sm sm:text-base text-neutral-300">
@@ -44,14 +47,16 @@ export default function Testimonials() {
   // Get testimonials from translations
   const row1: Testimonial[] = [0, 1, 2, 3].map((idx) => ({
     name: t(`row1.${idx}.name`),
-    handle: t(`row1.${idx}.handle`),
+    title: t(`row1.${idx}.title`),
+    company: t(`row1.${idx}.company`),
     avatar: t(`row1.${idx}.avatar`),
     quote: t(`row1.${idx}.quote`),
   }));
 
   const row2: Testimonial[] = [0, 1, 2, 3].map((idx) => ({
     name: t(`row2.${idx}.name`),
-    handle: t(`row2.${idx}.handle`),
+    title: t(`row2.${idx}.title`),
+    company: t(`row2.${idx}.company`),
     avatar: t(`row2.${idx}.avatar`),
     quote: t(`row2.${idx}.quote`),
   }));
@@ -69,20 +74,14 @@ export default function Testimonials() {
       id="testimonials"
       className="py-16 sm:py-24 relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
     >
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6 sm:mb-8">
-        <div className="space-y-1">
-          <p className="text-xs sm:text-sm text-neutral-400">
-            {t("section_label")}
-          </p>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl tracking-tight font-semibold text-white">
-            {t("section_title")}
-          </h2>
-        </div>
-        <div className="hidden sm:flex items-center gap-2 text-neutral-400">
-          <QuoteIcon size={16} />
-          <span className="text-sm">{t("section_subtitle")}</span>
-        </div>
+      {/* Section Header */}
+      <div className="text-center mb-12">
+        <h2 className="text-3xl md:text-4xl font-medium tracking-tighter-custom text-white mb-4">
+          {t("section_title")}
+        </h2>
+        <p className="text-neutral-400 text-sm font-light max-w-md mx-auto">
+          {t("section_subtitle")}
+        </p>
       </div>
 
       {/* Marquee Container */}

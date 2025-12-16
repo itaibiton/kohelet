@@ -3,7 +3,14 @@
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { ChevronRightIcon } from "@/components/icons";
+import {
+  ChevronRightIcon,
+  MailIcon,
+  PhoneIcon,
+  UserIcon,
+  BuildingIcon,
+  MessageSquareIcon
+} from "@/components/icons";
 
 export default function Contact() {
   const t = useTranslations("contact");
@@ -45,17 +52,31 @@ export default function Contact() {
             </p>
 
             <div className="space-y-8">
-              <div className="p-6 rounded-sm bg-white/5 border border-white/10">
-                <h3 className="text-white font-medium mb-2">Email</h3>
-                <a href="mailto:contact@kohelet.studio" className="text-neutral-400 hover:text-blue-400 transition-colors">
-                  contact@kohelet.studio
-                </a>
+              <div className="p-6 rounded-sm bg-white/5 border border-white/10 group hover:border-white/20 transition-colors">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 rounded-full bg-white/5 text-white/60 group-hover:text-white transition-colors">
+                    <MailIcon size={24} />
+                  </div>
+                  <div>
+                    <h3 className="text-white font-medium mb-1">Email</h3>
+                    <a href="mailto:contact@kohelet.studio" className="text-neutral-400 hover:text-blue-400 transition-colors block">
+                      info@kohelet.digital
+                    </a>
+                  </div>
+                </div>
               </div>
-              <div className="p-6 rounded-sm bg-white/5 border border-white/10">
-                <h3 className="text-white font-medium mb-2">Phone</h3>
-                <a href="tel:0500000000" className="text-neutral-400 hover:text-blue-400 transition-colors">
-                  050-0000000
-                </a>
+              <div className="p-6 rounded-sm bg-white/5 border border-white/10 group hover:border-white/20 transition-colors">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 rounded-full bg-white/5 text-white/60 group-hover:text-white transition-colors">
+                    <PhoneIcon size={24} />
+                  </div>
+                  <div>
+                    <h3 className="text-white font-medium mb-1">Phone</h3>
+                    <a href="tel:0500000000" className="text-neutral-400 hover:text-blue-400 transition-colors block">
+                      053-9858438
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -67,29 +88,39 @@ export default function Contact() {
                 <label className="text-xs font-mono text-neutral-500 uppercase tracking-wider">
                   {t("form.name.label")}
                 </label>
-                <input
-                  type="text"
-                  name="name"
-                  value={formState.name}
-                  onChange={handleChange}
-                  placeholder={t("form.name.placeholder")}
-                  className="w-full bg-[#08080a] border border-white/10 rounded-sm px-4 py-3 text-white placeholder:text-neutral-700 focus:outline-none focus:border-blue-500/50 transition-colors"
-                  required
-                />
+                <div className="relative">
+                  <div className="absolute top-1/2 -translate-y-1/2 start-4 text-white/20 pointer-events-none">
+                    <UserIcon size={18} />
+                  </div>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formState.name}
+                    onChange={handleChange}
+                    placeholder={t("form.name.placeholder")}
+                    className="w-full bg-[#08080a] border border-white/10 rounded-sm ps-12 pe-4 py-3 text-white placeholder:text-neutral-700 focus:outline-none focus:border-blue-500/50 transition-colors"
+                    required
+                  />
+                </div>
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-mono text-neutral-500 uppercase tracking-wider">
                   {t("form.email.label")}
                 </label>
-                <input
-                  type="email"
-                  name="email"
-                  value={formState.email}
-                  onChange={handleChange}
-                  placeholder={t("form.email.placeholder")}
-                  className="w-full bg-[#08080a] border border-white/10 rounded-sm px-4 py-3 text-white placeholder:text-neutral-700 focus:outline-none focus:border-blue-500/50 transition-colors"
-                  required
-                />
+                <div className="relative">
+                  <div className="absolute top-1/2 -translate-y-1/2 start-4 text-white/20 pointer-events-none">
+                    <MailIcon size={18} />
+                  </div>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formState.email}
+                    onChange={handleChange}
+                    placeholder={t("form.email.placeholder")}
+                    className="w-full bg-[#08080a] border border-white/10 rounded-sm ps-12 pe-4 py-3 text-white placeholder:text-neutral-700 focus:outline-none focus:border-blue-500/50 transition-colors"
+                    required
+                  />
+                </div>
               </div>
             </div>
 
@@ -98,27 +129,37 @@ export default function Contact() {
                 <label className="text-xs font-mono text-neutral-500 uppercase tracking-wider">
                   {t("form.phone.label")}
                 </label>
-                <input
-                  type="tel"
-                  name="phone"
-                  value={formState.phone}
-                  onChange={handleChange}
-                  placeholder={t("form.phone.placeholder")}
-                  className="w-full bg-[#08080a] border border-white/10 rounded-sm px-4 py-3 text-white placeholder:text-neutral-700 focus:outline-none focus:border-blue-500/50 transition-colors"
-                />
+                <div className="relative">
+                  <div className="absolute top-1/2 -translate-y-1/2 start-4 text-white/20 pointer-events-none">
+                    <PhoneIcon size={18} />
+                  </div>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formState.phone}
+                    onChange={handleChange}
+                    placeholder={t("form.phone.placeholder")}
+                    className="w-full bg-[#08080a] border border-white/10 rounded-sm ps-12 pe-4 py-3 text-white placeholder:text-neutral-700 focus:outline-none focus:border-blue-500/50 transition-colors"
+                  />
+                </div>
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-mono text-neutral-500 uppercase tracking-wider">
                   {t("form.company.label")}
                 </label>
-                <input
-                  type="text"
-                  name="company"
-                  value={formState.company}
-                  onChange={handleChange}
-                  placeholder={t("form.company.placeholder")}
-                  className="w-full bg-[#08080a] border border-white/10 rounded-sm px-4 py-3 text-white placeholder:text-neutral-700 focus:outline-none focus:border-blue-500/50 transition-colors"
-                />
+                <div className="relative">
+                  <div className="absolute top-1/2 -translate-y-1/2 start-4 text-white/20 pointer-events-none">
+                    <BuildingIcon size={18} />
+                  </div>
+                  <input
+                    type="text"
+                    name="company"
+                    value={formState.company}
+                    onChange={handleChange}
+                    placeholder={t("form.company.placeholder")}
+                    className="w-full bg-[#08080a] border border-white/10 rounded-sm ps-12 pe-4 py-3 text-white placeholder:text-neutral-700 focus:outline-none focus:border-blue-500/50 transition-colors"
+                  />
+                </div>
               </div>
             </div>
 
@@ -126,15 +167,20 @@ export default function Contact() {
               <label className="text-xs font-mono text-neutral-500 uppercase tracking-wider">
                 {t("form.message.label")}
               </label>
-              <textarea
-                name="message"
-                value={formState.message}
-                onChange={handleChange}
-                placeholder={t("form.message.placeholder")}
-                rows={4}
-                className="w-full bg-[#08080a] border border-white/10 rounded-sm px-4 py-3 text-white placeholder:text-neutral-700 focus:outline-none focus:border-blue-500/50 transition-colors resize-none"
-                required
-              />
+              <div className="relative">
+                <div className="absolute top-4 start-4 text-white/20 pointer-events-none">
+                  <MessageSquareIcon size={18} />
+                </div>
+                <textarea
+                  name="message"
+                  value={formState.message}
+                  onChange={handleChange}
+                  placeholder={t("form.message.placeholder")}
+                  rows={4}
+                  className="w-full bg-[#08080a] border border-white/10 rounded-sm ps-12 pe-4 py-3 text-white placeholder:text-neutral-700 focus:outline-none focus:border-blue-500/50 transition-colors resize-none"
+                  required
+                />
+              </div>
             </div>
 
             <div className="pt-4">

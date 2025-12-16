@@ -8,36 +8,33 @@ interface Particle {
   z: number;
 }
 
-interface Props {
-  shape?: "globe" | "cube" | "iphone" | "macbook";
+interface Edge {
+  p1: number; // Index of first particle
+  p2: number; // Index of second particle
 }
 
-const GLOBE_SIZE = 180;
-const CUBE_SIZE = 140;
-const CONNECTION_DISTANCE = 50;
+interface Graph {
+  particles: Particle[];
+  edges: Edge[];
+}
 
-// iPhone dimensions (bigger for more prominence)
-const IPHONE_HEIGHT = 320;
-const IPHONE_WIDTH = 148;
-const IPHONE_DEPTH = 20;
-const CORNER_RADIUS = 28;
+interface Props {
+  shape?: "globe" | "triangle";
+  rotationSpeed?: number;
+}
 
-// MacBook dimensions
-const MACBOOK_WIDTH = 340;
-const MACBOOK_HEIGHT = 220;
-const MACBOOK_BASE_DEPTH = 12;
-const MACBOOK_SCREEN_DEPTH = 8;
-const MACBOOK_BASE_HEIGHT = 220; // Bigger base for keyboard + trackpad
-const MACBOOK_CORNER_RADIUS = 12;
+const GLOBE_SIZE = 200;
+const TRIANGLE_SIZE = 290;
 
-// Easing function for smooth transitions
+// Easing function for smooth transitions (re-introduced)
 function easeInOutCubic(t: number): number {
   return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 }
 
-// Initialize particles for globe using Fibonacci sphere distribution
-function initGlobeParticles(): Particle[] {
+// Initializer for Globe: connecting neighbors
+function initGlobeGraph(): Graph {
   const particles: Particle[] = [];
+  const edges: Edge[] = [];
   const DOT_COUNT = 600;
   const phi = Math.PI * (3 - Math.sqrt(5));
 
@@ -54,435 +51,155 @@ function initGlobeParticles(): Particle[] {
     });
   }
 
-  return particles;
-}
+  // Connect neighbors
+  for (let i = 0; i < DOT_COUNT; i++) {
+    let nearest: { idx: number; dist: number }[] = [];
+    const p1 = particles[i];
 
-// Helper function to generate rounded rectangle outline
-function generateRoundedRectOutline(
-  width: number,
-  height: number,
-  z: number,
-  cornerRadius: number,
-  pointsPerSide: number
-): Particle[] {
-  const particles: Particle[] = [];
-  const halfWidth = width / 2;
-  const halfHeight = height / 2;
-
-  // Calculate dimensions for straight edges
-  const straightWidth = width - 2 * cornerRadius;
-  const straightHeight = height - 2 * cornerRadius;
-
-  // Corner centers
-  const corners = [
-    { x: halfWidth - cornerRadius, y: halfHeight - cornerRadius },     // Top-right
-    { x: -halfWidth + cornerRadius, y: halfHeight - cornerRadius },    // Top-left
-    { x: -halfWidth + cornerRadius, y: -halfHeight + cornerRadius },   // Bottom-left
-    { x: halfWidth - cornerRadius, y: -halfHeight + cornerRadius },    // Bottom-right
-  ];
-
-  // Generate particles along each corner arc and straight edge
-  for (let i = 0; i < 4; i++) {
-    const corner = corners[i];
-    const nextCorner = corners[(i + 1) % 4];
-
-    // Corner arc (quarter circle)
-    const arcPointsCount = Math.floor(pointsPerSide / 4);
-    const startAngle = (Math.PI / 2) * i;
-
-    for (let j = 0; j < arcPointsCount; j++) {
-      const angle = startAngle + (Math.PI / 2) * (j / arcPointsCount);
-      const px = corner.x + cornerRadius * Math.cos(angle);
-      const py = corner.y + cornerRadius * Math.sin(angle);
-      particles.push({ x: px, y: py, z });
+    for (let j = 0; j < DOT_COUNT; j++) {
+      if (i === j) continue;
+      const p2 = particles[j];
+      const dx = p1.x - p2.x;
+      const dy = p1.y - p2.y;
+      const dz = p1.z - p2.z;
+      const dist = dx * dx + dy * dy + dz * dz;
+      nearest.push({ idx: j, dist });
     }
-
-    // Straight edge to next corner
-    const edgePointsCount = Math.floor(pointsPerSide / 4);
-    for (let j = 1; j < edgePointsCount; j++) {
-      const t = j / edgePointsCount;
-      const edgeStartAngle = startAngle + Math.PI / 2;
-      const edgeStartX = corner.x + cornerRadius * Math.cos(edgeStartAngle);
-      const edgeStartY = corner.y + cornerRadius * Math.sin(edgeStartAngle);
-      const edgeEndAngle = ((i + 1) * Math.PI / 2);
-      const edgeEndX = nextCorner.x + cornerRadius * Math.cos(edgeEndAngle);
-      const edgeEndY = nextCorner.y + cornerRadius * Math.sin(edgeEndAngle);
-
-      particles.push({
-        x: edgeStartX + (edgeEndX - edgeStartX) * t,
-        y: edgeStartY + (edgeEndY - edgeStartY) * t,
-        z
-      });
-    }
-  }
-
-  return particles;
-}
-
-// Initialize particles for iPhone wireframe
-function initIPhoneParticles(): Particle[] {
-  const particles: Particle[] = [];
-  const pointsPerSide = 24;
-  const halfDepth = IPHONE_DEPTH / 2;
-
-  // 1. Front face outline (rounded rectangle)
-  const frontFace = generateRoundedRectOutline(
-    IPHONE_WIDTH,
-    IPHONE_HEIGHT,
-    halfDepth,
-    CORNER_RADIUS,
-    pointsPerSide
-  );
-  particles.push(...frontFace);
-
-  // 2. Back face outline (same shape)
-  const backFace = generateRoundedRectOutline(
-    IPHONE_WIDTH,
-    IPHONE_HEIGHT,
-    -halfDepth,
-    CORNER_RADIUS,
-    pointsPerSide
-  );
-  particles.push(...backFace);
-
-  // 3. Depth edges connecting front to back
-  const depthEdges = 12; // Number of depth connection lines around perimeter
-  for (let i = 0; i < depthEdges; i++) {
-    const frontIdx = Math.floor((i / depthEdges) * frontFace.length);
-    const backIdx = Math.floor((i / depthEdges) * backFace.length);
-
-    if (frontFace[frontIdx] && backFace[backIdx]) {
-      const depthPoints = 3;
-      for (let j = 1; j < depthPoints; j++) {
-        const t = j / depthPoints;
-        particles.push({
-          x: frontFace[frontIdx].x + (backFace[backIdx].x - frontFace[frontIdx].x) * t,
-          y: frontFace[frontIdx].y + (backFace[backIdx].y - frontFace[frontIdx].y) * t,
-          z: frontFace[frontIdx].z + (backFace[backIdx].z - frontFace[frontIdx].z) * t,
-        });
+    nearest.sort((a, b) => a.dist - b.dist);
+    for (let k = 0; k < 2; k++) {
+      const neighbor = nearest[k];
+      if (i < neighbor.idx) {
+        edges.push({ p1: i, p2: neighbor.idx });
       }
     }
   }
 
-  // 4. Screen bezel (smaller rounded rect on front face)
-  const bezelInset = 8;
-  const screenBezel = generateRoundedRectOutline(
-    IPHONE_WIDTH - bezelInset * 2,
-    IPHONE_HEIGHT - bezelInset * 2,
-    halfDepth + 0.5,
-    CORNER_RADIUS - 6,
-    20
-  );
-  particles.push(...screenBezel);
-
-  // 5. Dynamic Island (pill/capsule shape at top center)
-  const islandWidth = 40;
-  const islandHeight = 12;
-  const islandY = IPHONE_HEIGHT / 2 - 30; // Near top
-  const islandPointsCount = 16;
-
-  for (let i = 0; i < islandPointsCount; i++) {
-    const angle = (Math.PI * 2 * i) / islandPointsCount;
-    // Create pill shape using stretched circle
-    const radiusX = islandWidth / 2;
-    const radiusY = islandHeight / 2;
-    const px = radiusX * Math.cos(angle);
-    const py = radiusY * Math.sin(angle) + islandY;
-    particles.push({ x: px, y: py, z: halfDepth + 0.5 });
-  }
-
-  // 6. Camera module (rounded square on back face, top-left)
-  const cameraSize = 35;
-  const cameraRadius = 6;
-  const cameraOffsetX = -IPHONE_WIDTH / 2 + 25;
-  const cameraOffsetY = IPHONE_HEIGHT / 2 - 25;
-
-  // Create camera outline
-  for (let i = 0; i < 4; i++) {
-    const angle = (Math.PI / 2) * i;
-
-    // Corner arc
-    const arcPoints = 4;
-    for (let j = 0; j < arcPoints; j++) {
-      const a = angle + (Math.PI / 2) * (j / arcPoints);
-      const cornerX = (i === 0 || i === 3 ? 1 : -1) * (cameraSize / 2 - cameraRadius);
-      const cornerY = (i === 0 || i === 1 ? 1 : -1) * (cameraSize / 2 - cameraRadius);
-      const px = cameraOffsetX + cornerX + cameraRadius * Math.cos(a);
-      const py = cameraOffsetY + cornerY + cameraRadius * Math.sin(a);
-      particles.push({ x: px, y: py, z: -halfDepth - 0.5 });
-    }
-  }
-
-  // Add a small lens circle in the center of camera
-  const lensRadius = 8;
-  const lensPoints = 12;
-  for (let i = 0; i < lensPoints; i++) {
-    const angle = (Math.PI * 2 * i) / lensPoints;
-    const px = cameraOffsetX + lensRadius * Math.cos(angle);
-    const py = cameraOffsetY + lensRadius * Math.sin(angle);
-    particles.push({ x: px, y: py, z: -halfDepth - 0.5 });
-  }
-
-  return particles;
+  return { particles, edges };
 }
 
-// Initialize particles for MacBook wireframe
-function initMacBookParticles(): Particle[] {
+// Initializer for Triangle (Tetrahedron)
+function initTriangleGraph(): Graph {
+  // Tetrahedron vertices
+  // V1: Top (0, y, 0)
+  // V2, V3, V4: Base triangle
+  const s = TRIANGLE_SIZE;
+  const h = s * Math.sqrt(2 / 3); // Height of tetrahedron
+
+  const vTop = { x: 0, y: -h / 1.5, z: 0 };
+  const vFront = { x: 0, y: h / 2, z: s / Math.sqrt(3) };
+  const vLeft = { x: -s / 2, y: h / 2, z: -s / (2 * Math.sqrt(3)) };
+  const vRight = { x: s / 2, y: h / 2, z: -s / (2 * Math.sqrt(3)) };
+
+  const corners = [vTop, vFront, vLeft, vRight];
+
+  // Create subdivded edges to have enough points
   const particles: Particle[] = [];
-  const pointsPerEdge = 16;
+  const edges: Edge[] = [];
+  const steps = 15; // High subdivision for density relative to globe
 
-  // MacBook dimensions - base is FLAT (horizontal on XZ plane)
-  // Screen tilts back from hinge (rotates around X-axis)
-  const screenTilt = Math.PI * -0.05; // ~22° from vertical (natural laptop viewing angle)
-
-  // Base sits at Y=40 (slightly below center), extends in Z toward viewer
-  const baseY = 40;
-  const hingeZ = -MACBOOK_BASE_HEIGHT / 2; // Back edge of base (where screen connects)
-
-  // Helper: create rectangle outline on XZ plane (flat/horizontal)
-  const createFlatRect = (
-    width: number,
-    depth: number,
-    y: number,
-    zOffset: number = 0
-  ): Particle[] => {
-    const pts: Particle[] = [];
-    const halfW = width / 2;
-    const halfD = depth / 2;
-
-    // Simple rectangle edges (no rounded corners for simplicity)
-    // Top edge (far from viewer)
-    for (let i = 0; i <= pointsPerEdge; i++) {
-      pts.push({ x: -halfW + (i / pointsPerEdge) * width, y, z: -halfD + zOffset });
-    }
-    // Right edge
-    for (let i = 1; i <= pointsPerEdge; i++) {
-      pts.push({ x: halfW, y, z: -halfD + (i / pointsPerEdge) * depth + zOffset });
-    }
-    // Bottom edge (close to viewer)
-    for (let i = 1; i <= pointsPerEdge; i++) {
-      pts.push({ x: halfW - (i / pointsPerEdge) * width, y, z: halfD + zOffset });
-    }
-    // Left edge
-    for (let i = 1; i < pointsPerEdge; i++) {
-      pts.push({ x: -halfW, y, z: halfD - (i / pointsPerEdge) * depth + zOffset });
-    }
-    return pts;
-  };
-
-  // Helper: create tilted screen rectangle (rotates around X-axis at hinge)
-  const createTiltedRect = (
-    width: number,
-    height: number,
-    hingeY: number,
-    hingeZ: number,
-    tilt: number,
-    zOffset: number = 0
-  ): Particle[] => {
-    const pts: Particle[] = [];
-    const halfW = width / 2;
-    const halfH = height / 2;
-
-    // Screen rectangle - rotate each point around X-axis from hinge
-    const transformPoint = (localX: number, localY: number): Particle => {
-      // localY: 0 = bottom of screen (at hinge), height = top of screen
-      const rotatedY = -localY * Math.cos(tilt); // Goes up (negative Y)
-      const rotatedZ = localY * Math.sin(tilt); // Goes back (positive Z = away from viewer)
-      return {
-        x: localX,
-        y: hingeY + rotatedY,
-        z: hingeZ + rotatedZ + zOffset,
-      };
-    };
-
-    // Bottom edge (at hinge)
-    for (let i = 0; i <= pointsPerEdge; i++) {
-      pts.push(transformPoint(-halfW + (i / pointsPerEdge) * width, 0));
-    }
-    // Right edge (going up)
-    for (let i = 1; i <= pointsPerEdge; i++) {
-      pts.push(transformPoint(halfW, (i / pointsPerEdge) * height));
-    }
-    // Top edge
-    for (let i = 1; i <= pointsPerEdge; i++) {
-      pts.push(transformPoint(halfW - (i / pointsPerEdge) * width, height));
-    }
-    // Left edge (going down)
-    for (let i = 1; i < pointsPerEdge; i++) {
-      pts.push(transformPoint(-halfW, height - (i / pointsPerEdge) * height));
-    }
-    return pts;
-  };
-
-  // 1. BASE - flat horizontal rectangle (keyboard deck)
-  // Top surface
-  const baseTop = createFlatRect(MACBOOK_WIDTH, MACBOOK_BASE_HEIGHT, baseY - MACBOOK_BASE_DEPTH / 2);
-  particles.push(...baseTop);
-
-  // Bottom surface
-  const baseBottom = createFlatRect(MACBOOK_WIDTH, MACBOOK_BASE_HEIGHT, baseY + MACBOOK_BASE_DEPTH / 2);
-  particles.push(...baseBottom);
-
-  // 2. SCREEN - tilted back from hinge
-  const screenHingeY = baseY - MACBOOK_BASE_DEPTH / 2;
-  const screenHingeZ = hingeZ;
-
-  // Front face of screen
-  const screenFront = createTiltedRect(
-    MACBOOK_WIDTH, MACBOOK_HEIGHT,
-    screenHingeY, screenHingeZ,
-    screenTilt, 0
-  );
-  particles.push(...screenFront);
-
-  // Back face of screen
-  const screenBack = createTiltedRect(
-    MACBOOK_WIDTH, MACBOOK_HEIGHT,
-    screenHingeY, screenHingeZ,
-    screenTilt, -MACBOOK_SCREEN_DEPTH
-  );
-  particles.push(...screenBack);
-
-  // Screen bezel (inner rectangle)
-  const bezelInset = 10;
-  const screenBezel = createTiltedRect(
-    MACBOOK_WIDTH - bezelInset * 2,
-    MACBOOK_HEIGHT - bezelInset * 2,
-    screenHingeY + bezelInset * Math.cos(screenTilt) * 0.5,
-    screenHingeZ + bezelInset * Math.sin(screenTilt) * 0.5,
-    screenTilt, 1
-  );
-  particles.push(...screenBezel);
-
-  // 3. TRACKPAD - just 4 corners (sparse to avoid pyramid mesh)
-  const trackpadWidth = MACBOOK_WIDTH * 0.4;
-  const trackpadDepth = MACBOOK_BASE_HEIGHT * 0.2;
-  const trackpadZ = hingeZ + MACBOOK_BASE_HEIGHT * 0.65;
-  const trackpadY = baseY - MACBOOK_BASE_DEPTH / 2 - 1;
-  const halfTW = trackpadWidth / 2;
-  const halfTD = trackpadDepth / 2;
-
-  particles.push({ x: -halfTW, y: trackpadY, z: trackpadZ - halfTD });
-  particles.push({ x: halfTW, y: trackpadY, z: trackpadZ - halfTD });
-  particles.push({ x: halfTW, y: trackpadY, z: trackpadZ + halfTD });
-  particles.push({ x: -halfTW, y: trackpadY, z: trackpadZ + halfTD });
-
-  // 4. HINGE - line connecting screen to base
-  for (let i = 0; i <= 8; i++) {
-    const x = -MACBOOK_WIDTH / 2 + (i / 8) * MACBOOK_WIDTH;
-    particles.push({ x, y: screenHingeY, z: screenHingeZ });
-  }
-
-  return particles;
-}
-
-// Initialize particles for cube wireframe
-function initCubeParticles(): Particle[] {
-  const particles: Particle[] = [];
-  const size = CUBE_SIZE;
-  const pointsPerEdge = 15;
-
-  // 8 corners of the cube
-  const corners: [number, number, number][] = [
-    [-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1],
-    [-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1],
+  // Define edges pairs (indices into corners array)
+  const lines = [
+    [0, 1], [0, 2], [0, 3], // Top to Base
+    [1, 2], [2, 3], [3, 1]  // Base edges
   ];
 
-  // 12 edges defined by corner indices
-  const edges: [number, number][] = [
-    // Bottom face
-    [0, 1], [1, 2], [2, 3], [3, 0],
-    // Top face
-    [4, 5], [5, 6], [6, 7], [7, 4],
-    // Vertical edges
-    [0, 4], [1, 5], [2, 6], [3, 7],
-  ];
+  let pIndex = 0;
 
-  // Add corner particles (larger presence)
-  corners.forEach(([cx, cy, cz]) => {
-    particles.push({ x: cx * size, y: cy * size, z: cz * size });
-  });
-
-  // Add particles along each edge
-  edges.forEach(([startIdx, endIdx]) => {
+  lines.forEach(([startIdx, endIdx]) => {
     const start = corners[startIdx];
     const end = corners[endIdx];
 
-    for (let i = 1; i < pointsPerEdge; i++) {
-      const t = i / pointsPerEdge;
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
       particles.push({
-        x: (start[0] + (end[0] - start[0]) * t) * size,
-        y: (start[1] + (end[1] - start[1]) * t) * size,
-        z: (start[2] + (end[2] - start[2]) * t) * size,
+        x: start.x + (end.x - start.x) * t,
+        y: start.y + (end.y - start.y) * t,
+        z: start.z + (end.z - start.z) * t
       });
+
+      if (i > 0) {
+        edges.push({ p1: pIndex - 1, p2: pIndex });
+      }
+      pIndex++;
     }
   });
 
-  // Add some particles on faces for a more filled look
-  const facePointsPerAxis = 4;
-  const faces: { normal: [number, number, number]; corners: number[] }[] = [
-    { normal: [0, 0, -1], corners: [0, 1, 2, 3] }, // Front
-    { normal: [0, 0, 1], corners: [4, 5, 6, 7] },  // Back
-    { normal: [-1, 0, 0], corners: [0, 3, 7, 4] }, // Left
-    { normal: [1, 0, 0], corners: [1, 2, 6, 5] },  // Right
-    { normal: [0, -1, 0], corners: [0, 1, 5, 4] }, // Bottom
-    { normal: [0, 1, 0], corners: [2, 3, 7, 6] },  // Top
+  // Fill faces randomly (stochastically) to add volume
+  // Face 0: 0-1-2, Face 1: 0-2-3, Face 2: 0-3-1, Face 3: 1-2-3
+  const faces = [
+    [vTop, vFront, vLeft],
+    [vTop, vLeft, vRight],
+    [vTop, vRight, vFront],
+    [vFront, vLeft, vRight]
   ];
 
-  faces.forEach((face) => {
-    const [c0, c1, c2, c3] = face.corners.map((i) => corners[i]);
+  // Add ~200 random points per face for volume
+  const pointsPerFace = 50;
 
-    for (let i = 1; i < facePointsPerAxis; i++) {
-      for (let j = 1; j < facePointsPerAxis; j++) {
-        const u = i / facePointsPerAxis;
-        const v = j / facePointsPerAxis;
-
-        // Bilinear interpolation
-        const x = (1 - u) * (1 - v) * c0[0] + u * (1 - v) * c1[0] + u * v * c2[0] + (1 - u) * v * c3[0];
-        const y = (1 - u) * (1 - v) * c0[1] + u * (1 - v) * c1[1] + u * v * c2[1] + (1 - u) * v * c3[1];
-        const z = (1 - u) * (1 - v) * c0[2] + u * (1 - v) * c1[2] + u * v * c2[2] + (1 - u) * v * c3[2];
-
-        particles.push({ x: x * size, y: y * size, z: z * size });
+  faces.forEach(([A, B, C]) => {
+    for (let i = 0; i < pointsPerFace; i++) {
+      // Uniform point in triangle using barycentric coords
+      let r1 = Math.random();
+      let r2 = Math.random();
+      if (r1 + r2 > 1) {
+        r1 = 1 - r1;
+        r2 = 1 - r2;
       }
+      const r3 = 1 - r1 - r2;
+
+      const x = r1 * A.x + r2 * B.x + r3 * C.x;
+      const y = r1 * A.y + r2 * B.y + r3 * C.y;
+      const z = r1 * A.z + r2 * B.z + r3 * C.z;
+
+      particles.push({ x, y, z });
+      // No edges for internal points? Or connect them randomly?
+      // Let's connect them to nearest existing structural point to keep "network" look
+      // Or simpler: internal points are just dots.
     }
   });
 
-  return particles;
+  return { particles, edges };
 }
 
-// Normalize particle arrays to same length for morphing
-function normalizeParticleArrays(
-  from: Particle[],
-  to: Particle[]
-): { normalized1: Particle[]; normalized2: Particle[] } {
-  const maxLength = Math.max(from.length, to.length);
-  const centerPoint = { x: 0, y: 0, z: 0 };
+// Normalize graphs for morphing (re-introduced)
+function normalizeGraph(g1: Graph, g2: Graph): { g1: Graph, g2: Graph } {
+  const maxP = Math.max(g1.particles.length, g2.particles.length);
+  const maxE = Math.max(g1.edges.length, g2.edges.length);
 
-  const normalized1 = [...from];
-  const normalized2 = [...to];
+  const p1 = [...g1.particles];
+  const e1 = [...g1.edges];
+  const p2 = [...g2.particles];
+  const e2 = [...g2.edges];
 
-  // Pad shorter array with center points
-  while (normalized1.length < maxLength) {
-    normalized1.push({ ...centerPoint });
-  }
-  while (normalized2.length < maxLength) {
-    normalized2.push({ ...centerPoint });
-  }
+  while (p1.length < maxP) p1.push({ x: 0, y: 0, z: 0 });
+  while (p2.length < maxP) p2.push({ x: 0, y: 0, z: 0 });
 
-  return { normalized1, normalized2 };
+  while (e1.length < maxE) e1.push({ p1: 0, p2: 0 });
+  while (e2.length < maxE) e2.push({ p1: 0, p2: 0 });
+
+  return {
+    g1: { particles: p1, edges: e1 },
+    g2: { particles: p2, edges: e2 }
+  };
 }
 
-export default function HolographicNetwork({ shape = "globe" }: Props) {
+export default function HolographicNetwork({ shape = "globe", rotationSpeed = 0.004 }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Animation state refs to avoid re-renders
-  const particlesRef = useRef<Particle[]>([]);
-  const targetParticlesRef = useRef<Particle[]>([]);
-  const startParticlesRef = useRef<Particle[]>([]);
-  const transitionProgressRef = useRef<number>(1); // Start at 1 (completed)
-  const isTransitioningRef = useRef<boolean>(false);
+  const graphRef = useRef<Graph>({ particles: [], edges: [] });
+  const targetGraphRef = useRef<Graph>({ particles: [], edges: [] });
+  const startGraphRef = useRef<Graph>({ particles: [], edges: [] });
+  const rotationSpeedRef = useRef<number>(rotationSpeed);
+
   const currentShapeRef = useRef<string>(shape);
+  const transitionProgressRef = useRef<number>(1);
+  const isTransitioningRef = useRef<boolean>(false);
+
+  // Sync prop to ref
+  useEffect(() => {
+    rotationSpeedRef.current = rotationSpeed;
+  }, [rotationSpeed]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -495,36 +212,21 @@ export default function HolographicNetwork({ shape = "globe" }: Props) {
     let animationFrameId: number;
     let rotation = 0;
 
-    // Initialize particles based on initial shape
-    if (particlesRef.current.length === 0) {
-      particlesRef.current =
-        shape === "globe" ? initGlobeParticles() :
-          shape === "cube" ? initCubeParticles() :
-            shape === "iphone" ? initIPhoneParticles() :
-              initMacBookParticles();
+    // Initialize
+    if (graphRef.current.particles.length === 0) {
+      graphRef.current = shape === "globe" ? initGlobeGraph() : initTriangleGraph();
       currentShapeRef.current = shape;
     }
 
-    // Check if shape changed - trigger transition
+    // Trigger Morph
     if (currentShapeRef.current !== shape) {
-      const newTargetParticles =
-        shape === "globe" ? initGlobeParticles() :
-          shape === "cube" ? initCubeParticles() :
-            shape === "iphone" ? initIPhoneParticles() :
-              initMacBookParticles();
+      const next = shape === "globe" ? initGlobeGraph() : initTriangleGraph();
+      const { g1, g2 } = normalizeGraph(graphRef.current, next);
 
-      // Normalize arrays to same length
-      const { normalized1, normalized2 } = normalizeParticleArrays(
-        particlesRef.current,
-        newTargetParticles
-      );
+      startGraphRef.current = g1;
+      targetGraphRef.current = g2;
+      graphRef.current = g1;
 
-      // Store start and target positions
-      startParticlesRef.current = normalized1;
-      targetParticlesRef.current = normalized2;
-      particlesRef.current = [...normalized1]; // Copy start positions
-
-      // Start transition
       transitionProgressRef.current = 0;
       isTransitioningRef.current = true;
       currentShapeRef.current = shape;
@@ -543,130 +245,108 @@ export default function HolographicNetwork({ shape = "globe" }: Props) {
       const rect = container.getBoundingClientRect();
       ctx.clearRect(0, 0, rect.width, rect.height);
 
-      // Handle morphing transition
-      if (isTransitioningRef.current) {
-        transitionProgressRef.current += 0.025; // ~40 frames = ~0.67s at 60fps
+      rotation += rotationSpeedRef.current;
 
+      // Morphing Logic
+      if (isTransitioningRef.current) {
+        transitionProgressRef.current += 0.02; // Transition speed
         if (transitionProgressRef.current >= 1) {
-          // Transition complete
           transitionProgressRef.current = 1;
           isTransitioningRef.current = false;
-          particlesRef.current = [...targetParticlesRef.current];
+          graphRef.current = targetGraphRef.current;
         } else {
-          // Interpolate between start and target
-          const easedProgress = easeInOutCubic(transitionProgressRef.current);
-
-          for (let i = 0; i < particlesRef.current.length; i++) {
-            const start = startParticlesRef.current[i];
-            const target = targetParticlesRef.current[i];
-
-            particlesRef.current[i] = {
-              x: start.x + (target.x - start.x) * easedProgress,
-              y: start.y + (target.y - start.y) * easedProgress,
-              z: start.z + (target.z - start.z) * easedProgress,
-            };
-          }
-        }
-      }
-
-      // Increment rotation
-      rotation += 0.004;
-
-      // Transform and project particles
-      const projectedParticles: Array<{
-        x2d: number;
-        y2d: number;
-        z2: number;
-        original: Particle;
-      }> = [];
-
-      particlesRef.current.forEach((particle) => {
-        // Apply Y-axis rotation
-        const cosY = Math.cos(rotation);
-        const sinY = Math.sin(rotation);
-        const x1 = particle.x * cosY - particle.z * sinY;
-        const z1 = particle.x * sinY + particle.z * cosY;
-
-        // Apply X-axis tilt (0.3 rad)
-        const cosX = Math.cos(0.3);
-        const sinX = Math.sin(0.3);
-        const y2 = particle.y * cosX - z1 * sinX;
-        const z2 = particle.y * sinX + z1 * cosX;
-
-        // 2D projection with perspective
-        const perspective = 800;
-        const scale = perspective / (perspective + z2);
-        const x2d = x1 * scale + rect.width / 2;
-        const y2d = y2 * scale + rect.height / 2;
-
-        projectedParticles.push({
-          x2d,
-          y2d,
-          z2,
-          original: particle,
-        });
-      });
-
-      // Draw connections between nearby particles
-      for (let i = 0; i < projectedParticles.length; i++) {
-        const p1 = projectedParticles[i];
-        if (p1.z2 >= 200) continue; // Only front half
-
-        // For cube and iPhone, always draw connections; for globe, random
-        const shouldConnect = shape === "globe" ? Math.random() > 0.98 : true;
-
-        if (shouldConnect) {
-          for (let j = i + 1; j < projectedParticles.length; j++) {
-            const p2 = projectedParticles[j];
-            if (p2.z2 >= 200) continue;
-
-            // Calculate distance in 3D space
-            const dx = p1.original.x - p2.original.x;
-            const dy = p1.original.y - p2.original.y;
-            const dz = p1.original.z - p2.original.z;
-            const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-            if (distance < CONNECTION_DISTANCE) {
-              const alpha = (1 - distance / CONNECTION_DISTANCE) * 0.4;
-              ctx.strokeStyle = `rgba(100, 149, 237, ${alpha})`;
-              ctx.lineWidth = 0.5;
-              ctx.beginPath();
-              ctx.moveTo(p1.x2d, p1.y2d);
-              ctx.lineTo(p2.x2d, p2.y2d);
-              ctx.stroke();
+          const t = easeInOutCubic(transitionProgressRef.current);
+          // Morph Particles
+          for (let i = 0; i < graphRef.current.particles.length; i++) {
+            const start = startGraphRef.current.particles[i];
+            const target = targetGraphRef.current.particles[i];
+            if (start && target) {
+              graphRef.current.particles[i] = {
+                x: start.x + (target.x - start.x) * t,
+                y: start.y + (target.y - start.y) * t,
+                z: start.z + (target.z - start.z) * t
+              };
             }
           }
+          // Switch edges topology halfway
+          graphRef.current.edges = (transitionProgressRef.current > 0.5)
+            ? targetGraphRef.current.edges
+            : startGraphRef.current.edges;
         }
       }
 
-      // Draw particles as dots (only front half)
-      projectedParticles.forEach((p) => {
-        if (p.z2 < 200) {
-          const alpha = 0.3 + (200 - p.z2) / 400;
-          ctx.fillStyle = `rgba(100, 149, 237, ${alpha})`;
+      // Project Particles
+      const projected: { x: number, y: number, z: number }[] = [];
+      const ps = graphRef.current.particles;
+
+      const cosY = Math.cos(rotation);
+      const sinY = Math.sin(rotation);
+      const cosX = Math.cos(0.3); // Fixed tilt
+      const sinX = Math.sin(0.3);
+
+      for (let i = 0; i < ps.length; i++) {
+        const p = ps[i];
+        const x1 = p.x * cosY - p.z * sinY;
+        const z1 = p.x * sinY + p.z * cosY;
+        const y2 = p.y * cosX - z1 * sinX;
+        const z2 = p.y * sinX + z1 * cosX;
+
+        const scale = 800 / (800 + z2);
+        projected.push({
+          x: x1 * scale + rect.width / 2,
+          y: y2 * scale + rect.height / 2,
+          z: z2
+        });
+      }
+
+      // Draw Edges (O(E) complexity)
+      ctx.lineWidth = 0.5;
+      const edges = graphRef.current.edges;
+
+      for (let i = 0; i < edges.length; i++) {
+        const e = edges[i];
+        const p1 = projected[e.p1];
+        const p2 = projected[e.p2];
+
+        if (!p1 || !p2) continue;
+
+        const avgZ = (p1.z + p2.z) / 2;
+        if (avgZ >= 200) continue; // Clip back
+
+        const alpha = (1 - (avgZ + 200) / 400) * 0.4;
+
+        ctx.strokeStyle = `rgba(100, 149, 237, ${Math.max(0.1, alpha)})`;
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+      }
+
+      // Draw Vertices
+      ctx.fillStyle = "rgba(100, 149, 237, 0.6)";
+      for (let i = 0; i < projected.length; i++) {
+        const p = projected[i];
+        if (p.z < 200) {
           ctx.beginPath();
-          ctx.arc(p.x2d, p.y2d, 1.5, 0, Math.PI * 2);
+          ctx.arc(p.x, p.y, 1.5, 0, Math.PI * 2);
           ctx.fill();
         }
-      });
+      }
 
       animationFrameId = requestAnimationFrame(animate);
     };
 
-    const handleResize = () => {
-      initCanvas();
-    };
+    const handleResize = () => initCanvas();
 
     initCanvas();
     animate();
 
     window.addEventListener("resize", handleResize);
-
     return () => {
       window.removeEventListener("resize", handleResize);
       cancelAnimationFrame(animationFrameId);
     };
-  }, [shape]);
+  }, [shape]); // Trigger on shape change
 
   return (
     <div

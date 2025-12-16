@@ -53,8 +53,8 @@ export const Button = ({
         </div>
       )}
       <span className="relative z-10 flex items-center gap-3">
-        {icon && <span className="flex-shrink-0">{icon}</span>}
         {children}
+        {icon && <span className="flex-shrink-0">{icon}</span>}
       </span>
     </>
   );
