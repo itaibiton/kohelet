@@ -1,137 +1,110 @@
 "use client";
 
-import { useTranslations } from "next-intl";
-import { CheckIcon, ChevronRightIcon } from "@/components/icons";
-import { Button } from "@/components/ui/Button";
+import { useTranslations, useLocale } from "next-intl";
+import { Check, ArrowRight, Star } from "lucide-react";
 
-export default function Pricing() {
+export function Pricing() {
   const t = useTranslations("pricing");
+  const locale = useLocale();
+  const isRTL = locale === "he";
 
-  const packages = [
-    {
-      name: t("packages.0.name"),
-      price: t("packages.0.price"),
-      description: t("packages.0.description"),
-      features: [
-        t("packages.0.features.0"),
-        t("packages.0.features.1"),
-        t("packages.0.features.2"),
-        t("packages.0.features.3"),
-        t("packages.0.features.4"),
-      ],
-      cta: t("packages.0.cta"),
-      popular: false,
-    },
-    {
-      name: t("packages.1.name"),
-      price: t("packages.1.price"),
-      description: t("packages.1.description"),
-      features: [
-        t("packages.1.features.0"),
-        t("packages.1.features.1"),
-        t("packages.1.features.2"),
-        t("packages.1.features.3"),
-        t("packages.1.features.4"),
-      ],
-      cta: t("packages.1.cta"),
-      popular: true,
-    },
-    {
-      name: t("packages.2.name"),
-      price: t("packages.2.price"),
-      description: t("packages.2.description"),
-      features: [
-        t("packages.2.features.0"),
-        t("packages.2.features.1"),
-        t("packages.2.features.2"),
-        t("packages.2.features.3"),
-        t("packages.2.features.4"),
-      ],
-      cta: t("packages.2.cta"),
-      popular: false,
-    },
-    {
-      name: t("packages.3.name"),
-      price: t("packages.3.price"),
-      description: t("packages.3.description"),
-      features: [
-        t("packages.3.features.0"),
-        t("packages.3.features.1"),
-        t("packages.3.features.2"),
-        t("packages.3.features.3"),
-        t("packages.3.features.4"),
-      ],
-      cta: t("packages.3.cta"),
-      popular: false,
-    },
-  ];
+  const packages = t.raw("packages") as Array<{
+    name: string;
+    type: string;
+    description: string;
+    features: string[];
+    cta: string;
+    featured?: boolean;
+  }>;
 
   return (
-    <section id="pricing" className="py-32 relative z-10 border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-medium tracking-tighter-custom text-white mb-4">
-            {t("section_title")}
-          </h2>
-          <p className="text-neutral-400 text-sm font-light max-w-md mx-auto">
-            {t("section_subtitle")}
-          </p>
-        </div>
+    <section id="pricing" className="w-full max-w-7xl mx-auto px-6 py-24 relative z-10">
+      {/* Header */}
+      <div className={`mb-16 space-y-4 ${isRTL ? "text-right" : "text-center"}`}>
+        <h2 className={`text-3xl md:text-5xl font-display font-medium tracking-tight text-white ${isRTL ? "text-right" : ""}`}>
+          {t("section_title")}
+        </h2>
+        <p className={`text-white/50 text-sm md:text-base font-light ${isRTL ? "text-right" : ""}`}>
+          {t("section_subtitle")}
+        </p>
+      </div>
 
-        {/* Pricing Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {packages.map((pkg, index) => (
+      {/* Pricing Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+        {packages.map((pkg, index) => {
+          const isFeatured = pkg.featured || index === 1;
+
+          return (
             <div
               key={index}
-              className={`relative p-6 rounded-sm border transition-all duration-300 ${
-                pkg.popular
-                  ? "bg-blue-500/5 border-blue-500/30 scale-[1.02]"
-                  : "bg-white/[0.02] border-white/5 hover:border-white/10"
+              className={`relative p-8 rounded-2xl border flex flex-col h-full transition-all duration-300 ${
+                isFeatured
+                  ? "border-brand bg-[#050505] shadow-[0_0_50px_rgba(10,124,255,0.1)] md:-translate-y-4"
+                  : "border-white/10 bg-[#050505] hover:border-white/20"
               }`}
             >
-              {/* Popular Badge */}
-              {pkg.popular && (
-                <div className="absolute -top-3 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 px-3 py-1 bg-blue-500 text-white text-[10px] font-mono uppercase tracking-wider rounded-full">
-                  Popular
+              {/* Featured Badge */}
+              {isFeatured && (
+                <div
+                  className={`absolute -top-3 left-1/2 -translate-x-1/2 bg-brand text-white text-[10px] font-bold uppercase tracking-wide px-3 py-1 rounded-full flex items-center gap-1 shadow-lg shadow-brand/20 ${isRTL ? "flex-row-reverse" : ""}`}
+                >
+                  <Star className="w-3 h-3 fill-white text-white" />
+                  {t("scaling_badge")}
                 </div>
               )}
 
               {/* Package Info */}
-              <div className="mb-6">
-                <h3 className="text-white font-medium text-lg mb-2">{pkg.name}</h3>
-                <div className="text-2xl font-bold text-white mb-2">{pkg.price}</div>
-                <p className="text-neutral-500 text-sm">{pkg.description}</p>
+              <h3 className={`text-lg font-medium text-white mb-2 ${isRTL ? "text-right" : ""}`}>
+                {pkg.name}
+              </h3>
+              <div className={`flex items-baseline gap-1 mb-4`}>
+                <span className="text-3xl font-display font-medium text-white ">
+                  {pkg.type}
+                </span>
               </div>
+              <p className={`text-white/40 text-xs mb-8 ${isRTL ? "text-right" : ""}`}>
+                {pkg.description}
+              </p>
 
               {/* Features */}
-              <ul className="space-y-3 mb-8">
+              <ul className="space-y-4 mb-8 flex-1">
                 {pkg.features.map((feature, featureIndex) => (
-                  <li key={featureIndex} className="flex items-start gap-3">
-                    <CheckIcon size={16} className="text-blue-400 mt-0.5 flex-shrink-0" />
-                    <span className="text-neutral-400 text-sm">{feature}</span>
+                  <li
+                    key={featureIndex}
+                    className={`flex items-start gap-3 ${isRTL ? "flex-row-reverse text-right" : ""}`}
+                  >
+                    <Check
+                      className={`w-4 h-4 mt-0.5 shrink-0 ${isFeatured ? "text-brand" : "text-white"}`}
+                    />
+                    <span
+                      className={`text-xs ${isFeatured ? "text-white/90" : "text-white/80"}`}
+                    >
+                      {feature}
+                    </span>
                   </li>
                 ))}
               </ul>
 
-              {/* CTA */}
-              <Button
-                variant={pkg.popular ? "primary" : "ghost"}
-                className="w-full"
+              {/* CTA Button */}
+              <a
                 href="#contact"
-                icon={<ChevronRightIcon size={14} className="rtl:rotate-180" />}
+                className={`w-full py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition-all ${
+                  isFeatured
+                    ? "bg-brand hover:bg-brand-dark text-white shadow-glow-brand font-semibold"
+                    : "border border-white/10 bg-white/5 text-white hover:bg-white/10"
+                } ${isRTL ? "flex-row-reverse" : ""}`}
               >
                 {pkg.cta}
-              </Button>
+                {isFeatured && (
+                  <ArrowRight className={`w-4 h-4 ${isRTL ? "rotate-180" : ""}`} />
+                )}
+              </a>
             </div>
-          ))}
-        </div>
-
-        {/* Note */}
-        <p className="text-center text-neutral-600 text-xs mt-8 font-mono">
-          {t("note")}
-        </p>
+          );
+        })}
       </div>
     </section>
   );
 }
+
+export default Pricing;
