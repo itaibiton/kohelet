@@ -1,13 +1,13 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Twitter, Github, Linkedin } from "lucide-react";
+import { Twitter, Instagram, Linkedin } from "lucide-react";
 
 export function Footer() {
   const t = useTranslations("footer");
 
   return (
-    <footer className="w-full border-t border-white/10 bg-black py-8 px-6">
+    <footer className="w-full border-t border-white/10 bg-black py-8 px-6 relative z-10">
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
         {/* Copyright */}
         <div className="text-xs text-white/30 font-medium">
@@ -26,9 +26,9 @@ export function Footer() {
           <a
             href="#"
             className="text-white/30 hover:text-white transition-colors"
-            aria-label="GitHub"
+            aria-label="Instagram"
           >
-            <Github className="w-4 h-4" />
+            <Instagram className="w-4 h-4" />
           </a>
           <a
             href="#"

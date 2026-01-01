@@ -26,7 +26,7 @@ export const Button = ({
 
   const variantStyles = {
     primary:
-      "bg-accent-blue hover:bg-accent-blue-hover text-white shadow-[0_0_30px_rgba(10,124,255,0.4)] hover:shadow-[0_0_40px_rgba(10,124,255,0.6)]",
+      "bg-accent-blue hover:bg-accent-blue-hover text-white shadow-[0_0_30px_rgba(59,130,246,0.4)] hover:shadow-[0_0_40px_rgba(59,130,246,0.6)]",
     secondary: "bg-white text-black hover:bg-neutral-200",
     ghost:
       "bg-transparent border border-white/10 hover:border-white/30 text-white hover:bg-white/5",

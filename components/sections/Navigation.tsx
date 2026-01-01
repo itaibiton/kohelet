@@ -17,26 +17,26 @@ export function Navigation() {
 
   return (
     <nav className="fixed top-6 left-0 w-full z-50 flex justify-center px-4">
-      <div className="glass-panel px-6 py-3 rounded-full flex justify-between items-center gap-8 md:gap-12 shadow-[0_0_40px_rgba(0,0,0,0.6)]">
+      <div className="px-6 py-3 rounded-full flex justify-between items-center gap-8 md:gap-12 shadow-[0_0_20px_rgba(0,0,0,0.5)] bg-black/70 backdrop-blur-xl border border-white/10">
         {/* Logo */}
         <a
           href="#"
           className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
         >
-          <Image
-            src="/logo-vertical-no-digital.svg"
-            alt={t("logo")}
-            width={32}
-            height={32}
-            className="w-8 h-8"
-          />
-          {/* <span className="font-display font-semibold text-sm tracking-tight text-white uppercase">
+            <Image
+              src="/logo-vertical-no-digital.svg"
+              alt={t("logo")}
+              width={32}
+              height={32}
+              // className="w-8 h-8"
+            />
+          {/* <span className="font-bold text-sm tracking-tight text-white uppercase">
             {t("logo")}
           </span> */}
         </a>
 
         {/* Desktop Nav Links */}
-        <div className={`hidden md:flex items-center gap-8 ${isRTL ? "flex-row-reverse" : ""}`}>
+        <div className={`hidden md:flex items-center gap-6 ${isRTL ? "flex-row-reverse" : ""}`}>
           {links.map((link) => (
             <a
               key={link.href}
@@ -52,7 +52,7 @@ export function Navigation() {
         {/* Desktop CTA */}
         <a
           href={cta.href}
-          className={`hidden md:flex items-center gap-2 text-[10px] font-semibold bg-white text-black px-5 py-2 rounded-full hover:bg-white/90 transition-all shadow-[0_0_15px_rgba(255,255,255,0.1)] ${isRTL ? "flex-row-reverse" : ""}`}
+          className={`hidden md:flex items-center gap-2 text-[10px] font-bold bg-gradient-to-r from-accent-blue to-accent-blue-hover text-white px-5 py-2 rounded-full hover:brightness-110 transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] ${isRTL ? "flex-row-reverse" : ""}`}
         >
           {cta.label}
           <ArrowRight className={`w-3 h-3 ${isRTL ? "rotate-180" : ""}`} />
@@ -74,31 +74,29 @@ export function Navigation() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 top-20 z-40 md:hidden">
-          <div className="glass-panel mx-4 p-6 rounded-2xl shadow-2xl">
-            <div className="flex flex-col gap-4">
-              {links.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-sm font-medium text-white/80 hover:text-white py-2 transition-colors"
-                >
-                  {link.label}
-                </a>
-              ))}
-              <div className="pt-2 border-t border-white/10">
-                <LanguageSwitcher />
-              </div>
+        <div className="absolute top-full left-4 right-4 mt-2 glass-panel rounded-2xl shadow-[0_0_20px_rgba(0,0,0,0.5)] md:hidden">
+          <div className="px-6 py-4 flex flex-col gap-4">
+            {links.map((link) => (
               <a
-                href={cta.href}
+                key={link.href}
+                href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center justify-center gap-2 text-sm font-semibold bg-white text-black px-5 py-3 rounded-full hover:bg-white/90 transition-all mt-2 ${isRTL ? "flex-row-reverse" : ""}`}
+                className="text-sm font-medium text-white/80 hover:text-white py-2 transition-colors"
               >
-                {cta.label}
-                <ArrowRight className={`w-4 h-4 ${isRTL ? "rotate-180" : ""}`} />
+                {link.label}
               </a>
+            ))}
+            <div className="pt-2 border-t border-white/10">
+              <LanguageSwitcher />
             </div>
+            <a
+              href={cta.href}
+              onClick={() => setMobileMenuOpen(false)}
+              className={`flex items-center justify-center gap-2 text-xs font-bold bg-gradient-to-r from-accent-blue to-accent-blue-hover text-white px-5 py-3 rounded-full hover:brightness-110 transition-all mt-2 shadow-[0_0_15px_rgba(59,130,246,0.3)] ${isRTL ? "flex-row-reverse" : ""}`}
+            >
+              {cta.label}
+              <ArrowRight className={`w-4 h-4 ${isRTL ? "rotate-180" : ""}`} />
+            </a>
           </div>
         </div>
       )}

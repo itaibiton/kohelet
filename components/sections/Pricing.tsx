@@ -39,14 +39,14 @@ export function Pricing() {
               key={index}
               className={`relative p-8 rounded-2xl border flex flex-col h-full transition-all duration-300 ${
                 isFeatured
-                  ? "border-brand bg-[#050505] shadow-[0_0_50px_rgba(10,124,255,0.1)] md:-translate-y-4"
+                  ? "border-accent-blue bg-[#050505] shadow-[0_0_50px_rgba(59,130,246,0.1)] md:-translate-y-4"
                   : "border-white/10 bg-[#050505] hover:border-white/20"
               }`}
             >
               {/* Featured Badge */}
               {isFeatured && (
                 <div
-                  className={`absolute -top-3 left-1/2 -translate-x-1/2 bg-brand text-white text-[10px] font-bold uppercase tracking-wide px-3 py-1 rounded-full flex items-center gap-1 shadow-lg shadow-brand/20 ${isRTL ? "flex-row-reverse" : ""}`}
+                  className={`absolute -top-3 left-1/2 -translate-x-1/2 bg-accent-blue text-white text-[10px] font-bold uppercase tracking-wide px-3 py-1 rounded-full flex items-center gap-1 shadow-lg shadow-brand/20 ${isRTL ? "flex-row-reverse" : ""}`}
                 >
                   <Star className="w-3 h-3 fill-white text-white" />
                   {t("scaling_badge")}
@@ -74,7 +74,7 @@ export function Pricing() {
                     className={`flex items-start gap-3 ${isRTL ? "flex-row-reverse text-right" : ""}`}
                   >
                     <Check
-                      className={`w-4 h-4 mt-0.5 shrink-0 ${isFeatured ? "text-brand" : "text-white"}`}
+                      className={`w-4 h-4 mt-0.5 shrink-0 ${isFeatured ? "text-accent-blue" : "text-white"}`}
                     />
                     <span
                       className={`text-xs ${isFeatured ? "text-white/90" : "text-white/80"}`}
@@ -90,7 +90,7 @@ export function Pricing() {
                 href="#contact"
                 className={`w-full py-3 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition-all ${
                   isFeatured
-                    ? "bg-brand hover:bg-brand-dark text-white shadow-glow-brand font-semibold"
+                    ? "bg-accent-blue hover:bg-accent-blue-hover text-white shadow-glow-blue font-semibold"
                     : "border border-white/10 bg-white/5 text-white hover:bg-white/10"
                 } ${isRTL ? "flex-row-reverse" : ""}`}
               >

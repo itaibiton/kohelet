@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import * as THREE from "three";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
@@ -10,9 +10,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Brand Colors
-const BRAND_BLUE = new THREE.Color("#0A7CFF");
-const ACCENT_PURPLE = new THREE.Color("#5B4FFF");
+// Brand colors
+const BRAND_BLUE = 0x0a7cff;
+const ACCENT_PURPLE = 0x5b4fff;
 
 interface ThreeBackgroundProps {
   className?: string;
@@ -20,187 +20,238 @@ interface ThreeBackgroundProps {
 
 export function ThreeBackground({ className }: ThreeBackgroundProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const sceneRef = useRef<{
+    scene: THREE.Scene;
+    camera: THREE.PerspectiveCamera;
+    renderer: THREE.WebGLRenderer;
+    composer: EffectComposer;
+    logoGroup: THREE.Group;
+    wireframe: THREE.LineSegments;
+    particlesMesh: THREE.Points;
+    particlesMaterial: THREE.PointsMaterial;
+    particlesGeometry: THREE.BufferGeometry;
+    wireframeMaterial: THREE.LineBasicMaterial;
+    bloomPass: UnrealBloomPass;
+    spotlight1: THREE.SpotLight;
+    particlesCount: number;
+  } | null>(null);
+
+  const updateColors = useCallback((color: string) => {
+    if (!sceneRef.current) return;
+    const { particlesMaterial, wireframeMaterial, bloomPass } = sceneRef.current;
+    const newColor = new THREE.Color(color);
+
+    gsap.to(particlesMaterial.color, { r: newColor.r, g: newColor.g, b: newColor.b, duration: 0.5 });
+    gsap.to(wireframeMaterial.color, { r: newColor.r, g: newColor.g, b: newColor.b, duration: 0.5 });
+    gsap.to(bloomPass, { strength: 3, radius: 1, duration: 0.3 });
+  }, []);
+
+  const resetColors = useCallback(() => {
+    if (!sceneRef.current) return;
+    const { particlesMaterial, wireframeMaterial, bloomPass } = sceneRef.current;
+    const blue = new THREE.Color(BRAND_BLUE);
+
+    gsap.to(particlesMaterial.color, { r: blue.r, g: blue.g, b: blue.b, duration: 0.5 });
+    gsap.to(wireframeMaterial.color, { r: blue.r, g: blue.g, b: blue.b, duration: 0.5 });
+    gsap.to(bloomPass, { strength: 1.8, radius: 0.5, duration: 0.5 });
+  }, []);
 
   useEffect(() => {
     if (!containerRef.current) return;
 
     const container = containerRef.current;
 
-    // --- Scene Setup ---
+    // Scene setup
     const scene = new THREE.Scene();
-    // Deep void fog for fading out the distant tunnel
-    scene.fog = new THREE.FogExp2(0x020408, 0.03);
+    scene.fog = new THREE.FogExp2(0x020408, 0.02);
 
     const camera = new THREE.PerspectiveCamera(
-      70,
+      75,
       window.innerWidth / window.innerHeight,
-      0.01,
+      0.1,
       1000
     );
+    camera.position.z = 5;
 
-    const renderer = new THREE.WebGLRenderer({
-      antialias: true,
-      alpha: true,
-      powerPreference: "high-performance",
-    });
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.toneMapping = THREE.ReinhardToneMapping;
     container.appendChild(renderer.domElement);
 
-    // --- Post Processing (Bloom) ---
+    // Post Processing (Bloom) - Updated initial settings
     const renderScene = new RenderPass(scene, camera);
     const bloomPass = new UnrealBloomPass(
       new THREE.Vector2(window.innerWidth, window.innerHeight),
-      1.5, // strength
-      0.4, // radius
-      0.85 // threshold
+      1.8,
+      0.5,
+      0.85
     );
+    bloomPass.threshold = 0;
+    bloomPass.strength = 1.8;
+    bloomPass.radius = 0.5;
 
     const composer = new EffectComposer(renderer);
     composer.addPass(renderScene);
     composer.addPass(bloomPass);
 
-    // --- The Tunnel Path ---
-    // Create a winding path for the camera to follow
-    const points = [];
-    for (let i = 0; i < 5; i++) {
-      points.push(
-        new THREE.Vector3(
-          Math.sin(i * 2) * 10,
-          Math.cos(i * 1.5) * 5, // Less vertical movement
-          i * -20 // Moving forward into negative Z
-        )
-      );
-    }
-    // Add points straight ahead for a long distance
-    for (let i = 5; i < 20; i++) {
-      points.push(
-        new THREE.Vector3(
-          Math.sin(i * 0.5) * 15,
-          Math.cos(i * 0.3) * 10,
-          i * -20
-        )
-      );
-    }
+    // Logo Group
+    const logoGroup = new THREE.Group();
 
-    const path = new THREE.CatmullRomCurve3(points);
-
-    // --- Particle System ---
-    const particlesCount = 3000;
-    const particlesGeometry = new THREE.BufferGeometry();
-    const posArray = new Float32Array(particlesCount * 3);
-    const colorArray = new Float32Array(particlesCount * 3);
-    const sizeArray = new Float32Array(particlesCount);
-
-    // We'll spawn particles along the tube of the path
-    const tempPos = new THREE.Vector3();
-    const tempColor = new THREE.Color();
-
-    for (let i = 0; i < particlesCount; i++) {
-      // t is position along the curve (0 to 1)
-      const t = Math.random();
-      // get point on curve
-      const pointOnCurve = path.getPoint(t);
-
-      // Calculate a random offset in a ring/tube shape around that point
-      // We need a tangent/normal to construct the ring properly, or just simplified spherical offset
-      // Simplified: Random angle, Random radius
-      const angle = Math.random() * Math.PI * 2;
-      const radius = 3 + Math.random() * 8; // Tube radius variance
-
-      const xOffset = Math.cos(angle) * radius;
-      const yOffset = Math.sin(angle) * radius;
-
-      // We assume the path is roughly moving along Z, so we offset X and Y
-      // For more accuracy on winding paths we'd use Frenet frames, but effectively 
-      // adding random noise around the points works for abstract tunnels
-
-      posArray[i * 3] = pointOnCurve.x + xOffset;
-      posArray[i * 3 + 1] = pointOnCurve.y + yOffset;
-      posArray[i * 3 + 2] = pointOnCurve.z;
-
-      // Colors: Mix between Blue and Purple based on depth/position
-      // Start (t=0) is Blue, End (t=1) is Purple
-      tempColor.lerpColors(BRAND_BLUE, ACCENT_PURPLE, t);
-
-      colorArray[i * 3] = tempColor.r;
-      colorArray[i * 3 + 1] = tempColor.g;
-      colorArray[i * 3 + 2] = tempColor.b;
-
-      // Random sizes
-      sizeArray[i] = Math.random() * 0.15;
-    }
-
-    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
-    particlesGeometry.setAttribute('size', new THREE.BufferAttribute(sizeArray, 1));
-
-    const particlesMaterial = new THREE.PointsMaterial({
-      size: 0.1,
-      vertexColors: true,
+    // Electric Blue wireframe material (no solid mesh - wireframe only)
+    const wireframeMaterial = new THREE.LineBasicMaterial({
+      color: BRAND_BLUE,
       transparent: true,
       opacity: 0.8,
-      blending: THREE.AdditiveBlending,
-      sizeAttenuation: true,
-      depthWrite: false, // Important for transparency
+    });
+
+    // Sphere geometry - wireframe only (hollow look)
+    const geometry = new THREE.SphereGeometry(1.2, 32, 32);
+    const wireframe = new THREE.LineSegments(
+      new THREE.EdgesGeometry(geometry),
+      wireframeMaterial
+    );
+
+    // Add wireframe directly to logoGroup (no solid mesh)
+    logoGroup.add(wireframe);
+    scene.add(logoGroup);
+
+    // Lights
+    const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+    scene.add(ambientLight);
+
+    // Blue Spotlight
+    const spotlight1 = new THREE.SpotLight(BRAND_BLUE, 40);
+    spotlight1.position.set(5, 5, 5);
+    spotlight1.angle = 0.4;
+    spotlight1.penumbra = 0.5;
+    scene.add(spotlight1);
+
+    // Violet Spotlight
+    const spotlight2 = new THREE.SpotLight(ACCENT_PURPLE, 20);
+    spotlight2.position.set(-5, -5, 5);
+    spotlight2.angle = 0.5;
+    scene.add(spotlight2);
+
+    // Particles
+    const particlesGeometry = new THREE.BufferGeometry();
+    const particlesCount = 1500;
+    const posArray = new Float32Array(particlesCount * 3);
+
+    for (let i = 0; i < particlesCount * 3; i++) {
+      posArray[i] = (Math.random() - 0.5) * 25;
+    }
+
+    particlesGeometry.setAttribute(
+      "position",
+      new THREE.BufferAttribute(posArray, 3)
+    );
+
+    const particlesMaterial = new THREE.PointsMaterial({
+      size: 0.04,
+      color: BRAND_BLUE,
+      transparent: true,
+      opacity: 0.6,
     });
 
     const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+    particlesMesh.position.y = -2;
     scene.add(particlesMesh);
 
-    // --- Animation State ---
-    const animationState = {
-      cameraProgress: 0.02, // Start slightly inside
+    // Store refs (including new references for animations)
+    sceneRef.current = {
+      scene,
+      camera,
+      renderer,
+      composer,
+      logoGroup,
+      wireframe,
+      particlesMesh,
+      particlesMaterial,
+      particlesGeometry,
+      wireframeMaterial,
+      bloomPass,
+      spotlight1,
+      particlesCount,
     };
 
-    // --- ScrollTrigger ---
-    // We map the entire scroll distance to travelling down the tunnel
-    const scrollTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: "body",
-        start: "top top",
-        end: "bottom bottom",
-        scrub: 1.5, // Smooth smoothing
-      },
-    });
-
-    // Animate camera progress along the curve from 0.02 to 0.9
-    // We don't go to 1.0 to avoid hitting the very end abruptly
-    scrollTl.to(animationState, {
-      cameraProgress: 0.9,
-      ease: "power1.inOut",
-    });
-
-    // Animation Loop
+    // Animation loop
     let animationId: number;
     const animate = () => {
       animationId = requestAnimationFrame(animate);
 
-      // 1. Move Particles (Subtle "alive" motion)
-      // We can add a bit of noise or rotation to the whole tube
-      const time = Date.now() * 0.0005;
-      particlesMesh.rotation.z = time * 0.1; // Slow spin of the tunnel
+      const time = Date.now() * 0.001;
 
-      // 2. Update Camera Position
-      // Get position on curve based on scroll progress
-      // We define a loop or clamp? The scrollTl handles the value.
+      // Logo group rotation
+      logoGroup.rotation.y += 0.002;
+      logoGroup.rotation.x = Math.sin(time * 0.5) * 0.1;
 
-      const camPos = path.getPoint(animationState.cameraProgress);
-      // Look at a point slightly ahead
-      const lookAtPos = path.getPoint(Math.min(animationState.cameraProgress + 0.05, 0.99));
+      // Gentle floating
+      logoGroup.position.y = Math.sin(time) * 0.1;
 
-      // Smoothly interpolate camera position for extra butteriness (optional, but 'scrub' handles most)
-      camera.position.copy(camPos);
-      camera.lookAt(lookAtPos);
+      // Pulsing scale animation for wireframe sphere
+      const scale = 1 + Math.sin(time * 2) * 0.02;
+      wireframe.scale.set(scale, scale, scale);
 
-      // Add slight mouse parallax if we wanted, but let's stick to scroll for now to avoid motion sickness
+      // Particle wave animation
+      const positions = particlesGeometry.attributes.position.array as Float32Array;
+      for (let i = 0; i < particlesCount; i++) {
+        const x = positions[i * 3];
+        positions[i * 3 + 1] = Math.sin(Date.now() * 0.001 + x) * 0.5 - 2;
+      }
+      particlesGeometry.attributes.position.needsUpdate = true;
+
+      // Particle rotation
+      particlesMesh.rotation.y = -time * 0.05;
 
       composer.render();
     };
     animate();
 
-    // --- Resize Handler ---
+    // GSAP ScrollTrigger - Enhanced scroll effects
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "body",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 1,
+      },
+    });
+
+    // Logo group animations
+    tl.to(logoGroup.position, { z: -10, y: 5, duration: 2 }, 0)
+      .to(logoGroup.rotation, { x: 1, duration: 2 }, 0);
+
+    // Camera animations
+    tl.to(camera.position, { z: 8, duration: 2 }, 0)
+      .to(camera.rotation, { z: 0.2, duration: 2 }, 0);
+
+    // Particles: position to y: 0, then scale to 2
+    tl.to(particlesMesh.position, { y: 0, duration: 1 }, 1)
+      .to(particlesMesh.scale, { x: 2, y: 2, z: 2, duration: 2 }, 2);
+
+    // Color transition: blue (#3B82F6) to purple (#6366f1)
+    const purple = new THREE.Color(ACCENT_PURPLE);
+    tl.to(
+      particlesMaterial.color,
+      { r: purple.r, g: purple.g, b: purple.b, duration: 2 },
+      1
+    ).to(
+      wireframeMaterial.color,
+      { r: purple.r, g: purple.g, b: purple.b, duration: 2 },
+      1
+    );
+
+    // Bloom enhancement on scroll
+    tl.to(bloomPass, { strength: 3, radius: 1, duration: 2 }, 2);
+
+    // Fog density increase
+    tl.to(scene.fog as THREE.FogExp2, { density: 0.05, duration: 2 }, 3);
+
+    // Spotlight intensity and angle on scroll
+    tl.to(spotlight1, { intensity: 100, angle: 0.1, duration: 2 }, 3);
+
+    // Resize handler
     const handleResize = () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
@@ -209,20 +260,42 @@ export function ThreeBackground({ className }: ThreeBackgroundProps) {
     };
     window.addEventListener("resize", handleResize);
 
-    // --- Cleanup ---
+    // Cleanup
     return () => {
       cancelAnimationFrame(animationId);
       window.removeEventListener("resize", handleResize);
-      ScrollTrigger.getAll().forEach((t) => t.kill());
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 
       renderer.dispose();
+      geometry.dispose();
+      wireframeMaterial.dispose();
       particlesGeometry.dispose();
       particlesMaterial.dispose();
+
       if (container.contains(renderer.domElement)) {
         container.removeChild(renderer.domElement);
       }
     };
   }, []);
+
+  // Expose color update functions via custom event
+  useEffect(() => {
+    const handleColorChange = (e: CustomEvent<{ color: string }>) => {
+      updateColors(e.detail.color);
+    };
+
+    const handleColorReset = () => {
+      resetColors();
+    };
+
+    window.addEventListener("three-color-change" as keyof WindowEventMap, handleColorChange as EventListener);
+    window.addEventListener("three-color-reset" as keyof WindowEventMap, handleColorReset as EventListener);
+
+    return () => {
+      window.removeEventListener("three-color-change" as keyof WindowEventMap, handleColorChange as EventListener);
+      window.removeEventListener("three-color-reset" as keyof WindowEventMap, handleColorReset as EventListener);
+    };
+  }, [updateColors, resetColors]);
 
   return (
     <div
@@ -234,8 +307,13 @@ export function ThreeBackground({ className }: ThreeBackgroundProps) {
   );
 }
 
-// Export empty helpers to maintain compatibility if these were imported elsewhere
-// (Though they won't do anything now as the logic is different)
-export function triggerColorChange(color: string) { }
-export function triggerColorReset() { }
+// Helper functions to trigger color changes from other components
+export function triggerColorChange(color: string) {
+  window.dispatchEvent(
+    new CustomEvent("three-color-change", { detail: { color } })
+  );
+}
 
+export function triggerColorReset() {
+  window.dispatchEvent(new CustomEvent("three-color-reset"));
+}

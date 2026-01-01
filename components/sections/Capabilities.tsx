@@ -11,12 +11,12 @@ import {
 } from "lucide-react";
 
 const iconMap: Record<string, React.ReactNode> = {
-  database: <Database className="w-5 h-5 text-brand" />,
-  globe: <Globe className="w-5 h-5 text-brand" />,
-  message: <MessageSquare className="w-5 h-5 text-brand" />,
-  smartphone: <Smartphone className="w-5 h-5 text-brand" />,
-  shield: <ShieldCheck className="w-5 h-5 text-brand" />,
-  chart: <BarChart3 className="w-5 h-5 text-brand" />,
+  database: <Database className="w-5 h-5 text-accent-blue" />,
+  globe: <Globe className="w-5 h-5 text-accent-blue" />,
+  message: <MessageSquare className="w-5 h-5 text-accent-blue" />,
+  smartphone: <Smartphone className="w-5 h-5 text-accent-blue" />,
+  shield: <ShieldCheck className="w-5 h-5 text-accent-blue" />,
+  chart: <BarChart3 className="w-5 h-5 text-accent-blue" />,
 };
 
 export function Capabilities() {
@@ -88,7 +88,7 @@ export function Capabilities() {
           {terminalLines.map((line, index) => (
             <p
               key={index}
-              className={index === terminalLines.length - 1 ? "text-brand" : ""}
+              className={index === terminalLines.length - 1 ? "text-accent-blue" : ""}
             >
               {line}
               {index === terminalLines.length - 1 && (

@@ -16,11 +16,11 @@ export function Hero() {
       >
         {/* Badge */}
         <div
-          className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brand/30 bg-brand/5 backdrop-blur-sm animate-fade-in-up ${isRTL ? "flex-row-reverse" : ""}`}
+          className={`inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-accent-blue/30 bg-accent-blue/10 animate-fade-in-up ${isRTL ? "flex-row-reverse" : ""}`}
           style={{ animationDelay: "0.1s" }}
         >
-          <Zap className="w-3 h-3 text-brand fill-brand" />
-          <span className="text-[10px] font-semibold uppercase tracking-widest text-brand">
+          <Zap className="w-3 h-3 text-accent-blue fill-accent-blue" />
+          <span className="text-[10px] font-semibold uppercase tracking-widest text-accent-blue">
             {t("badge.text")}
           </span>
         </div>
@@ -31,14 +31,14 @@ export function Hero() {
           style={{ animationDelay: "0.2s" }}
         >
           {/* Small tagline */}
-          <p className="text-brand font-medium text-sm tracking-wide">
+          <p className="text-accent-blue font-medium text-sm tracking-wide">
             {t("tagline")}
           </p>
 
           {/* Main headline with color variations */}
           <h1 className="text-5xl font-display font-semibold tracking-tighter leading-[0.95] text-white">
             {t("headline.prefix")}
-            <span className="text-brand">{t("headline.highlight")}</span>
+            <span className="text-accent-blue">{t("headline.highlight")}</span>
             {t("headline.middle")}
             <br />
             <span className="text-white/30">{t("headline.faded")}</span>
@@ -53,7 +53,7 @@ export function Hero() {
           {/* Secondary title with underlined word */}
           <p className="text-xl text-white font-medium">
             {t("secondary.prefix")}{" "}
-            <span className="text-brand border-b border-brand/30 pb-0.5">
+            <span className="text-accent-blue border-b border-accent-blue/30 pb-0.5">
               {t("secondary.highlight")}
             </span>{" "}
             {t("secondary.suffix")}
@@ -73,7 +73,7 @@ export function Hero() {
           {/* Primary CTA - brand color with glow */}
           <a
             href="#solutions"
-            className={`group relative inline-flex items-center gap-2 px-8 py-3.5 bg-brand text-white rounded-full text-sm font-semibold tracking-wide transition-all duration-300 border border-brand hover:bg-brand-dark hover:border-brand-dark shadow-[0_0_30px_rgba(10,124,255,0.3)] hover:shadow-[0_0_40px_rgba(10,124,255,0.5)] ${isRTL ? "flex-row-reverse" : ""}`}
+            className={`group relative inline-flex items-center gap-2 px-8 py-3.5 bg-accent-blue text-white rounded-full text-sm font-semibold tracking-wide transition-all duration-300 border border-accent-blue hover:bg-accent-blue-hover hover:border-accent-blue-hover shadow-[0_0_30px_rgba(59,130,246,0.3)] hover:shadow-[0_0_40px_rgba(59,130,246,0.5)] ${isRTL ? "flex-row-reverse" : ""}`}
           >
             {t("cta_primary")}
             <ChevronRight
@@ -84,7 +84,7 @@ export function Hero() {
           {/* Secondary CTA - with play icon */}
           <a
             href="#demo"
-            className={`group inline-flex items-center gap-3 px-6 py-3.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-sm font-medium text-white transition-all backdrop-blur-md ${isRTL ? "flex-row-reverse" : ""}`}
+            className={`group inline-flex items-center gap-3 px-6 py-3.5 bg-white/10 hover:bg-white/15 border border-white/10 rounded-full text-sm font-medium text-white transition-all ${isRTL ? "flex-row-reverse" : ""}`}
           >
             <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/15 transition-colors">
               <Play className={`w-3 h-3 text-white fill-white ${isRTL ? "mr-0.5" : "ml-0.5"}`} />
@@ -99,7 +99,7 @@ export function Hero() {
         className="flex-1 w-full flex justify-center md:justify-end relative z-10 animate-fade-in-up"
         style={{ animationDelay: "0.9s" }}
       >
-        <div className="relative w-[340px] h-[580px] bg-[#050505]/90 rounded-[32px] border border-white/10 shadow-[0_0_60px_rgba(10,124,255,0.15)] overflow-hidden backdrop-blur-xl">
+        <div className="relative w-[340px] h-[580px] bg-[#050505]/95 rounded-[32px] border border-white/10 shadow-[0_0_60px_rgba(59,130,246,0.15)] overflow-hidden">
           {/* Header */}
           <div className="absolute top-0 left-0 w-full h-16 border-b border-white/5 flex items-center justify-between px-6 bg-white/[0.02]">
             <div className="flex items-center gap-2">
@@ -118,11 +118,11 @@ export function Hero() {
             <div className="space-y-3 mb-8">
               {/* AI Message 1 */}
               <div className="flex gap-3">
-                <div className="w-8 h-8 rounded-full bg-brand/20 flex items-center justify-center border border-brand/20 shrink-0">
-                  <Bot className="w-4 h-4 text-brand" />
+                <div className="w-8 h-8 rounded-full bg-accent-blue/20 flex items-center justify-center border border-accent-blue/20 shrink-0">
+                  <Bot className="w-4 h-4 text-accent-blue" />
                 </div>
                 <div className="bg-white/5 border border-white/5 rounded-2xl rounded-tl-none p-4 text-xs text-white/80 leading-relaxed font-light">
-                  <span className="text-brand">@System:</span>{" "}
+                  <span className="text-accent-blue">@System:</span>{" "}
                   {t("chat.system_message")}
                   <br />
                   <span className="text-emerald-400">
@@ -138,20 +138,20 @@ export function Hero() {
                 <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center border border-white/10 shrink-0">
                   <User className="w-4 h-4 text-white" />
                 </div>
-                <div className="bg-brand/10 border border-brand/20 rounded-2xl rounded-tr-none p-4 text-xs text-white/90 font-light">
+                <div className="bg-accent-blue/10 border border-accent-blue/20 rounded-2xl rounded-tr-none p-4 text-xs text-white/90 font-light">
                   {t("chat.user_message")}
                 </div>
               </div>
 
               {/* AI Message 2 */}
               <div className="flex gap-3">
-                <div className="w-8 h-8 rounded-full bg-brand/20 flex items-center justify-center border border-brand/20 shrink-0">
-                  <Bot className="w-4 h-4 text-brand" />
+                <div className="w-8 h-8 rounded-full bg-accent-blue/20 flex items-center justify-center border border-accent-blue/20 shrink-0">
+                  <Bot className="w-4 h-4 text-accent-blue" />
                 </div>
                 <div className="bg-white/5 border border-white/5 rounded-2xl rounded-tl-none p-4 text-xs text-white/80 leading-relaxed font-light">
                   {t("chat.executing")}
                   <div className="mt-2 w-full h-1 bg-white/10 rounded-full overflow-hidden">
-                    <div className="h-full bg-brand w-2/3 animate-pulse"></div>
+                    <div className="h-full bg-accent-blue w-2/3 animate-pulse"></div>
                   </div>
                   <span className="block mt-1 text-[10px] text-white/40">
                     {t("chat.status")}

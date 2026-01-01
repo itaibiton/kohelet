@@ -22,7 +22,7 @@ export const FeatureCard = ({
       </div>
 
       <div className="relative z-10">
-        <div className="w-10 h-10 mb-5 flex items-center justify-center rounded-sm bg-white/5 border border-white/5 group-hover:border-brand/40 group-hover:text-brand group-hover:shadow-[0_0_20px_rgba(10,124,255,0.2)] transition-all duration-500">
+        <div className="w-10 h-10 mb-5 flex items-center justify-center rounded-sm bg-white/5 border border-white/5 group-hover:border-accent-blue/40 group-hover:text-accent-blue group-hover:shadow-[0_0_20px_rgba(59,130,246,0.2)] transition-all duration-500">
           {icon}
         </div>
 

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { Mail, MapPin, ChevronDown } from "lucide-react";
+import { Mail, MapPin, Phone, ChevronDown } from "lucide-react";
 
 export function Contact() {
   const t = useTranslations("contact");
@@ -61,13 +61,19 @@ export function Contact() {
               <div
                 className={`flex items-center gap-3 text-sm text-white/70 ${isRTL ? "flex-row-reverse justify-end" : ""}`}
               >
-                <Mail className="w-4 h-4 text-brand" />
+                <Mail className="w-4 h-4 text-accent-blue" />
                 {t("email")}
               </div>
               <div
                 className={`flex items-center gap-3 text-sm text-white/70 ${isRTL ? "flex-row-reverse justify-end" : ""}`}
               >
-                <MapPin className="w-4 h-4 text-brand" />
+                <Phone className="w-4 h-4 text-accent-blue" />
+                {t("phone")}
+              </div>
+              <div
+                className={`flex items-center gap-3 text-sm text-white/70 ${isRTL ? "flex-row-reverse justify-end" : ""}`}
+              >
+                <MapPin className="w-4 h-4 text-accent-blue" />
                 {t("location")}
               </div>
             </div>
@@ -77,11 +83,11 @@ export function Contact() {
               className={`mt-12 p-4 rounded-lg bg-white/5 border border-white/10 inline-flex items-center gap-3 ${isRTL ? "flex-row-reverse" : ""}`}
             >
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-blue opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-blue"></span>
               </span>
               <span className="text-xs font-medium text-white/80">
-                {t("availability")}: <span className="text-brand">{t("availability_status")}</span>
+                {t("availability")}: <span className="text-accent-blue">{t("availability_status")}</span>
               </span>
             </div>
           </div>
@@ -102,7 +108,7 @@ export function Contact() {
                   value={formState.name}
                   onChange={handleChange}
                   placeholder={t("form.name.placeholder")}
-                  className={`w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-brand/50 focus:ring-1 focus:ring-brand/50 transition-all ${isRTL ? "text-right" : ""}`}
+                  className={`w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-accent-blue/50 focus:ring-1 focus:ring-brand/50 transition-all ${isRTL ? "text-right" : ""}`}
                   required
                 />
               </div>
@@ -118,7 +124,7 @@ export function Contact() {
                   value={formState.email}
                   onChange={handleChange}
                   placeholder={t("form.email.placeholder")}
-                  className={`w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-brand/50 focus:ring-1 focus:ring-brand/50 transition-all ${isRTL ? "text-right" : ""}`}
+                  className={`w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-accent-blue/50 focus:ring-1 focus:ring-brand/50 transition-all ${isRTL ? "text-right" : ""}`}
                   required
                 />
               </div>
@@ -136,7 +142,7 @@ export function Contact() {
                   name="service"
                   value={formState.service}
                   onChange={handleChange}
-                  className={`w-full appearance-none bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-brand/50 focus:ring-1 focus:ring-brand/50 transition-all cursor-pointer ${isRTL ? "text-right" : ""}`}
+                  className={`w-full appearance-none bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-accent-blue/50 focus:ring-1 focus:ring-brand/50 transition-all cursor-pointer ${isRTL ? "text-right" : ""}`}
                 >
                   {services.map((service, index) => (
                     <option key={index} value={service} className="bg-[#111]">
@@ -163,7 +169,7 @@ export function Contact() {
                 onChange={handleChange}
                 rows={4}
                 placeholder={t("form.message.placeholder")}
-                className={`w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-brand/50 focus:ring-1 focus:ring-brand/50 transition-all resize-none ${isRTL ? "text-right" : ""}`}
+                className={`w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-accent-blue/50 focus:ring-1 focus:ring-brand/50 transition-all resize-none ${isRTL ? "text-right" : ""}`}
                 required
               />
             </div>
@@ -172,7 +178,7 @@ export function Contact() {
             <button
               type="submit"
               disabled={status === "loading" || status === "success"}
-              className="w-full py-3.5 bg-brand hover:bg-brand-dark text-white font-semibold text-xs uppercase tracking-widest rounded-lg transition-colors duration-300 shadow-glow-brand disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3.5 bg-accent-blue hover:bg-accent-blue-hover text-white font-semibold text-xs uppercase tracking-widest rounded-lg transition-colors duration-300 shadow-glow-blue disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {status === "loading"
                 ? t("form.submit.loading")

@@ -40,7 +40,7 @@ export function Solutions() {
     <section id="solutions" className="w-full max-w-6xl mx-auto px-6 py-24 relative">
       {/* Header */}
         {/* <div
-          className={`hidden w-fit md:flex items-center gap-2 text-xs text-brand font-medium border border-brand/20 bg-brand/5 px-3 py-1 rounded-full ${isRTL ? "flex-row-reverse" : ""}`}
+          className={`hidden w-fit md:flex items-center gap-2 text-xs text-accent-blue font-medium border border-accent-blue/20 bg-accent-blue/5 px-3 py-1 rounded-full ${isRTL ? "flex-row-reverse" : ""}`}
         >
           <Zap className="w-3 h-3" />
           {t("powered_by")}
@@ -57,7 +57,7 @@ export function Solutions() {
           </p>
         </div>
         <div
-          className={`hidden w-fit md:flex items-center gap-2 text-xs text-brand font-medium border border-brand/20 bg-brand/5 px-3 py-1 rounded-full ${isRTL ? "flex-row-reverse" : ""}`}
+          className={`hidden w-fit md:flex items-center gap-2 text-xs text-accent-blue font-medium border border-accent-blue/20 bg-accent-blue/5 px-3 py-1 rounded-full ${isRTL ? "flex-row-reverse" : ""}`}
         >
           <Zap className="w-3 h-3" />
           {t("powered_by")}
@@ -76,7 +76,7 @@ export function Solutions() {
                 : "accent";
           const hoverBorder =
             index === 0
-              ? "group-hover:border-brand/20"
+              ? "group-hover:border-accent-blue/20"
               : index === 1
                 ? "group-hover:border-white/20"
                 : "group-hover:border-accent/20";
@@ -129,7 +129,7 @@ export function Solutions() {
                           <div
                             className={`w-1 h-1 rounded-full ${
                               index === 0
-                                ? "bg-brand"
+                                ? "bg-accent-blue"
                                 : index === 1
                                   ? "bg-white"
                                   : "bg-accent"

@@ -163,7 +163,8 @@
     "headline_line1": "Ready to Automate?",
     "headline_line2": "Let's Talk ROI.",
     "description": "Tell us what's eating up your team's time. We'll show you exactly how AI agents and custom software can free 15-25 hours per week—and what that looks like in revenue terms.",
-    "email": "hello@kohelet.tech",
+    "email": "info@kohelet.digital",
+    "phone": "+972-52-341-0467",
     "location": "Remote-First / HQ: Tel Aviv",
     "availability": "Current Availability",
     "availability_status": "High - Accepting New Projects",
@@ -193,7 +194,7 @@
         "label": "Send Inquiry",
         "loading": "Sending...",
         "success": "Message received! We'll respond within 24 hours.",
-        "error": "Something went wrong. Please email us directly at hello@kohelet.tech"
+        "error": "Something went wrong. Please email us directly at info@kohelet.digital"
       }
     }
   },
