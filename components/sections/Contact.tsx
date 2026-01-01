@@ -1,27 +1,25 @@
 "use client";
 
-import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { Button } from "@/components/ui/Button";
-import {
-  ChevronRightIcon,
-  MailIcon,
-  PhoneIcon,
-  UserIcon,
-  BuildingIcon,
-  MessageSquareIcon
-} from "@/components/icons";
+import { useTranslations, useLocale } from "next-intl";
+import { Mail, MapPin, ChevronDown } from "lucide-react";
 
-export default function Contact() {
+export function Contact() {
   const t = useTranslations("contact");
+  const locale = useLocale();
+  const isRTL = locale === "he";
+
   const [formState, setFormState] = useState({
     name: "",
     email: "",
-    phone: "",
-    company: "",
-    message: ""
+    service: "",
+    message: "",
   });
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">(
+    "idle"
+  );
+
+  const services = t.raw("services") as string[];
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,177 +28,169 @@ export default function Contact() {
     // Simulate API call
     setTimeout(() => {
       setStatus("success");
-      setFormState({ name: "", email: "", phone: "", company: "", message: "" });
+      setFormState({ name: "", email: "", service: "", message: "" });
     }, 1500);
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormState(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   return (
-    <section id="contact" className="py-32 relative z-10">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-20">
-          {/* Header Info */}
-          <div>
-            <h2 className="text-4xl md:text-5xl font-medium tracking-tighter-custom text-white mb-6">
-              {t("section_title")}
+    <section
+      id="contact"
+      className="w-full bg-[#030303] border-t border-white/5 py-24 px-6 relative z-10"
+    >
+      <div className="max-w-5xl mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          {/* Left Column - Info */}
+          <div className={isRTL ? "text-right" : ""}>
+            <h2 className="text-4xl md:text-5xl font-display font-medium tracking-tight text-white mb-6">
+              {t("headline_line1")}
+              <br />
+              {t("headline_line2")}
             </h2>
-            <p className="text-xl text-neutral-400 font-light mb-12">
-              {t("section_subtitle")}
+            <p className="text-white/50 text-sm leading-relaxed mb-8 max-w-sm">
+              {t("description")}
             </p>
 
-            <div className="space-y-8">
-              <div className="p-6 rounded-sm bg-white/5 border border-white/10 group hover:border-white/20 transition-colors">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-full bg-white/5 text-white/60 group-hover:text-white transition-colors">
-                    <MailIcon size={24} />
-                  </div>
-                  <div>
-                    <h3 className="text-white font-medium mb-1">Email</h3>
-                    <a href="mailto:contact@kohelet.studio" className="text-neutral-400 hover:text-blue-400 transition-colors block">
-                      info@kohelet.digital
-                    </a>
-                  </div>
-                </div>
+            {/* Contact Info */}
+            <div className="space-y-4">
+              <div
+                className={`flex items-center gap-3 text-sm text-white/70 ${isRTL ? "flex-row-reverse justify-end" : ""}`}
+              >
+                <Mail className="w-4 h-4 text-brand" />
+                {t("email")}
               </div>
-              <div className="p-6 rounded-sm bg-white/5 border border-white/10 group hover:border-white/20 transition-colors">
-                <div className="flex items-start gap-4">
-                  <div className="p-3 rounded-full bg-white/5 text-white/60 group-hover:text-white transition-colors">
-                    <PhoneIcon size={24} />
-                  </div>
-                  <div>
-                    <h3 className="text-white font-medium mb-1">Phone</h3>
-                    <a href="tel:0500000000" className="text-neutral-400 hover:text-blue-400 transition-colors block">
-                      053-9858438
-                    </a>
-                  </div>
-                </div>
+              <div
+                className={`flex items-center gap-3 text-sm text-white/70 ${isRTL ? "flex-row-reverse justify-end" : ""}`}
+              >
+                <MapPin className="w-4 h-4 text-brand" />
+                {t("location")}
               </div>
+            </div>
+
+            {/* Availability Badge */}
+            <div
+              className={`mt-12 p-4 rounded-lg bg-white/5 border border-white/10 inline-flex items-center gap-3 ${isRTL ? "flex-row-reverse" : ""}`}
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand"></span>
+              </span>
+              <span className="text-xs font-medium text-white/80">
+                {t("availability")}: <span className="text-brand">{t("availability_status")}</span>
+              </span>
             </div>
           </div>
 
-          {/* Form */}
+          {/* Right Column - Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
+            {/* Name & Email Row */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-xs font-mono text-neutral-500 uppercase tracking-wider">
+                <label
+                  className={`text-xs font-medium text-white/40 uppercase tracking-wide ${isRTL ? "block text-right" : ""}`}
+                >
                   {t("form.name.label")}
                 </label>
-                <div className="relative">
-                  <div className="absolute top-1/2 -translate-y-1/2 start-4 text-white/20 pointer-events-none">
-                    <UserIcon size={18} />
-                  </div>
-                  <input
-                    type="text"
-                    name="name"
-                    value={formState.name}
-                    onChange={handleChange}
-                    placeholder={t("form.name.placeholder")}
-                    className="w-full bg-[#08080a] border border-white/10 rounded-sm ps-12 pe-4 py-3 text-white placeholder:text-neutral-700 focus:outline-none focus:border-blue-500/50 transition-colors"
-                    required
-                  />
-                </div>
+                <input
+                  type="text"
+                  name="name"
+                  value={formState.name}
+                  onChange={handleChange}
+                  placeholder={t("form.name.placeholder")}
+                  className={`w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-brand/50 focus:ring-1 focus:ring-brand/50 transition-all ${isRTL ? "text-right" : ""}`}
+                  required
+                />
               </div>
               <div className="space-y-2">
-                <label className="text-xs font-mono text-neutral-500 uppercase tracking-wider">
+                <label
+                  className={`text-xs font-medium text-white/40 uppercase tracking-wide ${isRTL ? "block text-right" : ""}`}
+                >
                   {t("form.email.label")}
                 </label>
-                <div className="relative">
-                  <div className="absolute top-1/2 -translate-y-1/2 start-4 text-white/20 pointer-events-none">
-                    <MailIcon size={18} />
-                  </div>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formState.email}
-                    onChange={handleChange}
-                    placeholder={t("form.email.placeholder")}
-                    className="w-full bg-[#08080a] border border-white/10 rounded-sm ps-12 pe-4 py-3 text-white placeholder:text-neutral-700 focus:outline-none focus:border-blue-500/50 transition-colors"
-                    required
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-xs font-mono text-neutral-500 uppercase tracking-wider">
-                  {t("form.phone.label")}
-                </label>
-                <div className="relative">
-                  <div className="absolute top-1/2 -translate-y-1/2 start-4 text-white/20 pointer-events-none">
-                    <PhoneIcon size={18} />
-                  </div>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formState.phone}
-                    onChange={handleChange}
-                    placeholder={t("form.phone.placeholder")}
-                    className="w-full bg-[#08080a] border border-white/10 rounded-sm ps-12 pe-4 py-3 text-white placeholder:text-neutral-700 focus:outline-none focus:border-blue-500/50 transition-colors"
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs font-mono text-neutral-500 uppercase tracking-wider">
-                  {t("form.company.label")}
-                </label>
-                <div className="relative">
-                  <div className="absolute top-1/2 -translate-y-1/2 start-4 text-white/20 pointer-events-none">
-                    <BuildingIcon size={18} />
-                  </div>
-                  <input
-                    type="text"
-                    name="company"
-                    value={formState.company}
-                    onChange={handleChange}
-                    placeholder={t("form.company.placeholder")}
-                    className="w-full bg-[#08080a] border border-white/10 rounded-sm ps-12 pe-4 py-3 text-white placeholder:text-neutral-700 focus:outline-none focus:border-blue-500/50 transition-colors"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-xs font-mono text-neutral-500 uppercase tracking-wider">
-                {t("form.message.label")}
-              </label>
-              <div className="relative">
-                <div className="absolute top-4 start-4 text-white/20 pointer-events-none">
-                  <MessageSquareIcon size={18} />
-                </div>
-                <textarea
-                  name="message"
-                  value={formState.message}
+                <input
+                  type="email"
+                  name="email"
+                  value={formState.email}
                   onChange={handleChange}
-                  placeholder={t("form.message.placeholder")}
-                  rows={4}
-                  className="w-full bg-[#08080a] border border-white/10 rounded-sm ps-12 pe-4 py-3 text-white placeholder:text-neutral-700 focus:outline-none focus:border-blue-500/50 transition-colors resize-none"
+                  placeholder={t("form.email.placeholder")}
+                  className={`w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-brand/50 focus:ring-1 focus:ring-brand/50 transition-all ${isRTL ? "text-right" : ""}`}
                   required
                 />
               </div>
             </div>
 
-            <div className="pt-4">
-              <Button
-                type="submit"
-                disabled={status === "loading" || status === "success"}
-                className="w-full md:w-auto"
-                icon={status === "success" ? undefined : <ChevronRightIcon size={14} className="rtl:rotate-180" />}
+            {/* Service Select */}
+            <div className="space-y-2">
+              <label
+                className={`text-xs font-medium text-white/40 uppercase tracking-wide ${isRTL ? "block text-right" : ""}`}
               >
-                {status === "loading" ? t("form.submit.loading") :
-                  status === "success" ? t("form.submit.success") :
-                    t("form.submit.label")}
-              </Button>
-              {status === "error" && (
-                <p className="mt-2 text-red-500 text-sm">{t("form.submit.error")}</p>
-              )}
+                {t("form.service.label")}
+              </label>
+              <div className="relative">
+                <select
+                  name="service"
+                  value={formState.service}
+                  onChange={handleChange}
+                  className={`w-full appearance-none bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-brand/50 focus:ring-1 focus:ring-brand/50 transition-all cursor-pointer ${isRTL ? "text-right" : ""}`}
+                >
+                  {services.map((service, index) => (
+                    <option key={index} value={service} className="bg-[#111]">
+                      {service}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown
+                  className={`absolute top-3.5 w-4 h-4 text-white/30 pointer-events-none ${isRTL ? "left-4" : "right-4"}`}
+                />
+              </div>
             </div>
+
+            {/* Message */}
+            <div className="space-y-2">
+              <label
+                className={`text-xs font-medium text-white/40 uppercase tracking-wide ${isRTL ? "block text-right" : ""}`}
+              >
+                {t("form.message.label")}
+              </label>
+              <textarea
+                name="message"
+                value={formState.message}
+                onChange={handleChange}
+                rows={4}
+                placeholder={t("form.message.placeholder")}
+                className={`w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-brand/50 focus:ring-1 focus:ring-brand/50 transition-all resize-none ${isRTL ? "text-right" : ""}`}
+                required
+              />
+            </div>
+
+            {/* Submit Button */}
+            <button
+              type="submit"
+              disabled={status === "loading" || status === "success"}
+              className="w-full py-3.5 bg-brand hover:bg-brand-dark text-white font-semibold text-xs uppercase tracking-widest rounded-lg transition-colors duration-300 shadow-glow-brand disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {status === "loading"
+                ? t("form.submit.loading")
+                : status === "success"
+                  ? t("form.submit.success")
+                  : t("form.submit.label")}
+            </button>
+
+            {status === "error" && (
+              <p className={`text-red-500 text-sm ${isRTL ? "text-right" : ""}`}>
+                {t("form.submit.error")}
+              </p>
+            )}
           </form>
         </div>
       </div>
     </section>
   );
 }
+
+export default Contact;

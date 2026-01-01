@@ -1,512 +1,203 @@
 {
   "meta": {
-    "title": "Kohelet | Websites, Apps & AI That Convert",
-    "description": "We build landing pages, websites, and apps that turn visitors into customers. AI integration & automation for growing businesses. Free strategy call.",
-    "keywords": "web development, app development, landing pages, AI integration, chatbot, automation, brand identity, SEO"
+    "title": "Kohelet | Business Automation & Custom Software Development",
+    "description": "Deploy AI agents and custom software that scale your business without scaling headcount. Automate 60-80% of manual work in 90 days. Web apps, mobile apps, intelligent workflows.",
+    "keywords": "business automation, AI agents, custom software development, web app development, mobile app development, workflow automation, AI chatbots, lead qualification automation, data processing, Next.js development, React development"
   },
   "navigation": {
     "logo": "Kohelet",
     "links": [
-      {
-        "label": "Solutions",
-        "href": "#solutions"
-      },
-      {
-        "label": "Results",
-        "href": "#case-studies"
-      },
-      {
-        "label": "Pricing",
-        "href": "#pricing"
-      },
-      {
-        "label": "Reviews",
-        "href": "#testimonials"
-      }
+      { "label": "Services", "href": "#solutions" },
+      { "label": "Capabilities", "href": "#capabilities" },
+      { "label": "Pricing", "href": "#pricing" },
+      { "label": "Contact", "href": "#contact" }
     ],
     "cta": {
-      "label": "Free Call",
+      "label": "Get Started",
       "href": "#contact"
     }
   },
   "hero": {
     "badge": {
-      "text": "Accepting 3 New Clients This Month",
-      "icon": "sparkles"
+      "text": "Now Accepting Partners"
     },
-    "headline": "Websites That Close Deals",
-    "subheadline": "Landing pages, apps, and AI-powered tools that turn visitors into paying customers. For businesses that want results, not just a pretty site.",
-    "cta_primary": {
-      "label": "Get a Free Quote",
-      "href": "#contact"
+    "tagline": "Built for Scale. Powered by Automation.",
+    "headline": {
+      "prefix": "Scale Your Business ",
+      "highlight": "3x Faster",
+      "middle": " Without Hiring",
+      "faded": "More."
     },
-    "cta_secondary": {
-      "label": "See Our Work",
-      "href": "#case-studies"
+    "secondary": {
+      "prefix": "Stop wasting 20+ hours per week on",
+      "highlight": "tasks AI can do",
+      "suffix": "better."
     },
-    "stats": [
-      {
-        "value": "2.5x",
-        "label": "Average Conversion Lift"
-      },
-      {
-        "value": "97%",
-        "label": "Client Retention"
-      },
-      {
-        "value": "48",
-        "label": "Hour Response Time"
-      }
-    ]
-  },
-  "pain_points": {
-    "section_title": "Sound Familiar?",
-    "section_subtitle": "The problems we solve every day",
-    "items": [
-      {
-        "icon": "alert-circle",
-        "title": "Your website looks outdated",
-        "description": "You're losing credibility with potential customers before they read a single word"
-      },
-      {
-        "icon": "trending-down",
-        "title": "Visitors don't convert",
-        "description": "You have traffic but no one fills out forms or makes purchases"
-      },
-      {
-        "icon": "credit-card",
-        "title": "Paying for ads that don't work",
-        "description": "Clicks come in but your landing pages don't convert"
-      },
-      {
-        "icon": "bot",
-        "title": "Competitors already have AI",
-        "description": "They have chatbots and automation—you're still answering every message manually"
-      },
-      {
-        "icon": "clock",
-        "title": "Burned by agencies before",
-        "description": "Big promises, small results, and costs that spiraled beyond budget"
-      }
-    ]
+    "subtitle": "Most businesses still operate like it's 2015—manual data entry, copy-paste workflows, spreadsheet chaos. While they burn hours on repetitive tasks, their automated competitors capture market share with AI agents handling customer support, lead qualification, and operations 24/7. The question isn't whether to automate. It's how quickly you can start.",
+    "cta_primary": "See What We Automate",
+    "cta_secondary": "View Case Studies",
+    "chat": {
+      "system_message": "Analyzing customer inquiry pattern from last 48 hours...",
+      "optimization_complete": "89% can be auto-qualified.",
+      "launching_protocols": "Deploying AI qualification agent to handle incoming leads.",
+      "user_message": "Set up the qualification bot and connect it to our CRM. Book qualified leads automatically.",
+      "executing": "Executing deployment...",
+      "status": "Status: Integrating CRM 92%"
+    },
+    "stats": {
+      "traffic_label": "Hours Saved",
+      "traffic_value": "1,200+/mo",
+      "leads_label": "Leads",
+      "leads_value": "Auto-Qualified"
+    }
   },
   "solutions": {
-    "section_title": "Three Ways to Win With Us",
-    "section_subtitle": "Everything you need to build a digital presence that delivers results",
+    "section_title": "Two Core Services. One Mission.",
+    "section_subtitle": "We don't just write code—we architect systems that scale your business without scaling your headcount.",
+    "powered_by": "Powered by AI + Human Expertise",
     "pillars": [
       {
-        "badge": "Most Popular",
-        "title": "Build & Launch",
-        "description": "From idea to working website/app",
-        "icon": "rocket",
+        "title": "Custom Software Development",
+        "description": "Bespoke web and mobile applications built for your exact workflows. No more forcing your team into rigid SaaS tools. We build software that adapts to you—scalable, secure, and designed for rapid deployment.",
+        "icon": "code",
         "services": [
-          {
-            "name": "Landing Pages",
-            "detail": "High-converting, fast, mobile-optimized"
-          },
-          {
-            "name": "Business Websites",
-            "detail": "Corporate, e-commerce, portfolio"
-          },
-          {
-            "name": "Mobile Apps",
-            "detail": "iOS, Android, cross-platform"
-          }
+          { "name": "Web Applications (React/Next.js)", "detail": "" },
+          { "name": "Mobile Apps (iOS & Android)", "detail": "" },
+          { "name": "SaaS Platforms", "detail": "" },
+          { "name": "System Integrations", "detail": "" }
         ]
       },
       {
-        "badge": "",
-        "title": "Brand & Design",
-        "description": "Visual identity that stands out from competitors",
-        "icon": "palette",
+        "title": "Business Automation",
+        "description": "Intelligent workflows that eliminate manual work. From data processing to lead routing, we build automation systems that run 24/7—so your team can focus on strategic growth instead of repetitive tasks.",
+        "icon": "workflow",
         "services": [
-          {
-            "name": "Brand Identity",
-            "detail": "Logo, colors, typography"
-          },
-          {
-            "name": "UI/UX Design",
-            "detail": "Interfaces that convert"
-          },
-          {
-            "name": "Design Systems",
-            "detail": "Scalable component libraries"
-          }
+          { "name": "AI Workflow Automation", "detail": "" },
+          { "name": "Process Optimization", "detail": "" },
+          { "name": "Data Processing Pipelines", "detail": "" },
+          { "name": "Integration Automation", "detail": "" }
         ]
       },
       {
-        "badge": "High Impact",
-        "title": "AI & Automation",
-        "description": "Technology that saves time and money",
-        "icon": "brain",
+        "title": "AI Agents",
+        "description": "Deploy AI agents that work 24/7—handling customer inquiries, qualifying leads, processing data, and executing workflows while your team focuses on high-value activities. Reduce manual work by 60-80% within 90 days.",
+        "icon": "bot",
         "services": [
-          {
-            "name": "Smart Chatbots",
-            "detail": "24/7 customer support"
-          },
-          {
-            "name": "Workflow Automation",
-            "detail": "Save 10+ hours per week"
-          },
-          {
-            "name": "Custom AI Tools",
-            "detail": "Solutions specific to your business"
-          }
+          { "name": "24/7 AI Customer Support", "detail": "" },
+          { "name": "Lead Qualification Agents", "detail": "" },
+          { "name": "Custom AI Assistants", "detail": "" },
+          { "name": "Autonomous Task Agents", "detail": "" }
         ]
       }
     ]
   },
-  "case_studies": {
-    "section_title": "Real Results, Not Just Pretty Designs",
-    "section_subtitle": "Here's what we've done for clients like you",
+  "capabilities": {
+    "section_title": "Technical Capabilities",
+    "section_subtitle": "Enterprise-grade infrastructure. Startup-fast execution.",
     "items": [
-      {
-        "industry": "E-commerce",
-        "client": "Online Fashion Store",
-        "challenge": "Low conversion rate on product pages",
-        "solution": "Redesigned purchase experience + AI for personalized recommendations",
-        "results": [
-          { "metric": "+340%", "label": "Increase in conversions" },
-          { "metric": "-45%", "label": "Decrease in cart abandonment" }
-        ],
-        "image": "/case-studies/ecommerce.jpg"
-      },
-      {
-        "industry": "B2B Services",
-        "client": "Business Consulting Firm",
-        "challenge": "No leads from existing website",
-        "solution": "High-converting landing page + chatbot for lead qualification",
-        "results": [
-          { "metric": "85", "label": "New leads per month" },
-          { "metric": "80%", "label": "Inquiries handled automatically" }
-        ],
-        "image": "/case-studies/b2b.jpg"
-      },
-      {
-        "industry": "Startup",
-        "client": "FinTech App",
-        "challenge": "Needed MVP fast for investor pitch",
-        "solution": "Full app built in 6 weeks",
-        "results": [
-          { "metric": "3 weeks", "label": "From design to launch" },
-          { "metric": "$2M", "label": "Raised after launch" }
-        ],
-        "image": "/case-studies/startup.jpg"
-      }
-    ]
-  },
-  "process": {
-    "section_title": "Simple Process, Zero Surprises",
-    "section_subtitle": "How we work—transparent, efficient, drama-free",
-    "steps": [
-      {
-        "number": "01",
-        "title": "Discovery Call (Free)",
-        "description": "30 minutes to understand your goals. No sales pitch, no pressure."
-      },
-      {
-        "number": "02",
-        "title": "Strategy & Design",
-        "description": "We present concepts until you love what you see."
-      },
-      {
-        "number": "03",
-        "title": "Build & Launch",
-        "description": "We handle everything. You review and approve."
-      },
-      {
-        "number": "04",
-        "title": "Ongoing Support",
-        "description": "We don't disappear after launch. Here for every question."
-      }
+      { "icon": "message", "title": "Conversational AI", "description": "Natural language processing for human-like interaction." },
+      { "icon": "database", "title": "Data Engineering", "description": "ETL pipelines that structure your unstructured data." },
+      { "icon": "smartphone", "title": "Cross-Platform Apps", "description": "Flutter & React Native for iOS + Android simultaneously." },
+      { "icon": "globe", "title": "Global Deployment", "description": "Edge computing with low-latency worldwide access." },
+      { "icon": "shield", "title": "Enterprise Security", "description": "SOC 2 compliant infrastructure with end-to-end encryption." },
+      { "icon": "chart", "title": "Analytics Dashboards", "description": "Real-time metrics to track automation performance." }
+    ],
+    "terminal": [
+      "> initializing kohelet_core...",
+      "> loading modules: [ai_agents, automation_engine, web_platform, mobile_sdk]",
+      "> connection established. all systems operational.",
+      "> ready to deploy "
     ]
   },
   "pricing": {
-    "section_title": "Transparent Pricing, No Surprises",
-    "section_subtitle": "Know exactly what you're paying for upfront",
+    "section_title": "Pricing That Scales With You",
+    "section_subtitle": "Choose the engagement model that fits your stage—project-based sprints, ongoing partnership, or dedicated teams.",
+    "scaling_badge": "Most Popular",
     "packages": [
       {
-        "name": "Landing Page",
-        "price": "Starting at $2,500",
-        "description": "Perfect for campaigns and launches",
+        "name": "Startup Launch",
+        "type": "Project-Based",
+        "description": "Perfect for MVPs and new products. Get to market fast with core automation + a polished web app.",
         "features": [
-          "Single high-converting page",
-          "Custom design",
-          "Mobile responsive",
-          "Lead capture forms",
-          "30 days support"
+          "Custom Web Application (Next.js/React)",
+          "Basic AI Chat Integration",
+          "CRM/Tool Integrations (2-3 systems)",
+          "4-Week Delivery Sprint",
+          "30-Day Post-Launch Support"
         ],
-        "cta": "Get Started",
-        "popular": false
+        "cta": "Start Your MVP",
+        "featured": false
       },
       {
-        "name": "Business Website",
-        "price": "Starting at $5,000",
-        "description": "For businesses wanting professional presence",
+        "name": "Growth Partner",
+        "type": "Monthly Retainer",
+        "description": "Continuous development, AI optimization, and automation expansion as you scale. Most clients see ROI within 60 days.",
         "features": [
-          "Up to 10 pages",
-          "Content management system",
-          "SEO optimization",
-          "Forms and chat",
-          "60 days support"
+          "Full-Stack Development Team",
+          "Custom AI Agent Training & Deployment",
+          "Automated Lead Gen + Qualification",
+          "Monthly Feature Releases",
+          "Dedicated Slack Channel + Priority Support",
+          "Quarterly Strategy Sessions"
         ],
-        "cta": "Get Started",
-        "popular": true
+        "cta": "Become a Partner",
+        "featured": true
       },
       {
-        "name": "App / Web App",
-        "price": "Starting at $15,000",
-        "description": "For startups and digital products",
+        "name": "Enterprise",
+        "type": "Custom Engagement",
+        "description": "Large-scale digital transformation with dedicated engineering teams, on-premise AI, and SLA guarantees.",
         "features": [
-          "Full-stack development",
-          "iOS + Android / Web",
-          "Admin dashboard",
-          "API integrations",
-          "90 days support"
+          "Dedicated Engineering Team (3-10 devs)",
+          "On-Premise AI Deployment Options",
+          "Advanced Security & Compliance (SOC 2, HIPAA, GDPR)",
+          "24/7 Monitoring & Support",
+          "Executive Reporting Dashboards"
         ],
-        "cta": "Get Quote",
-        "popular": false
-      },
-      {
-        "name": "AI Integration",
-        "price": "Custom Quote",
-        "description": "Chatbots, automation, and custom solutions",
-        "features": [
-          "Needs assessment",
-          "Custom development",
-          "Integration with existing systems",
-          "Training and onboarding",
-          "Ongoing support"
-        ],
-        "cta": "Talk to Us",
-        "popular": false
-      }
-    ],
-    "note": "All prices exclude applicable taxes. Payment: 50% upfront, 50% on launch."
-  },
-  "about": {
-    "section_title": "Why Teams Choose Kohelet",
-    "headline": "We Build, Not Just Manage Projects",
-    "description": "The name Kohelet comes from 'to assemble'—to gather and connect. We combine technology, design, and strategy into a complete digital product that works for your business.",
-    "values": [
-      {
-        "title": "Hands on the Code",
-        "description": "We're developers, not middlemen. You work directly with who builds."
-      },
-      {
-        "title": "Speed Without Sacrifice",
-        "description": "Launch in weeks, not months. Without cutting corners on quality."
-      },
-      {
-        "title": "AI-First Thinking",
-        "description": "Every project considers where automation can save you time and money."
-      },
-      {
-        "title": "Results Commitment",
-        "description": "Not happy? We'll fix it until you are. That's our promise."
+        "cta": "Contact Sales",
+        "featured": false
       }
     ]
-  },
-  "testimonials": {
-    "section_title": "Don't Take Our Word For It",
-    "section_label": "What clients say",
-    "section_subtitle": "Real results from real businesses",
-    "row1": [
-      {
-        "name": "Sarah Cohen",
-        "title": "Marketing Director",
-        "company": "TechFlow",
-        "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=120&h=120&fit=crop&crop=faces",
-        "quote": "Kohelet rebuilt our landing page and conversion rate jumped from 1.2% to 4.8% in 6 weeks. The chatbot they added handles 200+ inquiries monthly on autopilot."
-      },
-      {
-        "name": "Michael Levy",
-        "title": "CEO",
-        "company": "Levy Consulting",
-        "avatar": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=120&h=120&fit=crop&crop=faces",
-        "quote": "Launched our new website in 3 weeks. Didn't think it was possible. Results? 85 new leads in the first month."
-      },
-      {
-        "name": "Michelle Abraham",
-        "title": "Business Owner",
-        "company": "Studio Michelle",
-        "avatar": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=120&h=120&fit=crop&crop=faces",
-        "quote": "Finally have a website I'm proud to show. Most importantly—clients reach out through it every week."
-      },
-      {
-        "name": "David Rosen",
-        "title": "CTO",
-        "company": "DataPro",
-        "avatar": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=120&h=120&fit=crop&crop=faces",
-        "quote": "The automations Kohelet built save our team 15 hours weekly. ROI paid for itself in two months."
-      }
-    ],
-    "row2": [
-      {
-        "name": "Noa Shapiro",
-        "title": "Product Manager",
-        "company": "Finnovate",
-        "avatar": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=120&h=120&fit=crop&crop=faces",
-        "quote": "They built us a full MVP in 6 weeks. A month later we closed a $2 million funding round."
-      },
-      {
-        "name": "Yoni Katz",
-        "title": "Digital Manager",
-        "company": "Medical Center",
-        "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=120&h=120&fit=crop&crop=faces",
-        "quote": "Their chatbot handles 80% of initial inquiries. Freed our team to focus on complex cases."
-      },
-      {
-        "name": "Tali Ben-David",
-        "title": "Founder",
-        "company": "StyleBox",
-        "avatar": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=120&h=120&fit=crop&crop=faces",
-        "quote": "From concept to working store in 4 weeks. Kohelet understood exactly what I needed, even when I couldn't explain it."
-      },
-      {
-        "name": "Oren Gold",
-        "title": "Business Owner",
-        "company": "Gold Properties",
-        "avatar": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=120&h=120&fit=crop&crop=faces",
-        "quote": "Full transparency throughout. Knew exactly what I was paying for and when I'd receive it. Highly recommend."
-      }
-    ]
-  },
-  "faq": {
-    "section_title": "Questions & Answers",
-    "section_subtitle": "Everything you wanted to know",
-    "items": [
-      {
-        "question": "How long does it take to build a website/app?",
-        "answer": "Landing page: 1-2 weeks. Business website: 3-6 weeks. App: 6-12 weeks. Timelines vary based on project complexity."
-      },
-      {
-        "question": "What's included in the price?",
-        "answer": "Design, development, revision rounds, and support (30-90 days depending on package). Hosting and domain not included but we'll help you set up."
-      },
-      {
-        "question": "Can I pay in installments?",
-        "answer": "Yes. 50% upfront to start work, 50% on launch. For larger projects—can be split into 3 payments."
-      },
-      {
-        "question": "What if I'm not happy with the design?",
-        "answer": "Unlimited revision rounds until you love the result. Your success is our success."
-      },
-      {
-        "question": "Do you help with content/copywriting?",
-        "answer": "Yes, at additional cost. We have copywriters who specialize in marketing content. Or bring your own."
-      },
-      {
-        "question": "Do you work with international clients?",
-        "answer": "Absolutely. We work with clients worldwide via Zoom, Slack, and digital tools. Time zones? We'll figure it out."
-      }
-    ]
-  },
-  "clients": {
-    "section_title": "Businesses That Trust Us",
-    "logos": [
-      {
-        "name": "Client 1",
-        "src": "/clients/logo-1.svg"
-      },
-      {
-        "name": "Client 2",
-        "src": "/clients/logo-2.svg"
-      },
-      {
-        "name": "Client 3",
-        "src": "/clients/logo-3.svg"
-      },
-      {
-        "name": "Client 4",
-        "src": "/clients/logo-4.svg"
-      },
-      {
-        "name": "Client 5",
-        "src": "/clients/logo-5.svg"
-      },
-      {
-        "name": "Client 6",
-        "src": "/clients/logo-6.svg"
-      }
-    ]
-  },
-  "cta_section": {
-    "headline": "Ready to Stop Losing Customers to a Bad Website?",
-    "subheadline": "Book a free 30-minute strategy call. No commitment, just clarity.",
-    "button": {
-      "label": "Book Your Free Call",
-      "href": "#contact"
-    },
-    "urgency": "Only 3 spots left this month"
   },
   "contact": {
-    "section_title": "Let's Talk",
-    "section_subtitle": "Leave your details and we'll get back to you within 48 hours",
+    "headline_line1": "Ready to Automate?",
+    "headline_line2": "Let's Talk ROI.",
+    "description": "Tell us what's eating up your team's time. We'll show you exactly how AI agents and custom software can free 15-25 hours per week—and what that looks like in revenue terms.",
+    "email": "hello@kohelet.tech",
+    "location": "Remote-First / HQ: Tel Aviv",
+    "availability": "Current Availability",
+    "availability_status": "High - Accepting New Projects",
+    "services": [
+      "Business Automation - AI Agents & Workflows",
+      "Custom Software - Web or Mobile App",
+      "Both - Automation + Software",
+      "Not Sure - Need Consultation"
+    ],
     "form": {
       "name": {
-        "label": "Full Name",
-        "placeholder": "What's your name?"
+        "label": "Name",
+        "placeholder": "Your name"
       },
       "email": {
         "label": "Email",
-        "placeholder": "your@email.com"
+        "placeholder": "you@company.com"
       },
-      "phone": {
-        "label": "Phone",
-        "placeholder": "+1 (555) 000-0000"
-      },
-      "company": {
-        "label": "Company Name",
-        "placeholder": "Optional"
+      "service": {
+        "label": "What Do You Need?"
       },
       "message": {
-        "label": "Tell Us About Your Project",
-        "placeholder": "What do you need? (landing page, website, app, AI) What's your timeline? What's your budget range?"
+        "label": "Tell Us About Your Challenge",
+        "placeholder": "Example: We spend 20+ hours/week manually qualifying leads and entering data into our CRM..."
       },
       "submit": {
-        "label": "Send",
+        "label": "Send Inquiry",
         "loading": "Sending...",
-        "success": "Message sent! We'll get back to you within 48 hours.",
-        "error": "Something went wrong. Try again or call: 053-9858438"
+        "success": "Message received! We'll respond within 24 hours.",
+        "error": "Something went wrong. Please email us directly at hello@kohelet.tech"
       }
     }
   },
   "footer": {
-    "logo": "Kohelet",
-    "tagline": "Websites, Apps & AI That Deliver Results",
-    "links": {
-      "services": {
-        "title": "Solutions",
-        "items": [
-          { "label": "Landing Pages", "href": "#solutions" },
-          { "label": "Business Websites", "href": "#solutions" },
-          { "label": "App Development", "href": "#solutions" },
-          { "label": "AI Integration", "href": "#solutions" }
-        ]
-      },
-      "company": {
-        "title": "Company",
-        "items": [
-          { "label": "About Us", "href": "#about" },
-          { "label": "Results", "href": "#case-studies" },
-          { "label": "Pricing", "href": "#pricing" },
-          { "label": "Contact", "href": "#contact" }
-        ]
-      },
-      "social": {
-        "title": "Follow Us",
-        "items": [
-          { "label": "LinkedIn", "href": "#", "icon": "linkedin" },
-          { "label": "Instagram", "href": "#", "icon": "instagram" },
-          { "label": "Twitter", "href": "#", "icon": "twitter" }
-        ]
-      }
-    },
-    "copyright": "© 2024 Kohelet. All rights reserved.",
-    "legal": [
-      { "label": "Terms of Service", "href": "/terms" },
-      { "label": "Privacy Policy", "href": "/privacy" }
-    ]
+    "copyright": "© 2024 Kohelet Digital Solutions. All rights reserved."
   }
 }

@@ -1,10 +1,7 @@
 export { default as Navigation } from "./Navigation";
 export { default as Hero } from "./Hero";
 export { default as Solutions } from "./Solutions";
-export { default as ProcessProtocol } from "./ProcessProtocol";
-export { default as CTA } from "./CTA";
-export { default as Footer } from "./Footer";
-export { default as About } from "./About";
-export { default as Testimonials } from "./Testimonials";
-export { default as Clients } from "./Clients";
+export { default as Capabilities } from "./Capabilities";
+export { default as Pricing } from "./Pricing";
 export { default as Contact } from "./Contact";
+export { default as Footer } from "./Footer";

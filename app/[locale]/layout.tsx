@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Heebo, JetBrains_Mono } from "next/font/google";
+import { Inter, Syne, Alef } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
@@ -7,16 +7,25 @@ import { routing } from "@/i18n/routing";
 import { isRtl, type Locale } from "@/i18n/config";
 import "../globals.css";
 
-const heebo = Heebo({
-  subsets: ["hebrew", "latin"],
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
   display: "swap",
-  variable: "--font-heebo",
+  variable: "--font-inter",
 });
 
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
+const syne = Syne({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
+  variable: "--font-syne",
+});
+
+const alef = Alef({
+  subsets: ["hebrew", "latin"],
+  weight: ["400", "700"],
+  display: "swap",
+  variable: "--font-hebrew",
 });
 
 export function generateStaticParams() {
@@ -28,10 +37,10 @@ export async function generateMetadata(): Promise<Metadata> {
   const meta = messages.meta as { title: string; description: string };
 
   return {
-    title: meta?.title || "Kohelet | Digital Architects",
+    title: meta?.title || "Kohelet | Digital Solutions & AI Architects",
     description:
       meta?.description ||
-      "We engineer high-performance software ecosystems.",
+      "We engineer high-performance software ecosystems with AI integration.",
   };
 }
 
@@ -50,11 +59,16 @@ export default async function LocaleLayout({
 
   const messages = await getMessages();
   const dir = isRtl(locale as Locale) ? "rtl" : "ltr";
+  const isHebrew = locale === "he";
 
   return (
-    <html lang={locale} dir={dir} className={`scroll-smooth ${heebo.variable} font-sans`}>
+    <html
+      lang={locale}
+      dir={dir}
+      className={`scroll-smooth ${inter.variable} ${syne.variable} ${alef.variable}`}
+    >
       <body
-        className={`${heebo.className} ${jetbrainsMono.variable} antialiased`}
+        className={`${isHebrew ? alef.className : inter.className} antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
           {children}

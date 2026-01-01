@@ -1,81 +1,109 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useTranslations } from "next-intl";
-import { CodeIcon, ChevronRightIcon } from "@/components/icons";
+import { useState } from "react";
+import { useTranslations, useLocale } from "next-intl";
+import { ArrowRight, Menu, X } from "lucide-react";
+import Image from "next/image";
 import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
-import { cn } from "@/lib/utils";
 
-export default function Navigation() {
-  const [scrolled, setScrolled] = useState(false);
+export function Navigation() {
   const t = useTranslations("navigation");
+  const locale = useLocale();
+  const isRTL = locale === "he";
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const links = [
-    { label: t("links.0.label"), href: t("links.0.href") },
-    { label: t("links.1.label"), href: t("links.1.href") },
-    { label: t("links.2.label"), href: t("links.2.href") },
-    { label: t("links.3.label"), href: t("links.3.href") },
-  ];
+  const links = t.raw("links") as Array<{ label: string; href: string }>;
+  const cta = t.raw("cta") as { label: string; href: string };
 
   return (
-    <nav
-      className={cn(
-        "fixed top-0 inset-x-0 z-50 transition-all duration-300",
-        scrolled
-          ? "bg-[#020204]/80 backdrop-blur-xl border-b border-white/5 py-4"
-          : "bg-transparent border-transparent py-8"
-      )}
-    >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+    <nav className="fixed top-6 left-0 w-full z-50 flex justify-center px-4">
+      <div className="glass-panel px-6 py-3 rounded-full flex justify-between items-center gap-8 md:gap-12 shadow-[0_0_40px_rgba(0,0,0,0.6)]">
         {/* Logo */}
-        <div className="flex items-center gap-3 group cursor-pointer">
-          <div className="w-8 h-8 relative flex items-center justify-center overflow-hidden bg-white/5 rounded-sm border border-white/10 group-hover:border-white/20 transition-colors">
-            <CodeIcon size={16} className="text-white relative z-10" />
-          </div>
-          <span className="text-sm font-semibold tracking-tight text-white uppercase hidden sm:block">
+        <a
+          href="#"
+          className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+        >
+          <Image
+            src="/logo-vertical-no-digital.svg"
+            alt={t("logo")}
+            width={32}
+            height={32}
+            className="w-8 h-8"
+          />
+          {/* <span className="font-display font-semibold text-sm tracking-tight text-white uppercase">
             {t("logo")}
-          </span>
-        </div>
+          </span> */}
+        </a>
 
         {/* Desktop Nav Links */}
-        <div className="hidden md:flex items-center gap-6">
-          {links.map((item) => (
+        <div className={`hidden md:flex items-center gap-8 ${isRTL ? "flex-row-reverse" : ""}`}>
+          {links.map((link) => (
             <a
-              key={item.href}
-              href={item.href}
-              className="text-xs font-medium text-neutral-400 hover:text-white transition-colors uppercase tracking-widest relative group"
+              key={link.href}
+              href={link.href}
+              className="text-[11px] font-medium text-white/60 hover:text-white transition-colors"
             >
-              {item.label}
-              <span className="absolute -bottom-1 start-0 w-0 h-[1px] bg-blue-500 group-hover:w-full transition-all duration-300"></span>
+              {link.label}
             </a>
           ))}
-        </div>
-
-        {/* Right Side Actions */}
-        <div className="flex items-center gap-3">
           <LanguageSwitcher />
-
-          <a
-            href={t("cta.href")}
-            className="hidden sm:flex items-center gap-2 px-3 py-1.5 border border-white/10 text-white text-xs font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-all rounded-sm group"
-          >
-            <span>{t("cta.label")}</span>
-            <ChevronRightIcon
-              size={10}
-              className="rtl:rotate-180 transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1"
-            />
-          </a>
         </div>
+
+        {/* Desktop CTA */}
+        <a
+          href={cta.href}
+          className={`hidden md:flex items-center gap-2 text-[10px] font-semibold bg-white text-black px-5 py-2 rounded-full hover:bg-white/90 transition-all shadow-[0_0_15px_rgba(255,255,255,0.1)] ${isRTL ? "flex-row-reverse" : ""}`}
+        >
+          {cta.label}
+          <ArrowRight className={`w-3 h-3 ${isRTL ? "rotate-180" : ""}`} />
+        </a>
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="md:hidden text-white/70 hover:text-white transition-colors"
+          aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+        >
+          {mobileMenuOpen ? (
+            <X className="w-5 h-5" />
+          ) : (
+            <Menu className="w-5 h-5" />
+          )}
+        </button>
       </div>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 top-20 z-40 md:hidden">
+          <div className="glass-panel mx-4 p-6 rounded-2xl shadow-2xl">
+            <div className="flex flex-col gap-4">
+              {links.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-sm font-medium text-white/80 hover:text-white py-2 transition-colors"
+                >
+                  {link.label}
+                </a>
+              ))}
+              <div className="pt-2 border-t border-white/10">
+                <LanguageSwitcher />
+              </div>
+              <a
+                href={cta.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`flex items-center justify-center gap-2 text-sm font-semibold bg-white text-black px-5 py-3 rounded-full hover:bg-white/90 transition-all mt-2 ${isRTL ? "flex-row-reverse" : ""}`}
+              >
+                {cta.label}
+                <ArrowRight className={`w-4 h-4 ${isRTL ? "rotate-180" : ""}`} />
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
+
+export default Navigation;
