@@ -17,21 +17,27 @@ export function Footer() {
         {/* Social Links */}
         <div className="flex gap-6">
           <a
-            href="#"
+            href="https://x.com/KoheletDigital"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-white/30 hover:text-white transition-colors"
-            aria-label="Twitter"
+            aria-label="X (Twitter)"
           >
             <Twitter className="w-4 h-4" />
           </a>
           <a
-            href="#"
+            href="https://instagram.com/kohelet.digital"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-white/30 hover:text-white transition-colors"
             aria-label="Instagram"
           >
             <Instagram className="w-4 h-4" />
           </a>
           <a
-            href="#"
+            href="https://www.linkedin.com/company/kohelet-digital/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-white/30 hover:text-white transition-colors"
             aria-label="LinkedIn"
           >

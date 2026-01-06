@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { Mail, MapPin, Phone, ChevronDown } from "lucide-react";
+import { Mail, Phone, ChevronDown, CheckCircle, XCircle } from "lucide-react";
 
 export function Contact() {
   const t = useTranslations("contact");
@@ -48,6 +48,11 @@ export function Contact() {
     setFormState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const handleReset = () => {
+    setStatus("idle");
+    setFormState({ name: "", email: "", phone: "", service: "", message: "" });
+  };
+
   return (
     <section
       id="contact"
@@ -79,12 +84,6 @@ export function Contact() {
               >
                 <Phone className="w-4 h-4 text-accent-blue shrink-0" />
                 <span>{t("phone")}</span>
-              </div>
-              <div
-                className={`flex items-center gap-3 text-sm w-full text-white/70 ${isRTL ? "" : ""}`}
-              >
-                <MapPin className="w-4 h-4 text-accent-blue shrink-0" />
-                <span>{t("location")}</span>
               </div>
             </div>
 
@@ -201,23 +200,57 @@ export function Contact() {
               />
             </div>
 
-            {/* Submit Button */}
-            <button
-              type="submit"
-              disabled={status === "loading" || status === "success"}
-              className="w-full py-3.5 bg-accent-blue hover:bg-accent-blue-hover text-white font-semibold text-xs uppercase tracking-widest rounded-lg transition-colors duration-300 shadow-glow-blue disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {status === "loading"
-                ? t("form.submit.loading")
-                : status === "success"
-                  ? t("form.submit.success")
-                  : t("form.submit.label")}
-            </button>
+            {/* Success Alert */}
+            {status === "success" && (
+              <div className={`p-4 rounded-lg bg-green-500/10 border border-green-500/30 ${isRTL ? "text-right" : ""}`}>
+                <div className={`flex items-start gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
+                  <CheckCircle className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-green-400 text-sm font-medium mb-3">
+                      {t("form.submit.success")}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={handleReset}
+                      className="text-xs text-green-400 hover:text-green-300 underline underline-offset-2 transition-colors"
+                    >
+                      {t("form.submit.resend")}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
 
+            {/* Error Alert */}
             {status === "error" && (
-              <p className={`text-red-500 text-sm ${isRTL ? "text-right" : ""}`}>
-                {t("form.submit.error")}
-              </p>
+              <div className={`p-4 rounded-lg bg-red-500/10 border border-red-500/30 ${isRTL ? "text-right" : ""}`}>
+                <div className={`flex items-start gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
+                  <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
+                  <div className="flex-1">
+                    <p className="text-red-400 text-sm font-medium mb-3">
+                      {t("form.submit.error")}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setStatus("idle")}
+                      className="text-xs text-red-400 hover:text-red-300 underline underline-offset-2 transition-colors"
+                    >
+                      {t("form.submit.retry")}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Submit Button */}
+            {status !== "success" && status !== "error" && (
+              <button
+                type="submit"
+                disabled={status === "loading"}
+                className="w-full py-3.5 bg-accent-blue hover:bg-accent-blue-hover text-white font-semibold text-xs uppercase tracking-widest rounded-lg transition-colors duration-300 shadow-glow-blue disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {status === "loading" ? t("form.submit.loading") : t("form.submit.label")}
+              </button>
             )}
           </form>
         </div>

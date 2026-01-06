@@ -34,8 +34,8 @@
       "suffix": "better."
     },
     "subtitle": "Most businesses still operate like it's 2015—manual data entry, copy-paste workflows, spreadsheet chaos. While they burn hours on repetitive tasks, their automated competitors capture market share with AI agents handling customer support, lead qualification, and operations 24/7. The question isn't whether to automate. It's how quickly you can start.",
-    "cta_primary": "See What We Automate",
-    "cta_secondary": "View Case Studies",
+    "cta_primary": "Let's Talk",
+    "cta_secondary": "What We Build",
     "chat": {
       "system_message": "Analyzing customer inquiry pattern from last 48 hours...",
       "optimization_complete": "89% can be auto-qualified.",
@@ -110,54 +110,145 @@
     ]
   },
   "pricing": {
-    "section_title": "Pricing That Scales With You",
-    "section_subtitle": "Choose the engagement model that fits your stage—project-based sprints, ongoing partnership, or dedicated teams.",
-    "scaling_badge": "Most Popular",
-    "packages": [
-      {
-        "name": "Startup Launch",
-        "type": "Project-Based",
-        "description": "Perfect for MVPs and new products. Get to market fast with core automation + a polished web app.",
-        "features": [
-          "Custom Web Application (Next.js/React)",
-          "Basic AI Chat Integration",
-          "CRM/Tool Integrations (2-3 systems)",
-          "4-Week Delivery Sprint",
-          "30-Day Post-Launch Support"
-        ],
-        "cta": "Start Your MVP",
-        "featured": false
+    "section_title": "Calculate Your Investment",
+    "section_subtitle": "Select the services and features you need for a custom estimate",
+    "starting_from": "Starting from",
+    "currency": "₪",
+    "per_month": "/month",
+    "one_time": "one-time",
+    "per_integration": "per integration",
+    "summary_title": "Your Selection",
+    "empty_selection": "Select services to see pricing",
+    "total_label": "Estimated Investment",
+    "monthly_label": "Monthly Add-ons",
+    "cta_button": "Discuss Your Project",
+    "cta_note": "Final pricing based on project scope",
+    "services": {
+      "title": "What Do You Need?",
+      "subtitle": "Select one or more services",
+      "customSoftware": {
+        "name": "Custom Software",
+        "description": "Web & mobile applications built for your workflows",
+        "tiers": {
+          "basic": {
+            "name": "Basic",
+            "description": "Simple apps, landing pages, dashboards",
+            "timeline": "4-6 weeks"
+          },
+          "standard": {
+            "name": "Standard",
+            "description": "Full web apps with integrations",
+            "timeline": "8-12 weeks"
+          },
+          "advanced": {
+            "name": "Advanced",
+            "description": "Complex platforms, mobile + web",
+            "timeline": "12-20 weeks"
+          }
+        }
       },
-      {
-        "name": "Growth Partner",
-        "type": "Monthly Retainer",
-        "description": "Continuous development, AI optimization, and automation expansion as you scale. Most clients see ROI within 60 days.",
-        "features": [
-          "Full-Stack Development Team",
-          "Custom AI Agent Training & Deployment",
-          "Automated Lead Gen + Qualification",
-          "Monthly Feature Releases",
-          "Dedicated Slack Channel + Priority Support",
-          "Quarterly Strategy Sessions"
-        ],
-        "cta": "Become a Partner",
-        "featured": true
+      "businessAutomation": {
+        "name": "Business Automation",
+        "description": "Eliminate repetitive tasks with smart workflows",
+        "tiers": {
+          "basic": {
+            "name": "Basic",
+            "description": "Email & CRM automation basics",
+            "timeline": "2-3 weeks"
+          },
+          "standard": {
+            "name": "Standard",
+            "description": "Multi-system workflows & reporting",
+            "timeline": "4-6 weeks"
+          },
+          "advanced": {
+            "name": "Advanced",
+            "description": "Enterprise-scale automation suite",
+            "timeline": "8-12 weeks"
+          }
+        }
       },
-      {
-        "name": "Enterprise",
-        "type": "Custom Engagement",
-        "description": "Large-scale digital transformation with dedicated engineering teams, on-premise AI, and SLA guarantees.",
-        "features": [
-          "Dedicated Engineering Team (3-10 devs)",
-          "On-Premise AI Deployment Options",
-          "Advanced Security & Compliance (SOC 2, HIPAA, GDPR)",
-          "24/7 Monitoring & Support",
-          "Executive Reporting Dashboards"
-        ],
-        "cta": "Contact Sales",
-        "featured": false
+      "aiAgents": {
+        "name": "AI Agents",
+        "description": "24/7 intelligent assistants for your business",
+        "tiers": {
+          "basic": {
+            "name": "Basic",
+            "description": "FAQ bot, basic lead capture",
+            "timeline": "3-4 weeks"
+          },
+          "standard": {
+            "name": "Standard",
+            "description": "Multi-channel AI with CRM integration",
+            "timeline": "6-8 weeks"
+          },
+          "advanced": {
+            "name": "Advanced",
+            "description": "Autonomous agents with learning",
+            "timeline": "10-16 weeks"
+          }
+        }
       }
-    ]
+    },
+    "complexity": {
+      "title": "Complexity Level"
+    },
+    "addOns": {
+      "title": "Add-Ons & Extras",
+      "subtitle": "Enhance your project",
+      "items": {
+        "prioritySupport": {
+          "name": "Priority Support",
+          "description": "4-hour response time",
+          "type": "monthly"
+        },
+        "dedicatedSlack": {
+          "name": "Dedicated Slack Channel",
+          "description": "Direct team communication",
+          "type": "monthly"
+        },
+        "monthlyReporting": {
+          "name": "Monthly Analytics Reports",
+          "description": "Detailed performance insights",
+          "type": "monthly"
+        },
+        "slaGuarantee": {
+          "name": "SLA Guarantee",
+          "description": "99.9% uptime commitment",
+          "type": "monthly"
+        },
+        "trainingWorkshops": {
+          "name": "Training Workshops",
+          "description": "Team onboarding sessions",
+          "type": "one-time"
+        },
+        "codeDocumentation": {
+          "name": "Full Documentation",
+          "description": "Technical & user docs",
+          "type": "one-time"
+        },
+        "multiLanguageSupport": {
+          "name": "Multi-Language Support",
+          "description": "Hebrew, English, Arabic",
+          "type": "one-time"
+        },
+        "apiIntegration": {
+          "name": "Custom API Integration",
+          "description": "Connect third-party services",
+          "type": "per-integration"
+        },
+        "dataAnalyticsDashboard": {
+          "name": "Analytics Dashboard",
+          "description": "Real-time business metrics",
+          "type": "one-time"
+        },
+        "securityAudit": {
+          "name": "Security Audit",
+          "description": "Penetration testing & compliance",
+          "type": "one-time"
+        }
+      }
+    }
   },
   "contact": {
     "headline_line1": "Ready to Automate?",

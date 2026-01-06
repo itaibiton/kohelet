@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
-import { ChevronRight, Bot, User, Zap, Play } from "lucide-react";
+import { ChevronRight, Bot, User, Zap } from "lucide-react";
 
 export function Hero() {
   const t = useTranslations("hero");
@@ -72,24 +72,20 @@ export function Hero() {
         >
           {/* Primary CTA - brand color with glow */}
           <a
-            href="#solutions"
-            className={`group relative inline-flex items-center gap-2 px-8 py-3.5 bg-accent-blue text-white rounded-full text-sm font-semibold tracking-wide transition-all duration-300 border border-accent-blue hover:bg-accent-blue-hover hover:border-accent-blue-hover shadow-[0_0_30px_rgba(59,130,246,0.3)] hover:shadow-[0_0_40px_rgba(59,130,246,0.5)] ${isRTL ? "flex-row-reverse" : ""}`}
+            href="#contact"
+            className="group relative inline-flex items-center gap-2 px-8 py-3.5 bg-accent-blue text-white rounded-full text-sm font-semibold tracking-wide transition-all duration-300 border border-accent-blue hover:bg-accent-blue-hover hover:border-accent-blue-hover shadow-[0_0_30px_rgba(59,130,246,0.3)] hover:shadow-[0_0_40px_rgba(59,130,246,0.5)]"
           >
             {t("cta_primary")}
-            <ChevronRight
-              className={`w-4 h-4 transition-transform group-hover:translate-x-0.5 ${isRTL ? "rotate-180 group-hover:-translate-x-0.5" : ""}`}
-            />
+            <ChevronRight className={`w-4 h-4 transition-transform group-hover:translate-x-0.5 ${isRTL ? "rotate-180" : ""}`} />
           </a>
 
-          {/* Secondary CTA - with play icon */}
+          {/* Secondary CTA - what we build */}
           <a
-            href="#demo"
-            className={`group inline-flex items-center gap-3 px-6 py-3.5 bg-white/10 hover:bg-white/15 border border-white/10 rounded-full text-sm font-medium text-white transition-all ${isRTL ? "flex-row-reverse" : ""}`}
+            href="#solutions"
+            className="group inline-flex items-center gap-2 px-6 py-3.5 bg-white/10 hover:bg-white/15 border border-white/10 rounded-full text-sm font-medium text-white transition-all"
           >
-            <span className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/15 transition-colors">
-              <Play className={`w-3 h-3 text-white fill-white ${isRTL ? "mr-0.5" : "ml-0.5"}`} />
-            </span>
             {t("cta_secondary")}
+            <ChevronRight className={`w-4 h-4 transition-transform group-hover:translate-x-0.5 ${isRTL ? "rotate-180" : ""}`} />
           </a>
         </div>
       </div>

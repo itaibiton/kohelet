@@ -122,17 +122,17 @@ export function Solutions() {
 
                   {/* Services List */}
                   <div className={`mt-auto ${isRTL ? "text-right" : ""}`}>
-                    <ul className={isRTL ? "flex flex-col items-end space-y-1" : ""}>
+                    <ul className={isRTL ? "flex flex-col  space-y-1" : ""}>
                      {
                       pillar.services.map((service, serviceIndex) => (
-                        <li key={serviceIndex} className={`flex items-center gap-2 text-xs text-white/60 ${isRTL ? "flex-row-reverse" : ""}`}>
+                        <li key={serviceIndex} className={`flex items-center gap-2 text-xs text-white/60 ${isRTL ? "" : ""}`}>
                           <div
                             className={`w-1 h-1 rounded-full shrink-0 ${
                               index === 0
                                 ? "bg-accent-blue"
                                 : index === 1
                                   ? "bg-white"
-                                  : "bg-accent"
+                                  : "bg-accent-blue"
                             }`}
                           ></div>
                           <span>{service.name}</span>
