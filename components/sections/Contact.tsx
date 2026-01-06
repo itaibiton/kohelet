@@ -12,6 +12,7 @@ export function Contact() {
   const [formState, setFormState] = useState({
     name: "",
     email: "",
+    phone: "",
     service: "",
     message: "",
   });
@@ -25,11 +26,20 @@ export function Contact() {
     e.preventDefault();
     setStatus("loading");
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formState),
+      });
+
+      if (!response.ok) throw new Error("Failed to submit");
+
       setStatus("success");
-      setFormState({ name: "", email: "", service: "", message: "" });
-    }, 1500);
+      setFormState({ name: "", email: "", phone: "", service: "", message: "" });
+    } catch {
+      setStatus("error");
+    }
   };
 
   const handleChange = (
@@ -57,24 +67,24 @@ export function Contact() {
             </p>
 
             {/* Contact Info */}
-            <div className="space-y-4">
+            <div className={`space-y-4 ${isRTL ? "flex flex-col items-end" : ""}`}>
               <div
-                className={`flex items-center gap-3 text-sm text-white/70 ${isRTL ? "flex-row-reverse justify-end" : ""}`}
+                className={`flex items-center gap-3 text-sm w-full text-white/70 ${isRTL ? "" : ""}`}
               >
-                <Mail className="w-4 h-4 text-accent-blue" />
-                {t("email")}
+                <Mail className="w-4 h-4 text-accent-blue shrink-0" />
+                <span>{t("email")}</span>
               </div>
               <div
-                className={`flex items-center gap-3 text-sm text-white/70 ${isRTL ? "flex-row-reverse justify-end" : ""}`}
+                className={`flex items-center gap-3 text-sm w-full text-white/70 ${isRTL ? "" : ""}`}
               >
-                <Phone className="w-4 h-4 text-accent-blue" />
-                {t("phone")}
+                <Phone className="w-4 h-4 text-accent-blue shrink-0" />
+                <span>{t("phone")}</span>
               </div>
               <div
-                className={`flex items-center gap-3 text-sm text-white/70 ${isRTL ? "flex-row-reverse justify-end" : ""}`}
+                className={`flex items-center gap-3 text-sm w-full text-white/70 ${isRTL ? "" : ""}`}
               >
-                <MapPin className="w-4 h-4 text-accent-blue" />
-                {t("location")}
+                <MapPin className="w-4 h-4 text-accent-blue shrink-0" />
+                <span>{t("location")}</span>
               </div>
             </div>
 
@@ -128,6 +138,23 @@ export function Contact() {
                   required
                 />
               </div>
+            </div>
+
+            {/* Phone */}
+            <div className="space-y-2">
+              <label
+                className={`text-xs font-medium text-white/40 uppercase tracking-wide ${isRTL ? "block text-right" : ""}`}
+              >
+                {t("form.phone.label")}
+              </label>
+              <input
+                type="tel"
+                name="phone"
+                value={formState.phone}
+                onChange={handleChange}
+                placeholder={t("form.phone.placeholder")}
+                className={`w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-accent-blue/50 focus:ring-1 focus:ring-brand/50 transition-all ${isRTL ? "text-right" : ""}`}
+              />
             </div>
 
             {/* Service Select */}

@@ -57,8 +57,8 @@ export function Pricing() {
               <h3 className={`text-lg font-medium text-white mb-2 ${isRTL ? "text-right" : ""}`}>
                 {pkg.name}
               </h3>
-              <div className={`flex items-baseline gap-1 mb-4`}>
-                <span className="text-3xl font-display font-medium text-white ">
+              <div className={`flex items-baseline gap-1 mb-4 ${isRTL ? "" : ""}`}>
+                <span className="text-3xl font-display font-medium text-white">
                   {pkg.type}
                 </span>
               </div>
@@ -67,17 +67,27 @@ export function Pricing() {
               </p>
 
               {/* Features */}
-              <ul className="space-y-4 mb-8 flex-1">
+              <ul className="flex gap-2 flex-col mb-4">
+                {/* {
+                  pkg.features.map((feature, featureIndex) => (
+                    <li key={featureIndex} className={`flex w-full items-start gap-3 ${isRTL ? "" : ""}`}>
+                      <Check className={`w-4 h-4 mt-0.5 shrink-0 ${isFeatured ? "text-accent-blue" : "text-white"}`} />
+                      <span className={`text-xs max-w-fit flex-1 ${isFeatured ? "text-white/90" : "text-white/80"} ${isRTL ? "text-right" : ""}`}>
+                        {feature}
+                      </span>
+                    </li>
+                  ))
+                } */}
                 {pkg.features.map((feature, featureIndex) => (
                   <li
                     key={featureIndex}
-                    className={`flex items-start gap-3 ${isRTL ? "flex-row-reverse text-right" : ""}`}
+                    className={`flex w-full items-start gap-3 ${isRTL ? "" : ""}`}
                   >
                     <Check
                       className={`w-4 h-4 mt-0.5 shrink-0 ${isFeatured ? "text-accent-blue" : "text-white"}`}
                     />
                     <span
-                      className={`text-xs ${isFeatured ? "text-white/90" : "text-white/80"}`}
+                      className={`text-xs max-w-fit flex-1 ${isFeatured ? "text-white/90" : "text-white/80"} ${isRTL ? "text-right" : ""}`}
                     >
                       {feature}
                     </span>

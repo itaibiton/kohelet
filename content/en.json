@@ -183,6 +183,10 @@
         "label": "Email",
         "placeholder": "you@company.com"
       },
+      "phone": {
+        "label": "Phone",
+        "placeholder": "+1 (555) 123-4567"
+      },
       "service": {
         "label": "What Do You Need?"
       },
