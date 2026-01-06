@@ -1,16 +1,28 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useTranslations, useLocale } from "next-intl";
-import { Check, ArrowRight, Code2, Bot, Workflow, Plus, Settings2 } from "lucide-react";
+import { Check, ArrowRight, Code2, Bot, Workflow, Plus, Settings2, MessageSquare } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { usePricing, type SelectedProduct } from "@/context/PricingContext";
 
-// Pricing constants in NIS
+// Pricing constants in NIS - all "starting from" prices
 const PRICING = {
-  services: {
-    customSoftware: { basic: 15000, standard: 35000, advanced: 75000 },
-    businessAutomation: { basic: 8000, standard: 20000, advanced: 45000 },
-    aiAgents: { basic: 12000, standard: 30000, advanced: 60000 },
+  customSoftware: {
+    landingPage: 4000,
+    onlineStore: 7000,
+    blog: 3000,
+    webApp: 9500,
+  },
+  businessAutomation: {
+    crmIntegration: 6000,
+    emailAutomation: 4500,
+    workflowAutomation: 8000,
+  },
+  aiAgents: {
+    chatbot: 5500,
+    customerSupport: 8500,
+    dataAnalysis: 10000,
   },
   addOns: {
     prioritySupport: 2000,
@@ -26,8 +38,10 @@ const PRICING = {
   },
 } as const;
 
-type ServiceType = keyof typeof PRICING.services;
-type ComplexityLevel = "basic" | "standard" | "advanced";
+type ServiceType = "customSoftware" | "businessAutomation" | "aiAgents";
+type CustomSoftwareProduct = keyof typeof PRICING.customSoftware;
+type BusinessAutomationProduct = keyof typeof PRICING.businessAutomation;
+type AIAgentProduct = keyof typeof PRICING.aiAgents;
 type AddOnType = keyof typeof PRICING.addOns;
 
 const SERVICE_ICONS: Record<ServiceType, React.ReactNode> = {
@@ -37,6 +51,13 @@ const SERVICE_ICONS: Record<ServiceType, React.ReactNode> = {
 };
 
 const SERVICES: ServiceType[] = ["customSoftware", "businessAutomation", "aiAgents"];
+
+const SERVICE_PRODUCTS: Record<ServiceType, string[]> = {
+  customSoftware: ["landingPage", "onlineStore", "blog", "webApp"],
+  businessAutomation: ["crmIntegration", "emailAutomation", "workflowAutomation"],
+  aiAgents: ["chatbot", "customerSupport", "dataAnalysis"],
+};
+
 const ADD_ONS: AddOnType[] = [
   "prioritySupport",
   "dedicatedSlack",
@@ -55,37 +76,47 @@ export function Pricing() {
   const locale = useLocale();
   const isRTL = locale === "he";
 
-  const [selectedServices, setSelectedServices] = useState<Record<ServiceType, boolean>>({
-    customSoftware: false,
-    businessAutomation: false,
-    aiAgents: false,
-  });
+  // Use shared pricing context for state
+  const {
+    selectedProducts,
+    setSelectedProducts,
+    addOns,
+    setAddOns,
+    setEstimatedTotal,
+  } = usePricing();
 
-  const [complexity, setComplexity] = useState<Record<ServiceType, ComplexityLevel>>({
-    customSoftware: "standard",
-    businessAutomation: "standard",
-    aiAgents: "standard",
-  });
-
-  const [addOns, setAddOns] = useState<Record<AddOnType, boolean>>({
-    prioritySupport: false,
-    dedicatedSlack: false,
-    monthlyReporting: false,
-    slaGuarantee: false,
-    trainingWorkshops: false,
-    codeDocumentation: false,
-    multiLanguageSupport: false,
-    apiIntegration: false,
-    dataAnalyticsDashboard: false,
-    securityAudit: false,
-  });
-
-  // Popover open states
+  // Popover open states (local only)
   const [openService, setOpenService] = useState<ServiceType | null>(null);
   const [addOnsOpen, setAddOnsOpen] = useState(false);
 
   const toggleAddOn = (addOn: AddOnType) => {
-    setAddOns((prev) => ({ ...prev, [addOn]: !prev[addOn] }));
+    setAddOns({ ...addOns, [addOn]: !addOns[addOn] });
+  };
+
+  const selectProduct = (service: ServiceType, product: string) => {
+    const priceMap = PRICING[service] as Record<string, number>;
+    const price = priceMap[product];
+
+    // Check if this exact product is already selected
+    const existingIndex = selectedProducts.findIndex(
+      (p) => p.service === service && p.product === product
+    );
+
+    if (existingIndex >= 0) {
+      // Remove if already selected
+      setSelectedProducts(selectedProducts.filter((_, i) => i !== existingIndex));
+    } else {
+      // Add new product
+      setSelectedProducts([...selectedProducts, { service, product, price } as SelectedProduct]);
+    }
+  };
+
+  const isProductSelected = (service: ServiceType, product: string) => {
+    return selectedProducts.some((p) => p.service === service && p.product === product);
+  };
+
+  const getServiceSelectedCount = (service: ServiceType) => {
+    return selectedProducts.filter((p) => p.service === service).length;
   };
 
   const selectedAddOnsCount = ADD_ONS.filter((a) => addOns[a]).length;
@@ -94,10 +125,9 @@ export function Pricing() {
     let oneTime = 0;
     let monthly = 0;
 
-    SERVICES.forEach((service) => {
-      if (selectedServices[service]) {
-        oneTime += PRICING.services[service][complexity[service]];
-      }
+    // Sum all selected products
+    selectedProducts.forEach((product) => {
+      oneTime += product.price;
     });
 
     ADD_ONS.forEach((addOn) => {
@@ -112,131 +142,141 @@ export function Pricing() {
     });
 
     return { oneTime, monthly };
-  }, [selectedServices, complexity, addOns, t]);
+  }, [selectedProducts, addOns, t]);
 
-  const hasSelections = SERVICES.some((s) => selectedServices[s]);
+  // Sync estimated total to context for use in Contact form
+  useEffect(() => {
+    setEstimatedTotal(calculatedPrice);
+  }, [calculatedPrice, setEstimatedTotal]);
+
+  const hasSelections = selectedProducts.length > 0;
 
   return (
     <section id="pricing" className="w-full max-w-5xl mx-auto px-6 py-24 relative z-10">
       {/* Header */}
-      <div className={`mb-12 space-y-4 ${isRTL ? "text-right" : "text-center"}`}>
+      <div className="mb-12 space-y-4">
         <h2 className="text-3xl md:text-5xl font-display font-medium tracking-tight text-white">
           {t("section_title")}
         </h2>
-        <p className="text-white/50 text-sm md:text-base font-light max-w-2xl mx-auto">
+        <p className="text-white/50 text-sm md:text-base font-light max-w-2xl">
           {t("section_subtitle")}
         </p>
       </div>
 
       {/* Main Grid */}
-      <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8`}>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left: Service Selection */}
-        <div className={`space-y-3 ${isRTL ? "lg:order-2" : "lg:order-1"}`}>
-          <h3 className={`text-sm font-medium text-white/60 uppercase tracking-wide mb-4 ${isRTL ? "text-right" : ""}`}>
-            {t("services.title")}
-          </h3>
-
+        <div className="space-y-3">
           {/* Service Cards with Popovers */}
-          {SERVICES.map((service) => (
-            <Popover
-              key={service}
-              open={openService === service}
-              onOpenChange={(open) => setOpenService(open ? service : null)}
-            >
-              <PopoverTrigger asChild>
-                <button
-                  className={`w-full p-4 rounded-xl border transition-all duration-200 ${
-                    selectedServices[service]
-                      ? "border-accent-blue bg-accent-blue/10"
-                      : "border-white/10 bg-white/[0.02] hover:border-white/20"
-                  }`}
-                >
-                  <div className={`flex items-center gap-4 ${isRTL ? "flex-row-reverse" : ""}`}>
-                    <div
-                      className={`p-2.5 rounded-lg ${
-                        selectedServices[service] ? "bg-accent-blue/20 text-accent-blue" : "bg-white/5 text-white/60"
-                      }`}
-                    >
-                      {SERVICE_ICONS[service]}
-                    </div>
-                    <div className={`flex-1 ${isRTL ? "text-right" : "text-left"}`}>
-                      <h4 className="text-white font-medium">{t(`services.${service}.name`)}</h4>
-                      {selectedServices[service] && (
-                        <p className="text-accent-blue text-xs mt-0.5">
-                          {t(`services.${service}.tiers.${complexity[service]}.name`)} · {t("currency")}
-                          {PRICING.services[service][complexity[service]].toLocaleString()}
-                        </p>
-                      )}
-                    </div>
-                    <div
-                      className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
-                        selectedServices[service] ? "border-accent-blue bg-accent-blue" : "border-white/20"
-                      }`}
-                    >
-                      {selectedServices[service] ? (
-                        <Check className="w-3.5 h-3.5 text-white" />
-                      ) : (
-                        <Plus className="w-3.5 h-3.5 text-white/40" />
-                      )}
-                    </div>
-                  </div>
-                </button>
-              </PopoverTrigger>
-              <PopoverContent
-                side="bottom"
-                align={isRTL ? "end" : "start"}
-                sideOffset={8}
-                className="w-[var(--radix-popover-trigger-width)] bg-[#0a0a0a] border-white/10 p-4 shadow-2xl"
+          {SERVICES.map((service) => {
+            const selectedCount = getServiceSelectedCount(service);
+            return (
+              <Popover
+                key={service}
+                open={openService === service}
+                onOpenChange={(open) => setOpenService(open ? service : null)}
               >
-                <div className={`mb-3 ${isRTL ? "text-right" : ""}`}>
-                  <span className="text-xs text-white/50">{t("complexity.title")}</span>
-                </div>
-                <div className="space-y-2">
-                  {(["basic", "standard", "advanced"] as ComplexityLevel[]).map((level) => (
-                    <button
-                      key={level}
-                      onClick={() => {
-                        setSelectedServices((prev) => ({ ...prev, [service]: true }));
-                        setComplexity((prev) => ({ ...prev, [service]: level }));
-                        setOpenService(null);
-                      }}
-                      className={`w-full p-3 rounded-lg border transition-all ${isRTL ? "text-right" : "text-left"} ${
-                        selectedServices[service] && complexity[service] === level
-                          ? "border-accent-blue bg-accent-blue/10"
-                          : "border-white/5 bg-white/[0.02] hover:border-white/10"
-                      }`}
-                    >
-                      <div className={`flex justify-between items-center ${isRTL ? "flex-row-reverse" : ""}`}>
-                        <div>
-                          <span className="text-white text-sm font-medium">
-                            {t(`services.${service}.tiers.${level}.name`)}
-                          </span>
-                          <span className="text-white/40 text-xs block">
-                            {t(`services.${service}.tiers.${level}.timeline`)}
-                          </span>
-                        </div>
-                        <span className="text-accent-blue text-sm font-medium">
-                          {t("currency")}
-                          {PRICING.services[service][level].toLocaleString()}
-                        </span>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-                {selectedServices[service] && (
+                <PopoverTrigger asChild>
                   <button
-                    onClick={() => {
-                      setSelectedServices((prev) => ({ ...prev, [service]: false }));
-                      setOpenService(null);
-                    }}
-                    className="mt-3 w-full py-2 text-xs text-red-400 hover:text-red-300 transition-colors"
+                    className={`w-full p-4 rounded-xl border transition-all duration-200 ${
+                      selectedCount > 0
+                        ? "border-accent-blue bg-accent-blue/10"
+                        : "border-white/10 bg-white/[0.02] hover:border-white/20"
+                    }`}
                   >
-                    {isRTL ? "הסר" : "Remove"}
+                    <div className="flex items-center gap-4">
+                      <div
+                        className={`p-2.5 rounded-lg ${
+                          selectedCount > 0 ? "bg-accent-blue/20 text-accent-blue" : "bg-white/5 text-white/60"
+                        }`}
+                      >
+                        {SERVICE_ICONS[service]}
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="text-white font-medium">{t(`services.${service}.name`)}</h4>
+                        {selectedCount > 0 && (
+                          <p className="text-accent-blue text-xs mt-0.5">
+                            {selectedCount} {t("products_selected")}
+                          </p>
+                        )}
+                      </div>
+                      <div
+                        className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
+                          selectedCount > 0 ? "border-accent-blue bg-accent-blue" : "border-white/20"
+                        }`}
+                      >
+                        {selectedCount > 0 ? (
+                          <Check className="w-3.5 h-3.5 text-white" />
+                        ) : (
+                          <Plus className="w-3.5 h-3.5 text-white/40" />
+                        )}
+                      </div>
+                    </div>
                   </button>
-                )}
-              </PopoverContent>
-            </Popover>
-          ))}
+                </PopoverTrigger>
+                <PopoverContent
+                  side="bottom"
+                  align={isRTL ? "end" : "start"}
+                  sideOffset={8}
+                  className="w-[var(--radix-popover-trigger-width)] bg-[#0a0a0a] border-white/10 p-4 shadow-2xl"
+                >
+                  <div className="mb-3">
+                    <span className="text-xs text-white/50">{t(`services.${service}.description`)}</span>
+                  </div>
+                  <div className="space-y-2">
+                    {SERVICE_PRODUCTS[service].map((product) => {
+                      const priceMap = PRICING[service] as Record<string, number>;
+                      const price = priceMap[product];
+                      const isSelected = isProductSelected(service, product);
+
+                      return (
+                        <button
+                          key={product}
+                          onClick={() => selectProduct(service, product)}
+                          className={`w-full p-3 rounded-lg border transition-all ${
+                            isSelected
+                              ? "border-accent-blue bg-accent-blue/10"
+                              : "border-white/5 bg-white/[0.02] hover:border-white/10"
+                          }`}
+                        >
+                          <div className="flex justify-between items-center">
+                            <div className="flex items-center gap-2">
+                              <div
+                                className={`w-4 h-4 rounded border flex-shrink-0 flex items-center justify-center transition-all ${
+                                  isSelected ? "bg-accent-blue border-accent-blue" : "border-white/30"
+                                }`}
+                              >
+                                {isSelected && <Check className="w-2.5 h-2.5 text-white" />}
+                              </div>
+                              <span className="text-white text-sm font-medium">
+                                {t(`services.${service}.products.${product}.name`)}
+                              </span>
+                            </div>
+                            <div className="text-end">
+                              <span className="text-white/40 text-xs block">{t("starting_from")}</span>
+                              <span className="text-accent-blue text-sm font-medium">
+                                {t("currency")}{price.toLocaleString()}
+                              </span>
+                            </div>
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Get Custom Quote Button */}
+                  <a
+                    href="#contact"
+                    onClick={() => setOpenService(null)}
+                    className="mt-4 w-full py-2.5 rounded-lg border border-white/10 bg-white/[0.02] hover:border-white/20 text-white/70 hover:text-white text-sm flex items-center justify-center gap-2 transition-all"
+                  >
+                    <MessageSquare className="w-4 h-4" />
+                    {t("get_custom_quote")}
+                  </a>
+                </PopoverContent>
+              </Popover>
+            );
+          })}
 
           {/* Add-ons Button with Popover */}
           <Popover open={addOnsOpen} onOpenChange={setAddOnsOpen}>
@@ -246,15 +286,15 @@ export function Pricing() {
                   selectedAddOnsCount > 0 ? "border-accent-blue/50" : ""
                 }`}
               >
-                <div className={`flex items-center gap-4 ${isRTL ? "flex-row-reverse" : ""}`}>
+                <div className="flex items-center gap-4">
                   <div className="p-2.5 rounded-lg bg-white/5 text-white/60">
                     <Settings2 className="w-5 h-5" />
                   </div>
-                  <div className={`flex-1 ${isRTL ? "text-right" : "text-left"}`}>
+                  <div className="flex-1">
                     <h4 className="text-white font-medium">{t("addOns.title")}</h4>
                     {selectedAddOnsCount > 0 && (
                       <p className="text-accent-blue text-xs mt-0.5">
-                        {selectedAddOnsCount} {isRTL ? "נבחרו" : "selected"}
+                        {selectedAddOnsCount} {t("products_selected")}
                       </p>
                     )}
                   </div>
@@ -268,7 +308,7 @@ export function Pricing() {
               sideOffset={8}
               className="w-[var(--radix-popover-trigger-width)] bg-[#0a0a0a] border-white/10 p-4 shadow-2xl max-h-80 overflow-y-auto"
             >
-              <div className={`mb-3 ${isRTL ? "text-right" : ""}`}>
+              <div className="mb-3">
                 <span className="text-xs text-white/50">{t("addOns.subtitle")}</span>
               </div>
               <div className="space-y-1">
@@ -277,9 +317,7 @@ export function Pricing() {
                   return (
                     <label
                       key={addOn}
-                      className={`flex items-center gap-3 p-2 rounded-lg cursor-pointer transition-all hover:bg-white/5 ${
-                        isRTL ? "flex-row-reverse" : ""
-                      }`}
+                      className="flex items-center gap-3 p-2 rounded-lg cursor-pointer transition-all hover:bg-white/5"
                     >
                       <input
                         type="checkbox"
@@ -294,7 +332,7 @@ export function Pricing() {
                       >
                         {addOns[addOn] && <Check className="w-2.5 h-2.5 text-white" />}
                       </div>
-                      <span className={`flex-1 text-sm text-white/80 ${isRTL ? "text-right" : ""}`}>
+                      <span className="flex-1 text-sm text-white/80">
                         {t(`addOns.items.${addOn}.name`)}
                       </span>
                       <span className="text-xs text-accent-blue">
@@ -311,23 +349,25 @@ export function Pricing() {
         </div>
 
         {/* Right: Price Summary */}
-        <div className={`${isRTL ? "lg:order-1" : "lg:order-2"}`}>
+        <div>
           <div className="p-6 rounded-2xl border border-white/10 bg-[#050505] h-full flex flex-col">
-            <h3 className={`text-sm font-medium text-white/60 mb-6 ${isRTL ? "text-right" : ""}`}>
+            <h3 className="text-sm font-medium text-white/60 mb-6">
               {t("summary_title")}
             </h3>
 
             {hasSelections ? (
               <div className="space-y-3 flex-1">
-                {SERVICES.filter((s) => selectedServices[s]).map((service) => (
+                {selectedProducts.map((item, index) => (
                   <div
-                    key={service}
-                    className={`flex justify-between items-center ${isRTL ? "flex-row-reverse" : ""}`}
+                    key={`${item.service}-${item.product}-${index}`}
+                    className="flex justify-between items-center"
                   >
-                    <span className="text-white/80 text-sm">{t(`services.${service}.name`)}</span>
+                    <span className="text-white/80 text-sm">
+                      {t(`services.${item.service}.products.${item.product}.name`)}
+                    </span>
                     <span className="text-white font-medium">
                       {t("currency")}
-                      {PRICING.services[service][complexity[service]].toLocaleString()}
+                      {item.price.toLocaleString()}
                     </span>
                   </div>
                 ))}
@@ -335,7 +375,7 @@ export function Pricing() {
                 {ADD_ONS.filter((a) => addOns[a]).map((addOn) => (
                   <div
                     key={addOn}
-                    className={`flex justify-between items-center text-xs ${isRTL ? "flex-row-reverse" : ""}`}
+                    className="flex justify-between items-center text-xs"
                   >
                     <span className="text-white/50">+ {t(`addOns.items.${addOn}.name`)}</span>
                     <span className="text-white/70">
@@ -347,21 +387,20 @@ export function Pricing() {
                 ))}
               </div>
             ) : (
-              <p className={`text-white/40 text-sm flex-1 ${isRTL ? "text-right" : ""}`}>{t("empty_selection")}</p>
+              <p className="text-white/40 text-sm flex-1">{t("empty_selection")}</p>
             )}
 
             {/* Total */}
-            <div className={`pt-6 border-t border-white/10 mt-6 ${isRTL ? "text-right" : ""}`}>
-              <p className="text-xs text-white/50 mb-2">{t("total_label")}</p>
-              <div className={`flex items-baseline gap-2 ${isRTL ? "flex-row-reverse justify-end" : ""}`}>
+            <div className="pt-6 border-t border-white/10 mt-6">
+              <div className="flex items-baseline gap-2 items-center justify-between">
                 <span className="text-xs text-white/50">{t("starting_from")}</span>
-                <span className="text-4xl font-display font-medium text-white">
+                <span className="text-2xl font-display font-medium text-white flex flex-col">
                   {t("currency")}
                   {calculatedPrice.oneTime.toLocaleString()}
                 </span>
               </div>
               {calculatedPrice.monthly > 0 && (
-                <p className="text-sm text-accent-blue mt-2">
+                <p className="text-sm text-accent-blue mt-2 text-end">
                   + {t("currency")}
                   {calculatedPrice.monthly.toLocaleString()}
                   {t("per_month")}
@@ -372,14 +411,12 @@ export function Pricing() {
             {/* CTA */}
             <a
               href="#contact"
-              className={`mt-6 w-full py-4 rounded-xl bg-accent-blue hover:bg-accent-blue-hover text-white font-semibold text-sm flex items-center justify-center gap-2 transition-all shadow-glow-blue ${
-                isRTL ? "flex-row-reverse" : ""
-              }`}
+              className="mt-6 w-full py-4 rounded-xl bg-accent-blue hover:bg-accent-blue-hover text-white font-semibold text-sm flex items-center justify-center gap-2 transition-all shadow-glow-blue"
             >
               {t("cta_button")}
-              <ArrowRight className={`w-4 h-4 ${isRTL ? "rotate-180" : ""}`} />
+              <ArrowRight className="w-4 h-4 rtl:rotate-180" />
             </a>
-            <p className={`text-xs text-white/40 mt-3 ${isRTL ? "text-right" : "text-center"}`}>{t("cta_note")}</p>
+            <p className="text-xs text-white/40 mt-3">{t("cta_note")}</p>
           </div>
         </div>
       </div>

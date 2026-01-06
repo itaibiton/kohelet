@@ -1,6 +1,6 @@
 "use client";
 
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Code2, Bot, Workflow, Zap } from "lucide-react";
 import { triggerColorChange, triggerColorReset } from "@/components/effects/ThreeBackground";
 
@@ -18,8 +18,6 @@ const colorMap: Record<string, string> = {
 
 export function Solutions() {
   const t = useTranslations("solutions");
-  const locale = useLocale();
-  const isRTL = locale === "he";
 
   const pillars = t.raw("pillars") as Array<{
     title: string;
@@ -45,10 +43,8 @@ export function Solutions() {
           <Zap className="w-3 h-3" />
           {t("powered_by")}
         </div> */}
-      <div
-        className={`flex w-full flex-col md:flex-row justify-between gap-8 mb-16 border-b border-white/5 pb-8 ${isRTL ? "md:flex-row items-end md:items-end" : "items-end"}`}
-      >
-        <div className={isRTL ? "text-right w-full md:w-auto" : ""}>
+      <div className="flex w-full flex-col md:flex-row justify-between items-end gap-8 mb-16 border-b border-white/5 pb-8">
+        <div>
           <h2 className="text-3xl md:text-4xl font-display font-medium tracking-tight text-white mb-3">
             {t("section_title")}
           </h2>
@@ -56,9 +52,7 @@ export function Solutions() {
             {t("section_subtitle")}
           </p>
         </div>
-        <div
-          className={`hidden w-fit md:flex items-center gap-2 text-xs text-accent-blue font-medium border border-accent-blue/20 bg-accent-blue/5 px-3 py-1 rounded-full ${isRTL ? "flex-row-reverse" : ""}`}
-        >
+        <div className="hidden w-fit md:flex items-center gap-2 text-xs text-accent-blue font-medium border border-accent-blue/20 bg-accent-blue/5 px-3 py-1 rounded-full">
           <Zap className="w-3 h-3" />
           {t("powered_by")}
         </div>
@@ -101,7 +95,7 @@ export function Solutions() {
 
                 <div className="relative z-10 flex flex-col h-full">
                   {/* Icon & Number */}
-                  <div className={`flex justify-between items-start mb-8 ${isRTL ? "flex-row-reverse" : ""}`}>
+                  <div className="flex justify-between items-start mb-8">
                     <div
                       className={`p-3 bg-white/5 rounded-xl border border-white/10 text-${accentColor}`}
                     >
@@ -121,11 +115,10 @@ export function Solutions() {
                   </p>
 
                   {/* Services List */}
-                  <div className={`mt-auto ${isRTL ? "text-right" : ""}`}>
-                    <ul className={isRTL ? "flex flex-col  space-y-1" : ""}>
-                     {
-                      pillar.services.map((service, serviceIndex) => (
-                        <li key={serviceIndex} className={`flex items-center gap-2 text-xs text-white/60 ${isRTL ? "" : ""}`}>
+                  <div className="mt-auto">
+                    <ul className="space-y-1">
+                      {pillar.services.map((service, serviceIndex) => (
+                        <li key={serviceIndex} className="flex items-center gap-2 text-xs text-white/60">
                           <div
                             className={`w-1 h-1 rounded-full shrink-0 ${
                               index === 0
@@ -137,8 +130,7 @@ export function Solutions() {
                           ></div>
                           <span>{service.name}</span>
                         </li>
-                      ))
-                     }
+                      ))}
                     </ul>
                   </div>
                 </div>

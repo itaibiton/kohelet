@@ -123,75 +123,59 @@
     "monthly_label": "Monthly Add-ons",
     "cta_button": "Discuss Your Project",
     "cta_note": "Final pricing based on project scope",
+    "products_selected": "selected",
+    "get_custom_quote": "Get Custom Quote",
     "services": {
       "title": "What Do You Need?",
       "subtitle": "Select one or more services",
       "customSoftware": {
         "name": "Custom Software",
         "description": "Web & mobile applications built for your workflows",
-        "tiers": {
-          "basic": {
-            "name": "Basic",
-            "description": "Simple apps, landing pages, dashboards",
-            "timeline": "4-6 weeks"
+        "products": {
+          "landingPage": {
+            "name": "Landing Page"
           },
-          "standard": {
-            "name": "Standard",
-            "description": "Full web apps with integrations",
-            "timeline": "8-12 weeks"
+          "onlineStore": {
+            "name": "Online Store"
           },
-          "advanced": {
-            "name": "Advanced",
-            "description": "Complex platforms, mobile + web",
-            "timeline": "12-20 weeks"
+          "blog": {
+            "name": "Blog"
+          },
+          "webApp": {
+            "name": "Web Application"
           }
         }
       },
       "businessAutomation": {
         "name": "Business Automation",
         "description": "Eliminate repetitive tasks with smart workflows",
-        "tiers": {
-          "basic": {
-            "name": "Basic",
-            "description": "Email & CRM automation basics",
-            "timeline": "2-3 weeks"
+        "products": {
+          "crmIntegration": {
+            "name": "CRM Integration"
           },
-          "standard": {
-            "name": "Standard",
-            "description": "Multi-system workflows & reporting",
-            "timeline": "4-6 weeks"
+          "emailAutomation": {
+            "name": "Email Automation"
           },
-          "advanced": {
-            "name": "Advanced",
-            "description": "Enterprise-scale automation suite",
-            "timeline": "8-12 weeks"
+          "workflowAutomation": {
+            "name": "Workflow Automation"
           }
         }
       },
       "aiAgents": {
         "name": "AI Agents",
         "description": "24/7 intelligent assistants for your business",
-        "tiers": {
-          "basic": {
-            "name": "Basic",
-            "description": "FAQ bot, basic lead capture",
-            "timeline": "3-4 weeks"
+        "products": {
+          "chatbot": {
+            "name": "Chatbot"
           },
-          "standard": {
-            "name": "Standard",
-            "description": "Multi-channel AI with CRM integration",
-            "timeline": "6-8 weeks"
+          "customerSupport": {
+            "name": "Customer Support Agent"
           },
-          "advanced": {
-            "name": "Advanced",
-            "description": "Autonomous agents with learning",
-            "timeline": "10-16 weeks"
+          "dataAnalysis": {
+            "name": "Data Analysis Agent"
           }
         }
       }
-    },
-    "complexity": {
-      "title": "Complexity Level"
     },
     "addOns": {
       "title": "Add-Ons & Extras",

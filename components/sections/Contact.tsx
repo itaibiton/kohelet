@@ -1,13 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { Mail, Phone, ChevronDown, CheckCircle, XCircle } from "lucide-react";
+import { usePricing, formatPricingForWebhook } from "@/context/PricingContext";
 
 export function Contact() {
   const t = useTranslations("contact");
-  const locale = useLocale();
-  const isRTL = locale === "he";
+
+  // Get pricing selections from context
+  const { selectedProducts, addOns, estimatedTotal, clearSelections } = usePricing();
 
   const [formState, setFormState] = useState({
     name: "",
@@ -27,16 +29,25 @@ export function Contact() {
     setStatus("loading");
 
     try {
+      // Include pricing selections if any were made
+      const pricingSelections = selectedProducts.length > 0 || Object.values(addOns).some(Boolean)
+        ? formatPricingForWebhook(selectedProducts, addOns, estimatedTotal)
+        : null;
+
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formState),
+        body: JSON.stringify({
+          ...formState,
+          pricingSelections,
+        }),
       });
 
       if (!response.ok) throw new Error("Failed to submit");
 
       setStatus("success");
       setFormState({ name: "", email: "", phone: "", service: "", message: "" });
+      clearSelections(); // Clear pricing selections after successful submission
     } catch {
       setStatus("error");
     }
@@ -61,7 +72,7 @@ export function Contact() {
       <div className="max-w-5xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           {/* Left Column - Info */}
-          <div className={isRTL ? "text-right" : ""}>
+          <div>
             <h2 className="text-4xl md:text-5xl font-display font-medium tracking-tight text-white mb-6">
               {t("headline_line1")}
               <br />
@@ -72,25 +83,19 @@ export function Contact() {
             </p>
 
             {/* Contact Info */}
-            <div className={`space-y-4 ${isRTL ? "flex flex-col items-end" : ""}`}>
-              <div
-                className={`flex items-center gap-3 text-sm w-full text-white/70 ${isRTL ? "" : ""}`}
-              >
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 text-sm text-white/70">
                 <Mail className="w-4 h-4 text-accent-blue shrink-0" />
                 <span>{t("email")}</span>
               </div>
-              <div
-                className={`flex items-center gap-3 text-sm w-full text-white/70 ${isRTL ? "" : ""}`}
-              >
+              <div className="flex items-center gap-3 text-sm text-white/70">
                 <Phone className="w-4 h-4 text-accent-blue shrink-0" />
                 <span>{t("phone")}</span>
               </div>
             </div>
 
             {/* Availability Badge */}
-            <div
-              className={`mt-12 p-4 rounded-lg bg-white/5 border border-white/10 inline-flex items-center gap-3 ${isRTL ? "flex-row-reverse" : ""}`}
-            >
+            <div className="mt-12 p-4 rounded-lg bg-white/5 border border-white/10 inline-flex items-center gap-3">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-blue opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-blue"></span>
@@ -106,9 +111,7 @@ export function Contact() {
             {/* Name & Email Row */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label
-                  className={`text-xs font-medium text-white/40 uppercase tracking-wide ${isRTL ? "block text-right" : ""}`}
-                >
+                <label className="text-xs font-medium text-white/40 uppercase tracking-wide block">
                   {t("form.name.label")}
                 </label>
                 <input
@@ -117,14 +120,12 @@ export function Contact() {
                   value={formState.name}
                   onChange={handleChange}
                   placeholder={t("form.name.placeholder")}
-                  className={`w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-accent-blue/50 focus:ring-1 focus:ring-brand/50 transition-all ${isRTL ? "text-right" : ""}`}
+                  className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-accent-blue/50 focus:ring-1 focus:ring-brand/50 transition-all"
                   required
                 />
               </div>
               <div className="space-y-2">
-                <label
-                  className={`text-xs font-medium text-white/40 uppercase tracking-wide ${isRTL ? "block text-right" : ""}`}
-                >
+                <label className="text-xs font-medium text-white/40 uppercase tracking-wide block">
                   {t("form.email.label")}
                 </label>
                 <input
@@ -133,7 +134,7 @@ export function Contact() {
                   value={formState.email}
                   onChange={handleChange}
                   placeholder={t("form.email.placeholder")}
-                  className={`w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-accent-blue/50 focus:ring-1 focus:ring-brand/50 transition-all ${isRTL ? "text-right" : ""}`}
+                  className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-accent-blue/50 focus:ring-1 focus:ring-brand/50 transition-all"
                   required
                 />
               </div>
@@ -141,9 +142,7 @@ export function Contact() {
 
             {/* Phone */}
             <div className="space-y-2">
-              <label
-                className={`text-xs font-medium text-white/40 uppercase tracking-wide ${isRTL ? "block text-right" : ""}`}
-              >
+              <label className="text-xs font-medium text-white/40 uppercase tracking-wide block">
                 {t("form.phone.label")}
               </label>
               <input
@@ -152,15 +151,13 @@ export function Contact() {
                 value={formState.phone}
                 onChange={handleChange}
                 placeholder={t("form.phone.placeholder")}
-                className={`w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-accent-blue/50 focus:ring-1 focus:ring-brand/50 transition-all ${isRTL ? "text-right" : ""}`}
+                className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-accent-blue/50 focus:ring-1 focus:ring-brand/50 transition-all"
               />
             </div>
 
             {/* Service Select */}
             <div className="space-y-2">
-              <label
-                className={`text-xs font-medium text-white/40 uppercase tracking-wide ${isRTL ? "block text-right" : ""}`}
-              >
+              <label className="text-xs font-medium text-white/40 uppercase tracking-wide block">
                 {t("form.service.label")}
               </label>
               <div className="relative">
@@ -168,7 +165,7 @@ export function Contact() {
                   name="service"
                   value={formState.service}
                   onChange={handleChange}
-                  className={`w-full appearance-none bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-accent-blue/50 focus:ring-1 focus:ring-brand/50 transition-all cursor-pointer ${isRTL ? "text-right" : ""}`}
+                  className="w-full appearance-none bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white focus:outline-none focus:border-accent-blue/50 focus:ring-1 focus:ring-brand/50 transition-all cursor-pointer"
                 >
                   {services.map((service, index) => (
                     <option key={index} value={service} className="bg-[#111]">
@@ -176,17 +173,13 @@ export function Contact() {
                     </option>
                   ))}
                 </select>
-                <ChevronDown
-                  className={`absolute top-3.5 w-4 h-4 text-white/30 pointer-events-none ${isRTL ? "left-4" : "right-4"}`}
-                />
+                <ChevronDown className="absolute top-3.5 end-4 w-4 h-4 text-white/30 pointer-events-none" />
               </div>
             </div>
 
             {/* Message */}
             <div className="space-y-2">
-              <label
-                className={`text-xs font-medium text-white/40 uppercase tracking-wide ${isRTL ? "block text-right" : ""}`}
-              >
+              <label className="text-xs font-medium text-white/40 uppercase tracking-wide block">
                 {t("form.message.label")}
               </label>
               <textarea
@@ -195,15 +188,15 @@ export function Contact() {
                 onChange={handleChange}
                 rows={4}
                 placeholder={t("form.message.placeholder")}
-                className={`w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-accent-blue/50 focus:ring-1 focus:ring-brand/50 transition-all resize-none ${isRTL ? "text-right" : ""}`}
+                className="w-full bg-white/[0.03] border border-white/10 rounded-lg px-4 py-3 text-sm text-white placeholder-white/20 focus:outline-none focus:border-accent-blue/50 focus:ring-1 focus:ring-brand/50 transition-all resize-none"
                 required
               />
             </div>
 
             {/* Success Alert */}
             {status === "success" && (
-              <div className={`p-4 rounded-lg bg-green-500/10 border border-green-500/30 ${isRTL ? "text-right" : ""}`}>
-                <div className={`flex items-start gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
+              <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
+                <div className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-green-400 text-sm font-medium mb-3">
@@ -223,8 +216,8 @@ export function Contact() {
 
             {/* Error Alert */}
             {status === "error" && (
-              <div className={`p-4 rounded-lg bg-red-500/10 border border-red-500/30 ${isRTL ? "text-right" : ""}`}>
-                <div className={`flex items-start gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
+              <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
+                <div className="flex items-start gap-3">
                   <XCircle className="w-5 h-5 text-red-500 shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="text-red-400 text-sm font-medium mb-3">

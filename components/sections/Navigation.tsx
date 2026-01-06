@@ -1,15 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { ArrowRight, Menu, X } from "lucide-react";
 import Image from "next/image";
 import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
 
 export function Navigation() {
   const t = useTranslations("navigation");
-  const locale = useLocale();
-  const isRTL = locale === "he";
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const links = t.raw("links") as Array<{ label: string; href: string }>;
@@ -36,7 +34,7 @@ export function Navigation() {
         </a>
 
         {/* Desktop Nav Links */}
-        <div className={`hidden md:flex items-center gap-6 ${isRTL ? "flex-row-reverse" : ""}`}>
+        <div className="hidden md:flex items-center gap-6">
           {links.map((link) => (
             <a
               key={link.href}
@@ -52,10 +50,10 @@ export function Navigation() {
         {/* Desktop CTA */}
         <a
           href={cta.href}
-          className={`hidden md:flex items-center gap-2 text-[10px] font-bold bg-gradient-to-r from-accent-blue to-accent-blue-hover text-white px-5 py-2 rounded-full hover:brightness-110 transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)] ${isRTL ? "flex-row-reverse" : ""}`}
+          className="hidden md:flex items-center gap-2 text-[10px] font-bold bg-gradient-to-r from-accent-blue to-accent-blue-hover text-white px-5 py-2 rounded-full hover:brightness-110 transition-all shadow-[0_0_15px_rgba(59,130,246,0.3)]"
         >
           {cta.label}
-          <ArrowRight className={`w-3 h-3 ${isRTL ? "rotate-180" : ""}`} />
+          <ArrowRight className="w-3 h-3 rtl:rotate-180" />
         </a>
 
         {/* Mobile Menu Button */}
@@ -92,10 +90,10 @@ export function Navigation() {
             <a
               href={cta.href}
               onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center justify-center gap-2 text-xs font-bold bg-gradient-to-r from-accent-blue to-accent-blue-hover text-white px-5 py-3 rounded-full hover:brightness-110 transition-all mt-2 shadow-[0_0_15px_rgba(59,130,246,0.3)] ${isRTL ? "flex-row-reverse" : ""}`}
+              className="flex items-center justify-center gap-2 text-xs font-bold bg-gradient-to-r from-accent-blue to-accent-blue-hover text-white px-5 py-3 rounded-full hover:brightness-110 transition-all mt-2 shadow-[0_0_15px_rgba(59,130,246,0.3)]"
             >
               {cta.label}
-              <ArrowRight className={`w-4 h-4 ${isRTL ? "rotate-180" : ""}`} />
+              <ArrowRight className="w-4 h-4 rtl:rotate-180" />
             </a>
           </div>
         </div>

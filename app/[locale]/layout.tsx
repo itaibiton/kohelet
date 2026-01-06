@@ -5,6 +5,7 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { isRtl, type Locale } from "@/i18n/config";
+import { PricingProvider } from "@/context/PricingContext";
 import "../globals.css";
 
 const heebo = Heebo({
@@ -57,7 +58,9 @@ export default async function LocaleLayout({
         className={`${heebo.className} ${jetbrainsMono.variable} antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
-          {children}
+          <PricingProvider>
+            {children}
+          </PricingProvider>
         </NextIntlClientProvider>
       </body>
     </html>

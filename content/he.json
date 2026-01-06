@@ -123,75 +123,59 @@
     "monthly_label": "תוספות חודשיות",
     "cta_button": "בואו נדבר על הפרויקט",
     "cta_note": "מחיר סופי על בסיס היקף הפרויקט",
+    "products_selected": "נבחרו",
+    "get_custom_quote": "קבלו הצעת מחיר מותאמת",
     "services": {
       "title": "מה אתם צריכים?",
       "subtitle": "בחרו שירות אחד או יותר",
       "customSoftware": {
         "name": "פיתוח תוכנה מותאם",
         "description": "אפליקציות ווב ומובייל שנבנות לתהליכים שלכם",
-        "tiers": {
-          "basic": {
-            "name": "בסיסי",
-            "description": "אפליקציות פשוטות, דפי נחיתה, דשבורדים",
-            "timeline": "4-6 שבועות"
+        "products": {
+          "landingPage": {
+            "name": "דף נחיתה"
           },
-          "standard": {
-            "name": "סטנדרטי",
-            "description": "אפליקציות מלאות עם אינטגרציות",
-            "timeline": "8-12 שבועות"
+          "onlineStore": {
+            "name": "חנות אונליין"
           },
-          "advanced": {
-            "name": "מתקדם",
-            "description": "פלטפורמות מורכבות, מובייל + ווב",
-            "timeline": "12-20 שבועות"
+          "blog": {
+            "name": "בלוג"
+          },
+          "webApp": {
+            "name": "אפליקציית ווב"
           }
         }
       },
       "businessAutomation": {
         "name": "אוטומציה עסקית",
         "description": "חסלו משימות חוזרות עם תהליכים חכמים",
-        "tiers": {
-          "basic": {
-            "name": "בסיסי",
-            "description": "אוטומציית מייל ו-CRM בסיסית",
-            "timeline": "2-3 שבועות"
+        "products": {
+          "crmIntegration": {
+            "name": "אינטגרציית CRM"
           },
-          "standard": {
-            "name": "סטנדרטי",
-            "description": "תהליכים רב-מערכתיים ודיווחים",
-            "timeline": "4-6 שבועות"
+          "emailAutomation": {
+            "name": "אוטומציית אימייל"
           },
-          "advanced": {
-            "name": "מתקדם",
-            "description": "חבילת אוטומציה ברמה ארגונית",
-            "timeline": "8-12 שבועות"
+          "workflowAutomation": {
+            "name": "אוטומציית תהליכים"
           }
         }
       },
       "aiAgents": {
         "name": "סוכני AI",
         "description": "עוזרים חכמים 24/7 לעסק שלכם",
-        "tiers": {
-          "basic": {
-            "name": "בסיסי",
-            "description": "בוט שאלות נפוצות, לכידת לידים",
-            "timeline": "3-4 שבועות"
+        "products": {
+          "chatbot": {
+            "name": "צ׳אטבוט"
           },
-          "standard": {
-            "name": "סטנדרטי",
-            "description": "AI רב-ערוצי עם אינטגרציית CRM",
-            "timeline": "6-8 שבועות"
+          "customerSupport": {
+            "name": "סוכן שירות לקוחות"
           },
-          "advanced": {
-            "name": "מתקדם",
-            "description": "סוכנים אוטונומיים עם יכולות למידה",
-            "timeline": "10-16 שבועות"
+          "dataAnalysis": {
+            "name": "סוכן ניתוח נתונים"
           }
         }
       }
-    },
-    "complexity": {
-      "title": "רמת מורכבות"
     },
     "addOns": {
       "title": "תוספות ושירותים נלווים",
@@ -255,7 +239,7 @@
     "headline_line2": "בואו נדבר.",
     "description": "לפני שמתחילים—בואו נדבר. נשמח להבין מה אתם צריכים, להסביר איך אנחנו עובדים, ולראות אם זה match.",
     "email": "info@kohelet.digital",
-    "phone": "+972-52-341-0467",
+    "phone": "052-341-0467",
     "availability": "סטטוס זמינות",
     "availability_status": "יש לנו מקום לפרויקטים חדשים",
     "services": [

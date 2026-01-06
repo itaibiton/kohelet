@@ -2,10 +2,23 @@ import { NextResponse } from "next/server";
 
 const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL;
 
+type PricingSelections = {
+  products: Array<{ category: string; product: string; price: number }>;
+  addOns: string[];
+  estimatedTotal: { oneTime: number; monthly: number };
+} | null;
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { name, email, phone, service, message } = body;
+    const { name, email, phone, service, message, pricingSelections } = body as {
+      name: string;
+      email: string;
+      phone?: string;
+      service?: string;
+      message: string;
+      pricingSelections?: PricingSelections;
+    };
 
     // Basic validation
     if (!name || !email || !message) {
@@ -27,6 +40,8 @@ export async function POST(request: Request) {
           service,
           message,
           submittedAt: new Date().toISOString(),
+          // Include pricing selections if provided
+          pricingSelections: pricingSelections || null,
         }),
       });
 
@@ -39,7 +54,14 @@ export async function POST(request: Request) {
       }
     } else {
       // Log to console if no webhook configured (for development)
-      console.log("Contact form submission:", { name, email, phone, service, message });
+      console.log("Contact form submission:", {
+        name,
+        email,
+        phone,
+        service,
+        message,
+        pricingSelections,
+      });
     }
 
     return NextResponse.json({ success: true });
