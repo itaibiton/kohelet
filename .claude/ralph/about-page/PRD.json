@@ -1,0 +1,319 @@
+{
+  "project": "Kohelet About Page",
+  "version": "1.0.0",
+  "created": "2026-01-07",
+  "completion_promise": "ABOUT PAGE COMPLETE",
+
+  "context": {
+    "tech_stack": ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS v4", "GSAP", "next-intl", "Lucide Icons"],
+    "i18n": "next-intl (en + he)",
+    "theme": "glassmorphism/dark theme",
+    "existing_components": ["AboutHero.tsx"],
+    "missing_components": ["CompanyStory.tsx", "Stats.tsx", "Values.tsx", "Team.tsx", "AboutCTA.tsx"]
+  },
+
+  "user_preferences": {
+    "team": "Full team (4-6 people) with photos, names, roles, and bios",
+    "stats": "Automation metrics: hours saved, tasks automated, efficiency gains",
+    "values": "Auto-generate based on Kohelet brand",
+    "git": "Auto-commit after each completed task"
+  },
+
+  "user_stories": [
+    {
+      "id": "PRD-01",
+      "title": "Define CompanyStory requirements",
+      "description": "Use prd-architect agent to define the CompanyStory component requirements",
+      "agent": "prd-architect",
+      "acceptance_criteria": [
+        "Define mission statement content structure",
+        "Define vision statement content structure",
+        "Define company narrative sections",
+        "Specify layout (text blocks, optional imagery)",
+        "Document animation requirements (fade-in-up)",
+        "Output requirements to progress.txt"
+      ],
+      "dependencies": [],
+      "pass": true
+    },
+    {
+      "id": "PRD-02",
+      "title": "Define Stats requirements",
+      "description": "Use prd-architect agent to define the Stats component requirements with automation metrics",
+      "agent": "prd-architect",
+      "acceptance_criteria": [
+        "Define 4 automation-focused metrics (hours saved, tasks automated, efficiency %, clients served)",
+        "Specify counter animation behavior (GSAP countUp)",
+        "Define responsive grid layout (2x2 mobile, 1x4 desktop)",
+        "Document glassmorphism card styling",
+        "Output requirements to progress.txt"
+      ],
+      "dependencies": [],
+      "pass": false
+    },
+    {
+      "id": "PRD-03",
+      "title": "Define Values requirements",
+      "description": "Use prd-architect agent to define 4-6 core values for Kohelet",
+      "agent": "prd-architect",
+      "acceptance_criteria": [
+        "Research Kohelet brand positioning (B2B automation, AI agents)",
+        "Define 4-6 core values (e.g., Innovation, Efficiency, Partnership, Excellence)",
+        "Specify value card layout with icons",
+        "Define responsive grid (1 col mobile, 2 cols tablet, 3 cols desktop)",
+        "Output requirements to progress.txt"
+      ],
+      "dependencies": [],
+      "pass": false
+    },
+    {
+      "id": "PRD-04",
+      "title": "Define Team requirements",
+      "description": "Use prd-architect agent to define Team component with 4-6 members",
+      "agent": "prd-architect",
+      "acceptance_criteria": [
+        "Define team member data structure (photo, name, role, bio, social links)",
+        "Specify 4-6 placeholder team members",
+        "Define card layout with hover effects",
+        "Specify responsive grid layout",
+        "Document image placeholder approach (initials or generic avatar)",
+        "Output requirements to progress.txt"
+      ],
+      "dependencies": [],
+      "pass": false
+    },
+    {
+      "id": "PRD-05",
+      "title": "Define AboutCTA requirements",
+      "description": "Use prd-architect agent to define the AboutCTA component",
+      "agent": "prd-architect",
+      "acceptance_criteria": [
+        "Define CTA headline and subtext",
+        "Specify primary button (Schedule Consultation) and secondary button (Contact Us)",
+        "Define background treatment (gradient or glassmorphism)",
+        "Document animation behavior",
+        "Output requirements to progress.txt"
+      ],
+      "dependencies": [],
+      "pass": false
+    },
+    {
+      "id": "UI-01",
+      "title": "Implement CompanyStory component",
+      "description": "Use ui-designer agent to implement the CompanyStory component",
+      "agent": "ui-designer",
+      "acceptance_criteria": [
+        "File exists at /components/sections/about/CompanyStory.tsx",
+        "Uses 'use client' directive",
+        "Implements next-intl translations (t('about.story'))",
+        "Follows glassmorphism design (bg-[#111113]/80, backdrop-blur-md)",
+        "Responsive layout with max-w-6xl container",
+        "Fade-in-up animations with staggered delays",
+        "Exports CompanyStory function component",
+        "No TypeScript errors"
+      ],
+      "dependencies": ["PRD-01"],
+      "pass": false
+    },
+    {
+      "id": "UI-02",
+      "title": "Implement Stats component",
+      "description": "Use ui-designer agent to implement the Stats component with counter animations",
+      "agent": "ui-designer",
+      "acceptance_criteria": [
+        "File exists at /components/sections/about/Stats.tsx",
+        "Uses 'use client' directive",
+        "Implements 4 stat cards with GSAP counter animations",
+        "Uses useInView or scroll-triggered animation",
+        "Responsive grid (grid-cols-2 lg:grid-cols-4)",
+        "Glassmorphism card styling",
+        "Exports Stats function component",
+        "No TypeScript errors"
+      ],
+      "dependencies": ["PRD-02"],
+      "pass": false
+    },
+    {
+      "id": "UI-03",
+      "title": "Implement Values component",
+      "description": "Use ui-designer agent to implement the Values grid component",
+      "agent": "ui-designer",
+      "acceptance_criteria": [
+        "File exists at /components/sections/about/Values.tsx",
+        "Uses 'use client' directive",
+        "Implements value cards with Lucide icons",
+        "Responsive grid (grid-cols-1 md:grid-cols-2 lg:grid-cols-3)",
+        "Hover effects on cards (scale, border color)",
+        "Fade-in animations",
+        "Exports Values function component",
+        "No TypeScript errors"
+      ],
+      "dependencies": ["PRD-03"],
+      "pass": false
+    },
+    {
+      "id": "UI-04",
+      "title": "Implement Team component",
+      "description": "Use ui-designer agent to implement the Team cards component",
+      "agent": "ui-designer",
+      "acceptance_criteria": [
+        "File exists at /components/sections/about/Team.tsx",
+        "Uses 'use client' directive",
+        "Implements team member cards with avatar, name, role, bio",
+        "Avatar uses initials or placeholder image",
+        "Responsive grid layout",
+        "Hover effects on cards",
+        "Optional social links (LinkedIn, Twitter)",
+        "Exports Team function component",
+        "No TypeScript errors"
+      ],
+      "dependencies": ["PRD-04"],
+      "pass": false
+    },
+    {
+      "id": "UI-05",
+      "title": "Implement AboutCTA component",
+      "description": "Use ui-designer agent to implement the AboutCTA section",
+      "agent": "ui-designer",
+      "acceptance_criteria": [
+        "File exists at /components/sections/about/AboutCTA.tsx",
+        "Uses 'use client' directive",
+        "Implements headline, subtext, and two buttons",
+        "Primary button links to /contact or opens calendar",
+        "Secondary button links to contact page",
+        "Gradient or glassmorphism background",
+        "Centered layout with padding",
+        "Exports AboutCTA function component",
+        "No TypeScript errors"
+      ],
+      "dependencies": ["PRD-05"],
+      "pass": false
+    },
+    {
+      "id": "COPY-01",
+      "title": "Write CompanyStory copy",
+      "description": "Use kohelet-copywriter agent to write English and Hebrew copy for CompanyStory",
+      "agent": "kohelet-copywriter",
+      "acceptance_criteria": [
+        "Write compelling mission statement (en + he)",
+        "Write vision statement (en + he)",
+        "Write company narrative (2-3 paragraphs, en + he)",
+        "Copy aligns with Kohelet brand voice (expert, results-oriented)",
+        "Output translation keys to progress.txt"
+      ],
+      "dependencies": ["UI-01"],
+      "pass": false
+    },
+    {
+      "id": "COPY-02",
+      "title": "Write Stats labels",
+      "description": "Use kohelet-copywriter agent to write stat labels and section copy",
+      "agent": "kohelet-copywriter",
+      "acceptance_criteria": [
+        "Write section headline (en + he)",
+        "Write 4 stat labels (hours saved, tasks automated, efficiency %, clients served)",
+        "Define stat values (e.g., 10,000+, 500+, 80%, 50+)",
+        "Copy is punchy and impactful",
+        "Output translation keys to progress.txt"
+      ],
+      "dependencies": ["UI-02"],
+      "pass": false
+    },
+    {
+      "id": "COPY-03",
+      "title": "Write Values copy",
+      "description": "Use kohelet-copywriter agent to write value names and descriptions",
+      "agent": "kohelet-copywriter",
+      "acceptance_criteria": [
+        "Write section headline (en + he)",
+        "Write 4-6 value names (en + he)",
+        "Write short description for each value (1-2 sentences, en + he)",
+        "Values reflect Kohelet's brand (innovation, efficiency, partnership)",
+        "Output translation keys to progress.txt"
+      ],
+      "dependencies": ["UI-03"],
+      "pass": false
+    },
+    {
+      "id": "COPY-04",
+      "title": "Write Team bios",
+      "description": "Use kohelet-copywriter agent to write team member bios",
+      "agent": "kohelet-copywriter",
+      "acceptance_criteria": [
+        "Write section headline (en + he)",
+        "Write 4-6 team member names and roles",
+        "Write short bio for each (2-3 sentences, en + he)",
+        "Bios are professional and personable",
+        "Output translation keys to progress.txt"
+      ],
+      "dependencies": ["UI-04"],
+      "pass": false
+    },
+    {
+      "id": "COPY-05",
+      "title": "Write AboutCTA copy",
+      "description": "Use kohelet-copywriter agent to write CTA headline and button text",
+      "agent": "kohelet-copywriter",
+      "acceptance_criteria": [
+        "Write compelling CTA headline (en + he)",
+        "Write supporting subtext (en + he)",
+        "Write primary button text (en + he)",
+        "Write secondary button text (en + he)",
+        "Copy drives action (consultation booking)",
+        "Output translation keys to progress.txt"
+      ],
+      "dependencies": ["UI-05"],
+      "pass": false
+    },
+    {
+      "id": "INT-01",
+      "title": "Update translation files",
+      "description": "Add all about page translations to en.json and he.json",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "Add 'about' section to /content/en.json",
+        "Add 'about' section to /content/he.json",
+        "All translation keys from COPY tasks are included",
+        "JSON is valid (no syntax errors)",
+        "Translations match component expectations"
+      ],
+      "dependencies": ["COPY-01", "COPY-02", "COPY-03", "COPY-04", "COPY-05"],
+      "pass": false
+    },
+    {
+      "id": "INT-02",
+      "title": "Update barrel exports and verify page",
+      "description": "Update index.ts exports and verify page renders",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "Update /components/sections/about/index.ts with all exports",
+        "Verify /app/[locale]/about/page.tsx imports work",
+        "Page renders without errors in dev server",
+        "All sections visible"
+      ],
+      "dependencies": ["INT-01"],
+      "pass": false
+    },
+    {
+      "id": "INT-03",
+      "title": "Run build verification",
+      "description": "Run pnpm build and ensure no errors",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "pnpm build completes successfully",
+        "No TypeScript errors",
+        "No ESLint errors (or only warnings)",
+        "All pages compile"
+      ],
+      "dependencies": ["INT-02"],
+      "pass": false
+    }
+  ],
+
+  "implementation_order": [
+    "Phase 1: PRD Definition (PRD-01 through PRD-05) - Use prd-architect agent",
+    "Phase 2: UI Implementation (UI-01 through UI-05) - Use ui-designer agent",
+    "Phase 3: Copywriting (COPY-01 through COPY-05) - Use kohelet-copywriter agent",
+    "Phase 4: Integration (INT-01 through INT-03) - Direct execution"
+  ]
+}
