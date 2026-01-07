@@ -62,3 +62,36 @@ about.story.narrative.p3
 
 **Next Task**: UI-01 (Implement CompanyStory component) - depends on PRD-01 ✅
 
+### [2026-01-07] PRD-02: Define Stats requirements ✅
+**Agent**: prd-architect
+**Status**: COMPLETE
+
+**Deliverables**:
+- Comprehensive PRD document defining Stats component requirements
+- 4 automation-focused metrics defined:
+  - Hours Saved: 10,000+
+  - Tasks Automated: 500+
+  - Efficiency Gain: 80%
+  - Clients Served: 50+
+- Counter animation specs: GSAP `power2.out` easing, 2.2s duration, scroll-triggered at 80% viewport
+- Card fade-in animation: staggered 150ms delay, 0.8s duration, `power3.out` easing
+- Responsive grid: `grid-cols-2 md:grid-cols-4` with `gap-6 md:gap-8`
+- Glassmorphism card styling: `bg-[#111113]/80`, `backdrop-blur-md`, `border-white/10`, `rounded-xl md:rounded-2xl`
+- Typography: Values `text-4xl md:text-5xl font-bold text-white`, Labels `text-sm text-neutral-400 uppercase`
+- Suffix handling: Separate span for suffix with `text-accent-blue`, static during animation
+- Accessibility: `role="group"`, `aria-label`, `aria-live="polite"` for counters
+- Performance: `prefers-reduced-motion` support, ScrollTrigger cleanup on unmount
+
+**Translation Keys Structure**:
+```
+about.stats.sectionTitle
+about.stats.hoursSaved.label
+about.stats.tasksAutomated.label
+about.stats.efficiency.label
+about.stats.clientsServed.label
+```
+
+**Component Location**: /components/sections/about/Stats.tsx
+
+**Next Task**: PRD-03 (Define Values requirements) OR UI-01 (Implement CompanyStory) - both available
+
