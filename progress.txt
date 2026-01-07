@@ -1,0 +1,27 @@
+# Kohelet About Page - Progress Log
+
+## Project Started: 2026-01-07
+
+---
+
+## Session 1 - 2026-01-07
+
+### Completed:
+- [x] PRD.json created with full task breakdown (18 tasks across 4 phases)
+- [x] progress.txt initialized
+- [x] PRD-01: Define CompanyStory component requirements
+  - Layout: Single-column, center-aligned, max-w-4xl
+  - Structure: section_title (h2) -> paragraph_1 -> paragraph_2 -> mission statement
+  - Typography: title (text-3xl/4xl), paragraphs (text-base/lg white/60), mission (text-lg/xl accent-blue)
+  - Animation: fade-in-up with staggered delays (0.1s, 0.2s, 0.3s, 0.4s)
+  - Translation keys: about.story.section_title, paragraph_1, paragraph_2, mission
+
+### Current State:
+- AboutHero.tsx exists
+- index.ts has exports for all 5 components (but files don't exist yet)
+- No about translations exist in en.json/he.json
+- PRD-01 complete (CompanyStory spec)
+
+### Next Task: PRD-02 - Define Stats component requirements
+
+---

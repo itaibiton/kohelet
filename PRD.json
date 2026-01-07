@@ -1,0 +1,758 @@
+{
+  "project": "Kohelet About Page",
+  "version": "1.0.0",
+  "created": "2026-01-07",
+  "overview": {
+    "description": "Development of a comprehensive About page for Kohelet showcasing company story, metrics, values, team, and conversion elements. This page serves as the trust-building centerpiece for visitors wanting to understand who we are and why we're qualified to handle their automation and software needs.",
+    "business_objectives": [
+      "Build credibility and trust with potential clients",
+      "Demonstrate expertise through data-driven metrics",
+      "Communicate company values and mission clearly",
+      "Convert visitors into leads through strategic CTAs"
+    ],
+    "success_metrics": [
+      "Average time on page > 90 seconds",
+      "Scroll depth > 80% for majority of visitors",
+      "CTA click-through rate > 5%",
+      "Bounce rate < 40%"
+    ]
+  },
+  "technical_context": {
+    "framework": "Next.js with App Router",
+    "styling": "Tailwind CSS",
+    "internationalization": "next-intl (English and Hebrew)",
+    "component_location": "/components/sections/about/",
+    "translation_files": [
+      "/content/en.json",
+      "/content/he.json"
+    ],
+    "page_file": "/app/[locale]/about/page.tsx",
+    "existing_components": [
+      "Navigation",
+      "Footer",
+      "NoiseOverlay",
+      "ThreeBackground",
+      "MouseGlow",
+      "AboutHero"
+    ]
+  },
+  "design_system": {
+    "colors": {
+      "primary": "accent-blue (#3B82F6)",
+      "primary_hover": "accent-blue-hover",
+      "background": "#050505",
+      "text_primary": "white",
+      "text_secondary": "white/80",
+      "text_muted": "white/50",
+      "text_faded": "white/30",
+      "border": "white/10",
+      "surface": "white/5"
+    },
+    "typography": {
+      "headings": "font-display (tracking-tighter)",
+      "body": "font-light (leading-relaxed)",
+      "accents": "font-semibold or font-medium"
+    },
+    "spacing": {
+      "section_vertical": "py-20 or py-24",
+      "section_horizontal": "px-6",
+      "max_width": "max-w-5xl or max-w-7xl mx-auto"
+    },
+    "animations": {
+      "pattern": "animate-fade-in-up with staggered animationDelay",
+      "delays": ["0.1s", "0.2s", "0.3s", "0.4s", "0.6s"]
+    }
+  },
+  "implementation_order": [
+    "phase1-prd",
+    "phase2-copy",
+    "phase3-ui",
+    "phase4-integration"
+  ],
+  "tasks": [
+    {
+      "id": "PRD-01",
+      "phase": "phase1-prd",
+      "agent": "prd-architect",
+      "title": "Define CompanyStory component requirements",
+      "description": "Create detailed functional and design specifications for the CompanyStory component, which tells Kohelet's origin story and mission. This component should establish emotional connection and credibility by explaining why Kohelet exists and what problem we're solving.",
+      "acceptance_criteria": [
+        "Component structure defined (layout, sections, content hierarchy)",
+        "Visual design pattern specified (alignment with AboutHero style)",
+        "Content requirements outlined (story narrative structure, key messages)",
+        "Internationalization keys structure defined (about.story.*)",
+        "Animation patterns specified",
+        "Responsive behavior documented (mobile, tablet, desktop)",
+        "Accessibility requirements noted (semantic HTML, ARIA labels)"
+      ],
+      "dependencies": [],
+      "priority": "P0",
+      "estimated_effort": "2 hours",
+      "pass": true,
+      "output_file": null,
+      "detailed_requirements": {
+        "content_structure": [
+          "Section heading (e.g., 'Our Story' or 'Why We Exist')",
+          "Origin story narrative (2-3 paragraphs)",
+          "Mission statement",
+          "Optional: Timeline or key milestones"
+        ],
+        "layout_options": [
+          "Single column narrative with centered text",
+          "Two-column split (story left, mission/visuals right)",
+          "Timeline-based vertical layout"
+        ],
+        "recommended_approach": "Single column centered narrative with mission statement highlighted separately, similar to AboutHero layout but with longer-form content",
+        "final_specification": {
+          "layout": "Single-column, center-aligned, max-w-4xl",
+          "structure": ["section_title (h2)", "paragraph_1", "paragraph_2", "mission statement with accent styling"],
+          "typography": {
+            "title": "text-3xl md:text-4xl font-display font-semibold tracking-tight text-white",
+            "paragraphs": "text-base md:text-lg text-white/60 leading-relaxed font-light",
+            "mission": "text-lg md:text-xl text-accent-blue font-medium leading-relaxed"
+          },
+          "animation": "animate-fade-in-up with delays 0.1s, 0.2s, 0.3s, 0.4s",
+          "spacing": "pt-16 pb-16 md:pt-20 md:pb-20 px-6",
+          "translation_keys": ["about.story.section_title", "about.story.paragraph_1", "about.story.paragraph_2", "about.story.mission"],
+          "accessibility": "section with aria-labelledby, h2 for proper hierarchy"
+        }
+      }
+    },
+    {
+      "id": "PRD-02",
+      "phase": "phase1-prd",
+      "agent": "prd-architect",
+      "title": "Define Stats component requirements",
+      "description": "Create detailed specifications for the Stats component showcasing key business metrics: 10,000+ hours saved, 500+ tasks automated, 80% efficiency gain, 50+ clients. This component serves as social proof and credibility builder.",
+      "acceptance_criteria": [
+        "Component layout defined (grid vs. horizontal vs. vertical)",
+        "Stat card design specified (styling, hierarchy, iconography)",
+        "Content structure for each stat defined (number, label, optional description)",
+        "Animation patterns specified (staggered fade-in, number counter animation)",
+        "Responsive grid behavior documented (4-col desktop, 2-col tablet, 1-col mobile)",
+        "Visual treatment for numbers defined (size, color, weight)",
+        "Internationalization keys structure defined (about.stats.*)",
+        "Optional: Icon/visual element for each stat"
+      ],
+      "dependencies": [],
+      "priority": "P0",
+      "estimated_effort": "1.5 hours",
+      "pass": false,
+      "output_file": null,
+      "detailed_requirements": {
+        "stats_data": [
+          {
+            "metric": "10,000+",
+            "label": "Hours Saved",
+            "description": "For our clients through automation"
+          },
+          {
+            "metric": "500+",
+            "label": "Tasks Automated",
+            "description": "Across various business processes"
+          },
+          {
+            "metric": "80%",
+            "label": "Efficiency Gain",
+            "description": "Average improvement in operations"
+          },
+          {
+            "metric": "50+",
+            "label": "Clients Served",
+            "description": "Businesses we've helped scale"
+          }
+        ],
+        "layout_pattern": "4-column grid on desktop, 2-column on tablet, 1-column on mobile with subtle borders and gradient backgrounds",
+        "animation_requirements": [
+          "Staggered fade-in-up on scroll",
+          "Optional: Counter animation for numbers (0 to final value)"
+        ]
+      }
+    },
+    {
+      "id": "PRD-03",
+      "phase": "phase1-prd",
+      "agent": "prd-architect",
+      "title": "Define Values component requirements",
+      "description": "Create specifications for the Values component highlighting Kohelet's core principles and operating philosophy. This builds trust by communicating how we work and what clients can expect.",
+      "acceptance_criteria": [
+        "Number of values determined (recommended: 3-5)",
+        "Value card layout specified (grid, vertical list, horizontal cards)",
+        "Content structure per value defined (title, description, optional icon/visual)",
+        "Visual design pattern specified (cards, minimal, icon-heavy)",
+        "Animation approach defined",
+        "Responsive behavior documented",
+        "Internationalization keys structure defined (about.values.*)",
+        "Icon/visual strategy determined (lucide-react icons, custom graphics, or none)"
+      ],
+      "dependencies": [],
+      "priority": "P0",
+      "estimated_effort": "1.5 hours",
+      "pass": false,
+      "output_file": null,
+      "detailed_requirements": {
+        "recommended_values_count": 4,
+        "sample_values": [
+          "Automation-First Mindset",
+          "Transparency & Communication",
+          "Results-Driven Development",
+          "Long-Term Partnership"
+        ],
+        "layout_pattern": "2x2 grid on desktop, single column on mobile, each value card with icon, title, and 2-3 sentence description",
+        "visual_treatment": "Subtle cards with border-white/10, bg-white/5, hover effects"
+      }
+    },
+    {
+      "id": "PRD-04",
+      "phase": "phase1-prd",
+      "agent": "prd-architect",
+      "title": "Define Team component requirements",
+      "description": "Create specifications for the Team section, which can be founder-focused or team overview depending on business preference. This humanizes the company and builds personal connection.",
+      "acceptance_criteria": [
+        "Approach determined (founder profile vs. team grid vs. team overview)",
+        "Content structure defined (photos, names, titles, bios, social links)",
+        "Layout pattern specified (single column, grid, carousel)",
+        "Visual treatment defined (profile images, card styling, hover effects)",
+        "Bio length guidelines specified (1 paragraph vs. 2-3 sentences)",
+        "Internationalization keys structure defined (about.team.*)",
+        "Responsive behavior documented",
+        "Optional: Social media links (LinkedIn, Twitter) included"
+      ],
+      "dependencies": [],
+      "priority": "P1",
+      "estimated_effort": "2 hours",
+      "pass": false,
+      "output_file": null,
+      "detailed_requirements": {
+        "approach_options": [
+          "Option A: Founder-focused - Single profile with detailed bio and photo",
+          "Option B: Team grid - 2-6 team members with photos, names, titles, short bios",
+          "Option C: Team overview - Description of team expertise without individual profiles"
+        ],
+        "recommended_approach": "Founder-focused for now, with structure that allows easy expansion to team grid later",
+        "content_per_profile": {
+          "photo": "Optional: Circular or rounded square profile photo",
+          "name": "Full name",
+          "title": "Role/title",
+          "bio": "2-3 paragraph bio highlighting expertise and philosophy",
+          "social_links": "Optional: LinkedIn, Twitter, GitHub"
+        }
+      }
+    },
+    {
+      "id": "PRD-05",
+      "phase": "phase1-prd",
+      "agent": "prd-architect",
+      "title": "Define AboutCTA component requirements",
+      "description": "Create specifications for the AboutCTA component - the conversion-focused call-to-action at the bottom of the About page. This component should compel visitors to take action after learning about Kohelet.",
+      "acceptance_criteria": [
+        "CTA messaging strategy defined (urgency, value proposition, next step)",
+        "Visual design specified (full-width banner, contained card, split layout)",
+        "Primary CTA button defined (text, action, styling)",
+        "Secondary CTA option evaluated (if applicable)",
+        "Copy structure defined (headline, supporting text, button text)",
+        "Background treatment specified (gradient, solid, pattern)",
+        "Internationalization keys structure defined (about.cta.*)",
+        "Responsive behavior documented",
+        "Link destination confirmed (#contact anchor or separate contact page)"
+      ],
+      "dependencies": [],
+      "priority": "P0",
+      "estimated_effort": "1 hour",
+      "pass": false,
+      "output_file": null,
+      "detailed_requirements": {
+        "messaging_strategy": "After learning about Kohelet, visitor should be compelled to start a conversation. Focus on removing friction and offering clear next step.",
+        "recommended_layout": "Centered content with gradient background, similar to hero section but more focused on action",
+        "content_structure": {
+          "headline": "Action-oriented question or statement (e.g., 'Ready to Automate Your Business?')",
+          "supporting_text": "1-2 sentences reinforcing value and ease of getting started",
+          "primary_button": "Primary CTA (e.g., 'Schedule a Call', 'Get Started')",
+          "secondary_option": "Optional: Secondary link (e.g., 'View Pricing', 'See Case Studies')"
+        }
+      }
+    },
+    {
+      "id": "COPY-01",
+      "phase": "phase2-copy",
+      "agent": "kohelet-copywriter",
+      "title": "Write CompanyStory copy (EN + HE)",
+      "description": "Write compelling narrative copy for the CompanyStory component in both English and Hebrew. Story should establish emotional connection, explain why Kohelet exists, and articulate the mission clearly.",
+      "acceptance_criteria": [
+        "English copy completed following PRD-01 structure",
+        "Hebrew copy completed (accurate translation maintaining tone/intent)",
+        "Story explains the 'why' behind Kohelet compellingly",
+        "Mission statement is clear and aspirational",
+        "Tone aligns with brand (professional, confident, automation-focused)",
+        "Copy is concise and scannable (2-3 paragraphs max for story)",
+        "All copy keys added to en.json and he.json under about.story.*",
+        "Copy reviewed for consistency with existing brand messaging"
+      ],
+      "dependencies": ["PRD-01"],
+      "priority": "P0",
+      "estimated_effort": "3 hours",
+      "pass": false,
+      "output_file": null,
+      "copy_guidelines": {
+        "tone": "Professional but approachable, confident without arrogance, automation-first mindset",
+        "story_structure": [
+          "The problem we observed (businesses drowning in manual work)",
+          "Our founding insight (automation should be accessible, not just for tech giants)",
+          "Our mission (democratize business automation and custom software)",
+          "Our approach (AI + human expertise, results-focused)"
+        ],
+        "length_targets": {
+          "section_heading": "2-4 words",
+          "story_narrative": "150-250 words total (2-3 paragraphs)",
+          "mission_statement": "1-2 sentences, punchy and memorable"
+        }
+      }
+    },
+    {
+      "id": "COPY-02",
+      "phase": "phase2-copy",
+      "agent": "kohelet-copywriter",
+      "title": "Write Stats labels and copy (EN + HE)",
+      "description": "Write clear, impactful labels and descriptions for the four key metrics in the Stats component. Copy should reinforce credibility and make numbers meaningful.",
+      "acceptance_criteria": [
+        "English labels completed for all 4 stats",
+        "Hebrew translations completed",
+        "Optional descriptions written (if PRD-02 specifies)",
+        "Numbers formatted consistently (10,000+ vs 10K)",
+        "Labels are concise (1-3 words)",
+        "Descriptions add context without cluttering (optional, 5-8 words)",
+        "All copy keys added to en.json and he.json under about.stats.*",
+        "Numbers and labels reviewed for accuracy and impact"
+      ],
+      "dependencies": ["PRD-02"],
+      "priority": "P0",
+      "estimated_effort": "1.5 hours",
+      "pass": false,
+      "output_file": null,
+      "copy_guidelines": {
+        "label_style": "Short, clear, benefit-focused (e.g., 'Hours Saved' not 'Total Hours')",
+        "number_formatting": "Use + for ongoing metrics (10,000+), % for percentages (80%)",
+        "description_strategy": "Optional: Add one short sentence context per stat if layout allows"
+      }
+    },
+    {
+      "id": "COPY-03",
+      "phase": "phase2-copy",
+      "agent": "kohelet-copywriter",
+      "title": "Write Values copy (EN + HE)",
+      "description": "Write compelling copy for each company value, including titles and descriptions. Values should communicate how Kohelet operates and what clients can expect.",
+      "acceptance_criteria": [
+        "English copy completed for all values (titles + descriptions)",
+        "Hebrew translations completed",
+        "Each value title is clear and memorable (2-4 words)",
+        "Each description explains the value and its client benefit (2-3 sentences)",
+        "Values feel authentic and differentiated (not generic corporate speak)",
+        "Tone consistent with brand (professional, automation-focused)",
+        "All copy keys added to en.json and he.json under about.values.*",
+        "Values align with company's actual operating principles"
+      ],
+      "dependencies": ["PRD-03"],
+      "priority": "P0",
+      "estimated_effort": "2.5 hours",
+      "pass": false,
+      "output_file": null,
+      "copy_guidelines": {
+        "value_title_format": "2-4 words, can be descriptive phrase or single concept",
+        "description_approach": "First sentence: what the value means. Second sentence: how it benefits the client.",
+        "avoid": "Generic corporate values like 'Innovation' without specificity. Be concrete.",
+        "example_structure": {
+          "title": "Automation-First Mindset",
+          "description": "We don't just automate for the sake of technology—we obsess over eliminating your team's busywork. Every project starts with identifying what shouldn't require human time, then building systems that run themselves."
+        }
+      }
+    },
+    {
+      "id": "COPY-04",
+      "phase": "phase2-copy",
+      "agent": "kohelet-copywriter",
+      "title": "Write Team copy (EN + HE)",
+      "description": "Write team section copy following the structure defined in PRD-04. This could be founder bio, team member bios, or team overview copy depending on chosen approach.",
+      "acceptance_criteria": [
+        "English copy completed following PRD-04 structure",
+        "Hebrew translations completed",
+        "Bios are professional yet personable",
+        "Content highlights relevant expertise and credibility",
+        "Tone aligns with brand (avoid overly formal or casual)",
+        "All copy keys added to en.json and he.json under about.team.*",
+        "If founder-focused: bio tells personal story and philosophy",
+        "If team grid: each bio is consistent length and format",
+        "Section heading written (e.g., 'Meet the Team', 'Who We Are')"
+      ],
+      "dependencies": ["PRD-04"],
+      "priority": "P1",
+      "estimated_effort": "2 hours",
+      "pass": false,
+      "output_file": null,
+      "copy_guidelines": {
+        "bio_approach": "Tell the story of expertise and philosophy, not just credentials",
+        "length_targets": {
+          "founder_bio": "150-200 words (2-3 paragraphs)",
+          "team_member_bio": "50-75 words (2-3 sentences)",
+          "team_overview": "100-150 words"
+        },
+        "tone": "First-person or third-person (be consistent), professional but authentic"
+      }
+    },
+    {
+      "id": "COPY-05",
+      "phase": "phase2-copy",
+      "agent": "kohelet-copywriter",
+      "title": "Write AboutCTA copy (EN + HE)",
+      "description": "Write conversion-focused copy for the AboutCTA component. Copy should compel action while removing friction and reinforcing value.",
+      "acceptance_criteria": [
+        "English copy completed (headline, supporting text, button text)",
+        "Hebrew translations completed",
+        "Headline is action-oriented and compelling",
+        "Supporting text reinforces value and reduces friction",
+        "Primary button text is clear and specific (not generic 'Submit')",
+        "Optional secondary CTA copy written if needed",
+        "Copy creates urgency without being pushy",
+        "All copy keys added to en.json and he.json under about.cta.*",
+        "Copy tested for clarity and conversion potential"
+      ],
+      "dependencies": ["PRD-05"],
+      "priority": "P0",
+      "estimated_effort": "1.5 hours",
+      "pass": false,
+      "output_file": null,
+      "copy_guidelines": {
+        "headline_approach": "Question format (e.g., 'Ready to Automate?') or benefit statement (e.g., 'Start Saving 20 Hours per Week')",
+        "supporting_text_strategy": "1-2 sentences max. Reinforce ease/speed of getting started or preview what happens next.",
+        "button_text_best_practices": [
+          "Be specific: 'Schedule a Free Call' > 'Get Started'",
+          "Use first person when appropriate: 'Book My Call' > 'Book a Call'",
+          "Keep it short: 2-4 words ideal"
+        ],
+        "tone": "Confident and direct, but not aggressive. Focus on partnership, not sales."
+      }
+    },
+    {
+      "id": "UI-01",
+      "phase": "phase3-ui",
+      "agent": "ui-designer",
+      "title": "Implement CompanyStory component",
+      "description": "Build the CompanyStory component in TypeScript/React following PRD-01 specifications and using copy from COPY-01. Component should match design system and work with next-intl.",
+      "acceptance_criteria": [
+        "Component file created at /components/sections/about/CompanyStory.tsx",
+        "Component follows PRD-01 layout and structure specifications",
+        "All copy pulled from translations using useTranslations('about.story')",
+        "Styling matches design system (colors, typography, spacing)",
+        "Animations implemented (fade-in-up with staggered delays)",
+        "Responsive behavior correct on mobile, tablet, desktop",
+        "Component properly exported (named and default export)",
+        "TypeScript types are correct with no errors",
+        "Accessibility: semantic HTML, proper heading hierarchy",
+        "Component renders without errors or warnings"
+      ],
+      "dependencies": ["PRD-01", "COPY-01"],
+      "priority": "P0",
+      "estimated_effort": "3 hours",
+      "pass": false,
+      "output_file": "/components/sections/about/CompanyStory.tsx",
+      "implementation_notes": {
+        "import_pattern": "import { useTranslations } from 'next-intl';",
+        "translation_usage": "const t = useTranslations('about.story');",
+        "styling_reference": "Follow AboutHero.tsx patterns for consistency",
+        "animation_classes": "animate-fade-in-up with style={{ animationDelay: '0.Xs' }}",
+        "section_wrapper": "<section className=\"w-full max-w-5xl mx-auto px-6 py-20 relative\">"
+      }
+    },
+    {
+      "id": "UI-02",
+      "phase": "phase3-ui",
+      "agent": "ui-designer",
+      "title": "Implement Stats component",
+      "description": "Build the Stats component following PRD-02 specifications, displaying 4 key metrics in a responsive grid with animations.",
+      "acceptance_criteria": [
+        "Component file created at /components/sections/about/Stats.tsx",
+        "4-column grid on desktop, 2-column on tablet, 1-column on mobile",
+        "Each stat card displays metric, label, and optional description",
+        "Styling matches design system (cards with subtle borders/backgrounds)",
+        "Staggered fade-in animations on scroll or load",
+        "All copy pulled from translations using useTranslations('about.stats')",
+        "Numbers formatted consistently and prominently",
+        "Component properly exported",
+        "TypeScript types correct",
+        "Responsive behavior tested and working",
+        "Component renders without errors"
+      ],
+      "dependencies": ["PRD-02", "COPY-02"],
+      "priority": "P0",
+      "estimated_effort": "2.5 hours",
+      "pass": false,
+      "output_file": "/components/sections/about/Stats.tsx",
+      "implementation_notes": {
+        "grid_classes": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6",
+        "stat_card_styling": "p-6 rounded-xl bg-white/[0.03] border border-white/10",
+        "metric_styling": "text-4xl md:text-5xl font-display font-semibold text-accent-blue",
+        "label_styling": "text-sm text-white/70 uppercase tracking-wider mt-2",
+        "animation_approach": "Stagger animationDelay across cards (0.1s, 0.2s, 0.3s, 0.4s)"
+      }
+    },
+    {
+      "id": "UI-03",
+      "phase": "phase3-ui",
+      "agent": "ui-designer",
+      "title": "Implement Values component",
+      "description": "Build the Values component following PRD-03 specifications, displaying company values in a clean, scannable format.",
+      "acceptance_criteria": [
+        "Component file created at /components/sections/about/Values.tsx",
+        "Values displayed in grid layout (2x2 on desktop, single column mobile)",
+        "Each value card includes icon (if specified), title, and description",
+        "Styling matches design system",
+        "Hover effects on value cards (if applicable)",
+        "All copy pulled from translations using useTranslations('about.values')",
+        "Icons imported from lucide-react (if PRD-03 specifies)",
+        "Animations implemented",
+        "Component properly exported",
+        "Responsive behavior working",
+        "TypeScript types correct",
+        "Component renders without errors"
+      ],
+      "dependencies": ["PRD-03", "COPY-03"],
+      "priority": "P0",
+      "estimated_effort": "3 hours",
+      "pass": false,
+      "output_file": "/components/sections/about/Values.tsx",
+      "implementation_notes": {
+        "grid_classes": "grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8",
+        "value_card_styling": "p-8 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/[0.07] transition-all",
+        "icon_size": "w-10 h-10 text-accent-blue mb-4",
+        "title_styling": "text-xl md:text-2xl font-display font-semibold text-white mb-3",
+        "description_styling": "text-sm md:text-base text-white/60 leading-relaxed"
+      }
+    },
+    {
+      "id": "UI-04",
+      "phase": "phase3-ui",
+      "agent": "ui-designer",
+      "title": "Implement Team component",
+      "description": "Build the Team component following PRD-04 specifications and chosen approach (founder-focused or team grid).",
+      "acceptance_criteria": [
+        "Component file created at /components/sections/about/Team.tsx",
+        "Layout matches PRD-04 specifications (founder profile or team grid)",
+        "Profile images display correctly (if included)",
+        "Names, titles, and bios pulled from translations",
+        "Social media links functional (if included)",
+        "Styling matches design system",
+        "All copy pulled from translations using useTranslations('about.team')",
+        "Responsive behavior appropriate for chosen layout",
+        "Component properly exported",
+        "TypeScript types correct",
+        "Component renders without errors"
+      ],
+      "dependencies": ["PRD-04", "COPY-04"],
+      "priority": "P1",
+      "estimated_effort": "3 hours",
+      "pass": false,
+      "output_file": "/components/sections/about/Team.tsx",
+      "implementation_notes": {
+        "founder_layout": "Single column centered content with optional profile image",
+        "team_grid_layout": "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8",
+        "profile_image": "Circular: rounded-full w-24 h-24 md:w-32 md:h-32",
+        "bio_styling": "text-sm md:text-base text-white/60 leading-relaxed",
+        "social_icons": "Import from lucide-react: Linkedin, Twitter, Github"
+      }
+    },
+    {
+      "id": "UI-05",
+      "phase": "phase3-ui",
+      "agent": "ui-designer",
+      "title": "Implement AboutCTA component",
+      "description": "Build the AboutCTA component following PRD-05 specifications, creating a compelling conversion section at the bottom of the About page.",
+      "acceptance_criteria": [
+        "Component file created at /components/sections/about/AboutCTA.tsx",
+        "Layout matches PRD-05 specifications (centered content with gradient bg)",
+        "Headline, supporting text, and button(s) display correctly",
+        "Primary CTA button styled with accent-blue and glow effect",
+        "Optional secondary CTA included if specified",
+        "All copy pulled from translations using useTranslations('about.cta')",
+        "Button links to correct destination (#contact or contact page)",
+        "Background gradient/treatment implemented",
+        "Styling matches design system",
+        "Component properly exported",
+        "Responsive layout working",
+        "TypeScript types correct",
+        "Component renders without errors"
+      ],
+      "dependencies": ["PRD-05", "COPY-05"],
+      "priority": "P0",
+      "estimated_effort": "2 hours",
+      "pass": false,
+      "output_file": "/components/sections/about/AboutCTA.tsx",
+      "implementation_notes": {
+        "section_wrapper": "<section className=\"w-full py-24 relative overflow-hidden\">",
+        "content_container": "max-w-4xl mx-auto px-6 text-center",
+        "headline_styling": "text-3xl md:text-4xl lg:text-5xl font-display font-semibold text-white mb-6",
+        "button_styling": "px-8 py-3.5 bg-accent-blue text-white rounded-full font-semibold shadow-[0_0_30px_rgba(59,130,246,0.3)] hover:shadow-[0_0_40px_rgba(59,130,246,0.5)]",
+        "background_gradient": "bg-gradient-to-b from-transparent via-accent-blue/5 to-transparent"
+      }
+    },
+    {
+      "id": "INT-01",
+      "phase": "phase4-integration",
+      "agent": "direct",
+      "title": "Verify About page integration",
+      "description": "Confirm that all 5 new components are properly integrated into /app/[locale]/about/page.tsx and render in correct order without errors.",
+      "acceptance_criteria": [
+        "All components imported correctly in page.tsx",
+        "Components render in correct order: AboutHero, CompanyStory, Stats, Values, Team, AboutCTA",
+        "Page structure includes Navigation, ThreeBackground, NoiseOverlay, MouseGlow, Footer",
+        "No TypeScript errors in page file",
+        "Page compiles without errors",
+        "Page accessible via /about and /he/about routes",
+        "All components visible on page load",
+        "No console errors or warnings",
+        "Page renders correctly in both EN and HE"
+      ],
+      "dependencies": ["UI-01", "UI-02", "UI-03", "UI-04", "UI-05"],
+      "priority": "P0",
+      "estimated_effort": "30 minutes",
+      "pass": false,
+      "output_file": null,
+      "verification_steps": [
+        "Run: npm run dev",
+        "Navigate to http://localhost:3000/about",
+        "Verify all sections render visually",
+        "Check browser console for errors",
+        "Switch to Hebrew: http://localhost:3000/he/about",
+        "Verify Hebrew translations display correctly",
+        "Test responsive behavior on mobile/tablet viewports"
+      ]
+    },
+    {
+      "id": "INT-02",
+      "phase": "phase4-integration",
+      "agent": "direct",
+      "title": "Add about translations to en.json and he.json",
+      "description": "Add all translation keys for the 5 new About components to both /content/en.json and /content/he.json files. Ensure translation structure matches component usage.",
+      "acceptance_criteria": [
+        "All about.story.* keys added to en.json and he.json",
+        "All about.stats.* keys added to both files",
+        "All about.values.* keys added to both files",
+        "All about.team.* keys added to both files",
+        "All about.cta.* keys added to both files",
+        "JSON structure is valid (no syntax errors)",
+        "Keys are nested correctly under 'about' object",
+        "Hebrew translations are accurate and culturally appropriate",
+        "All translation keys used in components have corresponding entries",
+        "No missing or orphaned translation keys"
+      ],
+      "dependencies": ["COPY-01", "COPY-02", "COPY-03", "COPY-04", "COPY-05"],
+      "priority": "P0",
+      "estimated_effort": "1 hour",
+      "pass": false,
+      "output_file": null,
+      "translation_structure": {
+        "about": {
+          "hero": "...(already exists)",
+          "story": {
+            "section_title": "...",
+            "story_paragraph_1": "...",
+            "story_paragraph_2": "...",
+            "mission_headline": "...",
+            "mission_text": "..."
+          },
+          "stats": {
+            "section_title": "...",
+            "stat_1_metric": "10,000+",
+            "stat_1_label": "Hours Saved",
+            "stat_1_description": "...",
+            "stat_2_metric": "500+",
+            "stat_2_label": "Tasks Automated",
+            "stat_2_description": "...",
+            "stat_3_metric": "80%",
+            "stat_3_label": "Efficiency Gain",
+            "stat_3_description": "...",
+            "stat_4_metric": "50+",
+            "stat_4_label": "Clients Served",
+            "stat_4_description": "..."
+          },
+          "values": {
+            "section_title": "...",
+            "value_1_title": "...",
+            "value_1_description": "...",
+            "value_2_title": "...",
+            "value_2_description": "...",
+            "value_3_title": "...",
+            "value_3_description": "...",
+            "value_4_title": "...",
+            "value_4_description": "..."
+          },
+          "team": {
+            "section_title": "...",
+            "founder_name": "...",
+            "founder_title": "...",
+            "founder_bio": "..."
+          },
+          "cta": {
+            "headline": "...",
+            "supporting_text": "...",
+            "button_text": "..."
+          }
+        }
+      }
+    },
+    {
+      "id": "INT-03",
+      "phase": "phase4-integration",
+      "agent": "direct",
+      "title": "Verify full page renders without errors",
+      "description": "Comprehensive end-to-end testing of the complete About page in both English and Hebrew, ensuring all components render correctly, translations work, and no errors occur.",
+      "acceptance_criteria": [
+        "About page loads without errors on /about",
+        "About page loads without errors on /he/about",
+        "All 6 components render in correct order (AboutHero through AboutCTA)",
+        "No missing translations in EN or HE",
+        "All animations trigger correctly",
+        "Responsive layouts work on mobile (375px), tablet (768px), desktop (1440px)",
+        "No TypeScript errors",
+        "No console errors or warnings",
+        "Navigation and Footer render correctly",
+        "Background effects (ThreeBackground, MouseGlow, NoiseOverlay) working",
+        "All CTAs link to correct destinations",
+        "Page scrolls smoothly",
+        "Performance acceptable (no significant lag)"
+      ],
+      "dependencies": ["INT-01", "INT-02"],
+      "priority": "P0",
+      "estimated_effort": "1 hour",
+      "pass": false,
+      "output_file": null,
+      "testing_checklist": [
+        "Visual regression test: Compare with design specifications",
+        "Functional test: Click all CTAs and verify navigation",
+        "Translation test: Switch between EN and HE, verify all text changes",
+        "Responsive test: Test breakpoints at 375px, 768px, 1024px, 1440px",
+        "Animation test: Reload page and verify fade-in animations trigger",
+        "Browser test: Test in Chrome, Firefox, Safari (if available)",
+        "Accessibility test: Tab through page, verify focus states and semantic HTML",
+        "Performance test: Check page load time and scroll performance"
+      ]
+    }
+  ],
+  "notes": {
+    "task_dependencies": "All UI tasks depend on their corresponding PRD and COPY tasks. Integration tasks depend on all UI tasks being complete.",
+    "agent_responsibilities": {
+      "prd-architect": "Define component requirements and specifications (Phase 1)",
+      "kohelet-copywriter": "Write all copy in English and Hebrew (Phase 2)",
+      "ui-designer": "Implement React components with styling and translations (Phase 3)",
+      "direct": "Integration, translation file updates, and final verification (Phase 4)"
+    },
+    "file_locations": {
+      "components": "/Users/Kohelet/Code/kohelet/components/sections/about/",
+      "page": "/Users/Kohelet/Code/kohelet/app/[locale]/about/page.tsx",
+      "translations": [
+        "/Users/Kohelet/Code/kohelet/content/en.json",
+        "/Users/Kohelet/Code/kohelet/content/he.json"
+      ]
+    },
+    "success_criteria": "Project is complete when all tasks show 'pass': true and the About page renders perfectly in both English and Hebrew with no errors.",
+    "estimated_total_effort": "Approximately 28-32 hours across all phases"
+  }
+}
