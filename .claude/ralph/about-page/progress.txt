@@ -811,3 +811,52 @@ about.stats.clientsServed.label
 **Phase 3 Progress**: 2/5 COPY tasks complete (COPY-01 ✅, COPY-02 ✅)
 
 **Next Task**: COPY-03 (Write Values copy) - depends on UI-03 ✅
+
+### [2026-01-08] COPY-03: Write Values copy ✅
+**Agent**: kohelet-copywriter
+**Status**: COMPLETE
+
+**Deliverables**:
+- Expanded from 4 to 6 values to match PRD-03 specifications
+- All values have compelling names and descriptions in English and Hebrew
+- Icon mappings aligned with PRD-03 requirements
+
+**6 Values (English)**:
+1. **Innovation-Driven** (lightbulb) - "We don't follow trends—we deploy what works..."
+2. **Results-Obsessed** (target) - "We measure success in hours saved..."
+3. **Built to Scale** (trending-up) - "The systems we build today grow with you tomorrow..."
+4. **Partnership-First** (handshake) - "You're not hiring a dev shop..."
+5. **Execution Excellence** (rocket) - "We ship fast without cutting corners..."
+6. **Transparent by Default** (eye) - "You'll always know what we're building..."
+
+**6 Values (Hebrew)**:
+1. **מונעי חדשנות** - Innovation-Driven
+2. **אובססיה לתוצאות** - Results-Obsessed
+3. **בנוי להתרחב** - Built to Scale
+4. **שותפות קודם כל** - Partnership-First
+5. **מצוינות בביצוע** - Execution Excellence
+6. **שקיפות כברירת מחדל** - Transparent by Default
+
+**Strategic Copy Decisions**:
+- Each value connects to measurable business outcomes
+- Uses specific stats (97% retention, 48-hour response, 80% automation)
+- "Technical co-founder" positioning vs. generic dev shop
+- Hebrew flows naturally with native-sounding phrases
+
+**Translation Keys Structure**:
+```
+about.values.sectionTitle
+about.values.sectionSubtitle
+about.values.items[0-5].id
+about.values.items[0-5].icon
+about.values.items[0-5].name
+about.values.items[0-5].description
+```
+
+**Files Updated**:
+- `/content/en.json` - 6 values with full descriptions
+- `/content/he.json` - 6 values with Hebrew translations
+
+**Phase 3 Progress**: 3/5 COPY tasks complete (COPY-01 ✅, COPY-02 ✅, COPY-03 ✅)
+
+**Next Task**: COPY-04 (Write Team bios) - depends on UI-04 ✅
