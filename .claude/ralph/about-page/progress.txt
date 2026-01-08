@@ -914,3 +914,48 @@ about.team.members[0-3].social.linkedin
 **Phase 3 Progress**: 4/5 COPY tasks complete (COPY-01 ✅, COPY-02 ✅, COPY-03 ✅, COPY-04 ✅)
 
 **Next Task**: COPY-05 (Write AboutCTA copy) - depends on UI-05 ✅
+
+### [2026-01-08] COPY-05: Write AboutCTA copy ✅
+**Agent**: kohelet-copywriter
+**Status**: COMPLETE
+
+**Previous Copy (Generic)**:
+- "Ready to Automate?" / "מוכנים לאוטומציה?"
+- Vague value proposition, standard buttons
+
+**Updated Copy (Results-Focused)**:
+
+**English**:
+- Headline: "Stop Burning 20+ Hours Per Week on Manual Work"
+- Subtext: "Book a free 30-minute discovery call. We'll analyze your workflows and show you exactly what 15-25 hours back looks like—in revenue terms."
+- Primary: "Book Your Discovery Call"
+- Secondary: "See What We Build"
+
+**Hebrew**:
+- Headline: "מבזבזים 20+ שעות בשבוע על עבודה ידנית?"
+- Subtext: "קבעו שיחת היכרות חינמית של 30 דקות. נבחן את התהליכים ונראה לכם בדיוק מה 15-25 שעות חזרה אומר—במונחים של הכנסות."
+- Primary: "קבעו שיחת היכרות"
+- Secondary: "ראו מה אנחנו בונים"
+
+**Strategic Improvements**:
+- Headline = specific pain point (20+ hours) creates urgency
+- Subtext = concrete outcome promise (15-25 hours) + ROI framing
+- Primary CTA = matches "Free Discovery Call" brand standard
+- Secondary = maintains softer option for those not ready
+- Hebrew = natural flow while being direct about results
+
+**Translation Keys Structure**:
+```
+about.cta.headline
+about.cta.subtext
+about.cta.primaryButton
+about.cta.secondaryButton
+```
+
+**Files Updated**:
+- `/content/en.json` - New CTA copy
+- `/content/he.json` - New Hebrew CTA copy
+
+**Phase 3 Status**: ALL COPY TASKS COMPLETE (COPY-01 ✅, COPY-02 ✅, COPY-03 ✅, COPY-04 ✅, COPY-05 ✅) 🎉
+
+**Next Task**: INT-01 (Update translation files) - COPY dependencies met
