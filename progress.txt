@@ -43,6 +43,27 @@
 - PRD-01 complete (CompanyStory spec)
 - PRD-02 complete (Stats spec)
 
-### Next Task: PRD-03 - Define Values component requirements
+- [x] PRD-03: Define Values component requirements
+  - Number of values: 4 (Automation-First Mindset, Transparency & Communication, Results-Driven Development, Long-Term Partnership)
+  - Layout: 2x2 responsive grid (1-col mobile, 2-col tablet/desktop)
+  - Grid: `grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6`
+  - Container: `max-w-6xl mx-auto px-6 py-20 md:py-32`
+  - Value Card: Glassmorphism styling with `bg-[#111113]/80 backdrop-blur-md border border-white/10`
+  - Card elements: Icon (w-10/w-12, accent-blue), title (text-xl/2xl, font-display, white), description (text-sm/base, white/60)
+  - Icons from lucide-react: Zap, Eye, Target, Handshake
+  - Animation: CSS animate-fade-in-up with staggered delays (0.1s-0.4s) - NO GSAP needed
+  - Translation keys: about.values.section_title, section_subtitle, items[] array with id/icon/title/description
+  - Accessibility: <section> tag, <h2> for title, <h3> for value titles, aria-hidden on icons
+  - Full spec saved to: .claude/ralph/about-page/PRD-03-Values-Specification.json
+
+### Current State:
+- AboutHero.tsx exists
+- index.ts has exports for all 5 components (but files don't exist yet)
+- No about translations exist in en.json/he.json
+- PRD-01 complete (CompanyStory spec)
+- PRD-02 complete (Stats spec)
+- PRD-03 complete (Values spec)
+
+### Next Task: PRD-04 - Define Team component requirements
 
 ---

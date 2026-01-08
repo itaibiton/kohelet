@@ -1,0 +1,546 @@
+{
+  "component_name": "Values",
+  "component_id": "PRD-03",
+  "file_path": "/components/sections/about/Values.tsx",
+  "description": "Company values showcase section displaying 4 core principles with icons, titles, and descriptions using glassmorphism card styling",
+
+  "detailed_requirements": {
+
+    "final_specification": {
+
+      "layout": {
+        "section_wrapper": {
+          "classes": "w-full max-w-6xl mx-auto px-6 py-20 md:py-32 relative z-10",
+          "description": "Main section container with responsive padding and max width, consistent with Stats component"
+        },
+        "section_header": {
+          "classes": "text-center mb-12 md:mb-16 space-y-4",
+          "description": "Section title and optional subtitle above value cards",
+          "elements": [
+            "section_title (h2)",
+            "section_subtitle (optional paragraph)"
+          ]
+        },
+        "grid_container": {
+          "classes": "grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6",
+          "description": "Responsive grid: 1 column mobile, 2 columns tablet/desktop (2x2 layout)",
+          "behavior": "Cards stack vertically on mobile, 2x2 grid on tablet and larger screens"
+        }
+      },
+
+      "value_card": {
+        "structure": {
+          "card_wrapper": {
+            "classes": "group relative p-6 md:p-8 rounded-xl md:rounded-2xl border border-white/10 bg-[#111113]/80 backdrop-blur-md hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300",
+            "description": "Glassmorphism card with hover effects, matching Stats component pattern",
+            "elements": [
+              "icon_container (Lucide icon with accent color)",
+              "value_title (short, impactful heading)",
+              "value_description (2-3 sentences explaining the value and its benefit)"
+            ]
+          },
+          "icon_container": {
+            "classes": "mb-4 md:mb-6 flex justify-start",
+            "icon_classes": "w-10 h-10 md:w-12 md:h-12 text-accent-blue",
+            "description": "Icon positioned at top-left of card, larger than Stats icons to emphasize values"
+          },
+          "value_title": {
+            "classes": "text-xl md:text-2xl font-display font-semibold tracking-tight text-white mb-3",
+            "description": "Bold, clear value name (2-4 words)",
+            "max_length": "4 words recommended",
+            "examples": [
+              "Automation-First Mindset",
+              "Transparency & Communication",
+              "Results-Driven Development",
+              "Long-Term Partnership"
+            ]
+          },
+          "value_description": {
+            "classes": "text-sm md:text-base text-white/60 font-light leading-relaxed tracking-tight",
+            "description": "2-3 sentence explanation of what the value means and how it benefits clients",
+            "length_guidance": "40-60 words per description",
+            "structure": "Sentence 1: What the value means. Sentence 2-3: How it benefits the client or manifests in practice."
+          }
+        },
+        "hover_effects": {
+          "background": "bg-white/[0.04]",
+          "border": "border-white/20",
+          "transition": "transition-all duration-300",
+          "description": "Subtle brightening on hover to indicate interactivity without making cards clickable"
+        }
+      },
+
+      "typography": {
+        "section_title": {
+          "classes": "text-3xl md:text-4xl lg:text-5xl font-display font-medium tracking-tight text-white",
+          "content_key": "about.values.section_title",
+          "example": "Our Values"
+        },
+        "section_subtitle": {
+          "classes": "text-base md:text-lg text-white/50 font-light tracking-tight max-w-2xl mx-auto",
+          "content_key": "about.values.section_subtitle",
+          "optional": true,
+          "example": "The principles that guide every project and partnership"
+        },
+        "value_title": {
+          "classes": "text-xl md:text-2xl font-display font-semibold tracking-tight text-white",
+          "format_guidance": "Use Title Case, keep concise (2-4 words)",
+          "examples": [
+            "Automation-First Mindset",
+            "Radical Transparency",
+            "Results Over Activity",
+            "Partnership Mindset"
+          ]
+        },
+        "value_description": {
+          "classes": "text-sm md:text-base text-white/60 font-light leading-relaxed tracking-tight",
+          "format_guidance": "2-3 complete sentences, balance being specific with being concise",
+          "tone": "Professional but conversational, focused on client benefits"
+        }
+      },
+
+      "animation": {
+        "approach": "Staggered fade-in animation on page load using CSS animations",
+        "card_fade_in": {
+          "classes": "animate-fade-in-up",
+          "stagger": {
+            "card_1": "style={{ animationDelay: '0.1s' }}",
+            "card_2": "style={{ animationDelay: '0.2s' }}",
+            "card_3": "style={{ animationDelay: '0.3s' }}",
+            "card_4": "style={{ animationDelay: '0.4s' }}"
+          },
+          "description": "Each value card fades in sequentially with 0.1s delays"
+        },
+        "section_header": {
+          "title_animation": "animate-fade-in-up with style={{ animationDelay: '0s' }}",
+          "subtitle_animation": "animate-fade-in-up with style={{ animationDelay: '0.1s' }}",
+          "description": "Header elements animate before value cards"
+        },
+        "no_scroll_trigger": {
+          "rationale": "Unlike Stats which uses GSAP ScrollTrigger for counter animations, Values uses simpler CSS animations on page load",
+          "dependencies": "No GSAP required, uses existing animate-fade-in-up utility"
+        }
+      },
+
+      "spacing": {
+        "section_padding": {
+          "mobile": "py-20 px-6",
+          "desktop": "py-32 px-6",
+          "description": "Consistent with AboutHero and Stats section padding"
+        },
+        "section_header": {
+          "bottom_margin": "mb-12 md:mb-16",
+          "description": "Space between header and value cards grid"
+        },
+        "card_padding": {
+          "mobile": "p-6",
+          "desktop": "p-8",
+          "description": "Inner padding for value cards, matching Stats cards"
+        },
+        "grid_gap": {
+          "mobile": "gap-4",
+          "desktop": "gap-6",
+          "description": "Space between value cards in grid"
+        },
+        "text_spacing": {
+          "icon_bottom": "mb-4 md:mb-6",
+          "title_bottom": "mb-3",
+          "description": "Vertical spacing within each value card"
+        }
+      },
+
+      "translation_keys": [
+        {
+          "key": "about.values.section_title",
+          "type": "string",
+          "example": "Our Values"
+        },
+        {
+          "key": "about.values.section_subtitle",
+          "type": "string",
+          "optional": true,
+          "example": "The principles that guide every project and partnership"
+        },
+        {
+          "key": "about.values.items",
+          "type": "array",
+          "structure": [
+            {
+              "id": "automation_first",
+              "icon": "zap",
+              "title": "Automation-First Mindset",
+              "description": "We don't automate for the sake of technology—we obsess over eliminating your team's busywork. Every project starts with identifying what shouldn't require human time, then building systems that run themselves."
+            },
+            {
+              "id": "transparency",
+              "icon": "eye",
+              "title": "Transparency & Communication",
+              "description": "No black boxes, no surprises. You'll see exactly what we're building, why we're making each decision, and where your investment goes. Weekly updates and open communication channels keep you in control."
+            },
+            {
+              "id": "results_driven",
+              "icon": "target",
+              "title": "Results-Driven Development",
+              "description": "We measure success by outcomes, not deliverables. Your automation should save hours, your software should drive revenue. If it doesn't move the needle, we didn't do our job."
+            },
+            {
+              "id": "long_term_partnership",
+              "icon": "handshake",
+              "title": "Long-Term Partnership",
+              "description": "We're not building one-off projects—we're building relationships. Your business evolves, and we're here to adapt your systems as you scale. Our clients tend to stay clients."
+            }
+          ]
+        }
+      ],
+
+      "accessibility": {
+        "semantic_html": {
+          "section_tag": "Use <section> with id='values' for anchor linking",
+          "heading_hierarchy": "Use <h2> for section title, <h3> for value titles",
+          "value_structure": "Use semantic <article> tag for each value card",
+          "description": "Use <p> tags for value descriptions"
+        },
+        "aria_considerations": [
+          "Section should have aria-labelledby pointing to section title",
+          "Icons are decorative: use aria-hidden='true' on icon elements",
+          "Ensure value titles are proper <h3> tags for screen reader navigation",
+          "Cards are non-interactive, so no focus states or keyboard handling needed",
+          "If cards become clickable in future, add role='button', tabindex='0', and keyboard handlers"
+        ],
+        "color_contrast": {
+          "section_title": "White text on dark background exceeds WCAG AA",
+          "value_title": "White text on dark card background exceeds WCAG AA",
+          "value_description": "white/60 opacity on dark background meets WCAG AA (approximately 4.5:1 contrast)",
+          "icon": "accent-blue (#3B82F6) on dark background exceeds WCAG AA",
+          "border": "white/10 border provides subtle visual separation without relying on color alone"
+        },
+        "focus_indicators": {
+          "requirement": "Not needed for non-interactive cards",
+          "future_consideration": "If cards become clickable, add focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
+        }
+      },
+
+      "responsive_behavior": {
+        "breakpoints": {
+          "mobile": "< 640px: 1 column, cards stack vertically",
+          "tablet": "640px - 1024px: 2 columns, 2x2 grid",
+          "desktop": "> 1024px: 2 columns, 2x2 grid (maintains 2x2 for better readability)"
+        },
+        "text_scaling": {
+          "section_title": "text-3xl (mobile) → text-4xl (tablet) → text-5xl (desktop)",
+          "section_subtitle": "text-base (mobile) → text-lg (desktop)",
+          "value_title": "text-xl (mobile) → text-2xl (desktop)",
+          "value_description": "text-sm (mobile) → text-base (desktop)",
+          "icon_size": "w-10 h-10 (mobile) → w-12 h-12 (desktop)"
+        },
+        "spacing_scaling": {
+          "section_padding": "py-20 (mobile) → py-32 (desktop)",
+          "card_padding": "p-6 (mobile) → p-8 (desktop)",
+          "grid_gap": "gap-4 (mobile) → gap-6 (desktop)",
+          "icon_margin": "mb-4 (mobile) → mb-6 (desktop)"
+        },
+        "card_behavior": {
+          "mobile": "Full width cards, adequate touch targets",
+          "desktop": "Fixed 2-column layout maintains readability, hover effects enabled"
+        }
+      },
+
+      "data_structure": {
+        "value_interface": {
+          "typescript": "interface Value { id: string; icon: string; title: string; description: string; }",
+          "description": "Each value card data structure"
+        },
+        "values_data": [
+          {
+            "id": "automation_first",
+            "icon": "Zap",
+            "title": "Automation-First Mindset",
+            "description": "We don't automate for the sake of technology—we obsess over eliminating your team's busywork. Every project starts with identifying what shouldn't require human time, then building systems that run themselves."
+          },
+          {
+            "id": "transparency",
+            "icon": "Eye",
+            "title": "Transparency & Communication",
+            "description": "No black boxes, no surprises. You'll see exactly what we're building, why we're making each decision, and where your investment goes. Weekly updates and open communication channels keep you in control."
+          },
+          {
+            "id": "results_driven",
+            "icon": "Target",
+            "title": "Results-Driven Development",
+            "description": "We measure success by outcomes, not deliverables. Your automation should save hours, your software should drive revenue. If it doesn't move the needle, we didn't do our job."
+          },
+          {
+            "id": "long_term_partnership",
+            "icon": "Handshake",
+            "title": "Long-Term Partnership",
+            "description": "We're not building one-off projects—we're building relationships. Your business evolves, and we're here to adapt your systems as you scale. Our clients tend to stay clients."
+          }
+        ]
+      },
+
+      "technical_implementation": {
+        "component_type": "Client component (use client directive)",
+        "required_imports": [
+          "useTranslations from next-intl",
+          "Lucide icons (Zap, Eye, Target, Handshake)",
+          "React (default import)"
+        ],
+        "state_management": {
+          "requirement": "No state needed - static content from translations",
+          "note": "Unlike Stats component, no animation state or refs required"
+        },
+        "animation_setup": {
+          "approach": "Pure CSS animations using existing animate-fade-in-up utility",
+          "no_gsap_required": "Simpler than Stats - no counter animations or scroll triggers needed",
+          "implementation": "Apply animate-fade-in-up class with inline style animationDelay"
+        },
+        "icon_mapping": {
+          "description": "Map icon names from translations to Lucide icon components",
+          "implementation": "Create icon mapping object: { zap: Zap, eye: Eye, target: Target, handshake: Handshake }",
+          "dynamic_rendering": "Dynamically render icon component based on translation data"
+        }
+      },
+
+      "visual_design_notes": {
+        "glassmorphism_treatment": {
+          "background": "bg-[#111113]/80 with backdrop-blur-md for frosted glass effect",
+          "border": "border border-white/10 for subtle definition",
+          "hover_state": "Slightly brighter background (bg-white/[0.04]) and border (border-white/20)",
+          "consistency": "Matches Stats component for visual cohesion across About page"
+        },
+        "color_palette": {
+          "primary_text": "#ffffff (white)",
+          "secondary_text": "rgba(255,255,255,0.6) (white/60)",
+          "tertiary_text": "rgba(255,255,255,0.5) (white/50)",
+          "accent": "#3b82f6 (accent-blue)",
+          "background": "#111113 (brand-gray)",
+          "card_background": "rgba(17,17,19,0.8) with backdrop blur",
+          "border": "rgba(255,255,255,0.1) (white/10)",
+          "hover_border": "rgba(255,255,255,0.2) (white/20)"
+        },
+        "visual_hierarchy": {
+          "1_icon": "Accent blue, largest at top (w-10 md:w-12)",
+          "2_title": "White, bold, font-display (text-xl md:text-2xl)",
+          "3_description": "White/60, light weight, readable line height (text-sm md:text-base)",
+          "spacing": "Clear vertical rhythm: icon → 4-6 spacing → title → 3 spacing → description"
+        },
+        "comparison_to_stats": {
+          "similarities": "Same card wrapper, hover effects, glassmorphism treatment",
+          "differences": "Larger icons (12 vs 10), more text content (descriptions vs single labels), no animations beyond fade-in"
+        }
+      },
+
+      "icon_recommendations": {
+        "automation_first": {
+          "icon": "Zap",
+          "lucide_import": "import { Zap } from 'lucide-react'",
+          "rationale": "Represents speed, energy, and automation - strongly associated with automation in tech UX",
+          "alternative": "Workflow, Cpu"
+        },
+        "transparency": {
+          "icon": "Eye",
+          "lucide_import": "import { Eye } from 'lucide-react'",
+          "rationale": "Represents visibility, clarity, and open communication",
+          "alternative": "MessageSquare, Radio (for broadcast)"
+        },
+        "results_driven": {
+          "icon": "Target",
+          "lucide_import": "import { Target } from 'lucide-react'",
+          "rationale": "Represents goals, precision, and hitting objectives",
+          "alternative": "TrendingUp, Award, CheckCircle"
+        },
+        "long_term_partnership": {
+          "icon": "Handshake",
+          "lucide_import": "import { Handshake } from 'lucide-react'",
+          "rationale": "Represents partnership, agreement, and collaborative relationships",
+          "alternative": "Users, Heart, Shield (for trust)"
+        }
+      },
+
+      "content_guidelines": {
+        "value_titles": {
+          "length": "2-4 words maximum",
+          "format": "Title Case",
+          "tone": "Clear, specific, action-oriented when possible",
+          "avoid": "Generic corporate buzzwords without context (e.g., 'Innovation', 'Excellence')",
+          "examples_good": [
+            "Automation-First Mindset",
+            "Radical Transparency",
+            "Results Over Activity",
+            "Partnership Mindset"
+          ],
+          "examples_bad": [
+            "Innovation" (too vague),
+            "Customer-Centric Excellence" (too corporate),
+            "Synergistic Collaboration" (buzzword overload)"
+          ]
+        },
+        "value_descriptions": {
+          "length": "40-60 words (2-3 sentences)",
+          "structure": {
+            "sentence_1": "What this value means in concrete terms",
+            "sentence_2": "How it manifests in your work or client experience",
+            "sentence_3_optional": "The benefit or outcome for clients"
+          },
+          "tone": "Professional but conversational, client-focused",
+          "perspective": "Use 'we' for company actions, 'you/your' for client benefits",
+          "avoid": [
+            "Corporate jargon",
+            "Vague statements without examples",
+            "Self-congratulation without client benefit",
+            "Overused phrases like 'best-in-class', 'world-class', 'cutting-edge'"
+          ],
+          "example_structure": {
+            "what": "We don't automate for the sake of technology—we obsess over eliminating your team's busywork.",
+            "how": "Every project starts with identifying what shouldn't require human time, then building systems that run themselves.",
+            "benefit": "(implicit in 'eliminating busywork' and 'run themselves')"
+          }
+        },
+        "section_header": {
+          "title_options": [
+            "Our Values",
+            "How We Work",
+            "What Drives Us",
+            "Our Principles"
+          ],
+          "subtitle_guidance": "Optional 1-sentence explanation of why values matter or what they represent",
+          "subtitle_examples": [
+            "The principles that guide every project and partnership",
+            "What you can expect when working with us",
+            "How we approach every client engagement"
+          ]
+        }
+      }
+    },
+
+    "acceptance_criteria": {
+      "layout": [
+        "Section uses max-w-6xl container with responsive padding (py-20 md:py-32)",
+        "Values arranged in 2x2 responsive grid (1 col mobile, 2 col tablet/desktop)",
+        "Grid gap is gap-4 on mobile, gap-6 on desktop",
+        "Section header included with title and optional subtitle"
+      ],
+      "value_cards": [
+        "Each card has glassmorphism styling (bg-[#111113]/80 backdrop-blur-md)",
+        "Cards have border border-white/10",
+        "Cards have rounded corners (rounded-xl md:rounded-2xl)",
+        "Hover effects work: bg-white/[0.04] and border-white/20",
+        "Each card contains: icon, title, description",
+        "Icons are positioned at top-left, sized w-10 h-10 (mobile) to w-12 h-12 (desktop)",
+        "Icons use accent-blue color"
+      ],
+      "typography": [
+        "Section title uses font-display with appropriate sizing (text-3xl to text-5xl)",
+        "Value titles use font-display font-semibold (text-xl to text-2xl)",
+        "Value descriptions use text-white/60 with font-light and leading-relaxed",
+        "All text has tracking-tight for tighter letter spacing"
+      ],
+      "animations": [
+        "Cards fade in with staggered delays (0.1s, 0.2s, 0.3s, 0.4s)",
+        "Section header animates before cards (title: 0s, subtitle: 0.1s)",
+        "Uses animate-fade-in-up utility class",
+        "No GSAP or complex scroll triggers needed"
+      ],
+      "translations": [
+        "Component uses useTranslations('about.values')",
+        "Section title and subtitle pulled from translations",
+        "Each value has title, description, and icon name in translation data",
+        "Translation keys follow documented structure (about.values.*)"
+      ],
+      "accessibility": [
+        "Section uses semantic <section> tag with id='values'",
+        "Section title uses <h2> tag",
+        "Value titles use <h3> tags for proper heading hierarchy",
+        "Icons are decorative with aria-hidden='true'",
+        "Color contrast meets WCAG AA standards",
+        "Cards are non-interactive, no keyboard navigation needed"
+      ],
+      "responsive": [
+        "Layout adapts correctly at all breakpoints (mobile: 1 col, tablet+: 2 col)",
+        "Text sizes scale appropriately across breakpoints",
+        "Icon sizes scale appropriately (w-10 to w-12)",
+        "Padding and spacing scale appropriately",
+        "Cards remain readable and well-proportioned at all sizes",
+        "Touch targets are adequate on mobile (cards are large enough)"
+      ],
+      "technical": [
+        "Component has 'use client' directive",
+        "All required Lucide icons properly imported",
+        "Icon mapping object correctly maps icon names to components",
+        "No TypeScript errors",
+        "No console warnings",
+        "Component exports default function",
+        "Works with both English and Hebrew translations (RTL support via next-intl)"
+      ]
+    },
+
+    "implementation_notes": {
+      "icon_mapping_pattern": {
+        "description": "Dynamic icon rendering based on translation data",
+        "code_example": "const iconMap = { zap: Zap, eye: Eye, target: Target, handshake: Handshake }; const IconComponent = iconMap[value.icon]; return <IconComponent className='...' />"
+      },
+      "animation_simplicity": {
+        "description": "Values component uses simpler animations than Stats",
+        "rationale": "No counters or scroll triggers needed - pure CSS fade-in is sufficient",
+        "implementation": "Apply animate-fade-in-up with inline animationDelay prop"
+      },
+      "rtl_support": {
+        "description": "Component should work with both English (LTR) and Hebrew (RTL)",
+        "considerations": [
+          "Icon position (justify-start works for both LTR and RTL)",
+          "Text alignment (natural left/right based on dir attribute)",
+          "Grid layout remains 2x2 in both directions"
+        ],
+        "implementation": "next-intl handles dir attribute automatically, no custom RTL classes needed"
+      },
+      "content_length": {
+        "description": "Ensure value descriptions are consistent length for visual balance",
+        "recommendation": "Keep all 4 descriptions between 40-60 words",
+        "visual_impact": "Similar-length descriptions create balanced, professional grid appearance"
+      },
+      "hover_behavior": {
+        "description": "Cards have hover effects but are not clickable",
+        "rationale": "Hover provides visual interest and indicates quality of interactivity, even though cards are informational only",
+        "future_enhancement": "Could link to detailed blog posts about each value"
+      },
+      "performance": {
+        "description": "Lightweight component with no heavy dependencies",
+        "benefits": [
+          "No GSAP = smaller bundle size",
+          "CSS animations = better performance than JS",
+          "Static content = no re-renders after initial mount"
+        ]
+      }
+    },
+
+    "dependencies_required": [
+      {
+        "package": "next-intl",
+        "version": "existing",
+        "purpose": "Translations and internationalization"
+      },
+      {
+        "package": "lucide-react",
+        "version": "existing",
+        "purpose": "Icons (Zap, Eye, Target, Handshake)"
+      },
+      {
+        "package": "react",
+        "version": "existing",
+        "purpose": "React component"
+      }
+    ]
+  },
+
+  "pass_criteria": {
+    "definition_complete": true,
+    "specification_detailed": true,
+    "translation_keys_documented": true,
+    "accessibility_addressed": true,
+    "responsive_behavior_defined": true,
+    "animation_approach_specified": true,
+    "icon_strategy_determined": true,
+    "content_guidelines_provided": true,
+    "ready_for_ui_implementation": true
+  }
+}
