@@ -132,7 +132,6 @@ export function BlogGrid({ posts, locale, isLoading = false }: BlogGridProps) {
               date={post.date}
               category={post.category}
               slug={post.slug}
-              locale={locale}
             />
           </div>
         ))}

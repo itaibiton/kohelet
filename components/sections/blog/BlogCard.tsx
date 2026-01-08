@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { Calendar, User } from "lucide-react";
 
@@ -15,7 +15,6 @@ export interface BlogCardProps {
   date: string; // ISO date string
   category: string;
   slug: string;
-  locale: string;
 }
 
 export function BlogCard({
@@ -26,21 +25,17 @@ export function BlogCard({
   date,
   category,
   slug,
-  locale,
 }: BlogCardProps) {
-  // Format date based on locale
-  const formattedDate = new Date(date).toLocaleDateString(
-    locale === "he" ? "he-IL" : "en-US",
-    {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    }
-  );
+  // Format date - using browser's locale automatically
+  const formattedDate = new Date(date).toLocaleDateString(undefined, {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 
   return (
     <Link
-      href={`/${locale}/blog/${slug}`}
+      href={`/blog/${slug}`}
       className="group relative block rounded-xl overflow-hidden bg-brand-gray/50 backdrop-blur-md border border-white/10 hover:border-accent-blue/30 transition-all duration-500 hover:-translate-y-1"
     >
       {/* Hover glow effect */}

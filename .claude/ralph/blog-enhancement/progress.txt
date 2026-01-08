@@ -1,0 +1,52 @@
+# Blog Enhancement - Progress Log
+
+## Project Started: 2026-01-08
+
+## Goal
+Fix blog section bugs (routing, layout, search), improve filter UI with shadcn components, set up MDX+Contentlayer2 for content management, add individual blog post pages, and integrate Vercel Analytics, Speed Insights, and OG image generation.
+
+## Components to Build
+- Fixed BlogCard with i18n routing
+- Fixed BlogHero layout (compact, left-aligned, single-line title)
+- Refactored BlogFilters with shadcn Input + Select
+- BlogPostHeader (title, author, date, category)
+- BlogPostContent (MDX renderer)
+- MDXComponents (styled markdown elements)
+- OG Image API route
+
+## Agent Workflow
+- ui-designer: UI components (BlogHero, BlogFilters, BlogPostHeader, BlogPostContent, MDXComponents)
+- senior-frontend-dev: Setup, integrations, data flow (Contentlayer, Vercel, routing fixes)
+
+## Phases
+1. Bug Fixes (BUG-01, BUG-02, BUG-03)
+2. shadcn Setup (SHADCN-01, SHADCN-02, SHADCN-03)
+3. Contentlayer (CL-01, CL-02, CL-03, CL-04, CL-05)
+4. Blog Post Page (POST-01, POST-02, POST-03, POST-04)
+5. Vercel (VERCEL-01, VERCEL-02, VERCEL-03)
+6. Integration (INT-01, INT-02, INT-03, QA-01)
+
+## Completed Tasks:
+- BUG-01: Fix BlogCard routing bug
+
+## Current Phase: Phase 1 - Bug Fixes
+
+---
+## Progress Log:
+
+### 2026-01-08 - BUG-01 Complete
+**Task:** Fix BlogCard routing bug
+**Agent:** senior-frontend-dev
+
+**Changes Made:**
+1. `components/sections/blog/BlogCard.tsx`:
+   - Changed import from `import Link from "next/link"` to `import { Link } from "@/i18n/routing"`
+   - Removed `locale` prop from `BlogCardProps` interface
+   - Updated href from `/${locale}/blog/${slug}` to `/blog/${slug}`
+   - Updated date formatting to use browser's locale automatically
+
+2. `components/sections/blog/BlogGrid.tsx`:
+   - Removed `locale={locale}` prop being passed to BlogCard
+
+**Result:** The i18n routing system now automatically handles locale prefixing. BlogCard routing works correctly for both /en/blog/slug and /he/blog/slug.
+

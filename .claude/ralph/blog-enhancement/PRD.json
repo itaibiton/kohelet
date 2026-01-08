@@ -1,0 +1,377 @@
+{
+  "project": "Blog Enhancement",
+  "version": "1.0.0",
+  "created": "2026-01-08",
+  "completion_promise": "BLOG-ENHANCEMENT COMPLETE",
+
+  "context": {
+    "tech_stack": [
+      "Next.js 16.0.8 (Turbopack)",
+      "React 19.0.0",
+      "Tailwind CSS v4",
+      "next-intl 4.5.8",
+      "Lucide React icons",
+      "GSAP animations",
+      "Three.js effects",
+      "Radix UI primitives",
+      "CVA + clsx + tailwind-merge"
+    ],
+    "i18n": "next-intl with en/he locales, RTL support for Hebrew",
+    "theme": "Glassmorphism dark (bg-brand-gray/50, backdrop-blur-md, border-white/10)",
+    "existing_components": [
+      "BlogHero",
+      "BlogFilters",
+      "BlogCard",
+      "BlogGrid"
+    ],
+    "components_to_build": [
+      "Fixed BlogCard with i18n routing",
+      "Fixed BlogHero layout",
+      "Refactored BlogFilters with shadcn",
+      "BlogPostHeader",
+      "BlogPostContent",
+      "MDXComponents",
+      "OG Image API route"
+    ]
+  },
+
+  "user_stories": [
+    {
+      "id": "BUG-01",
+      "title": "Fix BlogCard routing bug",
+      "description": "Change BlogCard.tsx line 3 from 'import Link from next/link' to 'import { Link } from @/i18n/routing'. Update href from '/${locale}/blog/${slug}' to '/blog/${slug}'. Remove locale prop since i18n Link handles it automatically. Update BlogGrid.tsx to not pass locale to BlogCard.",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "BlogCard imports Link from @/i18n/routing",
+        "href uses '/blog/${slug}' format without locale prefix",
+        "locale prop removed from BlogCardProps interface",
+        "BlogGrid updated to not pass locale prop",
+        "Clicking blog card navigates correctly to /en/blog/slug or /he/blog/slug"
+      ],
+      "dependencies": [],
+      "pass": true
+    },
+    {
+      "id": "BUG-02",
+      "title": "Fix BlogHero layout issues",
+      "description": "Reduce hero height from min-h-[60vh] to min-h-[35vh]. Change text-center to text-start and items-center to items-start. Remove the <br /> tag from title and consolidate to single line. Add RTL support with rtl: prefixes where needed.",
+      "agent": "ui-designer",
+      "acceptance_criteria": [
+        "Hero section height reduced to min-h-[35vh]",
+        "Title and content left-aligned (text-start)",
+        "Title displays on single line without line break",
+        "RTL support works correctly for Hebrew locale",
+        "Visual spacing between hero and filters feels compact"
+      ],
+      "dependencies": [],
+      "pass": false
+    },
+    {
+      "id": "BUG-03",
+      "title": "Fix search debounce cleanup",
+      "description": "Add proper cleanup for the debounce timeout in the blog page useEffect. Ensure timeout is cleared when component unmounts or when dependencies change to prevent memory leaks and state issues.",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "useEffect returns cleanup function that clears debounce timeout",
+        "No memory leak warnings in React strict mode",
+        "Search filter works correctly with debounced input"
+      ],
+      "dependencies": [],
+      "pass": false
+    },
+    {
+      "id": "SHADCN-01",
+      "title": "Install shadcn Input component",
+      "description": "Run 'npx shadcn@latest add input' to install the shadcn Input component. Verify it creates components/ui/input.tsx with proper TypeScript types.",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "components/ui/input.tsx exists",
+        "Input component exports correctly",
+        "No TypeScript errors in the component"
+      ],
+      "dependencies": [],
+      "pass": false
+    },
+    {
+      "id": "SHADCN-02",
+      "title": "Install shadcn Select component",
+      "description": "Run 'npx shadcn@latest add select' to install the shadcn Select component. This will also install @radix-ui/react-select dependency.",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "components/ui/select.tsx exists",
+        "Select, SelectTrigger, SelectContent, SelectItem, SelectValue export correctly",
+        "@radix-ui/react-select added to package.json",
+        "No TypeScript errors"
+      ],
+      "dependencies": ["SHADCN-01"],
+      "pass": false
+    },
+    {
+      "id": "SHADCN-03",
+      "title": "Refactor BlogFilters with shadcn components",
+      "description": "Rebuild BlogFilters.tsx to use shadcn Input and Select components. Create a compact single row layout with Search input on left and Category dropdown on right. Apply glassmorphism styling (bg-brand-gray/50 backdrop-blur-md border-white/10). Add RTL support for Hebrew. Reduce vertical padding to bring filters closer to blog grid.",
+      "agent": "ui-designer",
+      "acceptance_criteria": [
+        "BlogFilters uses shadcn Input with Search icon",
+        "BlogFilters uses shadcn Select for category dropdown",
+        "Glassmorphism styling matches design system",
+        "Single row layout on desktop, stacked on mobile",
+        "RTL layout works for Hebrew (search icon flips)",
+        "Reduced padding brings filters closer to content",
+        "All filter functionality (search + category) works correctly"
+      ],
+      "dependencies": ["SHADCN-02", "BUG-02"],
+      "pass": false
+    },
+    {
+      "id": "CL-01",
+      "title": "Install Contentlayer2 dependencies",
+      "description": "Install contentlayer2, next-contentlayer2, and markdown processing plugins: remark-gfm, rehype-highlight, rehype-slug, rehype-autolink-headings. Use contentlayer2 (community fork) for Next.js 16 compatibility.",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "contentlayer2 and next-contentlayer2 in package.json",
+        "remark-gfm in package.json",
+        "rehype-highlight, rehype-slug, rehype-autolink-headings in package.json",
+        "npm install completes without errors"
+      ],
+      "dependencies": [],
+      "pass": false
+    },
+    {
+      "id": "CL-02",
+      "title": "Create Contentlayer configuration",
+      "description": "Create contentlayer.config.ts at project root. Define Post document type with fields: title, title_he, excerpt, excerpt_he, date, author, authorAvatar, category, category_he, thumbnail, published. Add computed fields for slug and url. Configure MDX with remark-gfm and rehype plugins.",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "contentlayer.config.ts exists at project root",
+        "Post document type defined with all required fields",
+        "i18n fields (title_he, excerpt_he, category_he) included",
+        "Computed slug and url fields work correctly",
+        "MDX plugins configured (remark-gfm, rehype-highlight, rehype-slug)"
+      ],
+      "dependencies": ["CL-01"],
+      "pass": false
+    },
+    {
+      "id": "CL-03",
+      "title": "Update Next.js config for Contentlayer",
+      "description": "Update next.config.ts to wrap the config with withContentlayer from next-contentlayer2. Ensure it works together with existing withNextIntl wrapper. Order: withContentlayer(withNextIntl(nextConfig)).",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "next.config.ts imports withContentlayer from next-contentlayer2",
+        "Config chain: withContentlayer(withNextIntl(nextConfig))",
+        "No TypeScript errors in config",
+        "Build command works with new config"
+      ],
+      "dependencies": ["CL-02"],
+      "pass": false
+    },
+    {
+      "id": "CL-04",
+      "title": "Update TypeScript config for Contentlayer",
+      "description": "Update tsconfig.json to include contentlayer/generated path alias and add .contentlayer/generated to include array for auto-generated types.",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "tsconfig.json paths includes 'contentlayer/generated': ['./.contentlayer/generated']",
+        "tsconfig.json include array has '.contentlayer/generated'",
+        "TypeScript can resolve imports from contentlayer/generated"
+      ],
+      "dependencies": ["CL-03"],
+      "pass": false
+    },
+    {
+      "id": "CL-05",
+      "title": "Create sample MDX blog posts",
+      "description": "Create content/blog/ directory with 3-4 sample MDX posts. Each post should have full frontmatter (title, title_he, excerpt, excerpt_he, date, author, category, category_he, published). Include varied categories and both English and Hebrew content.",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "content/blog/ directory exists",
+        "At least 3 MDX posts created",
+        "Each post has complete frontmatter with i18n fields",
+        "Posts cover different categories (Development, AI, Design)",
+        "MDX content includes headings, paragraphs, code blocks"
+      ],
+      "dependencies": ["CL-04"],
+      "pass": false
+    },
+    {
+      "id": "POST-01",
+      "title": "Create blog post dynamic route",
+      "description": "Create app/[locale]/blog/[slug]/page.tsx with generateStaticParams for static generation. Import allPosts from contentlayer/generated. Add generateMetadata for SEO with locale-aware title and description. Handle 404 with notFound() if post not found.",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "app/[locale]/blog/[slug]/page.tsx exists",
+        "generateStaticParams returns all post slugs",
+        "generateMetadata returns locale-aware title and description",
+        "notFound() called when post doesn't exist",
+        "Page renders post content correctly"
+      ],
+      "dependencies": ["CL-05"],
+      "pass": false
+    },
+    {
+      "id": "POST-02",
+      "title": "Create BlogPostHeader component",
+      "description": "Create components/sections/blog/BlogPostHeader.tsx. Display title (locale-aware), category badge, author info with avatar fallback, formatted date, and reading time estimate. Use glassmorphism styling consistent with other blog components.",
+      "agent": "ui-designer",
+      "acceptance_criteria": [
+        "BlogPostHeader.tsx exists and exports correctly",
+        "Displays locale-aware title (title_he for Hebrew)",
+        "Shows category badge with accent styling",
+        "Author section with avatar or fallback icon",
+        "Date formatted by locale (en-US / he-IL)",
+        "Reading time calculated and displayed",
+        "Glassmorphism styling matches design system",
+        "RTL layout works for Hebrew"
+      ],
+      "dependencies": ["POST-01"],
+      "pass": false
+    },
+    {
+      "id": "POST-03",
+      "title": "Create BlogPostContent component",
+      "description": "Create components/sections/blog/BlogPostContent.tsx. Use useMDXComponent hook from next-contentlayer2 to render MDX content. Pass custom MDX components for styling. Wrap content in glassmorphism container with proper typography.",
+      "agent": "ui-designer",
+      "acceptance_criteria": [
+        "BlogPostContent.tsx exists and exports correctly",
+        "Uses useMDXComponent hook for MDX rendering",
+        "Custom MDX components passed for styling",
+        "Content wrapped in glassmorphism container",
+        "Typography readable and properly spaced",
+        "Code blocks styled with syntax highlighting"
+      ],
+      "dependencies": ["POST-02"],
+      "pass": false
+    },
+    {
+      "id": "POST-04",
+      "title": "Create MDX Components",
+      "description": "Create components/mdx/MDXComponents.tsx with styled components for: h1-h3 (white text, proper sizing), p (white/70, relaxed leading), a (accent-blue with hover), code (inline styling), pre (code blocks with glassmorphism), ul/ol (styled lists), blockquote (border-l-4 accent), img (Next.js Image with rounded corners).",
+      "agent": "ui-designer",
+      "acceptance_criteria": [
+        "components/mdx/MDXComponents.tsx exists",
+        "mdxComponents object exported with all element types",
+        "Headings (h1-h3) styled with white text and proper sizes",
+        "Paragraphs have white/70 text and relaxed leading",
+        "Links use accent-blue with hover states",
+        "Code blocks have glassmorphism styling",
+        "Lists properly styled with spacing",
+        "Blockquotes have accent border",
+        "Images use Next.js Image component"
+      ],
+      "dependencies": ["POST-03"],
+      "pass": false
+    },
+    {
+      "id": "VERCEL-01",
+      "title": "Install Vercel Analytics packages",
+      "description": "Install @vercel/analytics and @vercel/speed-insights packages from npm.",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "@vercel/analytics in package.json dependencies",
+        "@vercel/speed-insights in package.json dependencies",
+        "npm install completes successfully"
+      ],
+      "dependencies": [],
+      "pass": false
+    },
+    {
+      "id": "VERCEL-02",
+      "title": "Add Analytics to layout",
+      "description": "Update app/[locale]/layout.tsx to import and render Analytics and SpeedInsights components from Vercel packages. Place them before the closing body tag or at end of the layout.",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "Analytics imported from @vercel/analytics/react",
+        "SpeedInsights imported from @vercel/speed-insights/next",
+        "Both components rendered in layout",
+        "No hydration errors or warnings"
+      ],
+      "dependencies": ["VERCEL-01"],
+      "pass": false
+    },
+    {
+      "id": "VERCEL-03",
+      "title": "Create OG Image API route",
+      "description": "Create app/api/og/route.tsx using Next.js ImageResponse for dynamic OG image generation. Accept title, type, and locale query params. Use edge runtime. Design image with Kohelet branding: dark background (#020204), blue gradient accent, centered title text. Support Hebrew text direction.",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "app/api/og/route.tsx exists",
+        "Uses edge runtime for performance",
+        "Accepts title, type, locale query parameters",
+        "Returns 1200x630 ImageResponse",
+        "Kohelet branding with dark background and blue accent",
+        "Hebrew text displays correctly with RTL direction",
+        "GET /api/og?title=Test returns valid image"
+      ],
+      "dependencies": ["VERCEL-02"],
+      "pass": false
+    },
+    {
+      "id": "INT-01",
+      "title": "Refactor blog page for Contentlayer",
+      "description": "Update app/[locale]/blog/page.tsx to import posts from contentlayer/generated instead of mock data. Transform Contentlayer posts to match BlogPost interface with locale-aware fields. Remove mock data. Sort posts by date descending.",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "Blog page imports allPosts from contentlayer/generated",
+        "Mock data array removed",
+        "Posts transformed with locale-aware title, excerpt, category",
+        "Posts sorted by date (newest first)",
+        "Blog listing displays real MDX posts",
+        "Filters work with real post data"
+      ],
+      "dependencies": ["CL-05", "SHADCN-03"],
+      "pass": false
+    },
+    {
+      "id": "INT-02",
+      "title": "Update i18n translations",
+      "description": "Update content/en.json and content/he.json with new translation keys for blog enhancements: filters.selectCategory, post.readingTime, post.shareArticle, post.relatedPosts, post.backToBlog.",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "en.json has blog.filters.selectCategory translation",
+        "en.json has blog.post.* translations",
+        "he.json has matching Hebrew translations",
+        "All new translation keys work in components"
+      ],
+      "dependencies": ["INT-01"],
+      "pass": false
+    },
+    {
+      "id": "INT-03",
+      "title": "Update blog component exports",
+      "description": "Update components/sections/blog/index.ts to export new components: BlogPostHeader, BlogPostContent. Ensure all TypeScript interfaces are exported.",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "index.ts exports BlogPostHeader",
+        "index.ts exports BlogPostContent",
+        "All component interfaces exported",
+        "No TypeScript import errors"
+      ],
+      "dependencies": ["POST-04"],
+      "pass": false
+    },
+    {
+      "id": "QA-01",
+      "title": "Test and fix build",
+      "description": "Run npm run build and fix any TypeScript errors or build failures. Ensure all pages generate correctly and no warnings about missing dependencies.",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "npm run build completes successfully",
+        "No TypeScript errors",
+        "All blog pages generate (listing + individual posts)",
+        "No hydration warnings in dev mode"
+      ],
+      "dependencies": ["INT-03", "VERCEL-03"],
+      "pass": false
+    }
+  ],
+
+  "implementation_order": [
+    "Phase 1: Bug Fixes (BUG-01, BUG-02, BUG-03) - Fix critical issues first",
+    "Phase 2: shadcn Setup (SHADCN-01, SHADCN-02, SHADCN-03) - Better filter UI",
+    "Phase 3: Contentlayer (CL-01 through CL-05) - MDX blog infrastructure",
+    "Phase 4: Blog Post Page (POST-01 through POST-04) - Individual post pages",
+    "Phase 5: Vercel (VERCEL-01, VERCEL-02, VERCEL-03) - Analytics and OG images",
+    "Phase 6: Integration (INT-01, INT-02, INT-03, QA-01) - Wire everything together"
+  ]
+}
