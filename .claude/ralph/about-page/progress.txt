@@ -95,3 +95,53 @@ about.stats.clientsServed.label
 
 **Next Task**: PRD-03 (Define Values requirements) OR UI-01 (Implement CompanyStory) - both available
 
+### [2026-01-08] PRD-03: Define Values requirements ✅
+**Agent**: prd-architect
+**Status**: COMPLETE
+
+**Deliverables**:
+- Comprehensive PRD document defining Values component requirements
+- 6 core values defined with Lucide icons:
+  1. Innovation-Driven (Lightbulb) - Forward-thinking tech leadership
+  2. Results-Obsessed (Target) - ROI-focused partnership
+  3. Built to Scale (TrendingUp) - Exponential growth architecture
+  4. Partnership-First (Handshake) - Deep collaboration approach
+  5. Execution Excellence (Rocket) - Enterprise quality at startup speed
+  6. Transparent by Default (Eye) - No black boxes, clear communication
+
+**Layout Specs**:
+- Responsive grid: `grid-cols-1 md:grid-cols-2 lg:grid-cols-3`
+- Container: `max-w-6xl mx-auto px-6 py-20 md:py-32`
+- Card gap: `gap-6 md:gap-8`
+
+**Card Design (Glassmorphism)**:
+- Background: `bg-[#111113]/80`
+- Backdrop: `backdrop-blur-md`
+- Border: `border border-white/10` → `hover:border-white/20`
+- Corners: `rounded-xl`
+- Padding: `p-6 md:p-8`
+- Hover: `hover:scale-[1.02]`, subtle blue glow
+
+**Typography**:
+- Section title: `text-3xl md:text-4xl font-display font-medium text-white`
+- Value name: `text-xl font-semibold text-white`
+- Description: `text-sm text-neutral-400 leading-relaxed`
+- Icon: `w-10 h-10 text-accent-blue`
+
+**Animation**:
+- CSS fade-in-up animation (not GSAP)
+- Staggered delays: 0.1s header, 0.2-0.7s cards (100ms intervals)
+- `prefers-reduced-motion` support
+
+**Translation Keys Structure**:
+```
+about.values.sectionTitle
+about.values.sectionSubtitle
+about.values.items[0-5].name
+about.values.items[0-5].description
+```
+
+**Component Location**: /components/sections/about/Values.tsx
+
+**Next Task**: PRD-04 (Define Team requirements) - no dependencies
+
