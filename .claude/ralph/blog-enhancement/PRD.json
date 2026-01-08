@@ -207,7 +207,7 @@
         "Page renders post content correctly"
       ],
       "dependencies": ["CL-05"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "POST-02",

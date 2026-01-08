@@ -38,6 +38,7 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
 - CL-03: Update Next.js config for Contentlayer
 - CL-04: Update TypeScript config for Contentlayer
 - CL-05: Create sample MDX blog posts
+- POST-01: Create blog post dynamic route
 
 ## Current Phase: Phase 1 - Bug Fixes
 
@@ -229,4 +230,21 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
 **Result:** 4 sample MDX posts ready for Contentlayer processing.
 
 ## Current Phase: Phase 4 - Blog Post Page
+
+---
+
+### 2026-01-08 - POST-01 Complete
+**Task:** Create blog post dynamic route
+**Agent:** senior-frontend-dev
+
+**Created:**
+1. `app/[locale]/blog/[slug]/page.tsx` - Server Component with:
+   - generateStaticParams() for static generation
+   - generateMetadata() with locale-aware SEO (title_he, excerpt_he for Hebrew)
+   - 404 handling with notFound()
+   - Open Graph and Twitter card meta tags
+
+2. `app/[locale]/blog/[slug]/mdx-content.tsx` - Client Component for MDX rendering
+
+**Result:** Dynamic blog post route with full SEO support and locale-aware content.
 
