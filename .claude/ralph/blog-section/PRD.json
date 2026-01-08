@@ -164,7 +164,7 @@
         "All components use t() function"
       ],
       "dependencies": ["FE-02"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "INT-02",

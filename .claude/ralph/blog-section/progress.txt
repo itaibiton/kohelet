@@ -23,6 +23,7 @@ Build a full blog page with BlogHero, BlogGrid, BlogCard, and BlogFilters compon
 - [x] UI-04: Implement BlogGrid component
 - [x] FE-01: Create blog page route and layout
 - [x] FE-02: Add blog filter state management
+- [x] INT-01: Add i18n translations for blog
 
 ## Current Phase: Phase 3 - Integration
 
@@ -167,4 +168,32 @@ Build a full blog page with BlogHero, BlogGrid, BlogCard, and BlogFilters compon
 - useCallback for all handlers
 
 **Phase 2 Complete!** All frontend logic has been implemented.
+
+### 2026-01-08 - INT-01: i18n Translations for Blog
+**Task:** Add i18n translations for blog
+**Agent:** direct
+**Status:** ✅ Complete
+
+**Files Modified:**
+- `content/en.json` - Added blog.meta and blog.categories
+- `content/he.json` - Added blog.meta and blog.categories
+
+**Translations Added:**
+
+English (en.json):
+- blog.meta.title: "Blog | Kohelet Digital"
+- blog.meta.description: SEO description
+- blog.categories.* (6 category translations)
+
+Hebrew (he.json):
+- blog.meta.title: "בלוג | קהלת דיגיטל"
+- blog.meta.description: SEO description in Hebrew
+- blog.categories.* (6 category translations in Hebrew)
+
+**Previously added by UI agents:**
+- blog.hero.* (badge, title, subtitle)
+- blog.filters.* (all, searchPlaceholder)
+- blog.grid.* (emptyState, emptyStateDescription)
+
+All components already use t() function via useTranslations hook.
 

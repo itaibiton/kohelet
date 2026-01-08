@@ -281,6 +281,10 @@
     "copyright": "© 2024 Kohelet Digital Solutions. All rights reserved."
   },
   "blog": {
+    "meta": {
+      "title": "Blog | Kohelet Digital",
+      "description": "Insights on automation, AI agents, custom software development, and building better businesses. Tips, case studies, and technical deep-dives."
+    },
     "hero": {
       "badge": "Blog",
       "title": {
@@ -297,6 +301,14 @@
     "grid": {
       "emptyState": "No articles found",
       "emptyStateDescription": "Try adjusting your search or filter to find what you're looking for."
+    },
+    "categories": {
+      "Development": "Development",
+      "AI & Automation": "AI & Automation",
+      "Design": "Design",
+      "Marketing": "Marketing",
+      "Case Study": "Case Study",
+      "Business": "Business"
     }
   },
   "about": {
@@ -325,16 +337,16 @@
     "stats": {
       "sectionTitle": "Impact by Numbers",
       "hoursSaved": {
-        "label": "Hours Saved"
+        "label": "Hours Reclaimed"
       },
       "tasksAutomated": {
-        "label": "Tasks Automated"
+        "label": "Tasks Running 24/7"
       },
       "efficiency": {
-        "label": "Efficiency Gain"
+        "label": "Average Time Saved"
       },
       "clientsServed": {
-        "label": "Clients Served"
+        "label": "Businesses Automated"
       }
     },
     "values": {
