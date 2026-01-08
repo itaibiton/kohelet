@@ -165,6 +165,15 @@ export default function BlogPage({ params }: Props) {
     }, 300);
   }, []);
 
+  // Cleanup debounce timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (debounceRef.current) {
+        clearTimeout(debounceRef.current);
+      }
+    };
+  }, []);
+
   // Category change handler
   const handleCategoryChange = useCallback((category: string | null) => {
     setActiveCategory(category);

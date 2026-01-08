@@ -77,7 +77,7 @@
         "Search filter works correctly with debounced input"
       ],
       "dependencies": [],
-      "pass": false
+      "pass": true
     },
     {
       "id": "SHADCN-01",

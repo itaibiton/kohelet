@@ -29,6 +29,7 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
 ## Completed Tasks:
 - BUG-01: Fix BlogCard routing bug
 - BUG-02: Fix BlogHero layout issues
+- BUG-03: Fix search debounce cleanup
 
 ## Current Phase: Phase 1 - Bug Fixes
 
@@ -65,4 +66,20 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
    - Added RTL support with `rtl:` prefixes on decorative elements
 
 **Result:** Hero section is now more compact (35vh), left-aligned, and works correctly in both LTR and RTL layouts.
+
+---
+
+### 2026-01-08 - BUG-03 Complete
+**Task:** Fix search debounce cleanup
+**Agent:** senior-frontend-dev
+
+**Changes Made:**
+1. `app/[locale]/blog/page.tsx`:
+   - Added cleanup useEffect that clears debounce timeout on unmount
+   - Cleanup function checks if `debounceRef.current` exists before clearing
+   - Prevents memory leaks and React strict mode warnings
+
+**Result:** Debounce timeout is properly cleaned up when component unmounts, preventing state updates on unmounted components.
+
+## Current Phase: Phase 2 - shadcn Setup
 
