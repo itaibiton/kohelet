@@ -164,7 +164,7 @@
         "Build command works with new config"
       ],
       "dependencies": ["CL-02"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "CL-04",

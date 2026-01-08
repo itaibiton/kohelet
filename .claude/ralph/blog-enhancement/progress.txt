@@ -35,6 +35,7 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
 - SHADCN-03: Refactor BlogFilters with shadcn components
 - CL-01: Install Contentlayer2 dependencies
 - CL-02: Create Contentlayer configuration
+- CL-03: Update Next.js config for Contentlayer
 
 ## Current Phase: Phase 1 - Bug Fixes
 
@@ -177,4 +178,18 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
 - rehype-autolink-headings (heading anchors)
 
 **Result:** Contentlayer configuration ready. Content source: content/blog/*.mdx
+
+---
+
+### 2026-01-08 - CL-03 Complete
+**Task:** Update Next.js config for Contentlayer
+**Agent:** senior-frontend-dev
+
+**Changes Made:**
+1. `next.config.ts`:
+   - Added import: `import { withContentlayer } from "next-contentlayer2"`
+   - Updated export: `withContentlayer(withNextIntl(nextConfig))`
+   - Preserved all existing configuration
+
+**Result:** Next.js config now integrates Contentlayer2. Build verified successful.
 
