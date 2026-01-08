@@ -1,0 +1,207 @@
+{
+  "project": "Blog Section",
+  "version": "1.0.0",
+  "created": "2026-01-08",
+  "completion_promise": "BLOG-SECTION COMPLETE",
+
+  "context": {
+    "tech_stack": [
+      "Next.js 16 (with Turbopack)",
+      "React 19",
+      "Tailwind CSS v4",
+      "GSAP 3.13 (animations)",
+      "next-intl 4.5 (i18n)",
+      "Lucide React (icons)",
+      "TypeScript 5"
+    ],
+    "i18n": "next-intl with content/en.json and content/he.json",
+    "theme": {
+      "type": "Glassmorphism dark",
+      "colors": {
+        "brand_dark": "#020204",
+        "brand_gray": "#111113",
+        "brand_surface": "#08080a",
+        "accent_blue": "#3b82f6",
+        "accent_blue_hover": "#2563eb",
+        "text_primary": "#ffffff",
+        "text_secondary": "#a3a3a3",
+        "border_subtle": "rgba(255, 255, 255, 0.05)",
+        "border_default": "rgba(255, 255, 255, 0.1)"
+      },
+      "effects": [
+        "backdrop-blur-md",
+        "glass-panel class available",
+        "animate-fade-in-up keyframes",
+        "noise-overlay texture"
+      ]
+    },
+    "existing_components": [
+      "components/sections/Hero.tsx",
+      "components/sections/Navigation.tsx",
+      "components/sections/Footer.tsx",
+      "components/sections/Solutions.tsx",
+      "components/sections/Pricing.tsx",
+      "components/sections/Contact.tsx",
+      "components/ui/Button.tsx",
+      "components/ui/Card.tsx"
+    ],
+    "components_to_build": [
+      "BlogHero",
+      "BlogGrid",
+      "BlogCard",
+      "BlogFilters"
+    ],
+    "target_path": "app/[locale]/blog/"
+  },
+
+  "user_stories": [
+    {
+      "id": "UI-01",
+      "title": "Implement BlogHero component",
+      "description": "Create the hero section for the blog page with title, subtitle, and decorative elements matching the site's glassmorphism theme",
+      "agent": "ui-designer",
+      "acceptance_criteria": [
+        "Component created at components/sections/blog/BlogHero.tsx",
+        "Uses next-intl useTranslations hook for i18n",
+        "Matches glassmorphism dark theme from globals.css",
+        "Includes animated fade-in effects",
+        "Responsive design (mobile-first)",
+        "Includes decorative accent elements consistent with Hero.tsx style"
+      ],
+      "dependencies": [],
+      "pass": true
+    },
+    {
+      "id": "UI-02",
+      "title": "Implement BlogCard component",
+      "description": "Create a reusable blog post card component showing thumbnail, title, excerpt, author, date, and category",
+      "agent": "ui-designer",
+      "acceptance_criteria": [
+        "Component created at components/sections/blog/BlogCard.tsx",
+        "Props interface defined for: title, excerpt, thumbnail, author, date, category, slug",
+        "Glassmorphism card styling with hover effects",
+        "Image placeholder/skeleton support",
+        "Responsive sizing",
+        "Link wraps entire card for accessibility"
+      ],
+      "dependencies": [],
+      "pass": false
+    },
+    {
+      "id": "UI-03",
+      "title": "Implement BlogFilters component",
+      "description": "Create filter/search controls for the blog including category filter chips and search input",
+      "agent": "ui-designer",
+      "acceptance_criteria": [
+        "Component created at components/sections/blog/BlogFilters.tsx",
+        "Category filter chips with active state styling",
+        "Search input with icon",
+        "Uses glassmorphism styling for inputs",
+        "Props for categories array and filter callbacks",
+        "i18n support for filter labels"
+      ],
+      "dependencies": [],
+      "pass": false
+    },
+    {
+      "id": "UI-04",
+      "title": "Implement BlogGrid component",
+      "description": "Create the main grid layout that displays BlogCards with proper spacing and responsive columns",
+      "agent": "ui-designer",
+      "acceptance_criteria": [
+        "Component created at components/sections/blog/BlogGrid.tsx",
+        "Responsive grid: 1 col mobile, 2 cols tablet, 3 cols desktop",
+        "Accepts array of blog posts as props",
+        "Empty state when no posts",
+        "Loading skeleton state",
+        "Staggered animation on cards"
+      ],
+      "dependencies": ["UI-02"],
+      "pass": false
+    },
+    {
+      "id": "FE-01",
+      "title": "Create blog page route and layout",
+      "description": "Set up the blog page at app/[locale]/blog/page.tsx with proper layout structure combining all blog components",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "Page created at app/[locale]/blog/page.tsx",
+        "Imports and renders BlogHero, BlogFilters, BlogGrid",
+        "Uses generateMetadata for SEO",
+        "Includes Navigation and Footer",
+        "Mock data for initial blog posts",
+        "Proper TypeScript types for blog post data"
+      ],
+      "dependencies": ["UI-01", "UI-03", "UI-04"],
+      "pass": false
+    },
+    {
+      "id": "FE-02",
+      "title": "Add blog filter state management",
+      "description": "Implement client-side filtering logic connecting BlogFilters to BlogGrid",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "useState hooks for active category and search query",
+        "Filter logic filters posts by category",
+        "Search filters by title and excerpt",
+        "URL params sync for shareable filtered views (optional)",
+        "Debounced search input",
+        "Clear filters functionality"
+      ],
+      "dependencies": ["FE-01"],
+      "pass": false
+    },
+    {
+      "id": "INT-01",
+      "title": "Add i18n translations for blog",
+      "description": "Add English and Hebrew translations for all blog section text content",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "content/en.json updated with blog namespace",
+        "content/he.json updated with blog namespace",
+        "Translations for: hero title, hero subtitle, filter labels, empty state, loading state",
+        "Category names translated",
+        "All components use t() function"
+      ],
+      "dependencies": ["FE-02"],
+      "pass": false
+    },
+    {
+      "id": "INT-02",
+      "title": "Add blog link to navigation",
+      "description": "Update the site navigation to include a link to the blog section",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "Navigation.tsx updated with blog link",
+        "Link uses next-intl Link component",
+        "Translation keys added for nav item",
+        "Mobile nav updated as well",
+        "Blog link styled consistently with other nav items"
+      ],
+      "dependencies": ["INT-01"],
+      "pass": false
+    },
+    {
+      "id": "INT-03",
+      "title": "Final integration and testing",
+      "description": "Verify all components work together, fix any styling issues, ensure responsive design works",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "Blog page loads without errors",
+        "All components render correctly",
+        "Filtering works as expected",
+        "Responsive design verified at mobile/tablet/desktop",
+        "Navigation to blog works from main site",
+        "Both EN and HE locales work"
+      ],
+      "dependencies": ["INT-02"],
+      "pass": false
+    }
+  ],
+
+  "implementation_order": [
+    "Phase 1: UI Components - Use ui-designer agent (UI-01, UI-02, UI-03, UI-04)",
+    "Phase 2: Frontend Logic - Use senior-frontend-dev agent (FE-01, FE-02)",
+    "Phase 3: Integration - Direct execution (INT-01, INT-02, INT-03)"
+  ]
+}
