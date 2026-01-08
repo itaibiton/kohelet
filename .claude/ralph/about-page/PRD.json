@@ -278,7 +278,7 @@
         "Translations match component expectations"
       ],
       "dependencies": ["COPY-01", "COPY-02", "COPY-03", "COPY-04", "COPY-05"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "INT-02",
@@ -292,7 +292,7 @@
         "All sections visible"
       ],
       "dependencies": ["INT-01"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "INT-03",
@@ -306,7 +306,7 @@
         "All pages compile"
       ],
       "dependencies": ["INT-02"],
-      "pass": false
+      "pass": true
     }
   ],
 
