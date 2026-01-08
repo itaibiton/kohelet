@@ -362,7 +362,7 @@
         "No hydration warnings in dev mode"
       ],
       "dependencies": ["INT-03", "VERCEL-03"],
-      "pass": false
+      "pass": true
     }
   ],
 
