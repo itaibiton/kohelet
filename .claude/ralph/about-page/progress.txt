@@ -768,3 +768,46 @@ about.story.narrative.p3
 **Phase 3 Progress**: 1/5 COPY tasks complete (COPY-01 ✅)
 
 **Next Task**: COPY-02 (Write Stats labels) - depends on UI-02 ✅
+
+### [2026-01-08] COPY-02: Write Stats labels ✅
+**Agent**: kohelet-copywriter
+**Status**: COMPLETE
+
+**Deliverables**:
+- Section headline: "Impact by Numbers" (en) / "השפעה במספרים" (he)
+- 4 outcome-focused stat labels written in English and Hebrew
+
+**English Labels** (outcome-focused):
+- `about.stats.hoursSaved.label`: "Hours Reclaimed"
+- `about.stats.tasksAutomated.label`: "Tasks Running 24/7"
+- `about.stats.efficiency.label`: "Average Time Saved"
+- `about.stats.clientsServed.label`: "Businesses Automated"
+
+**Hebrew Labels** (natural, not literal translations):
+- `about.stats.hoursSaved.label`: "שעות חזרו לצוות" (Hours returned to the team)
+- `about.stats.tasksAutomated.label`: "משימות רצות 24/7" (Tasks running 24/7)
+- `about.stats.efficiency.label`: "חיסכון ממוצע בזמן" (Average time saved)
+- `about.stats.clientsServed.label`: "עסקים שקיבלו אוטומציה" (Businesses that received automation)
+
+**Strategic Copy Decisions**:
+- "Hours Reclaimed" > "Hours Saved" - implies giving time back
+- "Tasks Running 24/7" - emphasizes continuous automation
+- "Businesses Automated" > "Clients Served" - focuses on transformation
+- Hebrew uses active verbs and natural speech patterns
+
+**Translation Keys Structure**:
+```
+about.stats.sectionTitle
+about.stats.hoursSaved.label
+about.stats.tasksAutomated.label
+about.stats.efficiency.label
+about.stats.clientsServed.label
+```
+
+**Files Updated**:
+- `/content/en.json` - English stats labels
+- `/content/he.json` - Hebrew stats labels
+
+**Phase 3 Progress**: 2/5 COPY tasks complete (COPY-01 ✅, COPY-02 ✅)
+
+**Next Task**: COPY-03 (Write Values copy) - depends on UI-03 ✅

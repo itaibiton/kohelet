@@ -10,6 +10,7 @@
       { "label": "Services", "href": "#solutions" },
       { "label": "Capabilities", "href": "#capabilities" },
       { "label": "Pricing", "href": "#pricing" },
+      { "label": "Blog", "href": "/blog" },
       { "label": "Contact", "href": "#contact" }
     ],
     "cta": {

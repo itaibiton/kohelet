@@ -10,6 +10,7 @@
       { "label": "שירותים", "href": "#solutions" },
       { "label": "יכולות", "href": "#capabilities" },
       { "label": "תמחור", "href": "#pricing" },
+      { "label": "בלוג", "href": "/blog" },
       { "label": "צור קשר", "href": "#contact" }
     ],
     "cta": {
