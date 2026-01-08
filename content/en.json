@@ -279,5 +279,57 @@
   },
   "footer": {
     "copyright": "© 2024 Kohelet Digital Solutions. All rights reserved."
+  },
+  "about": {
+    "hero": {
+      "badge": "About Kohelet",
+      "headline": {
+        "line1": "We Build What Others Can't",
+        "line2_prefix": "Automation that ",
+        "line2_highlight": "Actually Works",
+        "line2_suffix": ""
+      },
+      "subtitle": "We're a team of engineers and automation specialists who believe businesses deserve better than off-the-shelf solutions. Every workflow we build, every agent we deploy, is crafted for your specific needs."
+    },
+    "story": {
+      "sectionTitle": "Our Story",
+      "missionLabel": "Mission",
+      "missionText": "To eliminate the gap between what technology can do and what businesses actually use it for.",
+      "visionLabel": "Vision",
+      "visionText": "A world where every business operates at peak efficiency, powered by intelligent automation.",
+      "narrative": {
+        "p1": "Kohelet started with a simple observation: most businesses are drowning in manual work that machines could handle better. We saw companies spending thousands of hours on repetitive tasks while their competitors raced ahead.",
+        "p2": "We don't believe in one-size-fits-all solutions. Every automation we build is designed around your specific workflows, your team's needs, and your growth goals. No templates, no compromises.",
+        "p3": "Our approach combines deep technical expertise with genuine business understanding. We're not just developers—we're partners in your operational transformation."
+      }
+    },
+    "stats": {
+      "sectionTitle": "Impact by Numbers",
+      "hoursSaved": {
+        "label": "Hours Saved"
+      },
+      "tasksAutomated": {
+        "label": "Tasks Automated"
+      },
+      "efficiency": {
+        "label": "Efficiency Gain"
+      },
+      "clientsServed": {
+        "label": "Clients Served"
+      }
+    },
+    "values": {
+      "sectionTitle": "Our Values",
+      "items": []
+    },
+    "team": {
+      "sectionTitle": "The Team",
+      "members": []
+    },
+    "cta": {
+      "headline": "Ready to Automate?",
+      "subtitle": "Let's discuss how we can transform your operations.",
+      "button": "Get Started"
+    }
   }
 }

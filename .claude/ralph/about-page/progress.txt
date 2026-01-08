@@ -469,3 +469,65 @@ about.story.narrative.p3
 **Phase 2 Progress**: 1/5 UI tasks complete (UI-01 ✅)
 
 **Next Task**: UI-02 (Implement Stats component) - depends on PRD-02 ✅
+
+### [2026-01-08] UI-02: Implement Stats component ✅
+**Agent**: ui-designer
+**Status**: COMPLETE
+
+**Deliverables**:
+- Component implemented at `/components/sections/about/Stats.tsx`
+- Uses `'use client'` directive
+- Implements next-intl translations with `useTranslations("about.stats")`
+
+**Key Features**:
+- 4 automation-focused stat cards with GSAP counter animations
+- Scroll-triggered at 80% viewport using GSAP ScrollTrigger
+- Counter animation: `power2.out` easing, 2.2s duration
+- Card fade-in animation: staggered 150ms delay, 0.8s duration, `power3.out` easing
+- `prefers-reduced-motion` support - sets final values immediately when enabled
+- Proper cleanup with `gsap.context()` and `ctx.revert()`
+
+**Stats Data**:
+```typescript
+{ id: "hoursSaved", value: 10000, suffix: "+", translationKey: "hoursSaved.label" }
+{ id: "tasksAutomated", value: 500, suffix: "+", translationKey: "tasksAutomated.label" }
+{ id: "efficiency", value: 80, suffix: "%", translationKey: "efficiency.label" }
+{ id: "clientsServed", value: 50, suffix: "+", translationKey: "clientsServed.label" }
+```
+
+**Layout**:
+- Responsive grid: `grid-cols-2 md:grid-cols-4`
+- Gap: `gap-6 md:gap-8`
+- Container: `max-w-6xl mx-auto px-6 py-20 md:py-32`
+
+**Glassmorphism Cards**:
+- Background: `bg-[#111113]/80`
+- Backdrop: `backdrop-blur-md`
+- Border: `border border-white/10`
+- Corners: `rounded-xl md:rounded-2xl`
+- Padding: `p-6 md:p-8`
+
+**Typography**:
+- Values: `text-4xl md:text-5xl font-bold text-white`
+- Suffixes: `text-4xl md:text-5xl font-bold text-accent-blue` (static during animation)
+- Labels: `text-sm text-neutral-400 uppercase tracking-wide`
+
+**Accessibility**:
+- `role="group"` on section container
+- `aria-label="Company statistics and automation metrics"`
+- `aria-live="polite"` on counter elements
+
+**Translation Keys**:
+```
+about.stats.sectionTitle (optional)
+about.stats.hoursSaved.label
+about.stats.tasksAutomated.label
+about.stats.efficiency.label
+about.stats.clientsServed.label
+```
+
+**TypeScript Check**: Passed (errors only for other missing components: Values, Team, AboutCTA)
+
+**Phase 2 Progress**: 2/5 UI tasks complete (UI-01 ✅, UI-02 ✅)
+
+**Next Task**: UI-03 (Implement Values component) - depends on PRD-03 ✅
