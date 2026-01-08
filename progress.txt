@@ -161,6 +161,39 @@
 - Phase 3 (UI): 2/5 complete (UI-01, UI-02)
 - Phase 4 (INT): 0/3 complete
 
-### Next Task: COPY-04 - Write Team copy (EN + HE)
+- [x] COPY-04: Write Team copy (EN + HE)
+  - Used kohelet-copywriter agent to generate professional, personable team copy
+  - Section title: "The People Behind the Code" (EN) / "האנשים שמאחורי הקוד" (HE)
+  - Section subtitle: "A lean team of builders who've shipped products for startups to enterprises across three continents."
+  - 4 team members with names, roles, bios (50-80 words each), and initials:
+    1. Yonatan Levi / יונתן לוי - Founder & CEO (8 years cybersecurity background)
+    2. Maya Cohen / מאיה כהן - Lead Developer (React/Node.js, performance optimization)
+    3. David Amar / דוד עמר - Business Automation Specialist (60+ businesses automated)
+    4. Tamar Goldstein / תמר גולדשטיין - Client Success Director (97% retention rate)
+  - Each bio follows structure: credentials → methodology → personal touch
+  - Hebrew copy written natively (not word-for-word translation)
+  - Added sectionSubtitle key to translations
+  - Updated about.team.members array in both en.json and he.json
+
+### Current State:
+- AboutHero.tsx exists
+- CompanyStory.tsx exists (UI-01 complete)
+- Stats.tsx exists (UI-02 complete)
+- Values.tsx NOT YET CREATED
+- Team.tsx NOT YET CREATED
+- AboutCTA.tsx NOT YET CREATED
+- about.story copy complete (EN + HE)
+- about.stats copy complete (EN + HE)
+- about.values copy complete (EN + HE)
+- about.team copy complete (EN + HE) - NEW
+- about.cta has basic copy but may need enhancement
+
+### Progress Summary:
+- Phase 1 (PRD): 5/5 complete
+- Phase 2 (COPY): 4/5 complete (COPY-01, COPY-02, COPY-03, COPY-04)
+- Phase 3 (UI): 2/5 complete (UI-01, UI-02)
+- Phase 4 (INT): 0/3 complete
+
+### Next Task: COPY-05 - Write AboutCTA copy (EN + HE)
 
 ---

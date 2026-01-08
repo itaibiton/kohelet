@@ -349,8 +349,42 @@
       ]
     },
     "team": {
-      "sectionTitle": "The Team",
-      "members": []
+      "sectionTitle": "The People Behind the Code",
+      "sectionSubtitle": "A lean team of builders who've shipped products for startups to enterprises across three continents.",
+      "members": [
+        {
+          "id": "member_1",
+          "name": "Yonatan Levi",
+          "role": "Founder & CEO",
+          "bio": "Yonatan spent 8 years as a senior developer at Israeli cybersecurity firms before founding Kohelet in 2019. He codes alongside the team on every project, believing the best technical decisions come from staying close to implementation. When he's not debugging, he's trail running in the Judean Hills or mentoring developers at Tel Aviv tech meetups.",
+          "initials": "YL",
+          "social": { "linkedin": "#" }
+        },
+        {
+          "id": "member_2",
+          "name": "Maya Cohen",
+          "role": "Lead Developer",
+          "bio": "Maya builds full-stack applications in React and Node.js, specializing in performance optimization that's delivered measurable results—including a 3.2-second load time reduction for a SaaS platform serving 50K users. She approaches every codebase like a puzzle: find the bottleneck, eliminate it, repeat. Outside of work, she contributes to open-source projects and maintains a technical blog on modern web architecture.",
+          "initials": "MC",
+          "social": { "linkedin": "#" }
+        },
+        {
+          "id": "member_3",
+          "name": "David Amar",
+          "role": "Business Automation Specialist",
+          "bio": "David has automated workflows for over 60 businesses, saving an average of 12 hours per week in manual tasks. His background in industrial engineering gives him a systems-thinking approach: map the process, identify friction points, automate ruthlessly. He's particularly skilled at turning chaotic spreadsheet operations into clean, auditable systems. He collects vintage watches and believes good automation, like good timepieces, should be invisible until you need it.",
+          "initials": "DA",
+          "social": { "linkedin": "#" }
+        },
+        {
+          "id": "member_4",
+          "name": "Tamar Goldstein",
+          "role": "Client Success Director",
+          "bio": "Tamar joined Kohelet after 6 years managing digital transformation projects at a Big Four consultancy. She's the reason our client retention rate sits at 97%—she treats every project like a partnership, not a transaction. Her philosophy: deliver value early, communicate proactively, and never let a client question where their project stands. When she's not in client calls, she's experimenting with ceramics or planning her next backpacking trip.",
+          "initials": "TG",
+          "social": { "linkedin": "#" }
+        }
+      ]
     },
     "cta": {
       "headline": "Ready to Automate?",
