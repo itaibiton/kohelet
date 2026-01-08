@@ -2,9 +2,15 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { ArrowRight, Menu, X } from "lucide-react";
 import Image from "next/image";
 import { LanguageSwitcher } from "@/components/ui/LanguageSwitcher";
+
+// Helper to determine if a link is a route link vs hash link
+function isRouteLink(href: string): boolean {
+  return href.startsWith("/") && !href.startsWith("/#");
+}
 
 export function Navigation() {
   const t = useTranslations("navigation");
@@ -35,15 +41,25 @@ export function Navigation() {
 
         {/* Desktop Nav Links */}
         <div className="hidden md:flex items-center gap-6">
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-[11px] font-medium text-white/60 hover:text-white transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
+          {links.map((link) =>
+            isRouteLink(link.href) ? (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="text-[11px] font-medium text-white/60 hover:text-white transition-colors"
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-[11px] font-medium text-white/60 hover:text-white transition-colors"
+              >
+                {link.label}
+              </a>
+            )
+          )}
           <LanguageSwitcher />
         </div>
 
@@ -74,16 +90,27 @@ export function Navigation() {
       {mobileMenuOpen && (
         <div className="absolute top-full left-4 right-4 mt-2 glass-panel rounded-2xl shadow-[0_0_20px_rgba(0,0,0,0.5)] md:hidden">
           <div className="px-6 py-4 flex flex-col gap-4">
-            {links.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-white/80 hover:text-white py-2 transition-colors"
-              >
-                {link.label}
-              </a>
-            ))}
+            {links.map((link) =>
+              isRouteLink(link.href) ? (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-sm font-medium text-white/80 hover:text-white py-2 transition-colors"
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-sm font-medium text-white/80 hover:text-white py-2 transition-colors"
+                >
+                  {link.label}
+                </a>
+              )
+            )}
             <div className="pt-2 border-t border-white/10">
               <LanguageSwitcher />
             </div>

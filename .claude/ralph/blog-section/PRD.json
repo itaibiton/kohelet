@@ -179,7 +179,7 @@
         "Blog link styled consistently with other nav items"
       ],
       "dependencies": ["INT-01"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "INT-03",

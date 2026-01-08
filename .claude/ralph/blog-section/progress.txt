@@ -24,6 +24,7 @@ Build a full blog page with BlogHero, BlogGrid, BlogCard, and BlogFilters compon
 - [x] FE-01: Create blog page route and layout
 - [x] FE-02: Add blog filter state management
 - [x] INT-01: Add i18n translations for blog
+- [x] INT-02: Add blog link to navigation
 
 ## Current Phase: Phase 3 - Integration
 
@@ -196,4 +197,23 @@ Hebrew (he.json):
 - blog.grid.* (emptyState, emptyStateDescription)
 
 All components already use t() function via useTranslations hook.
+
+### 2026-01-08 - INT-02: Add Blog Link to Navigation
+**Task:** Add blog link to navigation
+**Agent:** direct
+**Status:** ✅ Complete
+
+**Files Modified:**
+- `content/en.json` - Added Blog link to navigation.links array
+- `content/he.json` - Added בלוג link to navigation.links array
+- `components/sections/Navigation.tsx` - Updated to use next-intl Link for route links
+
+**Implementation Details:**
+- Added "Blog" / "בלוג" link with href "/blog" to both locales
+- Added isRouteLink() helper function to distinguish route links from hash links
+- Updated desktop nav to use next-intl Link component for route links
+- Updated mobile nav to use next-intl Link component for route links
+- Hash links (#solutions, #contact, etc.) continue using regular <a> tags
+- Blog link styled consistently with other nav items
+- Link automatically includes locale prefix via next-intl routing
 
