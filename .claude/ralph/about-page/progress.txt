@@ -145,3 +145,85 @@ about.values.items[0-5].description
 
 **Next Task**: PRD-04 (Define Team requirements) - no dependencies
 
+### [2026-01-08] PRD-04: Define Team requirements ✅
+**Agent**: prd-architect
+**Status**: COMPLETE
+
+**Deliverables**:
+- Comprehensive PRD document for Team component (17 sections)
+- PRD saved to: `.claude/ralph/about-page/PRD-04-TEAM-COMPONENT.md`
+
+**Team Member Data Structure**:
+```typescript
+interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  bio: string;
+  initials: string;
+  avatarColor: string;
+  socialLinks?: { linkedin?: string; twitter?: string; };
+}
+```
+
+**6 Placeholder Team Members Defined**:
+1. David Katz - Founder & CEO (initials: DK, bg-accent-blue/20)
+2. Sarah Cohen - Chief Technology Officer (initials: SC, bg-purple-500/20)
+3. Michael Levi - Head of AI Engineering (initials: ML, bg-green-500/20)
+4. Rachel Stein - Head of Product (initials: RS, bg-pink-500/20)
+5. Yossi Friedman - Lead Automation Engineer (initials: YF, bg-orange-500/20)
+6. Maya Goldberg - Customer Success Lead (initials: MG, bg-cyan-500/20)
+
+**Avatar Approach**: Initials-based with colored backgrounds (6 rotating colors)
+
+**Card Layout (Glassmorphism)**:
+- Background: `bg-[#111113]/80` with `backdrop-blur-md`
+- Border: `border border-white/10` → `hover:border-white/20`
+- Corners: `rounded-xl`
+- Padding: `p-6`
+- Hover: `hover:scale-105`, blue shadow glow
+- Avatar: 80px mobile, 96px desktop, circular
+
+**Responsive Grid**:
+- Mobile: 1 column (`grid-cols-1`)
+- Tablet: 2 columns (`md:grid-cols-2`)
+- Desktop: 3 columns (`lg:grid-cols-3`)
+- Gap: `gap-6 md:gap-8`
+- Container: `max-w-6xl mx-auto px-6 py-20 md:py-32`
+
+**Typography**:
+- Section title: `text-4xl md:text-5xl lg:text-6xl font-display font-semibold text-white`
+- Name: `text-xl md:text-2xl font-semibold text-white text-center`
+- Role: `text-sm md:text-base text-accent-blue text-center font-medium`
+- Bio: `text-sm text-neutral-400 text-center leading-relaxed`
+
+**Social Links**:
+- Lucide icons: `Linkedin`, `Twitter`
+- 40px circular buttons with glassmorphism
+- Hover: icon turns blue, border glows
+- Proper security: `target="_blank" rel="noopener noreferrer"`
+
+**Animation**:
+- CSS `fadeInUp` animation (0.6s ease-out)
+- Staggered delays: 100ms between cards (0ms, 100ms, 200ms, etc.)
+- `prefers-reduced-motion` support
+
+**Translation Keys**:
+```
+about.team.sectionTitle
+about.team.sectionSubtitle
+about.team.members[0-5].name
+about.team.members[0-5].role
+about.team.members[0-5].bio
+```
+
+**Accessibility**:
+- Semantic HTML: `<section>`, `<article>`, `<h2>`, `<h3>`
+- `aria-labelledby` on section, `aria-label` on social links
+- Focus states: `focus:ring-2 focus:ring-accent-blue`
+- RTL support via `useLocale()` hook
+
+**Component Location**: /components/sections/about/Team.tsx
+
+**Next Task**: PRD-05 (Define AboutCTA requirements) - no dependencies
+

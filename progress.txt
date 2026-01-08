@@ -22,6 +22,27 @@
 - No about translations exist in en.json/he.json
 - PRD-01 complete (CompanyStory spec)
 
-### Next Task: PRD-02 - Define Stats component requirements
+- [x] PRD-02: Define Stats component requirements
+  - Layout: Responsive grid (1-col mobile, 2-col tablet, 4-col desktop)
+  - Grid: `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6`
+  - Container: `max-w-6xl mx-auto px-6 py-20 md:py-32`
+  - Stat Card: Glassmorphism styling with `bg-[#111113]/80 backdrop-blur-md border border-white/10`
+  - Card elements: Icon (optional), metric value, label, description (optional)
+  - Typography: metric value (text-3xl/5xl font-display font-semibold white), label (text-sm/base white/60 font-light)
+  - Icons: Clock, Zap, TrendingUp, Users from lucide-react
+  - Animation: GSAP counter animation on scroll (1.5-2s, power2.out) + staggered fade-in (0.1s-0.4s delays)
+  - Translation keys: about.stats.section_title, metrics array with value/suffix/label/description/icon
+  - Accessibility: <section> tag, <h2> for title, aria-label on animated numbers
+  - Technical: 'use client', useGSAP hook with ScrollTrigger
+  - Full spec saved to: .claude/ralph/about-page/PRD-02-Stats-Specification.json
+
+### Current State:
+- AboutHero.tsx exists
+- index.ts has exports for all 5 components (but files don't exist yet)
+- No about translations exist in en.json/he.json
+- PRD-01 complete (CompanyStory spec)
+- PRD-02 complete (Stats spec)
+
+### Next Task: PRD-03 - Define Values component requirements
 
 ---

@@ -1,0 +1,454 @@
+{
+  "component_name": "Stats",
+  "component_id": "PRD-02",
+  "file_path": "/components/sections/about/Stats.tsx",
+  "description": "Automation metrics showcase section displaying 4 key business statistics with counter animations and glassmorphism styling",
+
+  "detailed_requirements": {
+
+    "final_specification": {
+
+      "layout": {
+        "section_wrapper": {
+          "classes": "w-full max-w-6xl mx-auto px-6 py-20 md:py-32 relative z-10",
+          "description": "Main section container with responsive padding and max width"
+        },
+        "grid_container": {
+          "classes": "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6",
+          "description": "Responsive grid: 1 column mobile, 2 columns tablet, 4 columns desktop",
+          "behavior": "Cards stack vertically on mobile, 2x2 on tablet, 1x4 on desktop"
+        },
+        "section_header": {
+          "classes": "text-center mb-12 md:mb-16 space-y-4",
+          "optional": true,
+          "description": "Optional section title and subtitle above stats"
+        }
+      },
+
+      "stat_card": {
+        "structure": {
+          "card_wrapper": {
+            "classes": "group relative p-6 md:p-8 rounded-xl md:rounded-2xl border border-white/10 bg-[#111113]/80 backdrop-blur-md hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300",
+            "description": "Glassmorphism card with hover effects",
+            "elements": [
+              "metric_value (number with optional suffix like +, %, k)",
+              "metric_label (descriptive text)",
+              "optional_icon (Lucide icon)"
+            ]
+          },
+          "icon_container": {
+            "classes": "mb-4 flex justify-center md:justify-start",
+            "optional": true,
+            "icon_classes": "w-8 h-8 md:w-10 md:h-10 text-accent-blue",
+            "description": "Optional icon at top of card using Lucide icons"
+          },
+          "metric_value": {
+            "classes": "text-3xl md:text-4xl lg:text-5xl font-display font-semibold tracking-tight text-white mb-2",
+            "description": "Large animated number display",
+            "animation": "GSAP counter animation on scroll into view"
+          },
+          "metric_label": {
+            "classes": "text-sm md:text-base text-white/60 font-light tracking-tight",
+            "description": "Descriptive label below the metric"
+          },
+          "optional_description": {
+            "classes": "text-xs text-white/40 mt-2 font-light",
+            "optional": true,
+            "description": "Additional context text (if needed)"
+          }
+        },
+        "hover_effects": {
+          "background": "bg-white/[0.04]",
+          "border": "border-white/20",
+          "transition": "transition-all duration-300"
+        }
+      },
+
+      "typography": {
+        "section_title": {
+          "classes": "text-3xl md:text-4xl lg:text-5xl font-display font-medium tracking-tight text-white",
+          "content_key": "about.stats.section_title",
+          "optional": true
+        },
+        "section_subtitle": {
+          "classes": "text-base md:text-lg text-white/50 font-light tracking-tight max-w-2xl mx-auto",
+          "content_key": "about.stats.section_subtitle",
+          "optional": true
+        },
+        "metric_value": {
+          "classes": "text-3xl md:text-4xl lg:text-5xl font-display font-semibold tracking-tight text-white",
+          "format_examples": [
+            "10,000+",
+            "500+",
+            "80%",
+            "50+"
+          ],
+          "animation": "Counter animation from 0 to target value"
+        },
+        "metric_label": {
+          "classes": "text-sm md:text-base text-white/60 font-light tracking-tight",
+          "examples": [
+            "Hours Saved",
+            "Tasks Automated",
+            "Efficiency Gain",
+            "Clients Served"
+          ]
+        }
+      },
+
+      "animation": {
+        "approach": "GSAP-based counter animation on scroll into view",
+        "counter_animation": {
+          "trigger": "useGSAP hook with ScrollTrigger",
+          "trigger_point": "when stat enters viewport (start: 'top 80%')",
+          "duration": "1.5-2 seconds",
+          "easing": "power2.out",
+          "behavior": "Animate from 0 to target value with smooth counting",
+          "implementation_note": "Use gsap.to() with onUpdate to set displayed value"
+        },
+        "card_fade_in": {
+          "classes": "animate-fade-in-up",
+          "stagger": {
+            "card_1": "style={{ animationDelay: '0.1s' }}",
+            "card_2": "style={{ animationDelay: '0.2s' }}",
+            "card_3": "style={{ animationDelay: '0.3s' }}",
+            "card_4": "style={{ animationDelay: '0.4s' }}"
+          },
+          "description": "Staggered fade-in for each stat card on page load"
+        },
+        "dependencies": {
+          "gsap": "^3.12.0",
+          "gsap_plugins": ["ScrollTrigger"]
+        }
+      },
+
+      "spacing": {
+        "section_padding": {
+          "mobile": "py-20 px-6",
+          "desktop": "py-32 px-6",
+          "description": "Consistent with AboutHero section padding"
+        },
+        "card_padding": {
+          "mobile": "p-6",
+          "desktop": "p-8",
+          "description": "Inner padding for stat cards"
+        },
+        "grid_gap": {
+          "mobile": "gap-4",
+          "desktop": "gap-6",
+          "description": "Space between stat cards"
+        },
+        "text_spacing": {
+          "section_header_bottom": "mb-12 md:mb-16",
+          "icon_bottom": "mb-4",
+          "value_bottom": "mb-2",
+          "optional_description_top": "mt-2"
+        }
+      },
+
+      "translation_keys": [
+        {
+          "key": "about.stats.section_title",
+          "type": "string",
+          "optional": true,
+          "example": "Impact by the Numbers"
+        },
+        {
+          "key": "about.stats.section_subtitle",
+          "type": "string",
+          "optional": true,
+          "example": "Real results from automation and custom software"
+        },
+        {
+          "key": "about.stats.metrics",
+          "type": "array",
+          "structure": [
+            {
+              "value": "10000",
+              "suffix": "+",
+              "label": "Hours Saved",
+              "description": "Across all client projects",
+              "icon": "clock"
+            },
+            {
+              "value": "500",
+              "suffix": "+",
+              "label": "Tasks Automated",
+              "description": "Repetitive processes eliminated",
+              "icon": "zap"
+            },
+            {
+              "value": "80",
+              "suffix": "%",
+              "label": "Efficiency Gain",
+              "description": "Average improvement",
+              "icon": "trending-up"
+            },
+            {
+              "value": "50",
+              "suffix": "+",
+              "label": "Clients Served",
+              "description": "Successful projects delivered",
+              "icon": "users"
+            }
+          ]
+        }
+      ],
+
+      "accessibility": {
+        "semantic_html": {
+          "section_tag": "Use <section> with optional id='stats' or aria-labelledby",
+          "heading": "Use <h2> for section title if provided",
+          "metric_structure": "Use <div> with role='group' or semantic <figure> for each stat",
+          "metric_value": "Use <span> or <div> with aria-label for screen readers"
+        },
+        "aria_considerations": [
+          "Add aria-label to animated numbers to announce final value",
+          "Example: aria-label='10,000 plus hours saved'",
+          "Ensure icon-only elements have aria-label or are decorative (aria-hidden='true')",
+          "Use aria-live='polite' during counter animation for screen readers (optional)"
+        ],
+        "keyboard_navigation": {
+          "requirement": "Cards are non-interactive, so no keyboard focus needed",
+          "note": "If cards become clickable in future, add tabindex and focus states"
+        },
+        "color_contrast": {
+          "metric_value": "White text on dark background exceeds WCAG AA",
+          "metric_label": "white/60 opacity ensures sufficient contrast",
+          "border": "white/10 border provides subtle visual separation"
+        }
+      },
+
+      "responsive_behavior": {
+        "breakpoints": {
+          "mobile": "< 640px: 1 column, cards stack vertically",
+          "tablet": "640px - 1024px: 2 columns, 2x2 grid",
+          "desktop": "> 1024px: 4 columns, 1x4 grid"
+        },
+        "text_scaling": {
+          "metric_value": "text-3xl (mobile) → text-4xl (tablet) → text-5xl (desktop)",
+          "metric_label": "text-sm (mobile) → text-base (desktop)",
+          "section_title": "text-3xl (mobile) → text-4xl (tablet) → text-5xl (desktop)"
+        },
+        "spacing_scaling": {
+          "section_padding": "py-20 (mobile) → py-32 (desktop)",
+          "card_padding": "p-6 (mobile) → p-8 (desktop)",
+          "grid_gap": "gap-4 (mobile) → gap-6 (desktop)"
+        }
+      },
+
+      "data_structure": {
+        "metric_interface": {
+          "typescript": "interface Metric { value: number; suffix?: string; label: string; description?: string; icon?: string; }",
+          "description": "Each stat card data structure"
+        },
+        "metric_values": [
+          {
+            "id": "hours_saved",
+            "value": 10000,
+            "suffix": "+",
+            "label": "Hours Saved",
+            "description": "Across all client projects",
+            "icon": "clock"
+          },
+          {
+            "id": "tasks_automated",
+            "value": 500,
+            "suffix": "+",
+            "label": "Tasks Automated",
+            "description": "Repetitive processes eliminated",
+            "icon": "zap"
+          },
+          {
+            "id": "efficiency_gain",
+            "value": 80,
+            "suffix": "%",
+            "label": "Efficiency Gain",
+            "description": "Average improvement",
+            "icon": "trending-up"
+          },
+          {
+            "id": "clients_served",
+            "value": 50,
+            "suffix": "+",
+            "label": "Clients Served",
+            "description": "Successful projects delivered",
+            "icon": "users"
+          }
+        ]
+      },
+
+      "technical_implementation": {
+        "component_type": "Client component (use client directive)",
+        "required_imports": [
+          "useTranslations from next-intl",
+          "useGSAP from @gsap/react",
+          "gsap from gsap",
+          "ScrollTrigger from gsap/ScrollTrigger",
+          "useRef, useState from react",
+          "Lucide icons (Clock, Zap, TrendingUp, Users)"
+        ],
+        "state_management": {
+          "counter_refs": "useRef array for each stat counter element",
+          "animated_values": "useState for current displayed values (if needed)"
+        },
+        "gsap_setup": {
+          "register_plugin": "gsap.registerPlugin(ScrollTrigger)",
+          "scroll_trigger": "Trigger animation when section enters viewport",
+          "counter_logic": "Use gsap.to() with custom object property and onUpdate callback"
+        },
+        "number_formatting": {
+          "description": "Format numbers with commas and suffixes",
+          "example": "10000 → 10,000+",
+          "utility_function": "Optional: create formatMetricValue(value, suffix) helper"
+        }
+      },
+
+      "visual_design_notes": {
+        "glassmorphism_treatment": {
+          "background": "bg-[#111113]/80 with backdrop-blur-md for frosted glass effect",
+          "border": "border border-white/10 for subtle definition",
+          "hover_state": "Slightly brighter background (bg-white/[0.04]) and border (border-white/20)"
+        },
+        "color_palette": {
+          "primary_text": "#ffffff (white)",
+          "secondary_text": "rgba(255,255,255,0.6) (white/60)",
+          "tertiary_text": "rgba(255,255,255,0.4) (white/40)",
+          "accent": "#3b82f6 (accent-blue)",
+          "background": "#111113 (brand-gray)",
+          "border": "rgba(255,255,255,0.1) (white/10)"
+        },
+        "visual_hierarchy": {
+          "1_primary": "Metric value (largest, bold, white)",
+          "2_secondary": "Metric label (medium, light, white/60)",
+          "3_tertiary": "Optional description (small, lighter, white/40)",
+          "4_decorative": "Optional icon (accent-blue)"
+        }
+      },
+
+      "icon_recommendations": {
+        "hours_saved": {
+          "icon": "Clock",
+          "rationale": "Represents time savings"
+        },
+        "tasks_automated": {
+          "icon": "Zap",
+          "rationale": "Represents speed and automation"
+        },
+        "efficiency_gain": {
+          "icon": "TrendingUp",
+          "rationale": "Represents growth and improvement"
+        },
+        "clients_served": {
+          "icon": "Users",
+          "rationale": "Represents people and relationships"
+        }
+      }
+    },
+
+    "acceptance_criteria": {
+      "layout": [
+        "Section uses max-w-6xl container with responsive padding (py-20 md:py-32)",
+        "Stats arranged in responsive grid (1 col mobile, 2 col tablet, 4 col desktop)",
+        "Grid gap is gap-4 on mobile, gap-6 on desktop"
+      ],
+      "stat_cards": [
+        "Each card has glassmorphism styling (bg-[#111113]/80 backdrop-blur-md)",
+        "Cards have border border-white/10",
+        "Cards have rounded corners (rounded-xl md:rounded-2xl)",
+        "Hover effects work: bg-white/[0.04] and border-white/20",
+        "Each card contains: metric value, metric label, optional description, optional icon"
+      ],
+      "typography": [
+        "Metric values use font-display with appropriate sizing (text-3xl to text-5xl)",
+        "Metric labels use text-white/60 with font-light",
+        "All text has tracking-tight for tighter letter spacing"
+      ],
+      "animations": [
+        "Cards fade in with staggered delays (0.1s, 0.2s, 0.3s, 0.4s)",
+        "Numbers animate from 0 to target value using GSAP counter animation",
+        "Counter animation triggers when section enters viewport (ScrollTrigger)",
+        "Animation duration is 1.5-2 seconds with smooth easing"
+      ],
+      "translations": [
+        "Component uses useTranslations('about.stats')",
+        "Section title and subtitle are optional and translated",
+        "Each metric has translated label and optional description",
+        "Translation keys follow documented structure"
+      ],
+      "accessibility": [
+        "Section uses semantic <section> tag",
+        "Section title uses <h2> if provided",
+        "Animated numbers have aria-label with final value",
+        "Icons are either labeled or decorative (aria-hidden)",
+        "Color contrast meets WCAG AA standards"
+      ],
+      "responsive": [
+        "Layout adapts correctly at all breakpoints (mobile, tablet, desktop)",
+        "Text sizes scale appropriately",
+        "Padding and spacing scale appropriately",
+        "Cards remain readable and well-proportioned at all sizes"
+      ],
+      "technical": [
+        "Component has 'use client' directive",
+        "GSAP and ScrollTrigger are properly imported and registered",
+        "No TypeScript errors",
+        "No console warnings",
+        "Component exports default function"
+      ]
+    },
+
+    "implementation_notes": {
+      "counter_animation_example": {
+        "description": "Example GSAP counter animation implementation",
+        "code_pattern": "useGSAP(() => { const counters = [refs]; counters.forEach((counter, i) => { gsap.to(counter.current, { textContent: targetValue, duration: 2, ease: 'power2.out', snap: { textContent: 1 }, scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' } }); }); }, []);"
+      },
+      "number_formatting": {
+        "description": "Consider formatting numbers with commas during animation",
+        "implementation": "Use onUpdate callback to format textContent with toLocaleString()"
+      },
+      "rtl_support": {
+        "description": "Component should work with both English (LTR) and Hebrew (RTL)",
+        "consideration": "Number formatting and icon positioning may need RTL adjustments",
+        "implementation": "Use useLocale() from next-intl and apply conditional classes for RTL"
+      },
+      "performance": {
+        "description": "GSAP animations are performant, but avoid unnecessary re-renders",
+        "recommendation": "Use refs for DOM manipulation, not state updates during animation"
+      }
+    },
+
+    "dependencies_required": [
+      {
+        "package": "gsap",
+        "version": "^3.12.0",
+        "purpose": "Counter animations"
+      },
+      {
+        "package": "@gsap/react",
+        "version": "^2.0.0",
+        "purpose": "React hooks for GSAP"
+      },
+      {
+        "package": "next-intl",
+        "version": "existing",
+        "purpose": "Translations"
+      },
+      {
+        "package": "lucide-react",
+        "version": "existing",
+        "purpose": "Icons (optional)"
+      }
+    ]
+  },
+
+  "pass_criteria": {
+    "definition_complete": true,
+    "specification_detailed": true,
+    "translation_keys_documented": true,
+    "accessibility_addressed": true,
+    "responsive_behavior_defined": true,
+    "animation_approach_specified": true,
+    "ready_for_ui_implementation": true
+  }
+}
