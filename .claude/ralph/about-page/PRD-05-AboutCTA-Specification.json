@@ -1,0 +1,908 @@
+{
+  "component_name": "AboutCTA",
+  "component_id": "PRD-05",
+  "file_path": "/components/sections/about/AboutCTA.tsx",
+  "description": "Call-to-action section at the bottom of the About page designed to convert visitors into leads by prompting them to schedule a discovery call or contact the team",
+
+  "detailed_requirements": {
+
+    "final_specification": {
+
+      "layout": {
+        "section_wrapper": {
+          "classes": "w-full relative py-20 md:py-32 overflow-hidden",
+          "description": "Full-width section with gradient background treatment",
+          "background": "bg-gradient-to-b from-transparent via-accent-blue/5 to-transparent",
+          "note": "Gradient creates visual separation from Team section above while maintaining cohesion"
+        },
+        "content_container": {
+          "classes": "relative z-10 w-full max-w-4xl mx-auto px-6",
+          "description": "Narrower container (max-w-4xl vs max-w-6xl) creates focus and intimacy for conversion moment",
+          "rationale": "Tighter width draws attention to CTA and makes copy feel more direct"
+        },
+        "card_wrapper": {
+          "classes": "relative p-8 md:p-12 rounded-xl md:rounded-2xl border border-white/10 bg-[#111113]/80 backdrop-blur-md text-center",
+          "description": "Glassmorphism card containing all CTA content, matching component patterns",
+          "elements": [
+            "headline (action-oriented question or benefit statement)",
+            "supporting_text (1-2 sentences reinforcing value)",
+            "button_container (primary CTA button, optional secondary link)",
+            "optional_trust_indicator (subtle social proof or guarantee)"
+          ]
+        },
+        "button_container": {
+          "classes": "flex flex-wrap items-center justify-center gap-4 mt-8",
+          "description": "Centered button container with space for primary and optional secondary CTA"
+        }
+      },
+
+      "content_structure": {
+        "headline": {
+          "classes": "text-3xl md:text-4xl lg:text-5xl font-display font-semibold tracking-tight text-white mb-4",
+          "description": "Action-oriented headline that frames the next step",
+          "type": "question or benefit statement",
+          "examples": [
+            "Ready to Eliminate Your Team's Busywork?",
+            "Let's Build Your Automation System",
+            "What Could Your Team Accomplish Without Manual Tasks?",
+            "Turn Hours of Work into Minutes"
+          ],
+          "character_limit": "40-60 characters recommended for visual balance",
+          "tone": "Direct, benefit-focused, conversational",
+          "content_key": "about.cta.headline"
+        },
+        "supporting_text": {
+          "classes": "text-base md:text-lg text-white/60 font-light leading-relaxed max-w-2xl mx-auto mb-8",
+          "description": "1-2 sentences reinforcing value and lowering friction",
+          "length_guidance": "20-40 words total",
+          "purpose": [
+            "Reinforce the benefit of taking action",
+            "Address potential objection or friction",
+            "Create urgency or momentum"
+          ],
+          "examples": [
+            "Schedule a 30-minute call to discuss your automation opportunities. No sales pitch—just a real conversation about what's possible.",
+            "Let's talk about where your team is losing time. We'll show you exactly how automation can help.",
+            "Book a free consultation to explore how we can streamline your operations and free up your team."
+          ],
+          "tone": "Reassuring, low-pressure, value-focused",
+          "content_key": "about.cta.supporting_text"
+        },
+        "primary_button": {
+          "component": "Native <a> tag styled as button (not Button component - to avoid clip-hud which doesn't fit glassmorphism)",
+          "classes": "group relative inline-flex items-center gap-2 px-8 py-4 bg-accent-blue text-white rounded-full text-sm font-semibold tracking-wide transition-all duration-300 border border-accent-blue hover:bg-accent-blue-hover hover:border-accent-blue-hover shadow-[0_0_30px_rgba(59,130,246,0.3)] hover:shadow-[0_0_40px_rgba(59,130,246,0.5)]",
+          "description": "Primary CTA with blue glow effect, matching Hero CTA styling",
+          "text_examples": [
+            "Schedule a Call",
+            "Let's Talk Automation",
+            "Book Your Consultation",
+            "Get Started"
+          ],
+          "character_limit": "15-25 characters",
+          "icon": "ChevronRight from lucide-react (w-4 h-4)",
+          "icon_behavior": "Translates right on hover (group-hover:translate-x-0.5), rotates 180deg for RTL",
+          "destination": "/#contact (anchor link to contact section on landing page)",
+          "content_key": "about.cta.button_text"
+        },
+        "secondary_link": {
+          "optional": true,
+          "classes": "group inline-flex items-center gap-2 text-sm font-medium text-white/60 hover:text-white transition-colors",
+          "description": "Optional low-commitment secondary action",
+          "text_examples": [
+            "View Our Work",
+            "See Case Studies",
+            "Read Client Stories",
+            "Learn More"
+          ],
+          "destination_options": [
+            "/#solutions (solutions section)",
+            "/case-studies (if exists)",
+            "/#testimonials (if exists)"
+          ],
+          "icon": "ArrowRight from lucide-react (w-4 h-4)",
+          "rationale": "Provides alternative path for visitors not ready for primary conversion",
+          "content_key": "about.cta.secondary_link_text"
+        },
+        "trust_indicator": {
+          "optional": true,
+          "classes": "mt-6 text-xs text-white/40 font-light",
+          "description": "Subtle social proof or guarantee to reduce friction",
+          "examples": [
+            "Join 50+ businesses saving hundreds of hours each month",
+            "No commitment required. Cancel anytime.",
+            "Trusted by teams at [Company A], [Company B], and [Company C]"
+          ],
+          "character_limit": "40-60 characters",
+          "content_key": "about.cta.trust_indicator",
+          "recommendation": "Include if space permits - helps overcome final objections"
+        }
+      },
+
+      "visual_design": {
+        "background_treatment": {
+          "section_background": {
+            "classes": "bg-gradient-to-b from-transparent via-accent-blue/5 to-transparent",
+            "description": "Subtle vertical gradient that highlights the CTA section without being overwhelming",
+            "color_stops": [
+              "from-transparent (top - seamless transition from Team section)",
+              "via-accent-blue/5 (middle - subtle blue accent that draws attention)",
+              "to-transparent (bottom - clean page ending)"
+            ]
+          },
+          "card_background": {
+            "classes": "bg-[#111113]/80 backdrop-blur-md",
+            "description": "Glassmorphism card background matching all other About page components",
+            "consistency": "Same treatment as Stats, Values, and Team cards"
+          },
+          "optional_decorative_element": {
+            "description": "Optional gradient orb similar to AboutHero for visual interest",
+            "classes": "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent-blue/10 rounded-full blur-[120px] pointer-events-none opacity-50",
+            "note": "Very subtle - should not overpower content"
+          }
+        },
+        "card_styling": {
+          "border": "border border-white/10",
+          "corners": "rounded-xl md:rounded-2xl",
+          "padding": "p-8 (mobile) md:p-12 (desktop)",
+          "alignment": "text-center for all elements",
+          "hover_effects": "None - card is not interactive as a whole, only button is clickable"
+        },
+        "button_styling": {
+          "primary_button": {
+            "base": "bg-accent-blue text-white rounded-full",
+            "border": "border border-accent-blue",
+            "shadow": "shadow-[0_0_30px_rgba(59,130,246,0.3)]",
+            "hover_shadow": "hover:shadow-[0_0_40px_rgba(59,130,246,0.5)]",
+            "hover_background": "hover:bg-accent-blue-hover",
+            "transition": "transition-all duration-300",
+            "description": "Prominent glow effect creates visual hierarchy and draws attention"
+          },
+          "secondary_link": {
+            "base": "text-white/60",
+            "hover": "hover:text-white",
+            "transition": "transition-colors",
+            "description": "Understated to keep focus on primary CTA"
+          }
+        }
+      },
+
+      "typography": {
+        "headline": {
+          "classes": "text-3xl md:text-4xl lg:text-5xl font-display font-semibold tracking-tight text-white",
+          "responsive_scaling": "text-3xl (mobile) → text-4xl (tablet) → text-5xl (desktop)",
+          "font_family": "font-display (Inter or similar)",
+          "weight": "font-semibold (600)",
+          "color": "text-white",
+          "spacing": "tracking-tight, mb-4"
+        },
+        "supporting_text": {
+          "classes": "text-base md:text-lg text-white/60 font-light leading-relaxed",
+          "responsive_scaling": "text-base (mobile) → text-lg (desktop)",
+          "weight": "font-light (300)",
+          "color": "text-white/60",
+          "spacing": "leading-relaxed, mb-8"
+        },
+        "button_text": {
+          "classes": "text-sm font-semibold tracking-wide",
+          "weight": "font-semibold (600)",
+          "size": "text-sm",
+          "spacing": "tracking-wide",
+          "color": "text-white"
+        },
+        "secondary_link_text": {
+          "classes": "text-sm font-medium",
+          "weight": "font-medium (500)",
+          "size": "text-sm",
+          "color": "text-white/60 hover:text-white"
+        },
+        "trust_indicator_text": {
+          "classes": "text-xs text-white/40 font-light",
+          "weight": "font-light (300)",
+          "size": "text-xs",
+          "color": "text-white/40"
+        }
+      },
+
+      "animation": {
+        "approach": "Staggered fade-in animation on page load using CSS animations, similar to Values and Team components",
+        "card_animation": {
+          "classes": "animate-fade-in-up",
+          "delay": "style={{ animationDelay: '0.2s' }}",
+          "description": "Entire card fades in with slight delay to allow visitor to finish reading Team section"
+        },
+        "element_stagger": {
+          "headline": {
+            "classes": "animate-fade-in-up",
+            "delay": "style={{ animationDelay: '0.3s' }}",
+            "description": "Headline animates slightly after card appears"
+          },
+          "supporting_text": {
+            "classes": "animate-fade-in-up",
+            "delay": "style={{ animationDelay: '0.4s' }}",
+            "description": "Supporting text follows headline"
+          },
+          "buttons": {
+            "classes": "animate-fade-in-up",
+            "delay": "style={{ animationDelay: '0.5s' }}",
+            "description": "CTAs appear last, creating natural reading flow and emphasis"
+          }
+        },
+        "button_hover_animation": {
+          "glow_increase": "shadow transitions from 30px to 40px blur",
+          "icon_translate": "ChevronRight translates 0.5 units to the right",
+          "background_shift": "bg-accent-blue to bg-accent-blue-hover",
+          "duration": "duration-300",
+          "description": "Subtle but noticeable hover feedback"
+        },
+        "no_scroll_trigger": {
+          "rationale": "Simple CSS animations sufficient - no GSAP needed",
+          "dependencies": "Uses existing animate-fade-in-up utility"
+        }
+      },
+
+      "spacing": {
+        "section_padding": {
+          "mobile": "py-20 px-6",
+          "desktop": "py-32 px-6",
+          "description": "Consistent with all other About page sections",
+          "note": "Generous vertical padding creates breathing room and visual separation"
+        },
+        "card_padding": {
+          "mobile": "p-8",
+          "desktop": "p-12",
+          "description": "More generous than other cards (8/12 vs 6/8) to emphasize importance and create focus",
+          "rationale": "Extra padding around conversion moment reduces visual clutter"
+        },
+        "internal_spacing": {
+          "headline_bottom": "mb-4",
+          "supporting_text_bottom": "mb-8",
+          "button_container_top": "mt-8",
+          "trust_indicator_top": "mt-6",
+          "button_gap": "gap-4",
+          "description": "Clear vertical rhythm guides eye from headline through supporting text to CTA"
+        },
+        "container_max_width": {
+          "value": "max-w-4xl",
+          "rationale": "Narrower than other sections (4xl vs 6xl) creates focus and intimacy for conversion moment",
+          "comparison": "Hero uses 7xl, Stats/Values/Team use 6xl, CTA uses 4xl"
+        }
+      },
+
+      "translation_keys": [
+        {
+          "key": "about.cta.headline",
+          "type": "string",
+          "description": "Action-oriented headline, question or benefit statement",
+          "example": "Ready to Eliminate Your Team's Busywork?",
+          "character_limit": "40-60 characters",
+          "tone": "Direct, benefit-focused, conversational"
+        },
+        {
+          "key": "about.cta.supporting_text",
+          "type": "string",
+          "description": "1-2 sentences reinforcing value and lowering friction",
+          "example": "Schedule a 30-minute call to discuss your automation opportunities. No sales pitch—just a real conversation about what's possible.",
+          "word_count": "20-40 words",
+          "tone": "Reassuring, low-pressure, value-focused"
+        },
+        {
+          "key": "about.cta.button_text",
+          "type": "string",
+          "description": "Primary CTA button text",
+          "example": "Schedule a Call",
+          "character_limit": "15-25 characters",
+          "tone": "Action-oriented, clear, specific"
+        },
+        {
+          "key": "about.cta.secondary_link_text",
+          "type": "string",
+          "optional": true,
+          "description": "Optional secondary link text for alternative action",
+          "example": "View Our Work",
+          "character_limit": "15-25 characters",
+          "tone": "Informational, low-commitment"
+        },
+        {
+          "key": "about.cta.trust_indicator",
+          "type": "string",
+          "optional": true,
+          "description": "Subtle social proof or guarantee to reduce friction",
+          "example": "Join 50+ businesses saving hundreds of hours each month",
+          "character_limit": "40-60 characters",
+          "tone": "Credible, specific, reassuring"
+        }
+      ],
+
+      "accessibility": {
+        "semantic_html": {
+          "section_tag": "Use <section> with id='cta' for potential anchor linking",
+          "heading": "Use <h2> for headline",
+          "paragraph": "Use <p> for supporting text and trust indicator",
+          "links": "Use <a> tags for both primary button and secondary link"
+        },
+        "aria_considerations": [
+          "Section should have aria-labelledby pointing to headline",
+          "Primary CTA button needs no additional ARIA - semantic <a> with clear text is sufficient",
+          "Icons should be decorative with aria-hidden='true' - link text provides context",
+          "Trust indicator is informational, no special ARIA needed"
+        ],
+        "color_contrast": {
+          "headline": "White text on dark background exceeds WCAG AAA",
+          "supporting_text": "white/60 on dark background meets WCAG AA (approximately 4.5:1)",
+          "button_text": "White text on blue background (#3B82F6) exceeds WCAG AA",
+          "secondary_link": "white/60 initial state meets AA, white on hover exceeds AA",
+          "trust_indicator": "white/40 may be below AA - acceptable for non-critical supplementary content",
+          "border": "white/10 border provides subtle visual separation without relying on color alone"
+        },
+        "keyboard_navigation": {
+          "primary_button": {
+            "requirement": "Must be keyboard accessible",
+            "implementation": "Native <a> tag is keyboard accessible by default",
+            "focus_state": "Add focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]",
+            "enter_key": "Activates link (native behavior)"
+          },
+          "secondary_link": {
+            "requirement": "Must be keyboard accessible if present",
+            "implementation": "Native <a> tag is keyboard accessible by default",
+            "focus_state": "Add focus-visible:underline",
+            "tab_order": "Appears after primary button in logical tab order"
+          },
+          "card_background": {
+            "requirement": "Card itself is not interactive, no focus state needed",
+            "note": "Only interactive elements (links) receive keyboard focus"
+          }
+        },
+        "screen_reader_experience": {
+          "reading_order": "Headline → Supporting text → Primary button → Secondary link → Trust indicator",
+          "announcement": "Section announced as 'Call to action' or by headline text",
+          "button_context": "Button text should be self-explanatory without surrounding context (e.g., 'Schedule a Call' not just 'Click Here')"
+        }
+      },
+
+      "responsive_behavior": {
+        "breakpoints": {
+          "mobile": "< 640px: Single column, full-width card, stacked buttons",
+          "tablet": "640px - 1024px: Card maintains centering, text scales up",
+          "desktop": "> 1024px: Full desktop sizing, maximum impact"
+        },
+        "text_scaling": {
+          "headline": "text-3xl (mobile) → text-4xl (tablet) → text-5xl (desktop)",
+          "supporting_text": "text-base (mobile) → text-lg (desktop)",
+          "button_text": "text-sm (consistent across breakpoints)",
+          "secondary_link": "text-sm (consistent across breakpoints)"
+        },
+        "spacing_scaling": {
+          "section_padding": "py-20 (mobile) → py-32 (desktop)",
+          "card_padding": "p-8 (mobile) → p-12 (desktop)",
+          "headline_bottom": "mb-4 (consistent)",
+          "supporting_text_bottom": "mb-8 (consistent)",
+          "button_container_top": "mt-8 (consistent)"
+        },
+        "button_behavior": {
+          "mobile": "Buttons may stack vertically or wrap if both present, adequate touch targets",
+          "desktop": "Buttons remain horizontal with gap-4, hover effects enabled",
+          "touch_targets": "Minimum 44x44px tap area on mobile (py-4 = 16px + text + padding meets this)"
+        },
+        "container_behavior": {
+          "mobile": "Container takes most of screen width with px-6 padding",
+          "desktop": "Container centers with max-w-4xl, creating focused narrow layout",
+          "background_gradient": "Gradient remains full-width while card constrains to max-w-4xl"
+        }
+      },
+
+      "conversion_optimization": {
+        "messaging_strategy": {
+          "headline_approach": {
+            "option_1_question": {
+              "example": "Ready to Eliminate Your Team's Busywork?",
+              "benefit": "Engages visitor with self-identification question",
+              "psychological_trigger": "Creates mental 'yes' response"
+            },
+            "option_2_benefit": {
+              "example": "Turn Hours of Work into Minutes",
+              "benefit": "Clear value proposition",
+              "psychological_trigger": "Paints picture of desired outcome"
+            },
+            "option_3_invitation": {
+              "example": "Let's Build Your Automation System",
+              "benefit": "Collaborative framing",
+              "psychological_trigger": "Partnership rather than vendor-client dynamic"
+            },
+            "recommended": "option_1_question - works well after trust-building About page content"
+          },
+          "supporting_text_approach": {
+            "purpose": "Lower friction and address objections",
+            "key_elements": [
+              "Specific time commitment ('30-minute call' not 'a call')",
+              "Remove pressure ('No sales pitch' or 'No commitment')",
+              "Reinforce value ('discuss your automation opportunities')",
+              "Make it feel conversational ('just a real conversation')"
+            ],
+            "example": "Schedule a 30-minute call to discuss your automation opportunities. No sales pitch—just a real conversation about what's possible."
+          },
+          "button_text_approach": {
+            "avoid": [
+              "Generic: 'Click Here', 'Learn More', 'Get Started' (too vague)",
+              "Corporate: 'Request Information', 'Submit Inquiry' (too formal)",
+              "Passive: 'Find Out More', 'See Options' (lack urgency)"
+            ],
+            "prefer": [
+              "Specific: 'Schedule a Call', 'Book Consultation' (clear action)",
+              "Value-focused: 'Let's Talk Automation' (reinforces benefit)",
+              "Action-oriented: 'Start Saving Time' (outcome-focused)"
+            ],
+            "recommended": "Schedule a Call - specific, low-friction, professional"
+          }
+        },
+        "friction_reduction": {
+          "techniques_applied": [
+            "Specific time commitment (30 minutes) sets clear expectations",
+            "No sales pitch language removes pressure",
+            "Conversational tone ('let's talk', 'discuss') feels collaborative",
+            "Optional secondary action provides alternative for hesitant visitors",
+            "Trust indicator provides social proof at decision moment"
+          ]
+        },
+        "placement_rationale": {
+          "position": "Bottom of About page, after Company Story, Stats, Values, and Team sections",
+          "psychological_state": "Visitor has consumed trust-building content and understands company values/capabilities",
+          "conversion_readiness": "High - visitor chose to visit About page and read through all sections",
+          "timing": "Perfect moment for conversion ask - visitor is informed and engaged"
+        }
+      },
+
+      "link_destinations": {
+        "primary_cta": {
+          "recommended": "/#contact",
+          "rationale": "Links to contact section on landing page (single source of truth for contact form)",
+          "alternative_1": "/contact (if dedicated contact page exists)",
+          "alternative_2": "#contact (if contact section added to About page)",
+          "implementation": "Use relative path for same-site linking, browser handles scroll-to-anchor"
+        },
+        "secondary_link": {
+          "option_1": "/#solutions (view solutions section)",
+          "option_2": "/case-studies (view case studies if exists)",
+          "option_3": "/#testimonials (view social proof if exists)",
+          "rationale": "Provides path for visitors who want more information before contacting",
+          "recommended": "/#solutions - shows what you can do for them"
+        },
+        "anchor_behavior": {
+          "same_page": "If linking to #contact on same page, browser scrolls smoothly to anchor",
+          "cross_page": "If linking to /#contact on different page, browser navigates then scrolls to anchor",
+          "implementation": "No custom JavaScript needed - native browser behavior handles anchor links"
+        }
+      },
+
+      "data_structure": {
+        "cta_content_interface": {
+          "typescript": "interface CTAContent { headline: string; supportingText: string; buttonText: string; buttonHref: string; secondaryLinkText?: string; secondaryLinkHref?: string; trustIndicator?: string; }",
+          "description": "CTA content data structure with optional secondary elements"
+        },
+        "default_content": {
+          "headline": "Ready to Eliminate Your Team's Busywork?",
+          "supportingText": "Schedule a 30-minute call to discuss your automation opportunities. No sales pitch—just a real conversation about what's possible.",
+          "buttonText": "Schedule a Call",
+          "buttonHref": "/#contact",
+          "secondaryLinkText": "View Our Work",
+          "secondaryLinkHref": "/#solutions",
+          "trustIndicator": "Join 50+ businesses saving hundreds of hours each month"
+        }
+      },
+
+      "technical_implementation": {
+        "component_type": "Server component (no 'use client' directive needed)",
+        "required_imports": [
+          "useTranslations from next-intl",
+          "ChevronRight, ArrowRight from lucide-react (icons)",
+          "React (for JSX)"
+        ],
+        "state_management": {
+          "requirement": "No state needed - static content from translations",
+          "note": "Server component by default - only use 'use client' if adding interactivity later"
+        },
+        "animation_setup": {
+          "approach": "Pure CSS animations using existing animate-fade-in-up utility",
+          "no_gsap_required": "No counter animations or scroll triggers - CSS fade-in sufficient",
+          "implementation": "Apply animate-fade-in-up class with inline style animationDelay on card and internal elements"
+        },
+        "link_implementation": {
+          "primary_button": {
+            "element": "<a> tag styled as button",
+            "href": "Pull from translation data or hardcode '/#contact'",
+            "attributes": "No target='_blank' for same-site linking",
+            "classes": "Full button styling classes as documented"
+          },
+          "secondary_link": {
+            "element": "<a> tag with understated styling",
+            "href": "Pull from translation data",
+            "conditional_rendering": "Only render if secondaryLinkText exists in translations",
+            "classes": "Text link styling with icon"
+          }
+        },
+        "icon_rendering": {
+          "primary_button_icon": {
+            "component": "ChevronRight from lucide-react",
+            "size": "w-4 h-4",
+            "animation": "group-hover:translate-x-0.5",
+            "rtl_handling": "rtl:rotate-180 class for RTL language support"
+          },
+          "secondary_link_icon": {
+            "component": "ArrowRight from lucide-react",
+            "size": "w-4 h-4",
+            "animation": "Optional: group-hover:translate-x-0.5",
+            "rtl_handling": "rtl:rotate-180 class for RTL language support"
+          }
+        },
+        "conditional_elements": {
+          "secondary_link": "Render only if translation key exists and is non-empty",
+          "trust_indicator": "Render only if translation key exists and is non-empty",
+          "decorative_orb": "Optional - can be omitted for cleaner implementation"
+        }
+      },
+
+      "visual_design_notes": {
+        "glassmorphism_treatment": {
+          "background": "bg-[#111113]/80 with backdrop-blur-md for frosted glass effect",
+          "border": "border border-white/10 for subtle definition",
+          "consistency": "Matches Stats, Values, and Team components for visual cohesion",
+          "note": "No hover effect on card itself - only on button"
+        },
+        "color_palette": {
+          "primary_text": "#ffffff (white) - headline",
+          "secondary_text": "rgba(255,255,255,0.6) (white/60) - supporting text",
+          "tertiary_text": "rgba(255,255,255,0.4) (white/40) - trust indicator",
+          "accent": "#3b82f6 (accent-blue) - button background and glow",
+          "background": "#111113 (brand-gray) - card background",
+          "gradient_accent": "rgba(59,130,246,0.05) (accent-blue/5) - section background gradient",
+          "border": "rgba(255,255,255,0.1) (white/10) - card border",
+          "button_glow": "rgba(59,130,246,0.3) normal, rgba(59,130,246,0.5) hover"
+        },
+        "visual_hierarchy": {
+          "1_button": "Largest visual weight due to size, color, and glow - primary focus",
+          "2_headline": "Large, bold, white - secondary focus draws eye first when reading",
+          "3_supporting_text": "Medium, light, white/60 - supporting information",
+          "4_secondary_link": "Small, understated - alternative path",
+          "5_trust_indicator": "Smallest, lightest - reinforcing detail",
+          "flow": "Eye travels: Headline → Supporting Text → Button (with secondary link and trust indicator as optional steps)"
+        },
+        "glow_effect_rationale": {
+          "purpose": "Creates visual hierarchy and draws attention to conversion point",
+          "implementation": "box-shadow with large blur radius and blue color",
+          "intensity": "30px blur normal, 40px blur on hover",
+          "color": "rgba(59,130,246,0.3) matches accent-blue brand color",
+          "hover_amplification": "Increases to 0.5 opacity on hover for feedback",
+          "context": "Consistent with Hero primary CTA and brand button styling"
+        },
+        "background_gradient_notes": {
+          "approach": "Subtle vertical gradient on section, not card",
+          "color": "accent-blue/5 (very low opacity)",
+          "shape": "from-transparent via-accent-blue/5 to-transparent",
+          "purpose": [
+            "Creates visual separation from Team section above",
+            "Subtly highlights CTA area without overwhelming",
+            "Maintains dark theme while adding interest",
+            "Draws eye to center where CTA card sits"
+          ],
+          "alternative": "Could use solid transparent background if gradient feels too busy"
+        },
+        "comparison_to_other_components": {
+          "similarities": "Same glassmorphism card treatment as Stats, Values, Team",
+          "differences": [
+            "Narrower container (max-w-4xl vs max-w-6xl) for focus",
+            "Centered text alignment vs left-aligned in some components",
+            "More generous padding (p-8 md:p-12 vs p-6 md:p-8) for emphasis",
+            "Section background gradient unique to CTA",
+            "Button glow effect creates stronger visual hierarchy",
+            "No grid - single card creates unified conversion moment"
+          ]
+        }
+      },
+
+      "content_guidelines": {
+        "headline_writing": {
+          "length": "40-60 characters for visual balance and readability",
+          "format": "Title Case or Sentence case (consistent with brand)",
+          "type_options": {
+            "question": {
+              "example": "Ready to Eliminate Your Team's Busywork?",
+              "when_to_use": "When visitor is likely already problem-aware (perfect for About page)",
+              "benefit": "Creates mental 'yes' response and self-identification"
+            },
+            "benefit_statement": {
+              "example": "Turn Hours of Work into Minutes",
+              "when_to_use": "When emphasizing outcome over process",
+              "benefit": "Paints clear picture of transformation"
+            },
+            "invitation": {
+              "example": "Let's Build Your Automation System",
+              "when_to_use": "When emphasizing partnership and collaboration",
+              "benefit": "Feels less salesy, more collaborative"
+            }
+          },
+          "tone": "Direct, conversational, benefit-focused",
+          "avoid": [
+            "Corporate jargon ('Leverage Our Solutions', 'Optimize Your Workflow')",
+            "Vague promises ('Unlock Your Potential', 'Transform Your Business')",
+            "Salesy language ('Limited Time Offer', 'Don't Miss Out')",
+            "Questions that could get 'no' answer ('Want to Save Money?' - could be no if budget is tight)"
+          ]
+        },
+        "supporting_text_writing": {
+          "length": "20-40 words (1-2 sentences)",
+          "structure": {
+            "sentence_1": "What the next step is and what value it provides",
+            "sentence_2": "Friction removal or additional reassurance"
+          },
+          "key_elements": [
+            "Specific details: '30-minute call' not 'a call'",
+            "Value framing: 'discuss your automation opportunities' not 'talk about our services'",
+            "Friction removal: 'No sales pitch', 'No commitment required', 'Cancel anytime'",
+            "Conversational tone: 'just a real conversation' not 'consultation session'"
+          ],
+          "examples_good": [
+            "Schedule a 30-minute call to discuss your automation opportunities. No sales pitch—just a real conversation about what's possible.",
+            "Book a free consultation to explore how we can streamline your operations. No commitment required.",
+            "Let's talk about where your team is losing time. We'll show you exactly how automation can help."
+          ],
+          "examples_avoid": [
+            "Contact us today to learn more about our comprehensive automation solutions and services." (too corporate, too vague),
+            "Fill out our form and a representative will be in touch." (passive, transactional),
+            "Request a demo to see our platform in action." (assumes product-led, not service-led)"
+          ],
+          "tone": "Reassuring, specific, low-pressure, benefit-focused"
+        },
+        "button_text_writing": {
+          "length": "15-25 characters (2-4 words)",
+          "guidelines": [
+            "Action-oriented verb: Schedule, Book, Start, Get, Let's",
+            "Specific action: 'Schedule a Call' not 'Contact Us'",
+            "Benefit hint if possible: 'Start Saving Time' vs 'Get Started'",
+            "Conversational: 'Let's Talk Automation' vs 'Request Consultation'"
+          ],
+          "examples_good": [
+            "Schedule a Call",
+            "Book Your Consultation",
+            "Let's Talk Automation",
+            "Start Saving Time",
+            "Get Your Free Audit"
+          ],
+          "examples_avoid": [
+            "Click Here" (too generic),
+            "Submit" (too transactional),
+            "Learn More" (too vague),
+            "Request Information" (too corporate),
+            "Contact" (too brief, lacks specificity)"
+          ],
+          "recommended": "Schedule a Call - professional, specific, low-friction"
+        },
+        "secondary_link_writing": {
+          "purpose": "Provide alternative path for not-yet-ready visitors",
+          "length": "15-25 characters",
+          "guidelines": [
+            "Less action-oriented than primary: 'View' vs 'Schedule'",
+            "Points to proof or information: case studies, solutions, testimonials",
+            "Still specific: 'View Our Work' vs 'Learn More'"
+          ],
+          "examples": [
+            "View Our Work",
+            "See Case Studies",
+            "Read Client Stories",
+            "Explore Solutions"
+          ],
+          "when_to_include": "When you have strong secondary content to show (case studies, portfolio)",
+          "when_to_skip": "If primary CTA is already low-friction, secondary may dilute focus"
+        },
+        "trust_indicator_writing": {
+          "purpose": "Reduce friction with social proof or guarantee",
+          "length": "40-60 characters (1 sentence fragment)",
+          "types": {
+            "social_proof": {
+              "example": "Join 50+ businesses saving hundreds of hours each month",
+              "benefit": "Shows others have taken this step successfully"
+            },
+            "guarantee": {
+              "example": "No commitment required. Cancel anytime.",
+              "benefit": "Removes risk from decision"
+            },
+            "credibility": {
+              "example": "Trusted by teams at [Company A], [Company B], and [Company C]",
+              "benefit": "Leverages brand recognition"
+            }
+          },
+          "tone": "Factual, specific, credible",
+          "avoid": [
+            "Superlatives without proof: 'Best in the Industry'",
+            "Vague claims: 'Thousands of Happy Customers'",
+            "Pushy guarantees: 'Risk-Free! 100% Money Back!'"
+          ],
+          "recommended": "Join 50+ businesses saving hundreds of hours each month - specific, credible, benefit-focused"
+        }
+      }
+    },
+
+    "acceptance_criteria": {
+      "layout": [
+        "Section uses full-width background with gradient (bg-gradient-to-b from-transparent via-accent-blue/5 to-transparent)",
+        "Content container uses max-w-4xl (narrower than other sections) for focus",
+        "Responsive padding (py-20 md:py-32, px-6) consistent with other sections",
+        "Card uses glassmorphism styling (bg-[#111113]/80 backdrop-blur-md)",
+        "Card has border border-white/10",
+        "Card has rounded corners (rounded-xl md:rounded-2xl)",
+        "All text is centered (text-center on card wrapper)"
+      ],
+      "content": [
+        "Headline renders as <h2> with large, bold styling",
+        "Supporting text renders as <p> with readable sizing and spacing",
+        "Primary CTA button styled with blue background and glow effect",
+        "Secondary link only renders if translation key exists",
+        "Trust indicator only renders if translation key exists",
+        "Button container centers buttons with gap-4"
+      ],
+      "typography": [
+        "Headline uses font-display font-semibold (text-3xl to text-5xl)",
+        "Supporting text uses font-light (text-base to text-lg) with text-white/60",
+        "Button text uses font-semibold text-sm with tracking-wide",
+        "Secondary link uses font-medium text-sm",
+        "Trust indicator uses font-light text-xs with text-white/40",
+        "All text has appropriate tracking for readability"
+      ],
+      "button_styling": [
+        "Primary button has bg-accent-blue with rounded-full shape",
+        "Primary button has border border-accent-blue",
+        "Primary button has glow shadow: shadow-[0_0_30px_rgba(59,130,246,0.3)]",
+        "Hover state increases glow to shadow-[0_0_40px_rgba(59,130,246,0.5)]",
+        "Hover state changes background to bg-accent-blue-hover",
+        "ChevronRight icon translates on hover (group-hover:translate-x-0.5)",
+        "Icon rotates 180deg for RTL languages (rtl:rotate-180)",
+        "All transitions use duration-300"
+      ],
+      "animations": [
+        "Card fades in with animate-fade-in-up and 0.2s delay",
+        "Headline fades in with animate-fade-in-up and 0.3s delay",
+        "Supporting text fades in with animate-fade-in-up and 0.4s delay",
+        "Button container fades in with animate-fade-in-up and 0.5s delay",
+        "Animations create natural reading flow: headline → text → CTA",
+        "No GSAP needed - uses CSS animations only"
+      ],
+      "links": [
+        "Primary button links to /#contact (or configured destination)",
+        "Primary button uses <a> tag (not <button>) for proper navigation",
+        "Secondary link (if present) links to configured destination",
+        "Links do not open in new tab (same-site navigation)",
+        "Anchor links work correctly (scroll to #contact section)"
+      ],
+      "translations": [
+        "Component uses useTranslations('about.cta')",
+        "All text content pulled from translation keys",
+        "Optional elements (secondary link, trust indicator) conditionally render",
+        "Translation keys follow documented structure (about.cta.*)"
+      ],
+      "accessibility": [
+        "Section uses semantic <section> tag with id='cta'",
+        "Headline uses <h2> tag",
+        "Supporting text and trust indicator use <p> tags",
+        "Primary button has clear, descriptive text (not 'Click Here')",
+        "Both links have visible focus states for keyboard navigation",
+        "Icons have aria-hidden='true' (link text provides context)",
+        "Color contrast meets WCAG AA standards for all text",
+        "Touch targets meet minimum 44x44px on mobile"
+      ],
+      "responsive": [
+        "Layout adapts correctly at all breakpoints",
+        "Text sizes scale appropriately (text-3xl to text-5xl headline)",
+        "Card padding scales (p-8 to p-12)",
+        "Section padding scales (py-20 to py-32)",
+        "Buttons stack or wrap gracefully on mobile",
+        "Container remains centered with proper max-width constraints",
+        "Gradient background remains full-width while card constrains"
+      ],
+      "technical": [
+        "Component is server component (no 'use client' directive unless needed)",
+        "All required icons properly imported (ChevronRight, ArrowRight)",
+        "No TypeScript errors",
+        "No console warnings",
+        "Component exports default function",
+        "Works with both English and Hebrew translations (RTL support)"
+      ]
+    },
+
+    "implementation_notes": {
+      "server_component_by_default": {
+        "description": "CTA component can be server component - no interactivity beyond native link behavior",
+        "rationale": "No state, no client-side effects, just static content and CSS animations",
+        "implementation": "Do not add 'use client' directive unless future interactivity requires it",
+        "benefit": "Better performance, smaller JavaScript bundle"
+      },
+      "link_vs_button": {
+        "description": "Use <a> tags styled as buttons, not <button> elements",
+        "rationale": "CTAs navigate to different sections/pages, which is semantic link behavior",
+        "implementation": "Style <a> tags with button classes, href navigates to /#contact",
+        "accessibility": "Proper semantics for screen readers - link announces destination, not just 'button'"
+      },
+      "anchor_link_behavior": {
+        "description": "Links to /#contact work via native browser behavior",
+        "same_page": "If contact section is on same page, add #contact and browser scrolls",
+        "cross_page": "If linking to /#contact on different page, browser navigates then scrolls",
+        "smooth_scroll": "Consider adding scroll-behavior: smooth to CSS for better UX",
+        "implementation": "No custom JavaScript needed - native anchor links handle everything"
+      },
+      "optional_elements": {
+        "secondary_link": {
+          "when_to_include": "If you have strong secondary content (case studies, portfolio)",
+          "when_to_skip": "If primary CTA is already low-friction and secondary would dilute focus",
+          "implementation": "Conditionally render based on translation key: {t.has('secondary_link_text') && <a>...}</a>}"
+        },
+        "trust_indicator": {
+          "when_to_include": "If you have specific metrics or guarantees to share",
+          "when_to_skip": "If generic trust indicators would feel inauthentic",
+          "implementation": "Conditionally render based on translation key",
+          "recommendation": "Include if possible - helps overcome final objections"
+        },
+        "decorative_orb": {
+          "when_to_include": "If visual interest is needed and doesn't distract",
+          "when_to_skip": "If section already feels visually complete with gradient",
+          "implementation": "Absolute positioned div with blur filter, very low opacity",
+          "recommendation": "Start without orb, add if section feels flat"
+        }
+      },
+      "rtl_support": {
+        "description": "Component works with both LTR and RTL languages",
+        "considerations": [
+          "Text alignment is centered, works for both directions",
+          "Icons need rtl:rotate-180 class to flip direction in RTL",
+          "Button gap-4 works in both directions",
+          "Gradient remains centered in both directions"
+        ],
+        "implementation": "next-intl handles dir attribute, add rtl: classes to icons"
+      },
+      "conversion_optimization_testing": {
+        "headline_variations": "Consider A/B testing question vs benefit statement vs invitation",
+        "supporting_text_variations": "Test different friction-removal approaches",
+        "button_text_variations": "Test specificity level ('Schedule a Call' vs 'Let's Talk')",
+        "secondary_link": "Test with and without secondary option - may increase or decrease primary conversions",
+        "implementation": "Use translation keys to easily swap copy for testing"
+      },
+      "performance": {
+        "description": "Lightweight component with minimal overhead",
+        "benefits": [
+          "Server component by default = no JavaScript needed",
+          "CSS animations = better performance than JS",
+          "No external dependencies beyond lucide-react icons",
+          "No GSAP = smaller bundle size"
+        ],
+        "considerations": "Icons add minimal weight, glow effect is pure CSS"
+      }
+    },
+
+    "dependencies_required": [
+      {
+        "package": "next-intl",
+        "version": "existing",
+        "purpose": "Translations and internationalization"
+      },
+      {
+        "package": "lucide-react",
+        "version": "existing",
+        "purpose": "Icons (ChevronRight, ArrowRight)"
+      },
+      {
+        "package": "react",
+        "version": "existing",
+        "purpose": "React component (JSX)"
+      }
+    ]
+  },
+
+  "pass_criteria": {
+    "definition_complete": true,
+    "specification_detailed": true,
+    "translation_keys_documented": true,
+    "accessibility_addressed": true,
+    "responsive_behavior_defined": true,
+    "animation_approach_specified": true,
+    "conversion_strategy_documented": true,
+    "messaging_guidelines_provided": true,
+    "link_destinations_confirmed": true,
+    "ready_for_ui_implementation": true
+  }
+}

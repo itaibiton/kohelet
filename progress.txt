@@ -90,6 +90,32 @@
 - PRD-03 complete (Values spec)
 - PRD-04 complete (Team spec)
 
-### Next Task: PRD-05 - Define AboutCTA component requirements
+- [x] PRD-05: Define AboutCTA component requirements
+  - Layout: Centered card with narrower container (max-w-4xl) for focused conversion moment
+  - Background: Subtle vertical gradient `bg-gradient-to-b from-transparent via-accent-blue/5 to-transparent`
+  - Card: Glassmorphism styling `bg-[#111113]/80 backdrop-blur-md border border-white/10`
+  - Content structure:
+    - Headline: Action-oriented question (text-3xl to text-5xl, font-display, white)
+    - Supporting text: 1-2 sentences (text-base to text-lg, white/60, font-light)
+    - Primary CTA button: Blue with glow effect `shadow-[0_0_30px_rgba(59,130,246,0.3)]`
+    - Optional secondary link: Understated text link
+    - Optional trust indicator: Subtle social proof (text-xs, white/40)
+  - Button styling: rounded-full, ChevronRight icon with hover translate, RTL support
+  - Animation: CSS animate-fade-in-up with staggered delays (0.2s-0.5s), NO GSAP
+  - Link destination: `/#contact` (anchor to contact section on landing page)
+  - Translation keys: about.cta.headline, supporting_text, button_text, secondary_link_text (optional), trust_indicator (optional)
+  - Accessibility: <section> tag, <h2> headline, <p> for text, focus states for buttons
+  - Technical: Server component (no 'use client' needed), uses <a> tags styled as buttons
+  - Full spec saved to: .claude/ralph/about-page/PRD-05-AboutCTA-Specification.json
+
+### Current State:
+- AboutHero.tsx exists
+- CompanyStory.tsx implemented (UI-01 complete)
+- index.ts has exports for all 5 components (remaining 4 need implementation)
+- No about translations exist in en.json/he.json yet
+- ALL PRD tasks complete (PRD-01 through PRD-05)
+- Phase 1 (PRD) COMPLETE - Ready to start Phase 2 (COPY)
+
+### Next Task: COPY-01 - Write CompanyStory copy (EN + HE)
 
 ---
