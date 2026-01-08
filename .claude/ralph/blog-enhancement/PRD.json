@@ -135,7 +135,7 @@
         "npm install completes without errors"
       ],
       "dependencies": [],
-      "pass": false
+      "pass": true
     },
     {
       "id": "CL-02",
