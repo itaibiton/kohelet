@@ -117,7 +117,7 @@
         "Staggered animation on cards"
       ],
       "dependencies": ["UI-02"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "FE-01",

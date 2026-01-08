@@ -293,6 +293,10 @@
     "filters": {
       "all": "All",
       "searchPlaceholder": "Search articles..."
+    },
+    "grid": {
+      "emptyState": "No articles found",
+      "emptyStateDescription": "Try adjusting your search or filter to find what you're looking for."
     }
   },
   "about": {
@@ -403,8 +407,9 @@
     },
     "cta": {
       "headline": "Ready to Automate?",
-      "subtitle": "Let's discuss how we can transform your operations.",
-      "button": "Get Started"
+      "subtext": "Stop losing hours to manual tasks. Let's discuss how we can transform your operations and give your team back the time they deserve.",
+      "primaryButton": "Schedule a Consultation",
+      "secondaryButton": "Get in Touch"
     }
   }
 }
