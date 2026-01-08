@@ -300,3 +300,172 @@ interface AboutCTAProps {
 
 **Next Task**: UI-01 (Implement CompanyStory component) - depends on PRD-01 ✅
 
+
+### [2026-01-08] PRD-04: Define Team requirements ✅
+**Agent**: prd-architect
+**Status**: COMPLETE
+
+**Deliverables**:
+- Comprehensive PRD specification saved to: `.claude/ralph/about-page/PRD-04-Team-Specification.json`
+- Following same detailed structure as PRD-02 (Stats) and PRD-03 (Values)
+- 4-6 team member grid with glassmorphism cards
+
+**Team Approach**: Team grid (4-6 members) with photos/initials, names, roles, bios, and social links
+
+**Layout Specifications**:
+- Container: `max-w-6xl mx-auto px-6 py-20 md:py-32`
+- Responsive grid: `grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`
+- Grid gap: `gap-6 md:gap-8`
+- Section header: `text-center mb-12 md:mb-16`
+
+**Card Structure (Glassmorphism)**:
+- Background: `bg-[#111113]/80` with `backdrop-blur-md`
+- Border: `border border-white/10` → `hover:border-white/20`
+- Corners: `rounded-xl md:rounded-2xl`
+- Padding: `p-6 md:p-8`
+- Hover: `bg-white/[0.04]`, subtle border brightening
+
+**Photo/Avatar Treatment**:
+- Circular profile images: `rounded-full`
+- Size: `w-32 h-32` mobile → `w-40 h-40` desktop
+- Border: `border-2 border-white/10` → `hover:border-white/20`
+- Placeholder approach (recommended): Initials on gradient background
+  - Gradient: `bg-gradient-to-br from-accent-blue/30 to-accent-blue/10`
+  - Initials: `text-3xl md:text-4xl font-display font-semibold text-white`
+- Alternative: Generic User icon from Lucide
+- Actual photos: Next.js Image component with `fill`, `object-cover`
+
+**Content per Team Member**:
+- **Name**: `text-xl md:text-2xl font-display font-semibold text-white text-center mb-1`
+- **Role**: `text-sm md:text-base text-accent-blue font-light text-center mb-4`
+- **Bio**: `text-sm md:text-base text-white/60 font-light leading-relaxed text-center mb-6` (50-80 words, 2-3 sentences)
+- **Social links** (optional): LinkedIn, Twitter, GitHub, Email
+  - Icons: `w-5 h-5` from Lucide
+  - Styling: `text-white/40 hover:text-accent-blue`
+  - Layout: `flex items-center justify-center gap-4`
+  - Security: `target="_blank" rel="noopener noreferrer"`
+
+**4 Placeholder Team Members**:
+1. Alex Thompson - Founder & CEO (AT)
+2. Sarah Chen - Lead Developer (SC)  
+3. Marcus Rodriguez - Business Automation Specialist (MR)
+4. Priya Patel - Client Success Director (PP)
+
+**Typography Specs**:
+- Section title: `text-3xl md:text-4xl lg:text-5xl font-display font-medium text-white`
+- Section subtitle: `text-base md:text-lg text-white/50 font-light` (optional)
+- Member name: `text-xl md:text-2xl font-display font-semibold text-white`
+- Member role: `text-sm md:text-base text-accent-blue font-light`
+- Member bio: `text-sm md:text-base text-white/60 font-light leading-relaxed`
+
+**Animation Approach**:
+- CSS `animate-fade-in-up` (no GSAP - simpler than Stats)
+- Staggered delays: Header (0s, 0.1s), Cards (0.1s, 0.2s, 0.3s, 0.4s, 0.5s, 0.6s)
+- No scroll triggers needed
+
+**Translation Keys Structure**:
+```
+about.team.section_title
+about.team.section_subtitle (optional)
+about.team.members[0-3 or 0-5]:
+  - id
+  - name
+  - role
+  - bio
+  - photo (optional)
+  - initials (optional, auto-generated from name)
+  - social (optional):
+    - linkedin
+    - twitter
+    - github
+    - email
+```
+
+**Accessibility**:
+- Semantic HTML: `<section id="team">`, `<article>` per member, `<h2>` for section, `<h3>` for names
+- Photo alt text: "Photo of [Name], [Role] at Kohelet"
+- Initials placeholder: `aria-label="Profile placeholder for [Name]"`
+- Social links: `aria-label="Connect with [Name] on [Platform]"`
+- Icons: `aria-hidden="true"` (link label is sufficient)
+- Focus states: `focus-visible:ring-2 focus-visible:ring-accent-blue`
+- Color contrast: WCAG AA compliant
+
+**Responsive Behavior**:
+- Mobile (< 640px): 1 column, stacked vertically
+- Tablet (640-1024px): 2 columns, 2x2 or 2x3 grid
+- Desktop (> 1024px): 3 columns
+- Handles 4-6 members gracefully (centers last row if uneven)
+
+**Technical Implementation**:
+- Client component: `use client`
+- Imports: `useTranslations`, `Image`, Lucide icons (`Linkedin`, `Twitter`, `Github`, `Mail`, `User`)
+- No state needed - static content from translations
+- Initials helper: `getInitials(name) => first letter + last letter`
+- Photo conditional: Render Image if `member.photo`, else render initials
+- Social icon mapping: Dynamic render based on available platforms
+- No GSAP dependency
+
+**Content Guidelines**:
+- **Bios**: 50-80 words, 3 sentences: (1) Background/expertise, (2) Skills/philosophy, (3) Personal touch
+- **Tone**: Professional but personable, third-person recommended
+- **Roles**: Under 30 characters, specific but concise
+- **Photos**: Square 1:1, minimum 400x400px, consistent style when added
+- **Launch strategy**: Use initials placeholders initially, add photos later (no code changes needed)
+
+**Dependencies**:
+- next-intl (existing)
+- next/image (existing)
+- lucide-react (existing)
+- react (existing)
+
+**Component Location**: /components/sections/about/Team.tsx
+
+**Phase 1 Progress**: ALL PRD tasks complete (PRD-01 ✅, PRD-02 ✅, PRD-03 ✅, PRD-04 ✅, PRD-05 ✅)
+
+### [2026-01-08] UI-01: Implement CompanyStory component ✅
+**Agent**: ui-designer
+**Status**: COMPLETE
+
+**Deliverables**:
+- Component implemented at `/components/sections/about/CompanyStory.tsx`
+- Uses `'use client'` directive
+- Implements next-intl translations with `useTranslations("about.story")`
+- Two-column grid layout: `lg:grid-cols-12` (5 cols left, 7 cols right)
+- Stacks vertically on mobile
+
+**Glassmorphism Cards**:
+- Background: `bg-[#111113]/80`
+- Backdrop: `backdrop-blur-md`
+- Border: `border border-white/10`
+- Corners: `rounded-xl`
+- Padding: `p-6 md:p-8`
+
+**Typography**:
+- Section title: `text-3xl md:text-4xl font-display font-medium text-white`
+- Labels: `text-xs uppercase tracking-widest text-accent-blue font-semibold`
+- Mission/Vision: `text-lg md:text-xl text-white font-light leading-relaxed`
+- Narrative: `text-base text-neutral-400 leading-relaxed`
+
+**Animation Delays**:
+- Section title: 0.1s
+- Mission card: 0.2s
+- Vision card: 0.3s
+- Narrative p1: 0.4s, p2: 0.5s, p3: 0.6s
+
+**Translation Keys**:
+```
+about.story.sectionTitle
+about.story.missionLabel
+about.story.missionText
+about.story.visionLabel
+about.story.visionText
+about.story.narrative.p1
+about.story.narrative.p2
+about.story.narrative.p3
+```
+
+**TypeScript Check**: Passed (errors only for other missing components)
+
+**Phase 2 Progress**: 1/5 UI tasks complete (UI-01 ✅)
+
+**Next Task**: UI-02 (Implement Stats component) - depends on PRD-02 ✅
