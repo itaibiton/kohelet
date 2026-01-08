@@ -121,7 +121,7 @@
         "All filter functionality (search + category) works correctly"
       ],
       "dependencies": ["SHADCN-02", "BUG-02"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "CL-01",

@@ -32,6 +32,7 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
 - BUG-03: Fix search debounce cleanup
 - SHADCN-01: Install shadcn Input component
 - SHADCN-02: Install shadcn Select component
+- SHADCN-03: Refactor BlogFilters with shadcn components
 
 ## Current Phase: Phase 1 - Bug Fixes
 
@@ -111,4 +112,25 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
 4. Exports: Select, SelectTrigger, SelectContent, SelectItem, SelectValue, SelectGroup, SelectLabel, SelectSeparator
 
 **Result:** shadcn Select component installed and ready to use for BlogFilters category dropdown.
+
+---
+
+### 2026-01-08 - SHADCN-03 Complete
+**Task:** Refactor BlogFilters with shadcn components
+**Agent:** ui-designer
+
+**Changes Made:**
+1. `components/sections/blog/BlogFilters.tsx`:
+   - Complete rebuild using shadcn Input and Select components
+   - Search input with Search icon, RTL-aware positioning
+   - Category Select dropdown with glassmorphism styling
+   - Single row on desktop, stacked on mobile
+   - Reduced vertical padding (py-4)
+
+2. `content/en.json` and `content/he.json`:
+   - Added translation keys for category dropdown (allCategories, selectCategory)
+
+**Result:** BlogFilters now uses polished shadcn components with full glassmorphism styling and RTL support.
+
+## Current Phase: Phase 3 - Contentlayer Setup
 

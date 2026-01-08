@@ -7,15 +7,16 @@
   "navigation": {
     "logo": "Kohelet",
     "links": [
-      { "label": "Services", "href": "#solutions" },
-      { "label": "Capabilities", "href": "#capabilities" },
-      { "label": "Pricing", "href": "#pricing" },
+      { "label": "Services", "href": "/#solutions" },
+      { "label": "Capabilities", "href": "/#capabilities" },
+      { "label": "Pricing", "href": "/#pricing" },
+      { "label": "About", "href": "/about" },
       { "label": "Blog", "href": "/blog" },
-      { "label": "Contact", "href": "#contact" }
+      { "label": "Contact", "href": "/#contact" }
     ],
     "cta": {
       "label": "Get Started",
-      "href": "#contact"
+      "href": "/#contact"
     }
   },
   "hero": {
@@ -296,8 +297,9 @@
       "subtitle": "Thoughts on automation, software development, and building better businesses."
     },
     "filters": {
-      "all": "All",
-      "searchPlaceholder": "Search articles..."
+      "all": "All Categories",
+      "searchPlaceholder": "Search articles...",
+      "categoryPlaceholder": "Select category"
     },
     "grid": {
       "emptyState": "No articles found",

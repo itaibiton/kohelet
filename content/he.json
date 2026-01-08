@@ -7,15 +7,16 @@
   "navigation": {
     "logo": "קהלת",
     "links": [
-      { "label": "שירותים", "href": "#solutions" },
-      { "label": "יכולות", "href": "#capabilities" },
-      { "label": "תמחור", "href": "#pricing" },
+      { "label": "שירותים", "href": "/#solutions" },
+      { "label": "יכולות", "href": "/#capabilities" },
+      { "label": "תמחור", "href": "/#pricing" },
+      { "label": "אודות", "href": "/about" },
       { "label": "בלוג", "href": "/blog" },
-      { "label": "צור קשר", "href": "#contact" }
+      { "label": "צור קשר", "href": "/#contact" }
     ],
     "cta": {
       "label": "התחילו",
-      "href": "#contact"
+      "href": "/#contact"
     }
   },
   "hero": {
@@ -297,8 +298,9 @@
       "subtitle": "מחשבות על אוטומציה, פיתוח תוכנה, ובניית עסקים טובים יותר."
     },
     "filters": {
-      "all": "הכל",
-      "searchPlaceholder": "חיפוש מאמרים..."
+      "all": "כל הקטגוריות",
+      "searchPlaceholder": "חיפוש מאמרים...",
+      "categoryPlaceholder": "בחר קטגוריה"
     },
     "grid": {
       "emptyState": "לא נמצאו מאמרים",
