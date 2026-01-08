@@ -85,7 +85,7 @@
         "Link wraps entire card for accessibility"
       ],
       "dependencies": [],
-      "pass": false
+      "pass": true
     },
     {
       "id": "UI-03",

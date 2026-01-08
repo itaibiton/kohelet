@@ -18,6 +18,7 @@ Build a full blog page with BlogHero, BlogGrid, BlogCard, and BlogFilters compon
 
 ## Completed Tasks:
 - [x] UI-01: Implement BlogHero component
+- [x] UI-02: Implement BlogCard component
 
 ## Current Phase: Phase 1 - UI Components
 
@@ -48,4 +49,24 @@ Build a full blog page with BlogHero, BlogGrid, BlogCard, and BlogFilters compon
 - blog.hero.title.highlight
 - blog.hero.title.line2
 - blog.hero.subtitle
+
+### 2026-01-08 - UI-02: BlogCard Component
+**Task:** Implement BlogCard component
+**Agent:** ui-designer
+**Status:** ✅ Complete
+
+**Files Created/Modified:**
+- `components/sections/blog/BlogCard.tsx` - Blog card component
+- `components/sections/blog/index.ts` - Updated barrel export
+
+**Implementation Details:**
+- Exported BlogCardProps interface with: title, excerpt, thumbnail?, author, date, category, slug, locale
+- Glassmorphism card styling: bg-brand-gray/50 backdrop-blur-md border border-white/10
+- Hover effects: border glow, subtle lift (-translate-y-1), gradient overlay, bottom accent line
+- Image with Next.js Image component, fallback placeholder with decorative grid pattern
+- Responsive sizing with proper image sizes attribute
+- Entire card wrapped in Link for accessibility
+- Category badge with accent blue styling
+- Author avatar with fallback icon
+- Locale-aware date formatting (en-US / he-IL)
 
