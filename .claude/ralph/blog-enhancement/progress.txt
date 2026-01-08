@@ -31,6 +31,7 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
 - BUG-02: Fix BlogHero layout issues
 - BUG-03: Fix search debounce cleanup
 - SHADCN-01: Install shadcn Input component
+- SHADCN-02: Install shadcn Select component
 
 ## Current Phase: Phase 1 - Bug Fixes
 
@@ -96,4 +97,18 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
 3. Component uses existing `cn` utility from `@/lib/utils`
 
 **Result:** shadcn Input component installed and ready to use. Import with `import { Input } from "@/components/ui/input"`.
+
+---
+
+### 2026-01-08 - SHADCN-02 Complete
+**Task:** Install shadcn Select component
+**Agent:** senior-frontend-dev
+
+**Changes Made:**
+1. Ran `npx shadcn@latest add select`
+2. Created `components/ui/select.tsx` with all Select subcomponents
+3. Added `@radix-ui/react-select` ^2.2.6 to dependencies
+4. Exports: Select, SelectTrigger, SelectContent, SelectItem, SelectValue, SelectGroup, SelectLabel, SelectSeparator
+
+**Result:** shadcn Select component installed and ready to use for BlogFilters category dropdown.
 
