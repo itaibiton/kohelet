@@ -319,8 +319,34 @@
       }
     },
     "values": {
-      "sectionTitle": "Our Values",
-      "items": []
+      "sectionTitle": "How We Work",
+      "sectionSubtitle": "The principles that guide every project we build",
+      "items": [
+        {
+          "id": "automation_first",
+          "icon": "zap",
+          "title": "Automation-First Thinking",
+          "description": "Before writing a single line of code, we identify what shouldn't require human time. Every project starts with mapping repetitive tasks—whether it's lead qualification, data entry, or reporting—and architecting systems that handle them automatically. We don't just build software; we engineer time back into your day."
+        },
+        {
+          "id": "transparency",
+          "icon": "eye",
+          "title": "Radical Transparency",
+          "description": "You'll always know what we're building, why we made specific technical decisions, and where your investment is going. No obscure jargon to justify billable hours. No surprises in scope or timeline. We share our development process in real-time because the best products emerge from informed collaboration, not information asymmetry."
+        },
+        {
+          "id": "results_driven",
+          "icon": "target",
+          "title": "Outcomes Over Outputs",
+          "description": "We don't measure success by features shipped or hours logged. A chatbot that qualifies 80% of leads automatically matters more than one with 50 integrations. A landing page that doubles conversions beats one with fancy animations. We optimize for the metrics that actually move your business forward—everything else is commentary."
+        },
+        {
+          "id": "long_term_partnership",
+          "icon": "handshake",
+          "title": "Built to Evolve",
+          "description": "The systems we build today need to scale with you tomorrow. That's why 97% of our clients are still clients. We architect for flexibility, document obsessively, and stay engaged as your business grows. When you hire more salespeople or expand to new markets, your software adapts—without expensive rebuilds."
+        }
+      ]
     },
     "team": {
       "sectionTitle": "The Team",
