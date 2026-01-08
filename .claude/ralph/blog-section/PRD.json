@@ -101,7 +101,7 @@
         "i18n support for filter labels"
       ],
       "dependencies": [],
-      "pass": false
+      "pass": true
     },
     {
       "id": "UI-04",

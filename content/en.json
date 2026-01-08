@@ -280,6 +280,21 @@
   "footer": {
     "copyright": "© 2024 Kohelet Digital Solutions. All rights reserved."
   },
+  "blog": {
+    "hero": {
+      "badge": "Blog",
+      "title": {
+        "line1": "Insights &",
+        "highlight": " Ideas",
+        "line2": ""
+      },
+      "subtitle": "Thoughts on automation, software development, and building better businesses."
+    },
+    "filters": {
+      "all": "All",
+      "searchPlaceholder": "Search articles..."
+    }
+  },
   "about": {
     "hero": {
       "badge": "About Kohelet",

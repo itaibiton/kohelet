@@ -19,6 +19,7 @@ Build a full blog page with BlogHero, BlogGrid, BlogCard, and BlogFilters compon
 ## Completed Tasks:
 - [x] UI-01: Implement BlogHero component
 - [x] UI-02: Implement BlogCard component
+- [x] UI-03: Implement BlogFilters component
 
 ## Current Phase: Phase 1 - UI Components
 
@@ -69,4 +70,29 @@ Build a full blog page with BlogHero, BlogGrid, BlogCard, and BlogFilters compon
 - Category badge with accent blue styling
 - Author avatar with fallback icon
 - Locale-aware date formatting (en-US / he-IL)
+
+### 2026-01-08 - UI-03: BlogFilters Component
+**Task:** Implement BlogFilters component
+**Agent:** ui-designer
+**Status:** ✅ Complete
+
+**Files Created/Modified:**
+- `components/sections/blog/BlogFilters.tsx` - Filter component
+- `components/sections/blog/index.ts` - Updated barrel export
+- `content/en.json` - Added blog.filters translations (partial)
+- `content/he.json` - Added blog.filters translations (partial)
+
+**Implementation Details:**
+- Exported BlogFiltersProps interface with: categories, activeCategory, searchQuery, callbacks
+- Search input with Lucide Search icon, glassmorphism styling
+- Category filter chips with active/inactive states
+- Active state: border-accent-blue/50 bg-accent-blue/10 text-accent-blue
+- Inactive state: border-white/10 bg-brand-gray/30 text-white/60
+- Responsive layout: search on top, categories wrap below
+- Focus states for search input
+- i18n support via useTranslations("blog.filters")
+
+**Translation keys added:**
+- blog.filters.all
+- blog.filters.searchPlaceholder
 
