@@ -1,0 +1,336 @@
+---
+title: "Building Design Systems That Scale"
+title_he: "בניית מערכות עיצוב שמתרחבות"
+excerpt: "Learn how to create comprehensive design systems that maintain consistency, improve collaboration, and scale across multiple products and teams."
+excerpt_he: "למד כיצד ליצור מערכות עיצוב מקיפות ששומרות על עקביות, משפרות שיתוף פעולה ומתרחבות על פני מוצרים וצוותים מרובים."
+date: "2026-01-06"
+author: "Kohelet Digital"
+category: "Design"
+category_he: "עיצוב"
+published: true
+---
+
+## Introduction to Design Systems
+
+A design system is more than just a component library or style guide—it's a single source of truth that brings together design principles, reusable components, patterns, and guidelines to create consistent user experiences across products.
+
+In 2026, as organizations build increasingly complex digital products, a well-architected design system has become essential for maintaining quality and velocity at scale.
+
+## Core Components of a Design System
+
+### 1. Design Tokens
+
+Design tokens are the atomic elements of your design system—the visual design decisions that define your brand and user interface.
+
+```typescript
+// tokens/colors.ts
+export const colors = {
+  // Brand colors
+  brand: {
+    primary: '#2563eb',      // Blue 600
+    secondary: '#7c3aed',    // Violet 600
+    accent: '#0891b2',       // Cyan 600
+  },
+
+  // Neutral colors
+  neutral: {
+    50: '#f8fafc',
+    100: '#f1f5f9',
+    200: '#e2e8f0',
+    300: '#cbd5e1',
+    400: '#94a3b8',
+    500: '#64748b',
+    600: '#475569',
+    700: '#334155',
+    800: '#1e293b',
+    900: '#0f172a',
+  },
+
+  // Semantic colors
+  semantic: {
+    success: '#10b981',
+    warning: '#f59e0b',
+    error: '#ef4444',
+    info: '#3b82f6',
+  },
+} as const;
+
+// tokens/spacing.ts
+export const spacing = {
+  xs: '0.25rem',    // 4px
+  sm: '0.5rem',     // 8px
+  md: '1rem',       // 16px
+  lg: '1.5rem',     // 24px
+  xl: '2rem',       // 32px
+  '2xl': '3rem',    // 48px
+  '3xl': '4rem',    // 64px
+} as const;
+
+// tokens/typography.ts
+export const typography = {
+  fontFamily: {
+    sans: ['Inter', 'system-ui', 'sans-serif'],
+    mono: ['JetBrains Mono', 'Consolas', 'monospace'],
+  },
+  fontSize: {
+    xs: ['0.75rem', { lineHeight: '1rem' }],
+    sm: ['0.875rem', { lineHeight: '1.25rem' }],
+    base: ['1rem', { lineHeight: '1.5rem' }],
+    lg: ['1.125rem', { lineHeight: '1.75rem' }],
+    xl: ['1.25rem', { lineHeight: '1.75rem' }],
+    '2xl': ['1.5rem', { lineHeight: '2rem' }],
+    '3xl': ['1.875rem', { lineHeight: '2.25rem' }],
+    '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+  },
+  fontWeight: {
+    normal: '400',
+    medium: '500',
+    semibold: '600',
+    bold: '700',
+  },
+} as const;
+```
+
+### 2. Component Library
+
+Build a comprehensive library of reusable components with consistent APIs:
+
+```typescript
+// components/Button.tsx
+import { cva, type VariantProps } from 'class-variance-authority';
+import { ButtonHTMLAttributes, forwardRef } from 'react';
+
+const buttonVariants = cva(
+  'inline-flex items-center justify-center rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  {
+    variants: {
+      variant: {
+        primary: 'bg-brand-primary text-white hover:bg-blue-700',
+        secondary: 'bg-brand-secondary text-white hover:bg-violet-700',
+        outline: 'border-2 border-neutral-300 bg-transparent hover:bg-neutral-100',
+        ghost: 'hover:bg-neutral-100',
+        danger: 'bg-semantic-error text-white hover:bg-red-600',
+      },
+      size: {
+        sm: 'h-9 px-3 text-sm',
+        md: 'h-10 px-4 text-base',
+        lg: 'h-11 px-6 text-lg',
+      },
+    },
+    defaultVariants: {
+      variant: 'primary',
+      size: 'md',
+    },
+  }
+);
+
+export interface ButtonProps
+  extends ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  isLoading?: boolean;
+}
+
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, variant, size, isLoading, children, ...props }, ref) => {
+    return (
+      <button
+        ref={ref}
+        className={buttonVariants({ variant, size, className })}
+        disabled={isLoading || props.disabled}
+        {...props}
+      >
+        {isLoading ? (
+          <>
+            <svg
+              className="mr-2 h-4 w-4 animate-spin"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+              />
+            </svg>
+            Loading...
+          </>
+        ) : (
+          children
+        )}
+      </button>
+    );
+  }
+);
+
+Button.displayName = 'Button';
+```
+
+### 3. Patterns and Guidelines
+
+Document common UI patterns and when to use them:
+
+- **Form Patterns**: Input validation, error handling, success states
+- **Navigation Patterns**: Header, sidebar, breadcrumbs, pagination
+- **Feedback Patterns**: Toasts, modals, alerts, loading states
+- **Layout Patterns**: Grid systems, spacing, responsive breakpoints
+
+## Building for Scale
+
+### Accessibility First
+
+Every component should be accessible by default:
+
+- Semantic HTML elements
+- Proper ARIA attributes
+- Keyboard navigation support
+- Screen reader compatibility
+- Focus management
+- Color contrast compliance
+
+```typescript
+// Example: Accessible Modal Component
+export function Modal({ isOpen, onClose, title, children }: ModalProps) {
+  useEffect(() => {
+    if (isOpen) {
+      // Trap focus within modal
+      const previousActiveElement = document.activeElement;
+      return () => {
+        (previousActiveElement as HTMLElement)?.focus();
+      };
+    }
+  }, [isOpen]);
+
+  return (
+    <div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+      className={isOpen ? 'block' : 'hidden'}
+    >
+      <div className="fixed inset-0 bg-black/50" onClick={onClose} />
+      <div className="fixed inset-0 flex items-center justify-center p-4">
+        <div className="bg-white rounded-lg shadow-xl max-w-md w-full">
+          <h2 id="modal-title" className="text-xl font-bold p-6">
+            {title}
+          </h2>
+          <div className="p-6">{children}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+```
+
+### Version Control and Documentation
+
+Maintain clear versioning and comprehensive documentation:
+
+- **Semantic Versioning**: Follow semver for breaking changes
+- **Changelog**: Document all changes, additions, and deprecations
+- **Migration Guides**: Help teams upgrade between versions
+- **Live Examples**: Interactive component playground
+- **Code Snippets**: Copy-paste ready examples
+
+### Cross-Platform Consistency
+
+Ensure consistency across web, mobile, and other platforms:
+
+- Share design tokens across platforms
+- Maintain consistent behavior and interactions
+- Adapt components to platform conventions
+- Test on multiple devices and screen sizes
+
+## Governance and Maintenance
+
+### Contribution Guidelines
+
+Establish clear processes for contributions:
+
+- Design review process
+- Code review standards
+- Testing requirements
+- Documentation requirements
+- Approval workflow
+
+### Measuring Success
+
+Track key metrics to understand impact:
+
+- **Adoption Rate**: Percentage of products using the design system
+- **Component Reuse**: How often components are used vs. rebuilt
+- **Design Consistency**: Variation in UI patterns across products
+- **Development Velocity**: Time saved using system components
+- **Design Debt**: Number of non-standard implementations
+
+### Evolution and Updates
+
+Design systems must evolve with your products:
+
+- Regular audits of components and patterns
+- Gather feedback from designers and developers
+- Stay current with web standards and best practices
+- Plan for deprecation and migration
+- Balance stability with innovation
+
+## Tools and Technology
+
+### Recommended Stack for 2026
+
+- **Component Development**: React with TypeScript
+- **Styling**: Tailwind CSS with custom configuration
+- **Component Variants**: class-variance-authority (CVA)
+- **Documentation**: Storybook or custom Next.js site
+- **Design Tokens**: Style Dictionary
+- **Version Control**: Git with monorepo structure
+- **Package Management**: npm/pnpm with workspace support
+
+## Common Pitfalls to Avoid
+
+### Over-Engineering
+
+- Don't build components you don't need yet
+- Start small and expand based on actual needs
+- Avoid premature optimization
+
+### Insufficient Documentation
+
+- Every component needs usage examples
+- Document edge cases and limitations
+- Explain design decisions and when to use alternatives
+
+### Ignoring Developer Experience
+
+- Make components easy to import and use
+- Provide helpful TypeScript types
+- Include sensible defaults
+- Optimize bundle size
+
+### Lack of Flexibility
+
+- Allow customization when needed
+- Don't enforce too rigid constraints
+- Support composition patterns
+- Provide escape hatches
+
+## Conclusion
+
+A well-designed system is never truly finished—it's a living product that evolves with your organization's needs. The key to success is starting with strong foundations, maintaining consistent standards, and fostering collaboration between designers and developers.
+
+By investing in a comprehensive design system, you'll:
+
+- Ship features faster with reusable components
+- Maintain consistency across all products
+- Reduce design and development debt
+- Improve collaboration across teams
+- Create better experiences for users
+
+Start small, iterate based on real needs, and always prioritize the experience of both the teams using your system and the users experiencing your products.

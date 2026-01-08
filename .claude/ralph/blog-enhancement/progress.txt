@@ -37,6 +37,7 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
 - CL-02: Create Contentlayer configuration
 - CL-03: Update Next.js config for Contentlayer
 - CL-04: Update TypeScript config for Contentlayer
+- CL-05: Create sample MDX blog posts
 
 ## Current Phase: Phase 1 - Bug Fixes
 
@@ -206,4 +207,26 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
    - Added to include array: `".contentlayer/generated"`
 
 **Result:** TypeScript now resolves imports from `contentlayer/generated` with full type support.
+
+---
+
+### 2026-01-08 - CL-05 Complete
+**Task:** Create sample MDX blog posts
+**Agent:** senior-frontend-dev
+
+**Created:**
+1. `content/blog/building-modern-websites-nextjs.mdx` - Development/פיתוח
+2. `content/blog/ai-powered-development-workflow.mdx` - AI/בינה מלאכותית
+3. `content/blog/design-systems-at-scale.mdx` - Design/עיצוב
+4. `content/blog/scaling-digital-products.mdx` - Business/עסקים
+
+**Each Post Includes:**
+- Complete bilingual frontmatter (title, title_he, excerpt, excerpt_he, category, category_he)
+- Multiple heading levels (## and ###)
+- Code blocks, bulleted lists, paragraphs
+- Production-quality content
+
+**Result:** 4 sample MDX posts ready for Contentlayer processing.
+
+## Current Phase: Phase 4 - Blog Post Page
 

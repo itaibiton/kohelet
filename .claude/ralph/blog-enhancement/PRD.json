@@ -192,7 +192,7 @@
         "MDX content includes headings, paragraphs, code blocks"
       ],
       "dependencies": ["CL-04"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "POST-01",

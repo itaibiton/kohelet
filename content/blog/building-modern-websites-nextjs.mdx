@@ -1,0 +1,138 @@
+---
+title: "Building Modern Websites with Next.js 14"
+title_he: "בניית אתרים מודרניים עם Next.js 14"
+excerpt: "Discover how to leverage Next.js 14's App Router, Server Components, and Server Actions to build blazingly fast, SEO-friendly websites with exceptional user experience."
+excerpt_he: "גלה כיצד למנף את ה-App Router, Server Components ו-Server Actions של Next.js 14 לבניית אתרים מהירים במיוחד, ידידותיים ל-SEO עם חווית משתמש יוצאת דופן."
+date: "2026-01-08"
+author: "Kohelet Digital"
+category: "Development"
+category_he: "פיתוח"
+published: true
+---
+
+## Introduction
+
+Next.js 14 has revolutionized the way we build modern web applications. With the introduction of the App Router, Server Components, and Server Actions, developers can now create applications that are not only faster but also more maintainable and scalable.
+
+In this article, we'll explore the key features that make Next.js 14 the go-to framework for building production-ready websites in 2026.
+
+## The Power of Server Components
+
+Server Components represent a paradigm shift in how we think about React applications. By default, all components in the App Router are Server Components, which means they run on the server and send only the rendered HTML to the client.
+
+### Benefits of Server Components
+
+- **Reduced Bundle Size**: No JavaScript shipped to the client for server components
+- **Direct Database Access**: Query your database directly without creating API routes
+- **Improved Security**: Sensitive logic stays on the server
+- **Better Performance**: Faster initial page loads and improved Core Web Vitals
+
+Here's a simple example of a Server Component fetching data:
+
+```typescript
+// app/blog/page.tsx
+import { getPosts } from '@/lib/db';
+
+export default async function BlogPage() {
+  const posts = await getPosts();
+
+  return (
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {posts.map((post) => (
+        <article key={post.id} className="rounded-lg border p-6">
+          <h2 className="text-2xl font-bold">{post.title}</h2>
+          <p className="mt-2 text-gray-600">{post.excerpt}</p>
+        </article>
+      ))}
+    </div>
+  );
+}
+```
+
+## Server Actions: Forms Made Simple
+
+Server Actions eliminate the need for API routes when handling form submissions and mutations. They provide a seamless way to handle server-side logic directly from your components.
+
+```typescript
+// app/contact/actions.ts
+'use server';
+
+import { z } from 'zod';
+import { revalidatePath } from 'next/cache';
+
+const contactSchema = z.object({
+  name: z.string().min(2),
+  email: z.email(),
+  message: z.string().min(10),
+});
+
+export async function submitContactForm(formData: FormData) {
+  const validatedFields = contactSchema.safeParse({
+    name: formData.get('name'),
+    email: formData.get('email'),
+    message: formData.get('message'),
+  });
+
+  if (!validatedFields.success) {
+    return { error: 'Invalid form data' };
+  }
+
+  // Save to database
+  await db.contacts.create({ data: validatedFields.data });
+
+  revalidatePath('/contact');
+  return { success: true };
+}
+```
+
+## Streaming and Suspense
+
+One of the most powerful features of Next.js 14 is the ability to stream content to the client as it becomes available. This dramatically improves perceived performance.
+
+### Implementation Strategy
+
+- Use `loading.tsx` for route-level loading states
+- Implement Suspense boundaries for component-level streaming
+- Show meaningful loading skeletons for better UX
+- Load critical content first, defer secondary content
+
+```typescript
+// app/dashboard/page.tsx
+import { Suspense } from 'react';
+import { UserStats } from './components/UserStats';
+import { RecentActivity } from './components/RecentActivity';
+import { LoadingSkeleton } from './components/LoadingSkeleton';
+
+export default function DashboardPage() {
+  return (
+    <div className="space-y-6">
+      <Suspense fallback={<LoadingSkeleton />}>
+        <UserStats />
+      </Suspense>
+
+      <Suspense fallback={<LoadingSkeleton />}>
+        <RecentActivity />
+      </Suspense>
+    </div>
+  );
+}
+```
+
+## Best Practices for Production
+
+When building with Next.js 14, keep these best practices in mind:
+
+- **Default to Server Components**: Only use 'use client' when you need interactivity
+- **Optimize Images**: Always use next/image with proper sizing
+- **Implement Proper Caching**: Use revalidatePath and revalidateTag strategically
+- **Type Safety**: Generate TypeScript types from your database schema
+- **Error Handling**: Implement error.tsx boundaries at appropriate levels
+- **Accessibility**: Ensure proper semantic HTML and ARIA attributes
+
+## Conclusion
+
+Next.js 14 has set a new standard for building modern web applications. By embracing Server Components, leveraging Server Actions, and implementing proper streaming strategies, you can create applications that are fast, secure, and provide an exceptional user experience.
+
+The framework's focus on performance, developer experience, and best practices makes it an excellent choice for projects of any size. Whether you're building a personal blog or a complex enterprise application, Next.js 14 provides the tools you need to succeed.
+
+Start building with Next.js 14 today and experience the future of web development.
