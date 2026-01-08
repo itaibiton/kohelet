@@ -8,3 +8,4 @@ export type { BlogCardProps } from "./BlogCard";
 export type { BlogFiltersProps } from "./BlogFilters";
 export type { BlogPost, BlogGridProps } from "./BlogGrid";
 export type { BlogPostHeaderProps } from "./BlogPostHeader";
+export type { BlogPostContentProps } from "./BlogPostContent";

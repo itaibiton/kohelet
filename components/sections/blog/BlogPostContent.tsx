@@ -3,7 +3,7 @@
 import { useMDXComponent } from "next-contentlayer2/hooks";
 import { mdxComponents } from "@/components/mdx/MDXComponents";
 
-interface BlogPostContentProps {
+export interface BlogPostContentProps {
   code: string; // post.body.code from Contentlayer
 }
 

@@ -437,3 +437,19 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
 
 ---
 
+### 2026-01-08 - INT-03 Complete
+**Task:** Update blog component exports
+**Agent:** senior-frontend-dev
+
+**Changes Made:**
+1. `components/sections/blog/index.ts`:
+   - Added export for `BlogPostContentProps` interface
+   - Verified BlogPostHeader and BlogPostContent already exported
+
+2. `components/sections/blog/BlogPostContent.tsx`:
+   - Changed `interface BlogPostContentProps` to `export interface BlogPostContentProps`
+
+**Result:** All blog components and interfaces properly exported from barrel file.
+
+---
+
