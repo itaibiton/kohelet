@@ -299,7 +299,8 @@
     "filters": {
       "all": "All Categories",
       "searchPlaceholder": "Search articles...",
-      "categoryPlaceholder": "Select category"
+      "categoryPlaceholder": "Select category",
+      "selectCategory": "Select category"
     },
     "grid": {
       "emptyState": "No articles found",
@@ -312,6 +313,12 @@
       "Marketing": "Marketing",
       "Case Study": "Case Study",
       "Business": "Business"
+    },
+    "post": {
+      "readingTime": "{minutes} min read",
+      "shareArticle": "Share this article",
+      "relatedPosts": "Related Posts",
+      "backToBlog": "Back to Blog"
     }
   },
   "about": {

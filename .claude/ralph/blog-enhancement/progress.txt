@@ -414,3 +414,26 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
 
 ---
 
+### 2026-01-08 - INT-02 Complete
+**Task:** Update i18n translations
+**Agent:** senior-frontend-dev
+
+**Changes Made:**
+1. `content/en.json`:
+   - Added `blog.filters.selectCategory`: "Select category"
+   - Added `blog.post.readingTime`: "{minutes} min read"
+   - Added `blog.post.shareArticle`: "Share this article"
+   - Added `blog.post.relatedPosts`: "Related Posts"
+   - Added `blog.post.backToBlog`: "Back to Blog"
+
+2. `content/he.json`:
+   - Added `blog.filters.selectCategory`: "בחר קטגוריה"
+   - Added `blog.post.readingTime`: "{minutes} דקות קריאה"
+   - Added `blog.post.shareArticle`: "שתף מאמר זה"
+   - Added `blog.post.relatedPosts`: "מאמרים קשורים"
+   - Added `blog.post.backToBlog`: "חזרה לבלוג"
+
+**Result:** All new translation keys ready for blog components.
+
+---
+

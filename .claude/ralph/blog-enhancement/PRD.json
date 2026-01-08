@@ -334,7 +334,7 @@
         "All new translation keys work in components"
       ],
       "dependencies": ["INT-01"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "INT-03",

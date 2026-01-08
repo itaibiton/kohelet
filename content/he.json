@@ -300,7 +300,8 @@
     "filters": {
       "all": "כל הקטגוריות",
       "searchPlaceholder": "חיפוש מאמרים...",
-      "categoryPlaceholder": "בחר קטגוריה"
+      "categoryPlaceholder": "בחר קטגוריה",
+      "selectCategory": "בחר קטגוריה"
     },
     "grid": {
       "emptyState": "לא נמצאו מאמרים",
@@ -313,6 +314,12 @@
       "Marketing": "שיווק",
       "Case Study": "מקרה בוחן",
       "Business": "עסקים"
+    },
+    "post": {
+      "readingTime": "{minutes} דקות קריאה",
+      "shareArticle": "שתף מאמר זה",
+      "relatedPosts": "מאמרים קשורים",
+      "backToBlog": "חזרה לבלוג"
     }
   },
   "about": {
