@@ -247,7 +247,7 @@
         "Output translation keys to progress.txt"
       ],
       "dependencies": ["UI-04"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "COPY-05",

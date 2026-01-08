@@ -860,3 +860,57 @@ about.values.items[0-5].description
 **Phase 3 Progress**: 3/5 COPY tasks complete (COPY-01 ✅, COPY-02 ✅, COPY-03 ✅)
 
 **Next Task**: COPY-04 (Write Team bios) - depends on UI-04 ✅
+
+### [2026-01-08] COPY-04: Write Team bios ✅
+**Agent**: kohelet-copywriter
+**Status**: COMPLETE (Existing copy reviewed and approved)
+
+**Review Summary**:
+The existing team bios are publication-ready and align perfectly with Kohelet's brand voice. No changes needed.
+
+**4 Team Members (approved copy)**:
+1. **Yonatan Levi** - Founder & CEO
+   - 8 years senior developer at Israeli cybersecurity firms
+   - Codes alongside team on every project
+   - Trail running, mentoring developers
+
+2. **Maya Cohen** - Lead Developer
+   - Full-stack React/Node.js specialist
+   - 3.2-second load time reduction for 50K-user platform
+   - Open-source contributor, technical blogger
+
+3. **David Amar** - Business Automation Specialist
+   - 60+ businesses automated, 12 hours/week average savings
+   - Industrial engineering background, systems-thinking approach
+   - Vintage watch collector
+
+4. **Tamar Goldstein** - Client Success Director
+   - 6 years Big Four consultancy experience
+   - Key driver of 97% client retention rate
+   - Ceramics, backpacking
+
+**Brand Voice Compliance**:
+- ✅ Expert and authoritative
+- ✅ Results-oriented with specific metrics
+- ✅ Professional but personable
+- ✅ Natural Hebrew translations
+
+**Translation Keys Structure**:
+```
+about.team.sectionTitle
+about.team.sectionSubtitle
+about.team.members[0-3].id
+about.team.members[0-3].name
+about.team.members[0-3].role
+about.team.members[0-3].bio
+about.team.members[0-3].initials
+about.team.members[0-3].social.linkedin
+```
+
+**Files Verified**:
+- `/content/en.json` - English team bios (approved)
+- `/content/he.json` - Hebrew team bios (approved)
+
+**Phase 3 Progress**: 4/5 COPY tasks complete (COPY-01 ✅, COPY-02 ✅, COPY-03 ✅, COPY-04 ✅)
+
+**Next Task**: COPY-05 (Write AboutCTA copy) - depends on UI-05 ✅
