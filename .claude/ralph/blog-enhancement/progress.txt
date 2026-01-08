@@ -36,6 +36,7 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
 - CL-01: Install Contentlayer2 dependencies
 - CL-02: Create Contentlayer configuration
 - CL-03: Update Next.js config for Contentlayer
+- CL-04: Update TypeScript config for Contentlayer
 
 ## Current Phase: Phase 1 - Bug Fixes
 
@@ -192,4 +193,17 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
    - Preserved all existing configuration
 
 **Result:** Next.js config now integrates Contentlayer2. Build verified successful.
+
+---
+
+### 2026-01-08 - CL-04 Complete
+**Task:** Update TypeScript config for Contentlayer
+**Agent:** senior-frontend-dev
+
+**Changes Made:**
+1. `tsconfig.json`:
+   - Added path alias: `"contentlayer/generated": ["./.contentlayer/generated"]`
+   - Added to include array: `".contentlayer/generated"`
+
+**Result:** TypeScript now resolves imports from `contentlayer/generated` with full type support.
 

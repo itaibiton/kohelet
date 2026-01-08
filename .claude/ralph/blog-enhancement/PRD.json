@@ -177,7 +177,7 @@
         "TypeScript can resolve imports from contentlayer/generated"
       ],
       "dependencies": ["CL-03"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "CL-05",
