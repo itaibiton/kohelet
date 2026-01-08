@@ -227,3 +227,76 @@ about.team.members[0-5].bio
 
 **Next Task**: PRD-05 (Define AboutCTA requirements) - no dependencies
 
+### [2026-01-08] PRD-05: Define AboutCTA requirements ✅
+**Agent**: prd-architect
+**Status**: COMPLETE
+
+**Deliverables**:
+- Comprehensive 20-section PRD document saved to `.claude/ralph/about-page/PRD-05-ABOUTCTA-COMPONENT.md`
+- Call-to-action section with glassmorphism card design
+- Centered layout with headline, subtext, and two-button CTA
+
+**Layout Specifications**:
+- Container: `max-w-5xl mx-auto px-6 py-20 md:py-32`
+- Card wrapper: `max-w-3xl mx-auto bg-[#111113]/80 backdrop-blur-md border-white/10 rounded-2xl p-8 md:p-12 lg:p-16`
+- All content centered with `text-center`
+
+**Content Structure**:
+- Headline: "Ready to Transform Your Business with AI?" (action-oriented, transformational)
+- Subtext: 30-minute consultation pitch, addresses objections, 120-180 chars
+- Primary Button: "Schedule a Consultation" → links to Calendly or `/contact`
+- Secondary Button: "Get in Touch" → links to `/contact`
+
+**Button Styling**:
+- Primary: Solid blue (`bg-accent-blue`), glow effect (`shadow-[0_0_30px_rgba(59,130,246,0.3)]`), `hover:scale-[1.02]`
+- Secondary: Ghost style (`border-white/10 hover:border-white/20`), `bg-transparent hover:bg-white/5`
+- Layout: `flex flex-col sm:flex-row justify-center gap-4`
+
+**Typography**:
+- Headline: `text-3xl md:text-4xl lg:text-5xl font-display font-semibold text-white text-center`
+- Subtext: `text-base md:text-lg lg:text-xl text-neutral-400 font-light max-w-2xl mx-auto`
+- Button text: `text-sm md:text-base font-semibold` (primary), `font-medium` (secondary)
+
+**Animation Specifications**:
+- CSS `animate-fade-in-up` animation (not GSAP)
+- Staggered delays: headline (0.1s), subtext (0.2s), primary button (0.3s), secondary button (0.4s)
+- Button hover: `scale-[1.02]`, shadow glow, `duration-300`
+
+**Accessibility**:
+- Semantic HTML: `<section>`, `<h2>`, `<p>`, `<a>`
+- ARIA labels: `aria-labelledby` on section, descriptive `aria-label` on buttons
+- Focus states: `focus:ring-2 focus:ring-accent-blue focus:ring-offset-2`
+- High contrast text (15:1+ for headline, 7:1+ for subtext)
+
+**RTL Support**:
+- Text alignment: `text-center` (universal)
+- Button layout: `rtl:flex-row-reverse` for proper button order
+- Icon rotation: `rtl:rotate-180` if ChevronRight used
+
+**Translation Keys**:
+```
+about.cta.headline
+about.cta.subtext
+about.cta.primaryButton
+about.cta.secondaryButton
+```
+
+**Component Props**:
+```typescript
+interface AboutCTAProps {
+  calendlyUrl?: string; // Optional: defaults to "/contact"
+}
+```
+
+**Suggested Content**:
+- Headline: "Ready to Transform Your Business with AI?"
+- Subtext: "Schedule a 30-minute consultation to discuss how automation and custom software can scale your business. No sales pitch—just strategic insights tailored to your challenges."
+- Primary Button: "Schedule a Consultation"
+- Secondary Button: "Get in Touch"
+
+**Component Location**: /components/sections/about/AboutCTA.tsx
+
+**Phase 1 Status**: ALL PRD TASKS COMPLETE (PRD-01 through PRD-05) ✅
+
+**Next Task**: UI-01 (Implement CompanyStory component) - depends on PRD-01 ✅
+

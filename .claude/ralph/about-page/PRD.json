@@ -95,7 +95,7 @@
         "Output requirements to progress.txt"
       ],
       "dependencies": [],
-      "pass": false
+      "pass": true
     },
     {
       "id": "UI-01",
