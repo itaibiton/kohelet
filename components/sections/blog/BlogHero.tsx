@@ -7,12 +7,12 @@ export function BlogHero() {
   const t = useTranslations("blog.hero");
 
   return (
-    <section className="min-h-[60vh] w-full max-w-5xl mx-auto flex flex-col items-center justify-center px-6 pt-32 pb-16 text-center relative">
+    <section className="min-h-[35vh] w-full max-w-5xl mx-auto flex flex-col items-start justify-center px-6 pt-32 pb-16 text-start relative">
       {/* Decorative gradient orb - top */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent-blue/8 rounded-full blur-[120px] pointer-events-none" />
 
       {/* Secondary accent orb - offset */}
-      <div className="absolute top-1/3 right-0 translate-x-1/2 w-[300px] h-[300px] bg-accent-blue/5 rounded-full blur-[80px] pointer-events-none" />
+      <div className="absolute top-1/3 right-0 translate-x-1/2 rtl:right-auto rtl:left-0 rtl:-translate-x-1/2 w-[300px] h-[300px] bg-accent-blue/5 rounded-full blur-[80px] pointer-events-none" />
 
       {/* Badge */}
       <div
@@ -31,8 +31,7 @@ export function BlogHero() {
         style={{ animationDelay: "0.2s" }}
       >
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-semibold tracking-tighter leading-[1.1] text-white">
-          {t("title.line1")}
-          <br />
+          {t("title.line1")}{" "}
           <span className="text-accent-blue">{t("title.highlight")}</span>
           <span className="text-white/40">{t("title.line2")}</span>
         </h1>
@@ -51,9 +50,9 @@ export function BlogHero() {
         className="relative z-10 mt-10 flex items-center gap-3 animate-fade-in-up"
         style={{ animationDelay: "0.6s" }}
       >
-        <div className="w-12 h-px bg-gradient-to-r from-transparent via-accent-blue/50 to-transparent" />
+        <div className="w-12 h-px bg-gradient-to-r from-transparent via-accent-blue/50 to-transparent rtl:bg-gradient-to-l" />
         <div className="w-2 h-2 rounded-full bg-accent-blue/30 border border-accent-blue/50" />
-        <div className="w-12 h-px bg-gradient-to-r from-transparent via-accent-blue/50 to-transparent" />
+        <div className="w-12 h-px bg-gradient-to-r from-transparent via-accent-blue/50 to-transparent rtl:bg-gradient-to-l" />
       </div>
     </section>
   );

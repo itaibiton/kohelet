@@ -64,7 +64,7 @@
         "Visual spacing between hero and filters feels compact"
       ],
       "dependencies": [],
-      "pass": false
+      "pass": true
     },
     {
       "id": "BUG-03",

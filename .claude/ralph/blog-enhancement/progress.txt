@@ -28,6 +28,7 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
 
 ## Completed Tasks:
 - BUG-01: Fix BlogCard routing bug
+- BUG-02: Fix BlogHero layout issues
 
 ## Current Phase: Phase 1 - Bug Fixes
 
@@ -49,4 +50,19 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
    - Removed `locale={locale}` prop being passed to BlogCard
 
 **Result:** The i18n routing system now automatically handles locale prefixing. BlogCard routing works correctly for both /en/blog/slug and /he/blog/slug.
+
+---
+
+### 2026-01-08 - BUG-02 Complete
+**Task:** Fix BlogHero layout issues
+**Agent:** ui-designer
+
+**Changes Made:**
+1. `components/sections/blog/BlogHero.tsx`:
+   - Reduced hero height from `min-h-[60vh]` to `min-h-[35vh]`
+   - Changed alignment from `items-center text-center` to `items-start text-start`
+   - Removed `<br />` tag from title, consolidated to single line
+   - Added RTL support with `rtl:` prefixes on decorative elements
+
+**Result:** Hero section is now more compact (35vh), left-aligned, and works correctly in both LTR and RTL layouts.
 
