@@ -320,7 +320,7 @@
         "Filters work with real post data"
       ],
       "dependencies": ["CL-05", "SHADCN-03"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "INT-02",

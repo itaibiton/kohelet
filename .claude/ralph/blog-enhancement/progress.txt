@@ -387,3 +387,30 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
 
 ---
 
+### 2026-01-08 - INT-01 Complete
+**Task:** Refactor blog page for Contentlayer
+**Agent:** senior-frontend-dev
+
+**Changes Made:**
+1. `app/[locale]/blog/page.tsx`:
+   - Added import: `import { allPosts } from "contentlayer/generated"`
+   - Removed 106-line mockPosts array
+   - Added `transformPosts()` function with:
+     - Filters published posts only
+     - Locale-aware field mapping (title_he, excerpt_he, category_he for Hebrew)
+     - Date sorting (newest first)
+   - Updated useMemo for efficient transformation
+   - Updated category derivation to use real posts
+   - Updated filter logic with proper dependencies
+
+**Features:**
+- Locale-aware: Displays Hebrew content when locale=he
+- Published filter: Only shows posts where published: true
+- Date sorting: Newest posts first
+- Performance: Uses useMemo for optimization
+- Type-safe: Maintains BlogPost interface
+
+**Result:** Blog listing now displays real MDX posts from content/blog/ with full i18n support.
+
+---
+
