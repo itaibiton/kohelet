@@ -1,0 +1,824 @@
+{
+  "component_name": "Team",
+  "component_id": "PRD-04",
+  "file_path": "/components/sections/about/Team.tsx",
+  "description": "Team showcase section displaying 4-6 team members with photos, names, roles, short bios, and optional social links using glassmorphism card styling",
+
+  "detailed_requirements": {
+
+    "final_specification": {
+
+      "layout": {
+        "section_wrapper": {
+          "classes": "w-full max-w-6xl mx-auto px-6 py-20 md:py-32 relative z-10",
+          "description": "Main section container with responsive padding and max width, consistent with Stats and Values components"
+        },
+        "section_header": {
+          "classes": "text-center mb-12 md:mb-16 space-y-4",
+          "description": "Section title and optional subtitle above team member cards",
+          "elements": [
+            "section_title (h2)",
+            "section_subtitle (optional paragraph)"
+          ]
+        },
+        "grid_container": {
+          "classes": "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8",
+          "description": "Responsive grid: 1 column mobile, 2 columns tablet, 3 columns desktop",
+          "behavior": "Cards stack vertically on mobile, 2-column grid on tablet, 3-column grid on desktop for optimal team member visibility",
+          "scalability": "Supports 3-6 team members. For exactly 4 members, desktop shows 3+1 layout. For 5-6 members, desktop shows balanced 3-column grid."
+        }
+      },
+
+      "team_card": {
+        "structure": {
+          "card_wrapper": {
+            "classes": "group relative p-6 md:p-8 rounded-xl md:rounded-2xl border border-white/10 bg-[#111113]/80 backdrop-blur-md hover:bg-white/[0.04] hover:border-white/20 transition-all duration-300",
+            "description": "Glassmorphism card with hover effects, matching Stats and Values component patterns",
+            "elements": [
+              "photo_container (profile photo or initials placeholder)",
+              "member_name (full name)",
+              "member_role (title/position)",
+              "member_bio (2-3 sentences)",
+              "social_links_container (optional LinkedIn, Twitter, GitHub icons)"
+            ]
+          },
+          "photo_container": {
+            "classes": "mb-6 flex justify-center",
+            "description": "Profile photo container, centered at top of card",
+            "image_wrapper": {
+              "classes": "relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-2 border-white/10 group-hover:border-white/20 transition-all duration-300",
+              "description": "Circular profile image with subtle border that brightens on card hover"
+            },
+            "placeholder_approach": {
+              "option_1_initials": {
+                "description": "Show member initials on colored background when no photo available",
+                "classes": "w-full h-full bg-gradient-to-br from-accent-blue/30 to-accent-blue/10 flex items-center justify-center",
+                "text_classes": "text-3xl md:text-4xl font-display font-semibold text-white",
+                "implementation": "Extract first letter of first name + first letter of last name"
+              },
+              "option_2_generic_avatar": {
+                "description": "Show generic user icon when no photo available",
+                "classes": "w-full h-full bg-gradient-to-br from-white/5 to-white/[0.02] flex items-center justify-center",
+                "icon": "User icon from Lucide (w-16 h-16 text-white/30)"
+              },
+              "recommended": "option_1_initials - more personal and visually interesting"
+            },
+            "actual_photo": {
+              "implementation": "Use Next.js Image component with fill, object-cover, priority props",
+              "classes": "object-cover",
+              "alt_text": "Photo of [Member Name], [Member Role] at Kohelet",
+              "format": "Square aspect ratio images (1:1), minimum 400x400px recommended",
+              "optimization": "Next.js automatic image optimization handles webp conversion and sizing"
+            }
+          },
+          "member_name": {
+            "classes": "text-xl md:text-2xl font-display font-semibold tracking-tight text-white mb-1 text-center",
+            "description": "Full name of team member, prominent and clear",
+            "format": "First Last or First Middle Last"
+          },
+          "member_role": {
+            "classes": "text-sm md:text-base text-accent-blue font-light tracking-tight mb-4 text-center",
+            "description": "Job title or role, using accent color to differentiate from name",
+            "examples": [
+              "Founder & CEO",
+              "Lead Developer",
+              "Business Automation Specialist",
+              "Chief Technology Officer"
+            ]
+          },
+          "member_bio": {
+            "classes": "text-sm md:text-base text-white/60 font-light leading-relaxed tracking-tight mb-6 text-center",
+            "description": "2-3 sentence bio highlighting expertise, background, and personal touch",
+            "length_guidance": "50-80 words per bio",
+            "structure": "Sentence 1: Primary expertise/background. Sentence 2: Relevant experience or philosophy. Sentence 3 (optional): Personal touch or passion.",
+            "tone": "Professional but personable, third-person or first-person depending on brand preference"
+          },
+          "social_links_container": {
+            "classes": "flex items-center justify-center gap-4",
+            "description": "Horizontal row of social media icon links, centered below bio",
+            "optional": true,
+            "link_styling": {
+              "classes": "text-white/40 hover:text-accent-blue transition-colors duration-200",
+              "icon_classes": "w-5 h-5",
+              "accessibility": "Each link has aria-label describing the platform and member name"
+            },
+            "supported_platforms": {
+              "linkedin": {
+                "icon": "Linkedin from lucide-react",
+                "priority": "primary - most relevant for B2B professional context"
+              },
+              "twitter": {
+                "icon": "Twitter from lucide-react",
+                "priority": "secondary - optional for thought leadership presence"
+              },
+              "github": {
+                "icon": "Github from lucide-react",
+                "priority": "secondary - relevant for technical team members"
+              },
+              "email": {
+                "icon": "Mail from lucide-react",
+                "priority": "optional - could link to mailto: or contact form",
+                "note": "Consider privacy implications"
+              }
+            }
+          }
+        },
+        "hover_effects": {
+          "card_background": "bg-white/[0.04]",
+          "card_border": "border-white/20",
+          "photo_border": "border-white/20",
+          "transition": "transition-all duration-300",
+          "description": "Subtle brightening and border emphasis on hover to create sense of interaction"
+        }
+      },
+
+      "typography": {
+        "section_title": {
+          "classes": "text-3xl md:text-4xl lg:text-5xl font-display font-medium tracking-tight text-white",
+          "content_key": "about.team.section_title",
+          "examples": [
+            "Meet the Team",
+            "Our Team",
+            "The People Behind Kohelet"
+          ]
+        },
+        "section_subtitle": {
+          "classes": "text-base md:text-lg text-white/50 font-light tracking-tight max-w-2xl mx-auto",
+          "content_key": "about.team.section_subtitle",
+          "optional": true,
+          "examples": [
+            "The experts obsessed with eliminating your busywork",
+            "Automation specialists committed to your success",
+            "Meet the team building your competitive advantage"
+          ]
+        },
+        "member_name": {
+          "classes": "text-xl md:text-2xl font-display font-semibold tracking-tight text-white",
+          "format": "Full name in Title Case"
+        },
+        "member_role": {
+          "classes": "text-sm md:text-base text-accent-blue font-light tracking-tight",
+          "format": "Title Case job title",
+          "character_limit": "Ideally under 30 characters for visual balance"
+        },
+        "member_bio": {
+          "classes": "text-sm md:text-base text-white/60 font-light leading-relaxed tracking-tight",
+          "format": "2-3 complete sentences",
+          "word_count": "50-80 words recommended for consistency",
+          "tone": "Professional yet personable"
+        }
+      },
+
+      "animation": {
+        "approach": "Staggered fade-in animation on page load using CSS animations, similar to Values component",
+        "section_header": {
+          "title_animation": "animate-fade-in-up with style={{ animationDelay: '0s' }}",
+          "subtitle_animation": "animate-fade-in-up with style={{ animationDelay: '0.1s' }}",
+          "description": "Header elements animate first"
+        },
+        "card_fade_in": {
+          "classes": "animate-fade-in-up",
+          "stagger": {
+            "card_1": "style={{ animationDelay: '0.1s' }}",
+            "card_2": "style={{ animationDelay: '0.2s' }}",
+            "card_3": "style={{ animationDelay: '0.3s' }}",
+            "card_4": "style={{ animationDelay: '0.4s' }}",
+            "card_5": "style={{ animationDelay: '0.5s' }}",
+            "card_6": "style={{ animationDelay: '0.6s' }}"
+          },
+          "description": "Each team card fades in sequentially with 0.1s delays, creating a wave effect"
+        },
+        "photo_animation": {
+          "optional_enhancement": "Photo could scale slightly on card hover using group-hover:scale-105 on image wrapper",
+          "note": "Keep subtle - primary hover effect is on card borders/background"
+        },
+        "no_scroll_trigger": {
+          "rationale": "Like Values component, Team uses simple CSS animations - no GSAP needed",
+          "dependencies": "Uses existing animate-fade-in-up utility, no additional libraries"
+        }
+      },
+
+      "spacing": {
+        "section_padding": {
+          "mobile": "py-20 px-6",
+          "desktop": "py-32 px-6",
+          "description": "Consistent with all other About page sections"
+        },
+        "section_header": {
+          "bottom_margin": "mb-12 md:mb-16",
+          "description": "Space between header and team grid"
+        },
+        "card_padding": {
+          "mobile": "p-6",
+          "desktop": "p-8",
+          "description": "Inner padding for team cards, matching Stats and Values"
+        },
+        "grid_gap": {
+          "mobile": "gap-6",
+          "desktop": "gap-8",
+          "description": "Slightly larger gap than Values (6/8 vs 4/6) due to larger card content",
+          "rationale": "Team cards have more vertical content (photo + bio), so extra breathing room prevents crowding"
+        },
+        "text_spacing": {
+          "photo_bottom": "mb-6",
+          "name_bottom": "mb-1",
+          "role_bottom": "mb-4",
+          "bio_bottom": "mb-6",
+          "description": "Vertical rhythm within each team card"
+        }
+      },
+
+      "translation_keys": [
+        {
+          "key": "about.team.section_title",
+          "type": "string",
+          "example": "Meet the Team"
+        },
+        {
+          "key": "about.team.section_subtitle",
+          "type": "string",
+          "optional": true,
+          "example": "The experts obsessed with eliminating your busywork"
+        },
+        {
+          "key": "about.team.members",
+          "type": "array",
+          "structure": [
+            {
+              "id": "member_1",
+              "name": "Alex Thompson",
+              "role": "Founder & CEO",
+              "bio": "Former McKinsey consultant who built his first business automation at 22. Obsessed with turning manual processes into self-running systems. When not architecting automations, you'll find him reading sci-fi or tinkering with AI agents.",
+              "photo": "/images/team/alex-thompson.jpg",
+              "initials": "AT",
+              "social": {
+                "linkedin": "https://linkedin.com/in/alexthompson",
+                "twitter": "https://twitter.com/alexthompson",
+                "github": "https://github.com/alexthompson"
+              }
+            },
+            {
+              "id": "member_2",
+              "name": "Sarah Chen",
+              "role": "Lead Developer",
+              "bio": "Full-stack engineer with a decade of experience building enterprise software. Specializes in scalable architectures and turning complex requirements into elegant code. Passionate about mentorship and open-source contributions.",
+              "photo": "/images/team/sarah-chen.jpg",
+              "initials": "SC",
+              "social": {
+                "linkedin": "https://linkedin.com/in/sarahchen",
+                "github": "https://github.com/sarahchen"
+              }
+            },
+            {
+              "id": "member_3",
+              "name": "Marcus Rodriguez",
+              "role": "Business Automation Specialist",
+              "bio": "Spent 8 years in operations before discovering his calling in automation. Expert at identifying bottlenecks and designing workflows that save hundreds of hours. Believes every repetitive task is an opportunity waiting to be automated.",
+              "photo": "/images/team/marcus-rodriguez.jpg",
+              "initials": "MR",
+              "social": {
+                "linkedin": "https://linkedin.com/in/marcusrodriguez"
+              }
+            },
+            {
+              "id": "member_4",
+              "name": "Priya Patel",
+              "role": "Client Success Director",
+              "bio": "Background in project management and customer success across SaaS and consulting. Ensures clients don't just get software—they get measurable outcomes. Known for turning skeptical stakeholders into automation advocates.",
+              "photo": "/images/team/priya-patel.jpg",
+              "initials": "PP",
+              "social": {
+                "linkedin": "https://linkedin.com/in/priyapatel",
+                "twitter": "https://twitter.com/priyapatel"
+              }
+            }
+          ],
+          "notes": [
+            "Structure supports 4-6 members - add up to 2 more objects following same pattern",
+            "Photos are optional - component will show initials if photo path is empty or null",
+            "Social links are optional - only include platforms where member has active presence",
+            "Initials field is fallback for photo display - auto-generated from name if not provided"
+          ]
+        }
+      ],
+
+      "accessibility": {
+        "semantic_html": {
+          "section_tag": "Use <section> with id='team' for anchor linking",
+          "heading_hierarchy": "Use <h2> for section title, <h3> for member names",
+          "member_structure": "Use semantic <article> tag for each team member card",
+          "bio": "Use <p> tags for member bios"
+        },
+        "aria_considerations": [
+          "Section should have aria-labelledby pointing to section title",
+          "Profile images must have descriptive alt text: 'Photo of [Name], [Role] at Kohelet'",
+          "If using placeholder initials, container should have aria-label describing the person",
+          "Social links must have aria-label: 'Connect with [Name] on LinkedIn'",
+          "Decorative hover effects don't need ARIA labels",
+          "Cards are non-interactive (not clickable as a whole), so no role='button' needed"
+        ],
+        "image_accessibility": {
+          "photos": {
+            "alt_text": "Required - descriptive alt text for each photo",
+            "format": "'Photo of [Full Name], [Job Title] at Kohelet'",
+            "example": "'Photo of Alex Thompson, Founder & CEO at Kohelet'"
+          },
+          "placeholder_initials": {
+            "aria_label": "Add aria-label to initials container",
+            "format": "'Profile placeholder for [Full Name]'",
+            "decorative": "Don't use aria-hidden - initials are meaningful content"
+          },
+          "social_icons": {
+            "aria_label": "Each link needs descriptive label",
+            "format": "'Connect with [Name] on [Platform]'",
+            "example": "'Connect with Alex Thompson on LinkedIn'",
+            "icon_decorative": "Icon itself can be aria-hidden='true' since link has label"
+          }
+        },
+        "color_contrast": {
+          "member_name": "White text on dark background exceeds WCAG AA",
+          "member_role": "accent-blue (#3B82F6) on dark background exceeds WCAG AA",
+          "member_bio": "white/60 opacity on dark background meets WCAG AA (approximately 4.5:1)",
+          "social_links": "white/40 initial state may be borderline - hover state (accent-blue) exceeds AA",
+          "border": "white/10 border provides subtle visual separation without relying on color alone",
+          "photo_border": "white/10 border distinguishes photo from card background"
+        },
+        "keyboard_navigation": {
+          "social_links": {
+            "requirement": "Social links must be keyboard accessible",
+            "implementation": "Native <a> tags are keyboard accessible by default",
+            "focus_state": "Add focus-visible:ring-2 focus-visible:ring-accent-blue focus-visible:ring-offset-2 focus-visible:ring-offset-[#111113]",
+            "tab_order": "Social links appear in logical order (left to right in LTR, right to left in RTL)"
+          },
+          "cards": {
+            "requirement": "Cards themselves are not interactive, so no focus state",
+            "note": "Only interactive elements (social links) receive keyboard focus"
+          }
+        }
+      },
+
+      "responsive_behavior": {
+        "breakpoints": {
+          "mobile": "< 640px: 1 column, cards stack vertically",
+          "tablet": "640px - 1024px: 2 columns, team members in 2-column grid",
+          "desktop": "> 1024px: 3 columns, team members in 3-column grid"
+        },
+        "grid_behavior": {
+          "4_members": "Mobile: 4x1, Tablet: 2x2, Desktop: 3+1 (3 on top row, 1 centered on bottom)",
+          "5_members": "Mobile: 5x1, Tablet: 3+2, Desktop: 3+2 (balanced)",
+          "6_members": "Mobile: 6x1, Tablet: 2x3, Desktop: 2x3 (perfect grid)",
+          "note": "CSS Grid automatically handles centering for uneven bottom rows"
+        },
+        "text_scaling": {
+          "section_title": "text-3xl (mobile) → text-4xl (tablet) → text-5xl (desktop)",
+          "section_subtitle": "text-base (mobile) → text-lg (desktop)",
+          "member_name": "text-xl (mobile) → text-2xl (desktop)",
+          "member_role": "text-sm (mobile) → text-base (desktop)",
+          "member_bio": "text-sm (mobile) → text-base (desktop)",
+          "photo_size": "w-32 h-32 (mobile) → w-40 h-40 (desktop)",
+          "social_icons": "w-5 h-5 (consistent across breakpoints)"
+        },
+        "spacing_scaling": {
+          "section_padding": "py-20 (mobile) → py-32 (desktop)",
+          "card_padding": "p-6 (mobile) → p-8 (desktop)",
+          "grid_gap": "gap-6 (mobile) → gap-8 (desktop)",
+          "photo_margin": "mb-6 (consistent across breakpoints)"
+        },
+        "touch_targets": {
+          "mobile_consideration": "Social link icons (w-5 h-5) with surrounding padding create adequate touch targets (minimum 44x44px)",
+          "implementation": "Ensure social link container padding provides sufficient tap area"
+        }
+      },
+
+      "data_structure": {
+        "team_member_interface": {
+          "typescript": "interface TeamMember { id: string; name: string; role: string; bio: string; photo?: string; initials?: string; social?: { linkedin?: string; twitter?: string; github?: string; email?: string; }; }",
+          "description": "Each team member card data structure with optional fields for flexibility"
+        },
+        "placeholder_team_data": [
+          {
+            "id": "member_1",
+            "name": "Alex Thompson",
+            "role": "Founder & CEO",
+            "bio": "Former McKinsey consultant who built his first business automation at 22. Obsessed with turning manual processes into self-running systems. When not architecting automations, you'll find him reading sci-fi or tinkering with AI agents.",
+            "photo": null,
+            "initials": "AT",
+            "social": {
+              "linkedin": "https://linkedin.com/in/alexthompson",
+              "twitter": "https://twitter.com/alexthompson"
+            }
+          },
+          {
+            "id": "member_2",
+            "name": "Sarah Chen",
+            "role": "Lead Developer",
+            "bio": "Full-stack engineer with a decade of experience building enterprise software. Specializes in scalable architectures and turning complex requirements into elegant code. Passionate about mentorship and open-source contributions.",
+            "photo": null,
+            "initials": "SC",
+            "social": {
+              "linkedin": "https://linkedin.com/in/sarahchen",
+              "github": "https://github.com/sarahchen"
+            }
+          },
+          {
+            "id": "member_3",
+            "name": "Marcus Rodriguez",
+            "role": "Business Automation Specialist",
+            "bio": "Spent 8 years in operations before discovering his calling in automation. Expert at identifying bottlenecks and designing workflows that save hundreds of hours. Believes every repetitive task is an opportunity waiting to be automated.",
+            "photo": null,
+            "initials": "MR",
+            "social": {
+              "linkedin": "https://linkedin.com/in/marcusrodriguez"
+            }
+          },
+          {
+            "id": "member_4",
+            "name": "Priya Patel",
+            "role": "Client Success Director",
+            "bio": "Background in project management and customer success across SaaS and consulting. Ensures clients don't just get software—they get measurable outcomes. Known for turning skeptical stakeholders into automation advocates.",
+            "photo": null,
+            "initials": "PP",
+            "social": {
+              "linkedin": "https://linkedin.com/in/priyapatel"
+            }
+          }
+        ],
+        "notes": [
+          "Photo field intentionally null for initial implementation - will show initials",
+          "Initials auto-generated from name if not provided in translation data",
+          "Social links only included where relevant - not all members need all platforms",
+          "Structure allows easy expansion to 5-6 members by adding more objects"
+        ]
+      },
+
+      "technical_implementation": {
+        "component_type": "Client component (use client directive)",
+        "required_imports": [
+          "useTranslations from next-intl",
+          "Image from next/image (for actual photos when added)",
+          "Lucide icons (Linkedin, Twitter, Github, Mail, User)",
+          "React (default import)"
+        ],
+        "state_management": {
+          "requirement": "No state needed - static content from translations",
+          "note": "Similar to Values component, purely presentational"
+        },
+        "animation_setup": {
+          "approach": "Pure CSS animations using existing animate-fade-in-up utility",
+          "no_gsap_required": "No counter animations or scroll triggers - CSS fade-in sufficient",
+          "implementation": "Apply animate-fade-in-up class with inline style animationDelay on each card"
+        },
+        "photo_rendering": {
+          "with_photo": {
+            "implementation": "Use Next.js Image component with fill prop inside relative container",
+            "code_pattern": "<div className='relative w-32 h-32 rounded-full overflow-hidden'><Image src={member.photo} alt={`Photo of ${member.name}, ${member.role}`} fill className='object-cover' /></div>"
+          },
+          "without_photo_initials": {
+            "implementation": "Show initials on gradient background",
+            "code_pattern": "<div className='w-32 h-32 rounded-full bg-gradient-to-br from-accent-blue/30 to-accent-blue/10 flex items-center justify-center'><span className='text-3xl font-display font-semibold text-white'>{initials}</span></div>",
+            "initials_generation": "Extract first letter of first name + first letter of last name from member.name"
+          },
+          "conditional_logic": "Use member.photo ? <Image /> : <InitialsPlaceholder /> pattern"
+        },
+        "social_links_rendering": {
+          "icon_mapping": {
+            "description": "Map social platform names to Lucide icon components",
+            "implementation": "const socialIcons = { linkedin: Linkedin, twitter: Twitter, github: Github, email: Mail };",
+            "dynamic_rendering": "Object.entries(member.social || {}).map(([platform, url]) => { const Icon = socialIcons[platform]; return <a href={url}><Icon /></a>; })"
+          },
+          "conditional_display": "Only render social links container if member.social exists and has entries",
+          "link_attributes": {
+            "target": "_blank for external links",
+            "rel": "noopener noreferrer for security",
+            "aria_label": "Descriptive label for each link"
+          }
+        },
+        "initials_helper": {
+          "function": "getInitials(name: string): string",
+          "implementation": "const names = name.split(' '); return names[0][0] + (names[1]?.[0] || '');",
+          "fallback": "If member.initials provided in data, use that; otherwise generate from name"
+        }
+      },
+
+      "visual_design_notes": {
+        "glassmorphism_treatment": {
+          "background": "bg-[#111113]/80 with backdrop-blur-md for frosted glass effect",
+          "border": "border border-white/10 for subtle card definition",
+          "hover_state": "Slightly brighter background (bg-white/[0.04]) and border (border-white/20)",
+          "consistency": "Matches Stats and Values components for visual cohesion across About page"
+        },
+        "color_palette": {
+          "primary_text": "#ffffff (white) - member names",
+          "accent_text": "#3b82f6 (accent-blue) - member roles",
+          "secondary_text": "rgba(255,255,255,0.6) (white/60) - member bios",
+          "tertiary_text": "rgba(255,255,255,0.4) (white/40) - social icons default state",
+          "background": "#111113 (brand-gray)",
+          "card_background": "rgba(17,17,19,0.8) with backdrop blur",
+          "border": "rgba(255,255,255,0.1) (white/10)",
+          "hover_border": "rgba(255,255,255,0.2) (white/20)",
+          "photo_border": "rgba(255,255,255,0.1) (white/10)",
+          "initials_background": "gradient from accent-blue/30 to accent-blue/10"
+        },
+        "visual_hierarchy": {
+          "1_photo": "Largest element, centered at top, draws eye first",
+          "2_name": "White, bold, font-display (text-xl md:text-2xl) - secondary focus",
+          "3_role": "Accent blue, lighter weight, slightly smaller - identifies function",
+          "4_bio": "White/60, light weight, readable line height - supporting information",
+          "5_social": "Smallest, white/40, bottom of card - tertiary actions",
+          "spacing": "Clear vertical rhythm: photo → 6 spacing → name → 1 spacing → role → 4 spacing → bio → 6 spacing → social"
+        },
+        "photo_treatment": {
+          "shape": "Circular (rounded-full) for friendly, approachable feel",
+          "size": "w-32 h-32 mobile, w-40 h-40 desktop - prominent but not overwhelming",
+          "border": "2px border in white/10, brightens to white/20 on card hover",
+          "placeholder_gradient": "Blue gradient for brand consistency and visual interest",
+          "alignment": "Centered within card to maintain symmetry"
+        },
+        "comparison_to_other_components": {
+          "similarities": "Same card wrapper, hover effects, glassmorphism treatment as Stats and Values",
+          "differences": [
+            "Circular photo element unique to Team",
+            "Mix of centered text (name/role) vs Values left-aligned text",
+            "Social links add interactive elements unlike Stats/Values",
+            "Longer text content (bios) than Values descriptions",
+            "3-column desktop grid vs 4-column (Stats) or 2-column (Values)"
+          ]
+        }
+      },
+
+      "content_guidelines": {
+        "member_names": {
+          "format": "Full name (First Last) or (First Middle Last)",
+          "capitalization": "Title Case",
+          "consistency": "Use same name format for all team members",
+          "examples": [
+            "Alex Thompson",
+            "Sarah Chen",
+            "Marcus Rodriguez",
+            "Dr. Priya Patel (if credentials relevant)"
+          ]
+        },
+        "member_roles": {
+          "format": "Job title in Title Case",
+          "length": "Ideally under 30 characters for visual balance",
+          "specificity": "Specific enough to understand function, concise enough to scan",
+          "examples_good": [
+            "Founder & CEO",
+            "Lead Developer",
+            "Business Automation Specialist",
+            "Client Success Director"
+          ],
+          "examples_avoid": [
+            "Chief Executive Officer and Founder" (too long),
+            "Developer" (too generic),
+            "VP of Customer Success and Strategic Partnerships" (too long)
+          ]
+        },
+        "member_bios": {
+          "length": "50-80 words (2-3 sentences) for consistency across all members",
+          "structure": {
+            "sentence_1": "Background and core expertise (credentials, years of experience, specialization)",
+            "sentence_2": "Specific skills or philosophy (what makes them uniquely qualified)",
+            "sentence_3_optional": "Personal touch (interests, passion, or humanizing detail)"
+          },
+          "tone": "Professional but personable - balance credibility with approachability",
+          "perspective": {
+            "third_person": "Recommended for team pages - maintains professional distance",
+            "first_person": "Alternative - more personal but less common in team sections",
+            "consistency": "Use same perspective for all team members"
+          },
+          "content_focus": [
+            "Highlight expertise relevant to client value",
+            "Include concrete details (years of experience, specific technologies)",
+            "Add one personal element to humanize (hobby, passion, quirk)",
+            "Avoid generic adjectives without supporting details"
+          ],
+          "examples": {
+            "good": "Former McKinsey consultant who built his first business automation at 22. Obsessed with turning manual processes into self-running systems. When not architecting automations, you'll find him reading sci-fi or tinkering with AI agents.",
+            "avoid": "Experienced leader with a passion for innovation and excellence. Committed to delivering world-class solutions. Enjoys working with teams to achieve outstanding results."
+          },
+          "notes": [
+            "Consistency in bio length creates visual balance in grid",
+            "Each bio should answer: Why is this person qualified? What's unique about them? What makes them human?",
+            "Avoid clichés: passionate, results-driven, customer-focused (without specifics)"
+          ]
+        },
+        "section_header": {
+          "title_options": [
+            "Meet the Team",
+            "Our Team",
+            "The Team",
+            "The People Behind Kohelet"
+          ],
+          "subtitle_guidance": "Optional 1-sentence value proposition or team philosophy",
+          "subtitle_examples": [
+            "The experts obsessed with eliminating your busywork",
+            "Automation specialists committed to your success",
+            "Meet the team building your competitive advantage",
+            "The humans behind the automation"
+          ],
+          "tone": "Clear and direct, focused on client benefit or team expertise"
+        },
+        "social_links": {
+          "inclusion_criteria": "Only include platforms where team member is active and professional content is relevant",
+          "linkedin_priority": "LinkedIn is primary - most relevant for B2B context, include for all members if possible",
+          "twitter_consideration": "Include if member shares thought leadership or industry insights",
+          "github_consideration": "Include for technical team members with public repositories",
+          "email_caution": "Consider privacy implications - public email may invite spam",
+          "consistency": "Not all members need same platforms - include what's authentic and relevant"
+        },
+        "photos": {
+          "initial_implementation": "Launch with initials placeholders to avoid delays waiting for professional photos",
+          "future_photos": {
+            "format": "Square aspect ratio (1:1), minimum 400x400px, ideally 800x800px for retina displays",
+            "style": "Consistent style across all photos - same lighting, background treatment, crop",
+            "background": "Neutral or on-brand backgrounds, avoid busy backgrounds",
+            "expression": "Professional but approachable - slight smile preferred over serious",
+            "attire": "Business casual consistent with brand - avoid overly formal or casual",
+            "photographer": "Consider professional headshot session for consistency"
+          }
+        }
+      }
+    },
+
+    "acceptance_criteria": {
+      "layout": [
+        "Section uses max-w-6xl container with responsive padding (py-20 md:py-32)",
+        "Team members arranged in responsive grid (1 col mobile, 2 col tablet, 3 col desktop)",
+        "Grid gap is gap-6 on mobile, gap-8 on desktop",
+        "Section header included with title and optional subtitle"
+      ],
+      "team_cards": [
+        "Each card has glassmorphism styling (bg-[#111113]/80 backdrop-blur-md)",
+        "Cards have border border-white/10",
+        "Cards have rounded corners (rounded-xl md:rounded-2xl)",
+        "Hover effects work: bg-white/[0.04] and border-white/20",
+        "Each card contains: photo/initials, name, role, bio, optional social links",
+        "Profile photos are circular (rounded-full) with w-32 h-32 (mobile) to w-40 h-40 (desktop)",
+        "Photo borders brighten on card hover (border-white/10 to border-white/20)"
+      ],
+      "typography": [
+        "Section title uses font-display with appropriate sizing (text-3xl to text-5xl)",
+        "Member names use font-display font-semibold (text-xl to text-2xl)",
+        "Member roles use text-accent-blue font-light (text-sm to text-base)",
+        "Member bios use text-white/60 with font-light and leading-relaxed (text-sm to text-base)",
+        "All text has tracking-tight for tighter letter spacing"
+      ],
+      "photos": [
+        "If member.photo exists, render Next.js Image component with proper alt text",
+        "If member.photo is null/empty, render initials placeholder with gradient background",
+        "Initials are generated from member name (first letter of first + last name)",
+        "Initials display in text-3xl md:text-4xl font-display on gradient background",
+        "Gradient background uses from-accent-blue/30 to-accent-blue/10",
+        "All photos/placeholders are circular and consistently sized"
+      ],
+      "social_links": [
+        "Social links only render if member.social exists and has entries",
+        "Icons render horizontally centered below bio with gap-4",
+        "Supported platforms: LinkedIn, Twitter, GitHub, Email (as specified in data)",
+        "Icons are w-5 h-5 from Lucide React",
+        "Default color is text-white/40, hover color is text-accent-blue",
+        "Links open in new tab (target='_blank') with rel='noopener noreferrer'",
+        "Each link has descriptive aria-label: 'Connect with [Name] on [Platform]'"
+      ],
+      "animations": [
+        "Cards fade in with staggered delays (0.1s, 0.2s, 0.3s, 0.4s, 0.5s, 0.6s)",
+        "Section header animates before cards (title: 0s, subtitle: 0.1s)",
+        "Uses animate-fade-in-up utility class",
+        "No GSAP or complex scroll triggers needed"
+      ],
+      "translations": [
+        "Component uses useTranslations('about.team')",
+        "Section title and subtitle pulled from translations",
+        "Each team member has name, role, bio, optional photo, optional initials, optional social in translation data",
+        "Translation keys follow documented structure (about.team.*)"
+      ],
+      "accessibility": [
+        "Section uses semantic <section> tag with id='team'",
+        "Section title uses <h2> tag",
+        "Member names use <h3> tags for proper heading hierarchy",
+        "Each member card uses <article> tag",
+        "Photos have descriptive alt text: 'Photo of [Name], [Role] at Kohelet'",
+        "Initials placeholders have aria-label: 'Profile placeholder for [Name]'",
+        "Social links have descriptive aria-labels",
+        "Social icons themselves have aria-hidden='true' (link label is sufficient)",
+        "Social links have visible focus states (focus-visible:ring-2 ring-accent-blue)",
+        "Color contrast meets WCAG AA standards"
+      ],
+      "responsive": [
+        "Layout adapts correctly at all breakpoints (mobile: 1 col, tablet: 2 col, desktop: 3 col)",
+        "Text sizes scale appropriately across breakpoints",
+        "Photo sizes scale appropriately (w-32 to w-40)",
+        "Padding and spacing scale appropriately",
+        "Cards remain readable and well-proportioned at all sizes",
+        "Social link touch targets are adequate on mobile (minimum 44x44px tap area)",
+        "Grid handles uneven member counts gracefully (centers last row if needed)"
+      ],
+      "technical": [
+        "Component has 'use client' directive",
+        "All required Lucide icons properly imported (Linkedin, Twitter, Github, Mail, User)",
+        "Next.js Image component imported for future photo support",
+        "No TypeScript errors",
+        "No console warnings",
+        "Component exports default function",
+        "Works with both English and Hebrew translations (RTL support via next-intl)",
+        "Handles optional fields gracefully (photo, initials, social)",
+        "Initials auto-generation works correctly from member name"
+      ]
+    },
+
+    "implementation_notes": {
+      "initials_generation": {
+        "description": "Auto-generate initials from member name if not provided in data",
+        "code_example": "const getInitials = (name: string): string => { const names = name.trim().split(' '); return (names[0]?.[0] || '') + (names[names.length - 1]?.[0] || ''); }; const initials = member.initials || getInitials(member.name);",
+        "edge_cases": "Handle single-word names (use first two letters) and empty names (fallback to '?')"
+      },
+      "photo_conditional": {
+        "description": "Conditionally render actual photo vs initials placeholder",
+        "code_pattern": "{member.photo ? (<div className='relative w-32 h-32 ...'><Image src={member.photo} alt={...} fill /></div>) : (<div className='w-32 h-32 ... bg-gradient-to-br'><span>{initials}</span></div>)}",
+        "note": "Use consistent sizing classes on both branches for layout stability"
+      },
+      "social_links_dynamic": {
+        "description": "Dynamically render social links based on data",
+        "code_example": "const socialIcons = { linkedin: Linkedin, twitter: Twitter, github: Github, email: Mail }; {member.social && Object.entries(member.social).map(([platform, url]) => { const Icon = socialIcons[platform]; return <a key={platform} href={url} target='_blank' rel='noopener noreferrer' aria-label={`Connect with ${member.name} on ${platform}`}><Icon className='w-5 h-5' /></a>; })}",
+        "email_handling": "If platform is 'email', prefix URL with 'mailto:' if not already present"
+      },
+      "animation_simplicity": {
+        "description": "Team component uses simple CSS animations like Values, no GSAP",
+        "rationale": "No counters or complex interactions - staggered fade-in provides polish without complexity",
+        "implementation": "Map over members array, apply animate-fade-in-up with dynamic animationDelay based on index"
+      },
+      "rtl_support": {
+        "description": "Component should work with both English (LTR) and Hebrew (RTL)",
+        "considerations": [
+          "Text alignment is centered, so works for both LTR and RTL",
+          "Photo is centered, not affected by direction",
+          "Social links gap-4 works in both directions",
+          "Grid layout remains 1/2/3 columns in both directions"
+        ],
+        "implementation": "next-intl handles dir attribute automatically, centered layout works universally"
+      },
+      "scalability": {
+        "description": "Component structure supports 3-6 team members easily",
+        "3_members": "Desktop shows 3 in single row, mobile/tablet stack appropriately",
+        "4_members": "Desktop shows 3+1, tablet shows 2+2, mobile stacks 4",
+        "5_members": "Desktop shows 3+2, tablet shows various arrangements, mobile stacks 5",
+        "6_members": "Desktop shows 3+3 (perfect grid), tablet shows 2+2+2, mobile stacks 6",
+        "expansion": "To add more members, simply add objects to translation data - component handles rendering automatically"
+      },
+      "placeholder_approach": {
+        "description": "Launch with initials placeholders, swap for actual photos when available",
+        "benefit": "No delays waiting for professional photography - can launch immediately",
+        "photo_upgrade_path": "Update translation data with photo URLs when photos ready - no code changes needed",
+        "visual_consistency": "Initials on gradient background maintain professional appearance"
+      },
+      "performance": {
+        "description": "Lightweight component with minimal dependencies",
+        "benefits": [
+          "No GSAP = smaller bundle size",
+          "CSS animations = better performance than JS",
+          "Static content = no re-renders after initial mount",
+          "Next.js Image optimization handles photo loading efficiently"
+        ],
+        "considerations": "If using actual photos, ensure image files are optimized (WebP format, appropriate sizes)"
+      }
+    },
+
+    "dependencies_required": [
+      {
+        "package": "next-intl",
+        "version": "existing",
+        "purpose": "Translations and internationalization"
+      },
+      {
+        "package": "next/image",
+        "version": "existing (Next.js built-in)",
+        "purpose": "Optimized image rendering for team photos"
+      },
+      {
+        "package": "lucide-react",
+        "version": "existing",
+        "purpose": "Icons (Linkedin, Twitter, Github, Mail, User)"
+      },
+      {
+        "package": "react",
+        "version": "existing",
+        "purpose": "React component"
+      }
+    ]
+  },
+
+  "pass_criteria": {
+    "definition_complete": true,
+    "specification_detailed": true,
+    "translation_keys_documented": true,
+    "accessibility_addressed": true,
+    "responsive_behavior_defined": true,
+    "animation_approach_specified": true,
+    "photo_strategy_determined": true,
+    "social_links_strategy_determined": true,
+    "content_guidelines_provided": true,
+    "placeholder_approach_defined": true,
+    "ready_for_ui_implementation": true
+  }
+}

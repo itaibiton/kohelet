@@ -64,6 +64,32 @@
 - PRD-02 complete (Stats spec)
 - PRD-03 complete (Values spec)
 
-### Next Task: PRD-04 - Define Team component requirements
+- [x] PRD-04: Define Team component requirements
+  - Approach: Team grid with 4 members (scalable to 3-6)
+  - Layout: 3-column desktop grid, 2-column tablet, 1-column mobile
+  - Grid: `grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8`
+  - Container: `max-w-6xl mx-auto px-6 py-20 md:py-32`
+  - Team Card: Glassmorphism styling with `bg-[#111113]/80 backdrop-blur-md border border-white/10`
+  - Card elements: Circular photo (or initials placeholder), name, role, bio, optional social links
+  - Photo: `w-32 h-32 md:w-40 md:h-40 rounded-full` with border
+  - Initials placeholder: Gradient background `from-accent-blue/30 to-accent-blue/10`
+  - Typography: name (text-xl/2xl font-display white), role (text-sm/base accent-blue), bio (text-sm/base white/60)
+  - Social icons: LinkedIn, Twitter, GitHub, Email from lucide-react (w-5 h-5)
+  - Animation: CSS animate-fade-in-up with staggered delays (0.1s-0.6s) - NO GSAP needed
+  - Translation keys: about.team.section_title, section_subtitle, members[] array with id/name/role/bio/photo/initials/social
+  - Accessibility: <section> tag, <h2> for title, <h3> for names, <article> per member, aria-labels for social links
+  - 4 placeholder team members defined with initials (photos optional for later)
+  - Full spec saved to: .claude/ralph/about-page/PRD-04-Team-Specification.json
+
+### Current State:
+- AboutHero.tsx exists
+- index.ts has exports for all 5 components (but files don't exist yet)
+- No about translations exist in en.json/he.json
+- PRD-01 complete (CompanyStory spec)
+- PRD-02 complete (Stats spec)
+- PRD-03 complete (Values spec)
+- PRD-04 complete (Team spec)
+
+### Next Task: PRD-05 - Define AboutCTA component requirements
 
 ---
