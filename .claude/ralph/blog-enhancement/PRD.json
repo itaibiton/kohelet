@@ -90,7 +90,7 @@
         "No TypeScript errors in the component"
       ],
       "dependencies": [],
-      "pass": false
+      "pass": true
     },
     {
       "id": "SHADCN-02",
