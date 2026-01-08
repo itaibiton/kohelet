@@ -260,7 +260,7 @@
         "Images use Next.js Image component"
       ],
       "dependencies": ["POST-03"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "VERCEL-01",
