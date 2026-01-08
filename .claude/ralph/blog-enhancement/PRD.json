@@ -287,7 +287,7 @@
         "No hydration errors or warnings"
       ],
       "dependencies": ["VERCEL-01"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "VERCEL-03",

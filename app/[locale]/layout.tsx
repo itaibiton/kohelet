@@ -6,6 +6,8 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { isRtl, type Locale } from "@/i18n/config";
 import { PricingProvider } from "@/context/PricingContext";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "../globals.css";
 
 const heebo = Heebo({
@@ -62,6 +64,8 @@ export default async function LocaleLayout({
             {children}
           </PricingProvider>
         </NextIntlClientProvider>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
