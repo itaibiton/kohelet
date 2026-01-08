@@ -313,13 +313,13 @@
     "story": {
       "sectionTitle": "Our Story",
       "missionLabel": "Mission",
-      "missionText": "To eliminate the gap between what technology can do and what businesses actually use it for.",
+      "missionText": "We engineer software that saves 15-25 hours per week—so your team can focus on strategy, not data entry.",
       "visionLabel": "Vision",
-      "visionText": "A world where every business operates at peak efficiency, powered by intelligent automation.",
+      "visionText": "Making AI-driven automation accessible to every business—from 5-person teams to 500-employee organizations.",
       "narrative": {
-        "p1": "Kohelet started with a simple observation: most businesses are drowning in manual work that machines could handle better. We saw companies spending thousands of hours on repetitive tasks while their competitors raced ahead.",
-        "p2": "We don't believe in one-size-fits-all solutions. Every automation we build is designed around your specific workflows, your team's needs, and your growth goals. No templates, no compromises.",
-        "p3": "Our approach combines deep technical expertise with genuine business understanding. We're not just developers—we're partners in your operational transformation."
+        "p1": "Kohelet exists because most businesses still operate like it's 2015. We watched SMBs burn 60% of their weekly hours on tasks that could be automated—manual data entry, copying leads between systems, answering the same customer questions 50 times. Meanwhile, enterprise competitors with dedicated tech teams pulled ahead. We built Kohelet to level the playing field.",
+        "p2": "We don't sell templates or generic chatbots. Every system we build is reverse-engineered from your actual workflows. When you need a lead qualification bot, we study how your sales team qualifies leads today—then we build an AI agent that replicates their decision-making. When you need workflow automation, we map your current process bottlenecks before writing a single line of code. Custom-built means it works the way you work.",
+        "p3": "Here's what sets us apart: 97% client retention because we deliver measurable ROI, not just deliverables. Sub-48-hour response times because we're builders, not account managers passing tickets to offshore teams. And a strict 3-client-per-month limit so every project gets the attention it deserves. You're not hiring a dev shop. You're hiring a technical co-founder who ships."
       }
     },
     "stats": {

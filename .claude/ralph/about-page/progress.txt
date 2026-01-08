@@ -726,4 +726,45 @@ about.cta.secondaryButton
 
 **Phase 2 Status**: ALL UI TASKS COMPLETE (UI-01 ✅, UI-02 ✅, UI-03 ✅, UI-04 ✅, UI-05 ✅) 🎉
 
-**Next Task**: COPY-01 (Write CompanyStory copy) - depends on UI-01 ✅
+---
+
+## Phase 3: Copywriting
+
+### [2026-01-08] COPY-01: Write CompanyStory copy ✅
+**Agent**: kohelet-copywriter
+**Status**: COMPLETE
+
+**Deliverables**:
+- Mission statement (en + he) - quantified time savings: "15-25 hours per week"
+- Vision statement (en + he) - AI accessibility across business sizes
+- 3-paragraph company narrative (en + he) covering:
+  1. Problem/Genesis: SMBs burning 60% of hours on automatable tasks
+  2. Our Approach: Custom-built from actual workflows, not templates
+  3. Differentiation: 97% retention, sub-48-hour response, 3-client-per-month limit
+
+**English Copy Highlights**:
+- Mission: "We engineer software that saves 15-25 hours per week—so your team can focus on strategy, not data entry."
+- Vision: "Making AI-driven automation accessible to every business—from 5-person teams to 500-employee organizations."
+- Closing: "You're not hiring a dev shop. You're hiring a technical co-founder who ships."
+
+**Hebrew Copy**: Natural, native-sounding translations (not literal)
+
+**Translation Keys Updated**:
+```
+about.story.sectionTitle
+about.story.missionLabel
+about.story.missionText
+about.story.visionLabel
+about.story.visionText
+about.story.narrative.p1
+about.story.narrative.p2
+about.story.narrative.p3
+```
+
+**Files Updated**:
+- `/content/en.json` - English translations
+- `/content/he.json` - Hebrew translations
+
+**Phase 3 Progress**: 1/5 COPY tasks complete (COPY-01 ✅)
+
+**Next Task**: COPY-02 (Write Stats labels) - depends on UI-02 ✅
