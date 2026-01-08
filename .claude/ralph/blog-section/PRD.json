@@ -149,7 +149,7 @@
         "Clear filters functionality"
       ],
       "dependencies": ["FE-01"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "INT-01",

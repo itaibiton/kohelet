@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import React, { useState, useCallback, useRef, useMemo, useEffect } from "react";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import Navigation from "@/components/sections/Navigation";
 import Footer from "@/components/sections/Footer";
 import NoiseOverlay from "@/components/effects/NoiseOverlay";
@@ -111,28 +112,81 @@ type Props = {
 export default function BlogPage({ params }: Props) {
   const { locale } = React.use(params);
 
-  // Placeholder state - will be replaced with useState in FE-02
-  // These are hardcoded for now since BlogFilters expects these props
-  const activeCategory = null;
-  const searchQuery = "";
+  // URL params for shareable filtered views
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // State management for filters
+  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Initialize filters from URL params
+  useEffect(() => {
+    const category = searchParams.get("category");
+    const search = searchParams.get("q");
+    if (category) setActiveCategory(category);
+    if (search) {
+      setSearchQuery(search);
+      setDebouncedSearch(search);
+    }
+  }, [searchParams]);
+
+  // Sync filters to URL params
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (activeCategory) params.set("category", activeCategory);
+    if (debouncedSearch) params.set("q", debouncedSearch);
+
+    const queryString = params.toString();
+    router.replace(
+      queryString ? `${pathname}?${queryString}` : pathname,
+      { scroll: false }
+    );
+  }, [activeCategory, debouncedSearch, pathname, router]);
 
   // Derive unique categories from mock posts
   const categories = Array.from(
     new Set(mockPosts.map((post) => post.category))
   ).sort();
 
-  // Filter logic (placeholder - will be enhanced in FE-02)
-  // For now, just pass all posts through
-  const filteredPosts = mockPosts;
+  // Debounced search handler
+  const handleSearchChange = useCallback((query: string) => {
+    setSearchQuery(query); // Update input immediately for UI
 
-  // Placeholder handlers - will be implemented in FE-02
-  const handleCategoryChange = () => {
-    // TODO: Implement in FE-02
-  };
+    // Debounce the filter update
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+    debounceRef.current = setTimeout(() => {
+      setDebouncedSearch(query);
+    }, 300);
+  }, []);
 
-  const handleSearchChange = () => {
-    // TODO: Implement in FE-02
-  };
+  // Category change handler
+  const handleCategoryChange = useCallback((category: string | null) => {
+    setActiveCategory(category);
+  }, []);
+
+  // Filter logic with memoization
+  const filteredPosts = useMemo(() => {
+    return mockPosts.filter((post) => {
+      // Category filter
+      const matchesCategory =
+        activeCategory === null || post.category === activeCategory;
+
+      // Search filter (case-insensitive, matches title and excerpt)
+      const searchLower = debouncedSearch.toLowerCase();
+      const matchesSearch =
+        debouncedSearch === "" ||
+        post.title.toLowerCase().includes(searchLower) ||
+        post.excerpt.toLowerCase().includes(searchLower);
+
+      return matchesCategory && matchesSearch;
+    });
+  }, [activeCategory, debouncedSearch]);
 
   return (
     <main className="min-h-screen relative selection:bg-blue-500/30 selection:text-white">
