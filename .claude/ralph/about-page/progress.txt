@@ -658,3 +658,72 @@ about.team.members[0-3].social.linkedin
 **Phase 2 Progress**: 4/5 UI tasks complete (UI-01 ✅, UI-02 ✅, UI-03 ✅, UI-04 ✅)
 
 **Next Task**: UI-05 (Implement AboutCTA component) - depends on PRD-05 ✅
+
+### [2026-01-08] UI-05: Implement AboutCTA component ✅
+**Agent**: ui-designer
+**Status**: COMPLETE
+
+**Deliverables**:
+- Component implemented at `/components/sections/about/AboutCTA.tsx`
+- Uses `'use client'` directive
+- Implements next-intl translations with `useTranslations("about.cta")`
+
+**Key Features**:
+- Glassmorphism card design: `bg-[#111113]/80 backdrop-blur-md border border-white/10 rounded-2xl`
+- Centered layout: `max-w-3xl mx-auto` card inside `max-w-5xl` section container
+- Decorative gradient orb behind card for visual depth
+- CSS `animate-fade-in-up` with staggered delays (0.1s to 0.4s)
+
+**Content Structure**:
+- Headline: `text-3xl md:text-4xl lg:text-5xl font-display font-semibold text-white`
+- Subtext: `text-base md:text-lg lg:text-xl text-neutral-400 max-w-2xl mx-auto`
+- Two-button CTA layout with responsive stacking
+
+**Button Styling**:
+- **Primary Button** (Schedule Consultation):
+  - `bg-accent-blue` with blue glow shadow
+  - `hover:shadow-[0_0_40px_rgba(59,130,246,0.5)]`
+  - `hover:scale-[1.02]` transform
+  - External links: `target="_blank" rel="noopener noreferrer"`
+  - Internal links: Next.js `Link` component
+
+- **Secondary Button** (Get in Touch):
+  - Ghost style: `bg-transparent border border-white/10`
+  - `hover:bg-white/5 hover:border-white/20`
+  - Links to `/contact`
+
+**RTL Support**:
+- Button group: `flex flex-col sm:flex-row rtl:sm:flex-row-reverse`
+- Ensures Hebrew layout has correct button order
+
+**Props Interface**:
+```typescript
+interface AboutCTAProps {
+  calendlyUrl?: string; // Optional: defaults to "/contact"
+}
+```
+
+**Accessibility**:
+- Semantic `<section>` with `id="cta"` and `aria-labelledby="cta-heading"`
+- `<h2 id="cta-heading">` for headline
+- Descriptive `aria-label` on both buttons
+- Focus states: `focus:ring-2` with proper offset colors
+- External link detection for security attributes
+
+**Translation Keys**:
+```
+about.cta.headline
+about.cta.subtext
+about.cta.primaryButton
+about.cta.secondaryButton
+```
+
+**Translations Added** (by ui-designer agent):
+- English: "Ready to Automate?", "Stop losing hours to manual tasks..."
+- Hebrew: "מוכנים לאוטומציה?", "תפסיקו לבזבז שעות על משימות ידניות..."
+
+**TypeScript Check**: Passed (no errors)
+
+**Phase 2 Status**: ALL UI TASKS COMPLETE (UI-01 ✅, UI-02 ✅, UI-03 ✅, UI-04 ✅, UI-05 ✅) 🎉
+
+**Next Task**: COPY-01 (Write CompanyStory copy) - depends on UI-01 ✅
