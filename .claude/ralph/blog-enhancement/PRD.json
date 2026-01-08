@@ -273,7 +273,7 @@
         "npm install completes successfully"
       ],
       "dependencies": [],
-      "pass": false
+      "pass": true
     },
     {
       "id": "VERCEL-02",
