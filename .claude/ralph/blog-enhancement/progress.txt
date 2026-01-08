@@ -34,6 +34,7 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
 - SHADCN-02: Install shadcn Select component
 - SHADCN-03: Refactor BlogFilters with shadcn components
 - CL-01: Install Contentlayer2 dependencies
+- CL-02: Create Contentlayer configuration
 
 ## Current Phase: Phase 1 - Bug Fixes
 
@@ -150,4 +151,30 @@ Fix blog section bugs (routing, layout, search), improve filter UI with shadcn c
 - rehype-autolink-headings (v7.1.0)
 
 **Result:** All Contentlayer2 dependencies installed and ready for configuration.
+
+---
+
+### 2026-01-08 - CL-02 Complete
+**Task:** Create Contentlayer configuration
+**Agent:** senior-frontend-dev
+
+**Created:**
+- `contentlayer.config.ts` at project root
+
+**Post Document Type Fields:**
+- English: title, excerpt, category (required)
+- Hebrew i18n: title_he, excerpt_he, category_he (optional)
+- Metadata: date, author, authorAvatar, thumbnail, published
+
+**Computed Fields:**
+- slug: from file name (my-post.mdx → my-post)
+- url: full path (/blog/my-post)
+
+**MDX Plugins:**
+- remark-gfm (GitHub Flavored Markdown)
+- rehype-highlight (syntax highlighting)
+- rehype-slug (heading IDs)
+- rehype-autolink-headings (heading anchors)
+
+**Result:** Contentlayer configuration ready. Content source: content/blog/*.mdx
 

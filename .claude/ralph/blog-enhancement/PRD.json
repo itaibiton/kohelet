@@ -150,7 +150,7 @@
         "MDX plugins configured (remark-gfm, rehype-highlight, rehype-slug)"
       ],
       "dependencies": ["CL-01"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "CL-03",
