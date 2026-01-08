@@ -195,7 +195,7 @@
         "Both EN and HE locales work"
       ],
       "dependencies": ["INT-02"],
-      "pass": false
+      "pass": true
     }
   ],
 
