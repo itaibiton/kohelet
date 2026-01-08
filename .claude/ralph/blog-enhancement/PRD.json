@@ -225,7 +225,7 @@
         "RTL layout works for Hebrew"
       ],
       "dependencies": ["POST-01"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "POST-03",
@@ -241,7 +241,7 @@
         "Code blocks styled with syntax highlighting"
       ],
       "dependencies": ["POST-02"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "POST-04",
