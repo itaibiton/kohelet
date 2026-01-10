@@ -1063,4 +1063,112 @@ return () => {
 
 ---
 
-## Next Task: MT-02 - Intersection Observer for THREE.js
+### MT-02: Intersection Observer for THREE.js ✅
+**Completed: 2026-01-11**
+
+#### Problem
+The THREE.js animation loop ran continuously even when the hero section was scrolled out of view, wasting CPU/GPU cycles and draining battery on mobile devices.
+
+#### Changes Made to `components/effects/ThreeBackground.tsx`
+
+**1. Added Visibility Tracking Refs (Lines 23-24):**
+```typescript
+const isVisibleRef = useRef(true);
+const rafIdRef = useRef<number | null>(null);
+```
+
+- `isVisibleRef` tracks whether the component is in viewport
+- `rafIdRef` stores the current animation frame ID for cleanup
+
+**2. Modified Animation Loop (Lines 180-216):**
+```typescript
+const animate = () => {
+  // Stop animation if not visible
+  if (!isVisibleRef.current) {
+    rafIdRef.current = null;
+    return;
+  }
+
+  rafIdRef.current = requestAnimationFrame(animate);
+  // ... rest of animation logic
+};
+```
+
+- Animation loop now checks visibility before scheduling next frame
+- Returns early when not visible, stopping the RAF chain
+
+**3. Added Intersection Observer (Lines 270-285):**
+```typescript
+const observer = new IntersectionObserver(
+  ([entry]) => {
+    isVisibleRef.current = entry.isIntersecting;
+
+    // Resume animation when becoming visible
+    if (entry.isIntersecting && rafIdRef.current === null) {
+      animate();
+    }
+  },
+  { threshold: 0.1 }
+);
+
+if (container) {
+  observer.observe(container);
+}
+```
+
+- Uses 0.1 threshold (10% visibility triggers callback)
+- Updates visibility ref when component enters/leaves viewport
+- Automatically resumes animation when scrolled back into view
+
+**4. Enhanced Cleanup (Lines 288-309):**
+```typescript
+return () => {
+  // Cancel any pending animation frame
+  if (rafIdRef.current !== null) {
+    cancelAnimationFrame(rafIdRef.current);
+  }
+
+  // Disconnect observer
+  observer.disconnect();
+
+  window.removeEventListener("resize", handleResize);
+  // ... rest of cleanup
+};
+```
+
+- Cancels pending RAF on unmount
+- Disconnects observer to prevent memory leaks
+
+#### How It Works
+
+| Scroll Position | Animation State | CPU/GPU Usage |
+|-----------------|-----------------|---------------|
+| Hero visible | Running (60fps) | Normal |
+| Hero partially visible | Running | Normal |
+| Hero <10% visible | Paused | ~0% (THREE.js) |
+| Scroll back to hero | Resumed | Normal |
+
+#### Performance Impact
+
+- **Before:** THREE.js renders 60fps continuously regardless of scroll position
+- **After:** THREE.js pauses when hero section is scrolled away
+- **Benefit:** Significant CPU/GPU savings when users scroll down the page
+- **No visual change:** Animation behaves identically when visible
+
+#### Why Use Refs Instead of State
+
+- `isVisibleRef` avoids re-renders on visibility change
+- Animation loop reads ref synchronously (no stale closure)
+- Better performance for high-frequency updates
+
+**Verification:**
+- ✅ Build: Successful
+- ✅ No TypeScript errors
+- ✅ Animation works when visible
+- ✅ Animation pauses when scrolled away
+- ✅ Animation resumes when scrolled back
+- ✅ Proper cleanup on unmount
+
+---
+
+## Next Task: MT-03 - Reduce particle count

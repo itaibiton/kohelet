@@ -20,6 +20,8 @@ interface ThreeBackgroundProps {
 
 export function ThreeBackground({ className }: ThreeBackgroundProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const isVisibleRef = useRef(true);
+  const rafIdRef = useRef<number | null>(null);
   const sceneRef = useRef<{
     scene: THREE.Scene;
     camera: THREE.PerspectiveCamera;
@@ -175,10 +177,15 @@ export function ThreeBackground({ className }: ThreeBackgroundProps) {
       particlesCount,
     };
 
-    // Animation loop
-    let animationId: number;
+    // Animation loop with visibility check
     const animate = () => {
-      animationId = requestAnimationFrame(animate);
+      // Stop animation if not visible
+      if (!isVisibleRef.current) {
+        rafIdRef.current = null;
+        return;
+      }
+
+      rafIdRef.current = requestAnimationFrame(animate);
 
       const time = Date.now() * 0.001;
 
@@ -260,9 +267,33 @@ export function ThreeBackground({ className }: ThreeBackgroundProps) {
     };
     window.addEventListener("resize", handleResize);
 
+    // Intersection Observer for pause/resume
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisibleRef.current = entry.isIntersecting;
+
+        // Resume animation when becoming visible
+        if (entry.isIntersecting && rafIdRef.current === null) {
+          animate();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (container) {
+      observer.observe(container);
+    }
+
     // Cleanup
     return () => {
-      cancelAnimationFrame(animationId);
+      // Cancel any pending animation frame
+      if (rafIdRef.current !== null) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
+
+      // Disconnect observer
+      observer.disconnect();
+
       window.removeEventListener("resize", handleResize);
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 
