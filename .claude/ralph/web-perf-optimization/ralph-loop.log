@@ -8,3 +8,20 @@ Time: Sat Jan 10 20:03:14 IST 2026
 Project: web-perf-optimization
 Max Iterations: 30
 
+========================================
+--- Iteration 1 --- Sat Jan 10 20:05:51 IST 2026
+========================================
+**CRP-01 Complete.**
+
+**Summary:**
+- Audited current bundle composition
+- Found 676KB gzipped total (target is <300KB)
+- THREE.js accounts for 412KB gzipped (61% of bundle) in two 732KB chunks
+- Both chunks contain THREE.js core, EffectComposer, RenderPass, UnrealBloomPass, GSAP, and ScrollTrigger
+- Key issue: THREE.js is directly imported without code splitting
+- Updated progress.txt with detailed findings
+- Updated PRD.json to mark CRP-01 as `pass: true`
+- Committed changes
+
+**Next task:** CRP-02 - Font optimization (depends on CRP-01 which is now complete)
+

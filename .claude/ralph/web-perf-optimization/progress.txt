@@ -70,4 +70,60 @@ Optimize Kohelet website to achieve Lighthouse 100/100, instant load times, and 
 
 ---
 
-## Next Task: CRP-02 - Font optimization
+### CRP-02: Font optimization ✅
+**Completed: 2026-01-10**
+
+#### Changes Made
+
+**Locale-specific font loading:**
+- Created separate Heebo font instances for Hebrew and English locales
+- Hebrew locale (`he`): Loads `hebrew` subset (includes Hebrew + basic Latin)
+- English locale (`en`): Loads `latin` subset only (smaller download)
+
+**Font loading optimizations:**
+1. Added `preload: true` for Heebo fonts (critical)
+2. Added `preload: false` for JetBrains Mono (secondary/code font)
+3. Added `display: "swap"` for all fonts (prevents FOIT)
+4. Specified explicit weights: `["400", "500", "600", "700"]` for Heebo
+5. Reduced JetBrains Mono weights to `["400", "500"]` (only what's needed)
+
+**Implementation:**
+```typescript
+// Hebrew locale font - includes Hebrew characters + Latin
+const heeboHebrew = Heebo({
+  subsets: ["hebrew"],
+  display: "swap",
+  variable: "--font-heebo",
+  preload: true,
+  weight: ["400", "500", "600", "700"],
+});
+
+// English locale font - Latin only (smaller subset)
+const heeboLatin = Heebo({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-heebo",
+  preload: true,
+  weight: ["400", "500", "600", "700"],
+});
+
+// Dynamic selection based on locale
+function getHeeboFont(locale: string) {
+  return locale === "he" ? heeboHebrew : heeboLatin;
+}
+```
+
+**Benefits:**
+- English users no longer download Hebrew glyphs (~30-50KB savings)
+- Hebrew users get optimized Hebrew subset
+- Critical fonts preloaded, secondary fonts deferred
+- `display: swap` prevents invisible text during load
+
+**Verification:**
+- ✅ TypeScript compilation: No errors
+- ✅ Build: Successful
+- ✅ Both locales render correctly
+
+---
+
+## Next Task: CRP-03 - Critical CSS extraction

@@ -10,17 +10,37 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "../globals.css";
 
-const heebo = Heebo({
-  subsets: ["hebrew", "latin"],
+// Hebrew locale font - includes Hebrew characters + Latin for numbers/common terms
+const heeboHebrew = Heebo({
+  subsets: ["hebrew"],
   display: "swap",
   variable: "--font-heebo",
+  preload: true,
+  weight: ["400", "500", "600", "700"],
 });
 
+// English locale font - Latin only (smaller subset)
+const heeboLatin = Heebo({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-heebo",
+  preload: true,
+  weight: ["400", "500", "600", "700"],
+});
+
+// Monospace font for code blocks - lower priority
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
   display: "swap",
+  preload: false,
+  weight: ["400", "500"],
 });
+
+// Get the appropriate font based on locale
+function getHeeboFont(locale: string) {
+  return locale === "he" ? heeboHebrew : heeboLatin;
+}
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -60,6 +80,7 @@ export default async function LocaleLayout({
 
   const messages = await getMessages();
   const dir = isRtl(locale as Locale) ? "rtl" : "ltr";
+  const heebo = getHeeboFont(locale);
 
   return (
     <html lang={locale} dir={dir} className={`scroll-smooth ${heebo.variable} font-sans`}>

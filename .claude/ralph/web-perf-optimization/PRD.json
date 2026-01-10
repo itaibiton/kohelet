@@ -58,7 +58,7 @@
         "No TypeScript errors"
       ],
       "dependencies": ["CRP-01"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "CRP-03",
