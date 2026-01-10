@@ -1,6 +1,0 @@
-{
-  "name": "contentlayer-generated",
-  "type": "module",
-  "main": "./index.mjs",
-  "types": "./index.d.ts"
-}

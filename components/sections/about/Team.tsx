@@ -50,7 +50,7 @@ export function Team() {
       className="w-full bg-brand-dark"
       aria-labelledby="team-title"
     >
-      <div className="max-w-6xl mx-auto px-6 py-20 md:py-32 relative z-10">
+      <div className="max-w-7xl mx-auto px-6 py-20 md:py-32 relative z-10">
         {/* Section Header */}
         <div className="text-center mb-12 md:mb-16 space-y-4">
           <h2

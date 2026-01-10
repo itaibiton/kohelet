@@ -1,0 +1,136 @@
+GlobalNest - AI Design Builder Prompt
+
+  Product Overview
+
+  GlobalNest is an AI-powered operating system for international real estate investment. The platform connects Israeli investors with global property opportunities through AI-powered matching, a verified professional network (brokers, lawyers, mortgage advisors), and integrated transaction management. The platform is bilingual (Hebrew/English) with full RTL support.
+
+  Target Users
+
+  Primary:
+  - First-time international investors (ages 25-45, $200K-$1M net worth)
+  - Experienced investors expanding portfolios (ages 35-55, own 1-3 properties)
+  - Israeli expatriates seeking Hebrew-speaking support
+
+  Secondary:
+  - Real estate professionals: brokers, lawyers, mortgage advisors seeking qualified leads
+
+  Brand Personality
+
+  - Trustworthy - Verified professionals, secure transactions
+  - Intelligent - AI-powered, data-driven recommendations
+  - Accessible - Simplifies complex international investing
+  - Premium - High-quality experience for serious investors
+  - Modern - Cutting-edge technology, sleek interface
+
+  Design System Requirements
+
+  Theme: Dark glassmorphism with premium feel
+
+  Colors:
+  - Background: Deep navy/dark slate
+  - Primary accent: Amber/Gold (#F59E0B) - represents wealth, premium
+  - Secondary: Cool slate tones
+  - Success: Emerald
+  - Text: White/off-white foreground, muted gray for secondary text
+
+  Typography:
+  - Clean, modern sans-serif
+  - Clear hierarchy: Large bold headings, comfortable body text
+  - Excellent readability in both Hebrew (RTL) and English (LTR)
+
+  Components:
+  - Glassmorphism cards: bg-card/30 with backdrop-blur, subtle borders
+  - Rounded corners (rounded-2xl)
+  - Subtle hover animations (scale, border color shifts)
+  - Phosphor Icons for iconography
+
+  Key Sections to Design
+
+  1. Hero Section
+  - Compelling headline about international real estate investing
+  - Animated 3D globe visualization showing global reach
+  - Clear CTA buttons: "Start Your Journey" / "For Professionals"
+  - Trust indicators (verified badge, security icons)
+
+  2. About Section
+  - Company story and mission statement
+  - Team introduction grid with glassmorphism cards
+  - Scroll-triggered fade-in animations
+
+  3. Features Section (Bento Grid)
+  6 core features with icons:
+  - AI-Powered Investor Onboarding (conversational profile building)
+  - Verified Professional Network (vetted brokers, lawyers, advisors)
+  - Global Property Marketplace (curated investment opportunities)
+  - Unified Communication Hub (messaging, file sharing, collaboration)
+  - AI Market Insights (recommendations, risk assessment, contract review)
+  - Deal Room (secure transaction management)
+
+  4. Social Proof Section
+  - Key metrics display: Active Investors, Properties Listed, Countries Covered, Total Investment Volume
+  - Testimonial cards with star ratings
+  - "Trusted by" logo row (grayscale with hover color)
+
+  5. How It Works (Process)
+  4 steps with icons:
+  1. Build Your Profile (AI chat onboarding)
+  2. Get Matched (AI matches properties + professionals)
+  3. Connect & Collaborate (messaging, document sharing)
+  4. Close Deals (Deal Room, transaction management)
+
+  6. FAQ Section
+  - Accordion component for common questions
+  - Topics: Safety, languages, costs, financing, professional quality
+  - CTA below: "Still have questions? Contact us"
+
+  7. CTA Section
+  - Split appeal: Investors / Professionals
+  - Strong action language
+  - Sign-up form or button
+
+  8. Footer
+  - Navigation links
+  - Social media
+  - Legal links (Privacy, Terms)
+  - Language switcher
+  - Newsletter signup
+
+  UX Requirements
+
+  - Responsive: Mobile-first, adapts beautifully to tablet and desktop
+  - Bilingual: Seamless Hebrew/English switching with proper RTL support
+  - Accessibility: WCAG 2.1 AA compliant, proper contrast ratios
+  - Performance: Fast loading, optimized images, lazy loading
+  - Animations: Subtle, purposeful motion with Framer Motion (scroll-triggered, staggered reveals)
+
+  Key User Flows to Consider
+
+  Investor Flow:
+  1. Land on homepage → Understand value proposition
+  2. Click "Start Journey" → AI onboarding chat
+  3. Complete 11-step profile → See personalized recommendations
+  4. Browse marketplace → Save properties
+  5. Connect with professionals → Message, share files
+  6. Enter Deal Room → Complete transaction
+
+  Professional Flow:
+  1. Land on homepage → Click "For Professionals"
+  2. Apply → Submit credentials for verification
+  3. Get verified → Profile goes live
+  4. Receive matches → Connect with qualified investors
+  5. Collaborate in Deal Room → Close deals
+
+  Content Tone
+
+  - Confident but not arrogant
+  - Educational and guiding
+  - Empathetic to investor fears (trust, risk, complexity)
+  - Clear and jargon-free
+  - Professional with warmth
+
+  Visual Inspiration
+
+  - Fintech apps (premium, data-rich dashboards)
+  - Proptech platforms (property visualization, maps)
+  - AI assistants (conversational interfaces)
+  - Trust-building design (verification badges, security indicators, reviews)

@@ -35,6 +35,13 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       meta?.description ||
       "We engineer high-performance software ecosystems with AI integration.",
+    icons: {
+      icon: [
+        { url: "/favicon.svg", type: "image/svg+xml" },
+        { url: "/favicon.ico", sizes: "any" },
+      ],
+      apple: "/favicon.svg",
+    },
   };
 }
 

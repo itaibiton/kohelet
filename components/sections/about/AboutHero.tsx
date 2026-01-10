@@ -7,7 +7,7 @@ export function AboutHero() {
   const t = useTranslations("about.hero");
 
   return (
-    <section className="min-h-[70vh] w-full max-w-5xl mx-auto flex flex-col items-center justify-center px-6 pt-32 pb-20 text-center relative">
+    <section className="min-h-[35vh] w-full max-w-7xl mx-auto flex flex-col items-start justify-center px-6 pt-32 pb-16 text-start relative">
       {/* Badge */}
       <div
         className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-accent-blue/30 bg-accent-blue/10 animate-fade-in-up"
@@ -35,7 +35,7 @@ export function AboutHero() {
 
       {/* Subtitle */}
       <p
-        className="mt-8 text-base md:text-lg text-white/50 leading-relaxed font-light max-w-3xl animate-fade-in-up"
+        className="mt-8 text-base md:text-lg text-white/50 leading-relaxed font-light max-w-2xl animate-fade-in-up"
         style={{ animationDelay: "0.4s" }}
       >
         {t("subtitle")}

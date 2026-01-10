@@ -1,19 +1,18 @@
 "use client";
 
-import { useMDXComponent } from "next-contentlayer2/hooks";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface MDXContentProps {
-  code: string;
+  content: string;
   locale: string;
 }
 
 /**
- * Client Component for rendering MDX content
- * Separated from the main page to keep the page as a Server Component
+ * Client Component for rendering Markdown content
+ * Uses react-markdown for simple, reliable rendering
  */
-export function MDXContent({ code, locale }: MDXContentProps) {
-  const Component = useMDXComponent(code);
-
+export function MDXContent({ content, locale }: MDXContentProps) {
   return (
     <div
       className="prose prose-invert prose-lg max-w-none
@@ -32,7 +31,7 @@ export function MDXContent({ code, locale }: MDXContentProps) {
         prose-img:rounded-xl prose-img:shadow-2xl"
       dir={locale === "he" ? "rtl" : "ltr"}
     >
-      <Component />
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
     </div>
   );
 }

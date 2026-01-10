@@ -11,7 +11,6 @@
       { "label": "יכולות", "href": "/#capabilities" },
       { "label": "תמחור", "href": "/#pricing" },
       { "label": "אודות", "href": "/about" },
-      { "label": "בלוג", "href": "/blog" },
       { "label": "צור קשר", "href": "/#contact" }
     ],
     "cta": {
@@ -281,7 +280,7 @@
     }
   },
   "footer": {
-    "copyright": "© 2024 קהלת פתרונות דיגיטליים. כל הזכויות שמורות."
+    "copyright": "© 2025 קהלת פתרונות דיגיטליים. כל הזכויות שמורות."
   },
   "blog": {
     "meta": {

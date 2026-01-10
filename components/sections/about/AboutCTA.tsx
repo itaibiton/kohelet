@@ -33,7 +33,7 @@ export function AboutCTA({ calendlyUrl }: AboutCTAProps) {
     <section
       id="cta"
       aria-labelledby="cta-heading"
-      className="relative max-w-5xl mx-auto px-6 py-20 md:py-32"
+      className="relative max-w-7xl mx-auto px-6 py-20 md:py-32"
     >
       {/* Decorative gradient orb - positioned behind the card */}
       <div
@@ -110,7 +110,7 @@ export function AboutCTA({ calendlyUrl }: AboutCTAProps) {
           )}
 
           {/* Secondary Button - Get in Touch */}
-          <Link
+          {/* <Link
             href="/contact"
             aria-label="Navigate to contact form"
             className="
@@ -127,7 +127,7 @@ export function AboutCTA({ calendlyUrl }: AboutCTAProps) {
             style={{ animationDelay: "0.4s" }}
           >
             {t("secondaryButton")}
-          </Link>
+          </Link> */}
         </div>
       </div>
     </section>

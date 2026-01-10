@@ -23,7 +23,7 @@ export function CompanyStory() {
 
   return (
     <section className="w-full bg-brand-dark">
-      <div className="max-w-6xl mx-auto px-6 py-20 md:py-32">
+      <div className="max-w-7xl mx-auto px-6 py-20 md:py-32">
         {/* Section Title */}
         <h2
           className="text-3xl md:text-4xl font-display font-medium text-white mb-12 md:mb-16 animate-fade-in-up"

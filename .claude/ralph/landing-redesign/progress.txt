@@ -1,0 +1,26 @@
+# GlobalNest Landing Page Redesign - Progress Log
+
+## Project Started: 2026-01-07
+
+## Goal
+Replace middle sections (Problem, Solution, Process, Pricing) with new sections:
+- About (company story + team)
+- Features (bento grid)
+- Social Proof (testimonials + stats)
+- FAQ (accordion)
+
+Keep: Hero and Footer
+
+## Completed Tasks:
+(none yet)
+
+## Current Phase: Phase 1 - Setup
+
+## Notes for Next Iteration:
+- Start with SETUP-01: Create about.tsx skeleton
+- All SETUP tasks (01-04) can be done first as they have no dependencies
+- Then SETUP-05 (index.ts) and SETUP-06 (page.tsx) depend on the skeletons
+
+---
+## Progress Log:
+

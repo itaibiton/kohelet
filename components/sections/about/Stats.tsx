@@ -134,7 +134,7 @@ export function Stats() {
       role="group"
       aria-label="Company statistics and automation metrics"
     >
-      <div className="max-w-6xl mx-auto px-6 py-20 md:py-32">
+      <div className="max-w-7xl mx-auto px-6 py-20 md:py-32">
         {/* Stats Grid */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
           {stats.map((stat, index) => (

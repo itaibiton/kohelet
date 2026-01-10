@@ -1,0 +1,355 @@
+{
+  "project": "GlobalNest Landing Page Redesign",
+  "version": "1.0.0",
+  "created": "2026-01-07",
+  "completion_promise": "LANDING REDESIGN COMPLETE",
+
+  "context": {
+    "tech_stack": ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS v4", "Framer Motion", "shadcn/ui", "Phosphor Icons"],
+    "i18n": "next-intl",
+    "theme": "glassmorphism/dark theme",
+    "keep_components": ["hero.tsx", "footer.tsx"],
+    "remove_components": ["problem.tsx", "solution.tsx", "process.tsx", "pricing.tsx"]
+  },
+
+  "user_stories": [
+    {
+      "id": "SETUP-01",
+      "title": "Create About section component file",
+      "description": "Create /src/components/landing/globalnest/about.tsx with basic component skeleton",
+      "acceptance_criteria": [
+        "File exists at /src/components/landing/globalnest/about.tsx",
+        "Exports function About()",
+        "Uses 'use client' directive",
+        "Returns a <section> element with id='about'"
+      ],
+      "dependencies": [],
+      "pass": false
+    },
+    {
+      "id": "SETUP-02",
+      "title": "Create Features section component file",
+      "description": "Create /src/components/landing/globalnest/features-new.tsx with basic component skeleton",
+      "acceptance_criteria": [
+        "File exists at /src/components/landing/globalnest/features-new.tsx",
+        "Exports function FeaturesNew()",
+        "Uses 'use client' directive",
+        "Returns a <section> element with id='features'"
+      ],
+      "dependencies": [],
+      "pass": false
+    },
+    {
+      "id": "SETUP-03",
+      "title": "Create Social Proof section component file",
+      "description": "Create /src/components/landing/globalnest/social-proof.tsx with basic component skeleton",
+      "acceptance_criteria": [
+        "File exists at /src/components/landing/globalnest/social-proof.tsx",
+        "Exports function SocialProof()",
+        "Uses 'use client' directive",
+        "Returns a <section> element with id='social-proof'"
+      ],
+      "dependencies": [],
+      "pass": false
+    },
+    {
+      "id": "SETUP-04",
+      "title": "Create FAQ section component file",
+      "description": "Create /src/components/landing/globalnest/faq.tsx with basic component skeleton",
+      "acceptance_criteria": [
+        "File exists at /src/components/landing/globalnest/faq.tsx",
+        "Exports function FAQ()",
+        "Uses 'use client' directive",
+        "Returns a <section> element with id='faq'"
+      ],
+      "dependencies": [],
+      "pass": false
+    },
+    {
+      "id": "SETUP-05",
+      "title": "Update barrel export file",
+      "description": "Update /src/components/landing/globalnest/index.ts to export new components",
+      "acceptance_criteria": [
+        "Exports About from about.tsx",
+        "Exports FeaturesNew from features-new.tsx",
+        "Exports SocialProof from social-proof.tsx",
+        "Exports FAQ from faq.tsx",
+        "No TypeScript errors"
+      ],
+      "dependencies": ["SETUP-01", "SETUP-02", "SETUP-03", "SETUP-04"],
+      "pass": false
+    },
+    {
+      "id": "SETUP-06",
+      "title": "Update main page component",
+      "description": "Update /src/app/[locale]/page.tsx to use new section components instead of old ones",
+      "acceptance_criteria": [
+        "Imports About, FeaturesNew, SocialProof, FAQ",
+        "Removes imports for Problem, Solution, Process, Pricing",
+        "Renders sections in order: Hero, About, FeaturesNew, SocialProof, FAQ, Footer",
+        "No TypeScript errors"
+      ],
+      "dependencies": ["SETUP-05"],
+      "pass": false
+    },
+    {
+      "id": "ABOUT-01",
+      "title": "Implement About section layout structure",
+      "description": "Add responsive container and glassmorphism card layout",
+      "acceptance_criteria": [
+        "Uses max-w-7xl container with px-4 md:px-6 padding",
+        "Has section heading with gradient text effect",
+        "Uses bg-card/30 dark:bg-card/20 for glass cards",
+        "Has border border-border for card outlines",
+        "Responsive padding py-20 md:py-32"
+      ],
+      "dependencies": ["SETUP-01"],
+      "pass": false
+    },
+    {
+      "id": "ABOUT-02",
+      "title": "Add company story content block",
+      "description": "Create content area with company narrative and mission statement",
+      "acceptance_criteria": [
+        "Contains company origin story paragraph (can be placeholder text)",
+        "Contains mission statement",
+        "Uses text-foreground for headings",
+        "Uses text-muted-foreground for body text",
+        "Proper typography hierarchy"
+      ],
+      "dependencies": ["ABOUT-01"],
+      "pass": false
+    },
+    {
+      "id": "ABOUT-03",
+      "title": "Add team introduction grid",
+      "description": "Create team member cards with avatars and roles",
+      "acceptance_criteria": [
+        "Shows 3-4 team member cards",
+        "Each card has avatar placeholder (initials circle), name, role",
+        "Uses grid layout (2 cols on mobile, 4 on desktop)",
+        "Matches glassmorphism style with hover effects"
+      ],
+      "dependencies": ["ABOUT-01"],
+      "pass": false
+    },
+    {
+      "id": "ABOUT-04",
+      "title": "Add Framer Motion animations to About section",
+      "description": "Add scroll-triggered fade-in animations",
+      "acceptance_criteria": [
+        "Uses framer-motion motion components",
+        "Content fades in on scroll into view (whileInView)",
+        "Staggered animation for team cards",
+        "Smooth transitions (duration 0.5-0.8s)"
+      ],
+      "dependencies": ["ABOUT-02", "ABOUT-03"],
+      "pass": false
+    },
+    {
+      "id": "FEAT-01",
+      "title": "Define features data array",
+      "description": "Create typed array of feature objects with icons, titles, descriptions",
+      "acceptance_criteria": [
+        "TypeScript interface for Feature type defined",
+        "Array of 6 features relevant to GlobalNest real estate platform",
+        "Uses Phosphor Icons imports (@phosphor-icons/react)",
+        "Each feature has: icon component, title, description"
+      ],
+      "dependencies": ["SETUP-02"],
+      "pass": false
+    },
+    {
+      "id": "FEAT-02",
+      "title": "Implement features grid layout",
+      "description": "Create responsive bento-grid style layout for features",
+      "acceptance_criteria": [
+        "Uses CSS grid with varying spans for visual interest",
+        "2 cols on mobile (grid-cols-1 md:grid-cols-2 lg:grid-cols-3)",
+        "Gap between cards (gap-4 md:gap-6)",
+        "Cards map over features array"
+      ],
+      "dependencies": ["FEAT-01"],
+      "pass": false
+    },
+    {
+      "id": "FEAT-03",
+      "title": "Style feature cards with glassmorphism",
+      "description": "Apply consistent card styling matching theme",
+      "acceptance_criteria": [
+        "Uses bg-secondary/50 dark:bg-secondary/30 background",
+        "Has backdrop-blur-sm effect",
+        "Border with border-border",
+        "Rounded-2xl corners",
+        "Icon in brand color (text-primary)"
+      ],
+      "dependencies": ["FEAT-02"],
+      "pass": false
+    },
+    {
+      "id": "FEAT-04",
+      "title": "Add hover interactions to feature cards",
+      "description": "Implement hover states with subtle animations",
+      "acceptance_criteria": [
+        "Scale on hover (hover:scale-[1.02])",
+        "Border color changes on hover",
+        "Smooth transition-all duration-300",
+        "Cursor pointer on cards"
+      ],
+      "dependencies": ["FEAT-03"],
+      "pass": false
+    },
+    {
+      "id": "SOCIAL-01",
+      "title": "Define testimonials data array",
+      "description": "Create array of testimonial objects",
+      "acceptance_criteria": [
+        "TypeScript interface for Testimonial type",
+        "3-4 testimonials with quote, name, role, company",
+        "Each has rating (number 1-5)"
+      ],
+      "dependencies": ["SETUP-03"],
+      "pass": false
+    },
+    {
+      "id": "SOCIAL-02",
+      "title": "Implement testimonials grid",
+      "description": "Create responsive layout for testimonials",
+      "acceptance_criteria": [
+        "Grid of 3 columns on desktop (lg:grid-cols-3)",
+        "Single column stack on mobile",
+        "Star rating display using icons",
+        "Quote styling with quotation marks or styling"
+      ],
+      "dependencies": ["SOCIAL-01"],
+      "pass": false
+    },
+    {
+      "id": "SOCIAL-03",
+      "title": "Add company logos section",
+      "description": "Create 'trusted by' logo row",
+      "acceptance_criteria": [
+        "Horizontal flex row of placeholder logos",
+        "Grayscale with hover color effect (grayscale hover:grayscale-0)",
+        "Responsive: wraps on mobile",
+        "'Trusted by investors from' or similar label"
+      ],
+      "dependencies": ["SETUP-03"],
+      "pass": false
+    },
+    {
+      "id": "SOCIAL-04",
+      "title": "Add statistics/metrics display",
+      "description": "Create key metrics row showing platform stats",
+      "acceptance_criteria": [
+        "4 stat boxes with number and label",
+        "Large bold numbers (text-4xl font-bold)",
+        "Grid layout: 2x2 on mobile, 1x4 on desktop",
+        "Stats like: Active Investors, Properties Listed, Countries, Total Invested"
+      ],
+      "dependencies": ["SETUP-03"],
+      "pass": false
+    },
+    {
+      "id": "FAQ-01",
+      "title": "Define FAQ data array",
+      "description": "Create array of FAQ question/answer pairs",
+      "acceptance_criteria": [
+        "TypeScript interface for FAQItem type",
+        "5-6 relevant FAQ items for real estate investment platform",
+        "Each has question and answer strings"
+      ],
+      "dependencies": ["SETUP-04"],
+      "pass": false
+    },
+    {
+      "id": "FAQ-02",
+      "title": "Implement accordion using shadcn/ui",
+      "description": "Use Accordion component from shadcn/ui",
+      "acceptance_criteria": [
+        "Imports Accordion, AccordionItem, AccordionTrigger, AccordionContent from @/components/ui/accordion",
+        "Maps over FAQ data to render items",
+        "Single item open at a time (type='single' collapsible)",
+        "Proper value attribute for each item"
+      ],
+      "dependencies": ["FAQ-01"],
+      "pass": false
+    },
+    {
+      "id": "FAQ-03",
+      "title": "Style FAQ section with theme",
+      "description": "Apply glassmorphism styling to FAQ",
+      "acceptance_criteria": [
+        "Section has max-w-3xl mx-auto for readability",
+        "Accordion items have border-border",
+        "Trigger text uses text-foreground font-medium",
+        "Content uses text-muted-foreground"
+      ],
+      "dependencies": ["FAQ-02"],
+      "pass": false
+    },
+    {
+      "id": "FAQ-04",
+      "title": "Add CTA below FAQ",
+      "description": "Add contact prompt below FAQ accordion",
+      "acceptance_criteria": [
+        "Text: 'Still have questions?' or similar",
+        "Link or button to contact page",
+        "Centered below accordion with margin-top",
+        "Uses primary color for link/button"
+      ],
+      "dependencies": ["FAQ-03"],
+      "pass": false
+    },
+    {
+      "id": "I18N-01",
+      "title": "Add section translations to en.json",
+      "description": "Add English translations for all new sections",
+      "acceptance_criteria": [
+        "Add 'about' section with title, story, mission, teamTitle keys",
+        "Add 'features' section with title, subtitle, and feature items",
+        "Add 'socialProof' section with title, testimonial labels, stats labels",
+        "Add 'faq' section if not exists with title and items"
+      ],
+      "dependencies": ["ABOUT-04", "FEAT-04", "SOCIAL-04", "FAQ-04"],
+      "pass": false
+    },
+    {
+      "id": "CLEAN-01",
+      "title": "Remove old component files",
+      "description": "Delete deprecated component files that are no longer used",
+      "acceptance_criteria": [
+        "problem.tsx deleted from /src/components/landing/globalnest/",
+        "solution.tsx deleted",
+        "process.tsx deleted",
+        "pricing.tsx deleted",
+        "No import errors in project"
+      ],
+      "dependencies": ["SETUP-06", "I18N-01"],
+      "pass": false
+    },
+    {
+      "id": "VERIFY-01",
+      "title": "Verify build succeeds",
+      "description": "Run npm run build and ensure no errors",
+      "acceptance_criteria": [
+        "npm run build completes successfully",
+        "No TypeScript errors",
+        "No ESLint errors (or only warnings)",
+        "Dev server starts without errors"
+      ],
+      "dependencies": ["CLEAN-01"],
+      "pass": false
+    }
+  ],
+
+  "implementation_order": [
+    "Phase 1: Setup (SETUP-01 through SETUP-06) - Create skeletons and wire up",
+    "Phase 2: About Section (ABOUT-01 through ABOUT-04) - Build About component",
+    "Phase 3: Features Section (FEAT-01 through FEAT-04) - Build Features component",
+    "Phase 4: Social Proof Section (SOCIAL-01 through SOCIAL-04) - Build testimonials/stats",
+    "Phase 5: FAQ Section (FAQ-01 through FAQ-04) - Build FAQ with accordion",
+    "Phase 6: i18n (I18N-01) - Add translations",
+    "Phase 7: Cleanup & Verify (CLEAN-01, VERIFY-01) - Remove old files and verify"
+  ]
+}

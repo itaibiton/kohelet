@@ -150,7 +150,7 @@ export default async function BlogPostPage({ params }: Props) {
           )}
 
           {/* MDX Content */}
-          <MDXContent code={post.body.code} locale={locale} />
+          <MDXContent content={post.body.raw} locale={locale} />
         </div>
       </article>
 

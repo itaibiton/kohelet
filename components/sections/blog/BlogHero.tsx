@@ -7,7 +7,7 @@ export function BlogHero() {
   const t = useTranslations("blog.hero");
 
   return (
-    <section className="min-h-[35vh] w-full max-w-5xl mx-auto flex flex-col items-start justify-center px-6 pt-32 pb-16 text-start relative">
+    <section className="min-h-[35vh] w-full max-w-7xl mx-auto flex flex-col items-start justify-center px-6 pt-32 pb-16 text-start relative">
       {/* Decorative gradient orb - top */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-accent-blue/8 rounded-full blur-[120px] pointer-events-none" />
 
@@ -45,15 +45,6 @@ export function BlogHero() {
         {t("subtitle")}
       </p>
 
-      {/* Decorative line accent */}
-      <div
-        className="relative z-10 mt-10 flex items-center gap-3 animate-fade-in-up"
-        style={{ animationDelay: "0.6s" }}
-      >
-        <div className="w-12 h-px bg-gradient-to-r from-transparent via-accent-blue/50 to-transparent rtl:bg-gradient-to-l" />
-        <div className="w-2 h-2 rounded-full bg-accent-blue/30 border border-accent-blue/50" />
-        <div className="w-12 h-px bg-gradient-to-r from-transparent via-accent-blue/50 to-transparent rtl:bg-gradient-to-l" />
-      </div>
     </section>
   );
 }
