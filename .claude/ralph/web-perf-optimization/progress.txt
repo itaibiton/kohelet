@@ -335,4 +335,103 @@ function canRenderThreeJS(): boolean {
 
 ---
 
-## Next Task: SPLIT-02 - Pricing component split
+### SPLIT-02: Pricing component split ✅
+**Completed: 2026-01-10**
+
+#### Implementation
+
+**Component Structure Before:**
+```
+components/sections/Pricing.tsx (427 lines - monolithic)
+```
+
+**Component Structure After:**
+```
+components/sections/
+├── Pricing.tsx (157 lines) - Main orchestrator
+└── pricing/
+    ├── index.ts (7 lines) - Barrel export
+    ├── types.ts (58 lines) - Shared types & constants
+    ├── PricingSelector.tsx (140 lines) - Service selection UI
+    ├── ProductCard.tsx (61 lines) - Individual product cards
+    ├── AddOnsSelector.tsx (80 lines) - Add-ons selection UI
+    ├── AddOnCheckbox.tsx (52 lines) - Individual add-on checkbox
+    └── PricingCalculator.tsx (101 lines) - Price summary panel
+```
+
+#### Sub-Components Created
+
+1. **`pricing/types.ts`**
+   - Shared TypeScript interfaces: `Product`, `AddOn`, `ServiceType`
+   - Product and add-on constants extracted from Pricing.tsx
+   - Centralized pricing data for easy maintenance
+
+2. **`pricing/PricingSelector.tsx`**
+   - Service category cards (Custom Software, Business Automation, AI Agents)
+   - Manages popover states for product selection
+   - Renders ProductCard components within popovers
+   - Wrapped with `React.memo()` for render optimization
+
+3. **`pricing/ProductCard.tsx`**
+   - Individual product/service option card
+   - Shows product name, price, and selection state
+   - Wrapped with `React.memo()` for optimal re-renders
+
+4. **`pricing/AddOnsSelector.tsx`**
+   - Add-ons selection button with popover
+   - Displays count of selected add-ons
+   - Wrapped with `React.memo()`
+
+5. **`pricing/AddOnCheckbox.tsx`**
+   - Single add-on checkbox with name and price
+   - Monthly/one-time pricing label
+   - Wrapped with `React.memo()`
+
+6. **`pricing/PricingCalculator.tsx`**
+   - Price summary panel showing all selections
+   - One-time and monthly totals
+   - CTA button to contact form
+   - Wrapped with `React.memo()`
+
+#### Memoization Applied
+
+**useMemo:**
+- `selectedAddOnsCount` - Counts selected add-ons
+- `calculatedPrice` - Computes total pricing
+
+**useCallback:**
+- `toggleAddOn` - Add-on toggle handler
+- `selectProduct` - Product selection handler
+- `isProductSelected` - Selection check function
+- `getServiceSelectedCount` - Count calculation
+
+#### Performance Benefits
+
+1. **Code Size Reduction:**
+   - Main Pricing.tsx: 427 → 157 lines (63% reduction)
+   - Better code readability and maintainability
+
+2. **Re-render Optimization:**
+   - React.memo prevents unnecessary child re-renders
+   - Only affected components update on state change
+
+3. **Bundle Potential:**
+   - Sub-components can be code-split if needed
+   - Better tree-shaking opportunity
+
+#### No Regressions
+
+- ✅ All pricing functionality intact
+- ✅ Translations (next-intl) working
+- ✅ RTL support maintained for Hebrew
+- ✅ Popover interactions unchanged
+- ✅ PricingContext integration intact
+
+**Verification:**
+- ✅ Build: Successful
+- ✅ No TypeScript errors
+- ✅ All pages render correctly
+
+---
+
+## Next Task: SPLIT-03 - Contact form lazy load
