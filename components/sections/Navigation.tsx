@@ -75,7 +75,7 @@ export function Navigation() {
               alt={t("logo")}
               width={32}
               height={32}
-              // className="w-8 h-8"
+              priority
             />
           {/* <span className="font-bold text-sm tracking-tight text-white uppercase">
             {t("logo")}

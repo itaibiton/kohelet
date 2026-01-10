@@ -231,7 +231,7 @@
         "No duplicate resource loading"
       ],
       "dependencies": ["ASSET-02"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "MT-01",

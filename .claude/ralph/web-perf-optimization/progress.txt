@@ -877,4 +877,100 @@ All optimized SVGs maintain:
 
 ---
 
-## Next Task: ASSET-04 - Preload critical assets
+### ASSET-04: Preload critical assets ✅
+**Completed: 2026-01-11**
+
+#### Analysis
+
+**Font Preloading - Already Optimized:**
+
+| Font | Preload | Display | Priority |
+|------|---------|---------|----------|
+| Heebo (Hebrew locale) | ✅ `preload: true` | swap | Critical - primary font |
+| Heebo (English locale) | ✅ `preload: true` | swap | Critical - primary font |
+| JetBrains Mono | ❌ `preload: false` | optional | Low - secondary/decorative |
+
+The font configuration in `layout.tsx` already implements proper preloading:
+```typescript
+const heeboHebrew = Heebo({
+  preload: true,    // ✅ Preloaded
+  display: "swap",  // ✅ Shows fallback during load
+  // ...
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  preload: false,   // ✅ Deferred (secondary font)
+  display: "optional", // ✅ Uses fallback if not cached
+  // ...
+});
+```
+
+**Hero Background - No Image:**
+- Hero section uses pure CSS/SVG styling and text
+- ThreeBackground is dynamically loaded (SPLIT-01)
+- GradientFallback is CSS-only (no image preload needed)
+- No LCP image in hero section
+
+**Above-the-Fold Images Identified:**
+
+| Image | Location | Size | Optimization |
+|-------|----------|------|--------------|
+| `/logo-vertical-no-digital.svg` | Navigation.tsx | 1.5KB | Added `priority` |
+
+#### Optimization Applied
+
+**Navigation Logo (`Navigation.tsx:73-79`):**
+
+```typescript
+// Before
+<Image
+  src="/logo-vertical-no-digital.svg"
+  alt={t("logo")}
+  width={32}
+  height={32}
+/>
+
+// After
+<Image
+  src="/logo-vertical-no-digital.svg"
+  alt={t("logo")}
+  width={32}
+  height={32}
+  priority  // ✅ Added - preloads LCP-critical image
+/>
+```
+
+**What `priority` does:**
+1. Adds `<link rel="preload">` to document head
+2. Disables lazy loading for this image
+3. Loads image immediately instead of on intersection
+4. Improves LCP score for above-the-fold content
+
+#### Preload Strategy Summary
+
+| Resource Type | Strategy | Implementation |
+|---------------|----------|----------------|
+| Primary Font (Heebo) | Preload | `preload: true` in next/font |
+| Secondary Font (JetBrains) | Defer | `preload: false`, `display: optional` |
+| Navigation Logo | Priority | `priority={true}` on next/image |
+| ThreeBackground | Lazy | Dynamic import with fallback |
+| Effects (MouseGlow, Noise) | Lazy | Dynamic import |
+| Contact Section | Lazy | Dynamic import |
+
+#### No Duplicate Loading Verified
+
+- Fonts: Each locale loads only its required subset (CRP-02)
+- Images: Single logo instance with priority
+- THREE.js: Lazy loaded only on capable devices (SPLIT-01)
+- No redundant preload declarations
+
+#### Verification
+- ✅ Build: Successful
+- ✅ No TypeScript errors
+- ✅ Font preload configuration verified
+- ✅ Navigation logo priority added
+- ✅ No duplicate resource loading
+
+---
+
+## Next Task: MT-01 - MouseGlow throttling
