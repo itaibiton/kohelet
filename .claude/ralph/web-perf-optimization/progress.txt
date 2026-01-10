@@ -434,4 +434,61 @@ components/sections/
 
 ---
 
-## Next Task: SPLIT-03 - Contact form lazy load
+### SPLIT-03: Contact form lazy load ✅
+**Completed: 2026-01-10**
+
+#### Implementation
+
+**New Files Created:**
+
+1. **`components/sections/ContactWrapper.tsx`**
+   - Dynamic import with `next/dynamic` and `ssr: false`
+   - Loading skeleton with glassmorphism aesthetic
+   - Matches Contact section's exact layout structure
+
+**Modified Files:**
+
+2. **`app/[locale]/page.tsx`**
+   - Replaced direct `Contact` import with `ContactWrapper`
+   - Contact component now lazy loaded
+
+#### Loading Skeleton Features
+
+```typescript
+const ContactWrapper = dynamic(
+  () => import("@/components/sections/Contact"),
+  {
+    ssr: false,
+    loading: () => <ContactSkeleton />,
+  }
+);
+```
+
+**Skeleton Design:**
+- Dark theme with `bg-[#030303]` background
+- Glassmorphism styling (`bg-white/5`, `border-white/10`)
+- Animated pulse effects on placeholder elements
+- Two-column grid layout (lg+) matching Contact structure
+- All form field placeholders (name, email, phone, service, message)
+- Contact info icons (Mail, Phone) with reduced opacity
+- Availability badge with pulsing indicator
+- Submit button placeholder
+- RTL support via logical CSS properties (`end-4`)
+- Accessibility: `aria-busy="true"`, `aria-label`
+
+#### Bundle Impact
+
+- Contact component removed from initial bundle
+- Form handling, PricingContext, lucide-react icons deferred
+- Loaded on-demand after main content
+- Improves TTI and FCP metrics
+
+**Verification:**
+- ✅ Build: Successful
+- ✅ No TypeScript errors
+- ✅ Skeleton matches glassmorphism aesthetic
+- ✅ RTL support maintained
+
+---
+
+## Next Task: SPLIT-04 - Effects lazy loading

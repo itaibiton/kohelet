@@ -3,7 +3,7 @@ import Hero from "@/components/sections/Hero";
 import Solutions from "@/components/sections/Solutions";
 import Capabilities from "@/components/sections/Capabilities";
 import Pricing from "@/components/sections/Pricing";
-import Contact from "@/components/sections/Contact";
+import { ContactWrapper } from "@/components/sections/ContactWrapper";
 import Footer from "@/components/sections/Footer";
 import { ThreeBackgroundWrapper } from "@/components/effects/ThreeBackgroundWrapper";
 import MouseGlow from "@/components/effects/MouseGlow";
@@ -20,7 +20,7 @@ export default function Home() {
       <Solutions />
       <Capabilities />
       <Pricing />
-      <Contact />
+      <ContactWrapper />
       <Footer />
     </main>
   );
