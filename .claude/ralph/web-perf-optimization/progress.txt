@@ -617,4 +617,101 @@ Each route now has:
 
 ---
 
-## Next Task: ASSET-01 - Image format audit
+### ASSET-01: Image format audit ✅
+**Completed: 2026-01-11**
+
+#### Image Inventory
+
+**Static Images in `/public/` (10 files, 19.5KB total):**
+
+| File | Type | Size | Purpose |
+|------|------|------|---------|
+| favicon.ico | ICO | 1.2KB | Browser favicon |
+| favicon.svg | SVG | 4.9KB | SVG favicon |
+| logo-horizontal-white-digital.svg | SVG | 4.7KB | Full logo with text |
+| logo-horizontal-no-digital.svg | SVG | 2.7KB | Logo without "digital" |
+| logo-vertical-no-digital.svg | SVG | 2.7KB | Vertical logo (used in Navigation) |
+| next.svg | SVG | 1.4KB | Next.js logo (default template) |
+| vercel.svg | SVG | 0.1KB | Vercel logo (default template) |
+| globe.svg | SVG | 1.0KB | Globe icon (default template) |
+| file.svg | SVG | 0.4KB | File icon (default template) |
+| window.svg | SVG | 0.4KB | Window icon (default template) |
+
+#### Findings
+
+**✅ Excellent: No PNG/JPG Images**
+- No raster images (PNG, JPG, JPEG) in the codebase
+- All images are vector-based SVGs (optimal for logos/icons)
+- No WebP/AVIF conversion needed
+
+**✅ Already Optimal: Next.js Image Optimization in Use**
+
+Components using `next/image` for optimization:
+1. **`Navigation.tsx:73-78`** - Logo image (32x32, SVG)
+2. **`BlogCard.tsx:47-53`** - Blog thumbnails (responsive with `fill`, `sizes` attribute)
+3. **`BlogCard.tsx:99-105`** - Author avatars (24x24)
+4. **`BlogPostHeader.tsx:73-78`** - Author avatars (32x32)
+5. **`MDXComponents.tsx:248-291`** - Blog content images (responsive, optimized)
+
+**Blog Images:**
+- Blog posts currently have no embedded images (text-only MDX)
+- `BlogCard.tsx` has CSS gradient fallback when no thumbnail
+- `MDXComponents.tsx` properly handles MDX images with `next/image`
+- Uses responsive `sizes` attribute: `"(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"`
+
+#### Next.js Image Optimization Features Already Active
+
+From `MDXComponents.tsx`:
+```typescript
+// Responsive container with fill mode for images without dimensions
+<Image
+  src={src}
+  alt={alt || ""}
+  fill
+  className="rounded-xl border border-white/10 object-cover"
+  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 70vw"
+/>
+```
+
+- ✅ Automatic WebP/AVIF conversion by Next.js
+- ✅ Lazy loading by default
+- ✅ Responsive sizes for efficient bandwidth
+- ✅ Automatic srcset generation
+- ✅ Priority loading option available for LCP images
+
+#### Unused Default Assets
+
+The following files are from Next.js template and not used:
+- `next.svg` - Not imported anywhere
+- `vercel.svg` - Not imported anywhere
+- `globe.svg` - Not imported anywhere
+- `file.svg` - Not imported anywhere
+- `window.svg` - Not imported anywhere
+
+**Recommendation:** Remove unused template files to reduce repository size (4.3KB savings, not affecting bundle).
+
+#### Optimization Status
+
+| Criteria | Status |
+|----------|--------|
+| No PNG/JPG that should be WebP/AVIF | ✅ N/A - No raster images |
+| Blog thumbnails use next/image | ✅ Yes with responsive sizes |
+| All images properly optimized | ✅ SVGs (vector) + next/image |
+| LCP images handled | ✅ Hero uses CSS gradient, no hero image |
+
+#### Conclusion
+
+**No optimization needed.** The codebase is already optimally configured:
+- All static assets are SVGs (vector graphics)
+- Dynamic images use `next/image` with proper optimization
+- No raster images requiring WebP/AVIF conversion
+- Blog has CSS fallback when thumbnails not provided
+
+**Verification:**
+- ✅ Build: Successful
+- ✅ All image sources documented
+- ✅ next/image usage verified
+
+---
+
+## Next Task: ASSET-02 - Font subsetting
