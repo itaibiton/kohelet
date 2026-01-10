@@ -259,4 +259,80 @@ export default function AnalyticsWrapper() {
 
 ---
 
-## Next Task: SPLIT-01 - THREE.js dynamic import
+### SPLIT-01: THREE.js dynamic import ✅
+**Completed: 2026-01-10**
+
+#### Implementation
+
+**New Files Created:**
+
+1. **`components/effects/GradientFallback.tsx`**
+   - Pure CSS gradient fallback component
+   - Matches dark theme with brand colors (blue #3B82F6, purple #5B4FFF)
+   - Subtle pulsing animation (respects `prefers-reduced-motion`)
+   - Zero JavaScript overhead for mobile/low-end devices
+
+2. **`components/effects/ThreeBackgroundWrapper.tsx`**
+   - Dynamic import with `next/dynamic` and `ssr: false`
+   - Comprehensive device capability detection:
+     - `hasWebGLSupport()` - Checks for WebGL context
+     - `isLowEndDevice()` - Detects < 4 CPU cores
+     - `isMobileDevice()` - Mobile user agent detection
+   - Subtle loading state during dynamic import
+   - Re-exports color change helper functions for API compatibility
+
+**Modified Files:**
+
+3. **`app/[locale]/page.tsx`**
+   - Replaced direct `ThreeBackground` import with `ThreeBackgroundWrapper`
+   - Simplified import statement
+
+#### Device Capability Strategy
+
+```typescript
+function canRenderThreeJS(): boolean {
+  const hasWebGL = hasWebGLSupport();
+  const isLowEnd = isLowEndDevice();
+  const isMobile = isMobileDevice();
+  return hasWebGL && !isLowEnd && !isMobile;
+}
+```
+
+**Behavior:**
+- Desktop with WebGL + 4+ cores → Full THREE.js experience (lazy loaded)
+- Mobile device → CSS gradient fallback (instant)
+- Low-end device → CSS gradient fallback (instant)
+- No WebGL support → CSS gradient fallback (instant)
+
+#### Bundle Impact
+
+- THREE.js now in separate lazy-loaded chunk
+- NOT included in initial page bundle
+- Only downloaded when:
+  1. Device passes capability checks
+  2. Component is rendered
+- Mobile/low-end users save ~631KB download
+
+#### Gradient Fallback Design
+
+```css
+/* Layered radial gradients matching brand colors */
+- Base: Deep dark (#030712)
+- Blue orb: rgba(59, 130, 246, 0.15) at 25% 25%
+- Purple orb: rgba(91, 79, 255, 0.1) at 75% 75%
+- Subtle pulse animation: 8s infinite
+```
+
+**Verification:**
+- ✅ Build: Successful
+- ✅ No TypeScript errors
+- ✅ THREE.js chunk separated from initial bundle
+- ✅ Dynamic import with `ssr: false`
+- ✅ GradientFallback matches design aesthetic
+- ✅ Device detection implemented
+- ✅ Loading state implemented
+- ✅ page.tsx updated
+
+---
+
+## Next Task: SPLIT-02 - Pricing component split
