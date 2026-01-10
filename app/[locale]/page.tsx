@@ -6,15 +6,13 @@ import Pricing from "@/components/sections/Pricing";
 import { ContactWrapper } from "@/components/sections/ContactWrapper";
 import Footer from "@/components/sections/Footer";
 import { ThreeBackgroundWrapper } from "@/components/effects/ThreeBackgroundWrapper";
-import MouseGlow from "@/components/effects/MouseGlow";
-import NoiseOverlay from "@/components/effects/NoiseOverlay";
+import { EffectsWrapper } from "@/components/effects/EffectsWrapper";
 
 export default function Home() {
   return (
     <main className="min-h-screen relative selection:bg-blue-500/30 selection:text-white">
-      <NoiseOverlay />
+      <EffectsWrapper />
       <ThreeBackgroundWrapper />
-      <MouseGlow />
       <Navigation />
       <Hero />
       <Solutions />
