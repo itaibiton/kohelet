@@ -188,4 +188,75 @@ function getHeeboFont(locale: string) {
 
 ---
 
-## Next Task: CRP-04 - Defer non-critical scripts
+### CRP-04: Defer non-critical scripts ✅
+**Completed: 2026-01-10**
+
+#### Script Analysis
+
+**Current State Before Optimization:**
+- `@vercel/analytics` and `@vercel/speed-insights` directly imported in layout.tsx
+- Both packages internally use `defer` attribute on scripts
+- Both inject scripts via `useEffect` (client-side only)
+- No other third-party scripts (no Google Analytics, tracking pixels, etc.)
+
+**Findings:**
+1. No `<Script>` component usage in codebase
+2. No `dangerouslySetInnerHTML` patterns
+3. No inline scripts or tracking pixels
+4. Vercel analytics components already use `defer` internally (verified in source)
+
+**Optimization Applied:**
+
+Created `components/analytics/AnalyticsWrapper.tsx`:
+```typescript
+"use client";
+
+import dynamic from "next/dynamic";
+
+// Lazy load analytics - non-critical for initial render
+const Analytics = dynamic(
+  () => import("@vercel/analytics/react").then((mod) => mod.Analytics),
+  { ssr: false }
+);
+
+const SpeedInsights = dynamic(
+  () => import("@vercel/speed-insights/next").then((mod) => mod.SpeedInsights),
+  { ssr: false }
+);
+
+export default function AnalyticsWrapper() {
+  return (
+    <>
+      <Analytics />
+      <SpeedInsights />
+    </>
+  );
+}
+```
+
+**Changes to layout.tsx:**
+- Replaced direct imports of Analytics/SpeedInsights
+- Now imports single `AnalyticsWrapper` component
+- Analytics code is code-split into separate chunk
+- Loaded with `ssr: false` - only runs client-side after hydration
+
+**Benefits:**
+1. Analytics code removed from initial server bundle
+2. Analytics loaded lazily after page hydration completes
+3. No blocking of critical rendering path
+4. Bundle size reduction for initial page load
+
+**Technical Notes:**
+- Next.js 16 requires `ssr: false` dynamic imports in Client Components
+- Both packages internally use `script.defer = true` (line 126 in analytics, line 133 in speed-insights)
+- Scripts are injected to `document.head` after component mounts
+- No additional optimization needed - Vercel packages are well-optimized
+
+**Verification:**
+- ✅ Build: Successful
+- ✅ No TypeScript errors
+- ✅ Analytics wrapper properly exports
+
+---
+
+## Next Task: SPLIT-01 - THREE.js dynamic import

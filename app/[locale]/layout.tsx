@@ -6,8 +6,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { isRtl, type Locale } from "@/i18n/config";
 import { PricingProvider } from "@/context/PricingContext";
-import { Analytics } from "@vercel/analytics/react";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import AnalyticsWrapper from "@/components/analytics/AnalyticsWrapper";
 import "../globals.css";
 
 // Hebrew locale font - includes Hebrew characters + Latin for numbers/common terms
@@ -92,8 +91,7 @@ export default async function LocaleLayout({
             {children}
           </PricingProvider>
         </NextIntlClientProvider>
-        <Analytics />
-        <SpeedInsights />
+        <AnalyticsWrapper />
       </body>
     </html>
   );

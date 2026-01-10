@@ -86,7 +86,7 @@
         "Test page still functions correctly"
       ],
       "dependencies": ["CRP-01"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "SPLIT-01",
