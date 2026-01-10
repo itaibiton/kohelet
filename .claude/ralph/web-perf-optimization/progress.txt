@@ -126,4 +126,66 @@ function getHeeboFont(locale: string) {
 
 ---
 
-## Next Task: CRP-03 - Critical CSS extraction
+### CRP-03: Critical CSS extraction ✅
+**Completed: 2026-01-10**
+
+#### CSS Analysis
+
+**Original globals.css:**
+- 352 lines with mixed concerns
+- Unused CSS variables (sidebar, chart, light theme)
+- Unused utility classes (text-glow, text-glow-blue, shadow-glow-blue, tracking-tighter-custom)
+- No organization for critical path
+
+**Optimizations Made:**
+
+1. **Removed unused CSS variables:**
+   - `--sidebar-*` (6 variables) - Not used in any component
+   - `--chart-1` through `--chart-5` - Not used in any component
+   - Light theme `:root` overrides - Site is dark-only
+   - Duplicate `.dark` theme block - Consolidated into `:root`
+
+2. **Removed unused utility classes:**
+   - `.text-glow` - Not referenced
+   - `.text-glow-blue` - Not referenced
+   - `.shadow-glow-blue` - Not referenced
+   - `.tracking-tighter-custom` - Not referenced
+
+3. **Reorganized for Critical Path:**
+   - Critical CSS first (brand colors, fonts, base layout)
+   - THREE.js container styles (hero background)
+   - Utility classes used by components
+   - Animations (hero entrance, button hover)
+   - Non-critical (scrollbar, selection) at end
+
+4. **Added section comments for maintainability**
+
+**CSS Size Reduction:**
+- Before: 352 lines, ~8.5KB
+- After: 320 lines, ~7.5KB
+- Savings: ~1KB (12% reduction)
+
+**Classes still in use (verified):**
+- `.clip-hud` → Button.tsx
+- `.animate-shimmer` → Button.tsx
+- `.noise-overlay` → NoiseOverlay.tsx
+- `.glass-panel` → Cards (Tailwind merge)
+- `.animate-fade-in-up` → Hero.tsx and 10 other components
+- `.animate-pulse-slow` → Status indicators
+
+**Tailwind CSS v4 Purging:**
+- Tailwind v4 with `@tailwindcss/postcss` auto-detects content
+- No manual content configuration needed
+- Unused Tailwind utilities automatically purged at build time
+- tw-animate-css library preserved (used in 13 components)
+
+**Verification:**
+- ✅ Build: Successful
+- ✅ No TypeScript errors
+- ✅ All pages render correctly
+- ✅ Hero animations working
+- ✅ Button effects working
+
+---
+
+## Next Task: CRP-04 - Defer non-critical scripts

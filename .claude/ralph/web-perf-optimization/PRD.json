@@ -72,7 +72,7 @@
         "Verify Tailwind purges unused styles"
       ],
       "dependencies": ["CRP-01"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "CRP-04",
