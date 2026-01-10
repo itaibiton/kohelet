@@ -201,7 +201,7 @@
         "Document font size reduction"
       ],
       "dependencies": ["CRP-02"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "ASSET-03",

@@ -714,4 +714,105 @@ The following files are from Next.js template and not used:
 
 ---
 
-## Next Task: ASSET-02 - Font subsetting
+### ASSET-02: Font subsetting ✅
+**Completed: 2026-01-11**
+
+#### Current Font Configuration
+
+**Heebo (Primary Font) - Already Optimized in CRP-02:**
+```typescript
+// Hebrew locale - Hebrew subset (includes Hebrew + Latin)
+const heeboHebrew = Heebo({
+  subsets: ["hebrew"],
+  display: "swap",
+  variable: "--font-heebo",
+  preload: true,
+  weight: ["400", "500", "600", "700"],
+});
+
+// English locale - Latin only (smaller download)
+const heeboLatin = Heebo({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-heebo",
+  preload: true,
+  weight: ["400", "500", "600", "700"],
+});
+```
+
+**JetBrains Mono (Secondary Font) - Optimized:**
+```typescript
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  display: "optional",  // Changed from "swap"
+  preload: false,       // Already optimized
+  weight: ["400", "500"],
+});
+```
+
+#### Optimization Applied
+
+**Changed JetBrains Mono `display` from `swap` to `optional`:**
+
+| Property | Before | After | Benefit |
+|----------|--------|-------|---------|
+| display | `swap` | `optional` | Prevents layout shift if font fails to load |
+| Behavior | Always loads, shows fallback during load | Uses font if cached/fast, else uses fallback | Better LCP, no FOUT |
+
+**Why `optional` for JetBrains Mono:**
+1. **Non-critical font** - Used for UI accents (stats, labels) not primary content
+2. **System fallback acceptable** - `monospace` fallback is perfectly readable
+3. **Prevents FOUT** - Flash of Unstyled Text avoided on slow connections
+4. **Better Core Web Vitals** - No layout shift from font swap
+
+#### Font Usage Audit
+
+| Component | Font | Usage |
+|-----------|------|-------|
+| Hero.tsx:102 | font-mono | Status text "SYSTEMS ONLINE" |
+| Card.tsx:20,33 | font-mono | Tags and descriptions |
+| StatItem.tsx:17-20 | font-mono | Metric values and labels |
+| Capabilities.tsx:76 | font-mono | Terminal-style panel |
+| Solutions.tsx:104 | font-mono | Small labels |
+| MDXComponents.tsx:139,158 | font-mono | Code blocks (inline and block) |
+
+**Conclusion:** `font-mono` is used throughout UI for decorative/accent purposes, not just code blocks. Cannot lazy-load to specific routes. `display: optional` is the correct optimization.
+
+#### Font Size Summary
+
+| Font | Subset | Weights | Preload | Display |
+|------|--------|---------|---------|---------|
+| Heebo (Hebrew locale) | hebrew | 400, 500, 600, 700 | ✅ | swap |
+| Heebo (English locale) | latin | 400, 500, 600, 700 | ✅ | swap |
+| JetBrains Mono | latin | 400, 500 | ❌ | optional |
+
+**Estimated Font Sizes (from Google Fonts API):**
+- Heebo Latin (4 weights): ~45KB
+- Heebo Hebrew (4 weights): ~85KB (includes Hebrew + Latin)
+- JetBrains Mono (2 weights): ~40KB
+
+**Total per locale:**
+- English: ~85KB (Heebo Latin + JetBrains Mono)
+- Hebrew: ~125KB (Heebo Hebrew + JetBrains Mono)
+
+#### Already Optimized (From CRP-02)
+
+1. ✅ Locale-specific font loading (Hebrew vs Latin subset)
+2. ✅ `preload: true` for Heebo (critical)
+3. ✅ `preload: false` for JetBrains Mono (secondary)
+4. ✅ Only required weights loaded
+5. ✅ `display: swap` for primary font (prevents FOIT)
+
+#### New Optimization Applied
+
+- ✅ `display: optional` for JetBrains Mono
+
+**Verification:**
+- ✅ Build: Successful
+- ✅ No TypeScript errors
+- ✅ Font loading strategy documented
+
+---
+
+## Next Task: ASSET-03 - SVG optimization

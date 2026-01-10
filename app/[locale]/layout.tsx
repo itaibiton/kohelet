@@ -27,11 +27,13 @@ const heeboLatin = Heebo({
   weight: ["400", "500", "600", "700"],
 });
 
-// Monospace font for code blocks - lower priority
+// Monospace font for code and UI accents - lower priority
+// Using display: "optional" to prevent layout shift if font fails to load
+// Fallback to system monospace is acceptable for this decorative usage
 const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   subsets: ["latin"],
-  display: "swap",
+  display: "optional",
   preload: false,
   weight: ["400", "500"],
 });
