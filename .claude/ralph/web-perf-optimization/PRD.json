@@ -1,0 +1,445 @@
+{
+  "project": "Web Performance Optimization",
+  "version": "1.0.0",
+  "created": "2026-01-10",
+  "completion_promise": "WEB-PERF OPTIMIZATION COMPLETE",
+
+  "context": {
+    "tech_stack": ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS v4", "THREE.js", "GSAP", "Turbopack"],
+    "i18n": "next-intl (en + he)",
+    "theme": "glassmorphism/dark theme",
+    "target_metrics": {
+      "lighthouse_score": "95-100",
+      "initial_bundle": "<300KB",
+      "tbt": "<50ms",
+      "fcp": "<1s",
+      "lcp": "<1.5s"
+    },
+    "current_issues": [
+      "THREE.js 1.5MB loaded on every page",
+      "No code splitting (Pricing 427 lines in main bundle)",
+      "No lazy loading for heavy components",
+      "Font bloat (Hebrew+Latin on all pages)",
+      "MouseGlow fires on every mousemove without throttling"
+    ]
+  },
+
+  "user_preferences": {
+    "threejs_strategy": "Lazy load with CSS gradient fallback for mobile/low-end",
+    "priority": "Maximum Lighthouse score (aggressive optimization)",
+    "git": "Auto-commit after each completed task"
+  },
+
+  "user_stories": [
+    {
+      "id": "CRP-01",
+      "title": "Audit current bundle",
+      "description": "Analyze .next/static/chunks/ and identify chunk composition to understand current bundle state",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "List all chunks over 100KB",
+        "Identify THREE.js chunks",
+        "Document current total bundle size",
+        "Output findings to progress.txt"
+      ],
+      "dependencies": [],
+      "pass": true
+    },
+    {
+      "id": "CRP-02",
+      "title": "Font optimization",
+      "description": "Implement locale-specific font loading in layout.tsx to avoid loading unnecessary font subsets",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "Load Hebrew subset only for Hebrew locale",
+        "Load Latin subset only for English locale",
+        "Add display: 'swap' to all fonts",
+        "Add preload hints for critical fonts",
+        "No TypeScript errors"
+      ],
+      "dependencies": ["CRP-01"],
+      "pass": false
+    },
+    {
+      "id": "CRP-03",
+      "title": "Critical CSS extraction",
+      "description": "Ensure critical CSS for above-the-fold content is inlined or prioritized",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "Review globals.css for critical styles",
+        "Ensure hero section styles are prioritized",
+        "Remove unused CSS variables if any",
+        "Verify Tailwind purges unused styles"
+      ],
+      "dependencies": ["CRP-01"],
+      "pass": false
+    },
+    {
+      "id": "CRP-04",
+      "title": "Defer non-critical scripts",
+      "description": "Add loading='lazy' and defer attributes to non-critical resources",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "Review all script tags",
+        "Add defer to non-critical scripts",
+        "Verify Analytics/SpeedInsights load efficiently",
+        "Test page still functions correctly"
+      ],
+      "dependencies": ["CRP-01"],
+      "pass": false
+    },
+    {
+      "id": "SPLIT-01",
+      "title": "THREE.js dynamic import",
+      "description": "Wrap ThreeBackground in dynamic() with ssr: false and add CSS gradient fallback",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "Create ThreeBackgroundWrapper with dynamic import",
+        "Add ssr: false to prevent server-side rendering",
+        "Create GradientFallback component for mobile/low-end devices",
+        "Detect WebGL support and use fallback if not available",
+        "Implement loading state during dynamic import",
+        "Update page.tsx to use wrapper",
+        "THREE.js chunks no longer in initial bundle",
+        "No TypeScript errors"
+      ],
+      "dependencies": ["CRP-04"],
+      "pass": false
+    },
+    {
+      "id": "SPLIT-02",
+      "title": "Pricing component split",
+      "description": "Break 427-line Pricing.tsx into smaller sub-components and memoize",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "Create PricingSelector sub-component",
+        "Create ProductCard sub-component",
+        "Create AddOnCheckbox sub-component",
+        "Create PricingCalculator sub-component",
+        "Add useMemo for expensive calculations",
+        "Add useCallback for event handlers",
+        "Main Pricing.tsx orchestrates sub-components",
+        "No functional regression",
+        "No TypeScript errors"
+      ],
+      "dependencies": ["SPLIT-01"],
+      "pass": false
+    },
+    {
+      "id": "SPLIT-03",
+      "title": "Contact form lazy load",
+      "description": "Dynamic import Contact section to reduce initial bundle",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "Create ContactWrapper with dynamic import",
+        "Add ssr: false option",
+        "Add loading skeleton placeholder",
+        "Update page.tsx to use wrapper",
+        "Contact not in initial bundle",
+        "No TypeScript errors"
+      ],
+      "dependencies": ["SPLIT-01"],
+      "pass": false
+    },
+    {
+      "id": "SPLIT-04",
+      "title": "Effects lazy loading",
+      "description": "Dynamic import MouseGlow and NoiseOverlay effects",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "Create EffectsWrapper with dynamic imports",
+        "MouseGlow loads only after main content",
+        "NoiseOverlay loads with low priority",
+        "Add ssr: false to both",
+        "Effects not in initial bundle",
+        "No TypeScript errors"
+      ],
+      "dependencies": ["SPLIT-01"],
+      "pass": false
+    },
+    {
+      "id": "SPLIT-05",
+      "title": "Route isolation",
+      "description": "Ensure blog and about pages don't load home page effects",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "Review /about/page.tsx imports",
+        "Review /blog/page.tsx imports",
+        "Remove any shared effect imports",
+        "Each route has independent bundle",
+        "Verify with bundle analyzer",
+        "No TypeScript errors"
+      ],
+      "dependencies": ["SPLIT-04"],
+      "pass": false
+    },
+    {
+      "id": "ASSET-01",
+      "title": "Image format audit",
+      "description": "Audit images and ensure optimal formats are used",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "List all images in public/",
+        "Identify any PNG/JPG that should be WebP/AVIF",
+        "Verify blog thumbnails use next/image optimization",
+        "Document any optimization opportunities",
+        "Output findings to progress.txt"
+      ],
+      "dependencies": ["SPLIT-05"],
+      "pass": false
+    },
+    {
+      "id": "ASSET-02",
+      "title": "Font subsetting",
+      "description": "Further optimize font loading with subsetting",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "Review Google Fonts configuration",
+        "Ensure only required weights are loaded",
+        "JetBrains Mono only loads on code blocks (optional/lazy)",
+        "Add font-display: optional for secondary fonts",
+        "Document font size reduction"
+      ],
+      "dependencies": ["CRP-02"],
+      "pass": false
+    },
+    {
+      "id": "ASSET-03",
+      "title": "SVG optimization",
+      "description": "Minify SVGs in /public directory",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "Run SVGO or similar on all SVGs",
+        "Remove unnecessary metadata",
+        "Optimize path data",
+        "Document size reduction",
+        "SVGs still render correctly"
+      ],
+      "dependencies": ["ASSET-01"],
+      "pass": false
+    },
+    {
+      "id": "ASSET-04",
+      "title": "Preload critical assets",
+      "description": "Add preload hints for fonts and LCP images",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "Add preload for primary font (Heebo)",
+        "Add preload for hero background if any",
+        "Add priority hints using Next.js priority prop",
+        "Verify preload in network waterfall",
+        "No duplicate resource loading"
+      ],
+      "dependencies": ["ASSET-02"],
+      "pass": false
+    },
+    {
+      "id": "MT-01",
+      "title": "MouseGlow throttling",
+      "description": "Add requestAnimationFrame throttle to mousemove handler",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "Implement RAF-based throttling",
+        "Only update position once per frame",
+        "Add passive: true to event listener",
+        "Disable on mobile devices (touch)",
+        "Smooth visual transition maintained",
+        "No TypeScript errors"
+      ],
+      "dependencies": ["SPLIT-04"],
+      "pass": false
+    },
+    {
+      "id": "MT-02",
+      "title": "Intersection Observer for THREE.js",
+      "description": "Pause THREE.js animations when not visible",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "Add Intersection Observer to ThreeBackground",
+        "Pause render loop when not in viewport",
+        "Resume when scrolled back into view",
+        "Stop requestAnimationFrame when paused",
+        "Significant CPU reduction when scrolled away",
+        "No TypeScript errors"
+      ],
+      "dependencies": ["SPLIT-01"],
+      "pass": false
+    },
+    {
+      "id": "MT-03",
+      "title": "Reduce particle count",
+      "description": "Lower particle count from 1500 to 500 for better performance",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "Change PARTICLE_COUNT from 1500 to 500",
+        "Adjust particle size/opacity for visual balance",
+        "Verify visual effect still looks good",
+        "Measure FPS improvement",
+        "No TypeScript errors"
+      ],
+      "dependencies": ["MT-02"],
+      "pass": false
+    },
+    {
+      "id": "MT-04",
+      "title": "Bloom optimization",
+      "description": "Disable bloom post-processing on mobile and low-end devices",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "Detect device performance capability",
+        "Use navigator.hardwareConcurrency for detection",
+        "Disable bloom if < 4 cores or mobile",
+        "Add simpler glow effect as fallback",
+        "Significant GPU reduction on mobile",
+        "No TypeScript errors"
+      ],
+      "dependencies": ["MT-03"],
+      "pass": false
+    },
+    {
+      "id": "MT-05",
+      "title": "GSAP cleanup",
+      "description": "Proper ScrollTrigger cleanup on unmount",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "Add cleanup in useEffect return",
+        "Kill all ScrollTrigger instances",
+        "Clear all GSAP timelines",
+        "No memory leaks on route change",
+        "Verify with DevTools memory profiler",
+        "No TypeScript errors"
+      ],
+      "dependencies": ["MT-02"],
+      "pass": false
+    },
+    {
+      "id": "MT-06",
+      "title": "Memoize Pricing calculations",
+      "description": "Add useMemo and useCallback to prevent unnecessary re-renders in Pricing",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "Wrap price calculations in useMemo",
+        "Wrap handlers in useCallback",
+        "Verify re-renders reduced with React DevTools",
+        "No functional regression",
+        "No TypeScript errors"
+      ],
+      "dependencies": ["SPLIT-02"],
+      "pass": false
+    },
+    {
+      "id": "BUILD-01",
+      "title": "next.config optimization",
+      "description": "Add performance-focused configuration to next.config.ts",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "Add image optimization config",
+        "Add security headers",
+        "Add caching headers for static assets",
+        "Enable experimental.optimizeCss if available",
+        "No build errors"
+      ],
+      "dependencies": ["MT-06"],
+      "pass": false
+    },
+    {
+      "id": "BUILD-02",
+      "title": "Bundle analyzer setup",
+      "description": "Add @next/bundle-analyzer for ongoing visibility",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "Install @next/bundle-analyzer",
+        "Add ANALYZE=true script to package.json",
+        "Update next.config.ts with analyzer",
+        "Document how to run analysis",
+        "No build errors"
+      ],
+      "dependencies": ["BUILD-01"],
+      "pass": false
+    },
+    {
+      "id": "BUILD-03",
+      "title": "Performance budgets",
+      "description": "Configure size limits and performance budgets",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "Set maximum bundle size warning",
+        "Configure experimental.largePageDataBytes if needed",
+        "Add size limit to CI if applicable",
+        "Document performance targets"
+      ],
+      "dependencies": ["BUILD-02"],
+      "pass": false
+    },
+    {
+      "id": "VERIFY-01",
+      "title": "Lighthouse audit",
+      "description": "Run Lighthouse and verify performance scores",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "Run Lighthouse on production build",
+        "Performance score >= 90",
+        "Document all scores (Performance, Accessibility, Best Practices, SEO)",
+        "List any remaining issues",
+        "Output results to progress.txt"
+      ],
+      "dependencies": ["BUILD-03"],
+      "pass": false
+    },
+    {
+      "id": "VERIFY-02",
+      "title": "Bundle size verification",
+      "description": "Verify main bundle is under target size",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "Run ANALYZE=true build",
+        "Main bundle < 300KB (gzipped)",
+        "THREE.js in separate chunk",
+        "Document final bundle composition",
+        "Output results to progress.txt"
+      ],
+      "dependencies": ["VERIFY-01"],
+      "pass": false
+    },
+    {
+      "id": "VERIFY-03",
+      "title": "TBT measurement",
+      "description": "Verify Total Blocking Time is under target",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "Use Chrome DevTools Performance tab",
+        "TBT < 50ms on initial load",
+        "No long tasks > 50ms",
+        "Document measurement methodology",
+        "Output results to progress.txt"
+      ],
+      "dependencies": ["VERIFY-02"],
+      "pass": false
+    },
+    {
+      "id": "VERIFY-04",
+      "title": "Build verification",
+      "description": "Ensure pnpm build passes and site works correctly",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "pnpm build completes successfully",
+        "No TypeScript errors",
+        "No ESLint errors",
+        "All pages render correctly",
+        "All dynamic imports work",
+        "Fallbacks display on mobile simulation"
+      ],
+      "dependencies": ["VERIFY-03"],
+      "pass": false
+    }
+  ],
+
+  "implementation_order": [
+    "Phase 1: Critical Path Optimization (CRP-01 through CRP-04) - Direct execution",
+    "Phase 2: Code Splitting (SPLIT-01 through SPLIT-05) - senior-frontend-dev agent",
+    "Phase 3: Asset Optimization (ASSET-01 through ASSET-04) - Direct execution",
+    "Phase 4: Main Thread Optimization (MT-01 through MT-06) - senior-frontend-dev agent",
+    "Phase 5: Build Configuration (BUILD-01 through BUILD-03) - Direct execution",
+    "Phase 6: Verification (VERIFY-01 through VERIFY-04) - Direct execution"
+  ]
+}

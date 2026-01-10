@@ -1,0 +1,73 @@
+## Project Started: 2026-01-10
+
+## Goal
+Optimize Kohelet website to achieve Lighthouse 100/100, instant load times, and <50ms TBT.
+
+## Target Metrics
+- Lighthouse Performance: 95-100
+- Initial JS Bundle: <300KB (gzipped)
+- Total Blocking Time: <50ms
+- First Contentful Paint: <1s
+- Largest Contentful Paint: <1.5s
+
+## Current State (Before Optimization)
+- THREE.js bundle: 1.5MB (732KB x 2 chunks)
+- No code splitting
+- No lazy loading
+- Font loading: All locales on all pages
+- MouseGlow: No throttling
+- Pricing.tsx: 427 lines monolithic
+
+## Agent Workflow
+- CRP tasks (Critical Path): Direct execution
+- SPLIT tasks (Code Splitting): senior-frontend-dev agent
+- ASSET tasks (Assets): Direct execution
+- MT tasks (Main Thread): senior-frontend-dev agent
+- BUILD tasks (Build Config): Direct execution
+- VERIFY tasks (Verification): Direct execution
+
+## Completed Tasks
+
+### CRP-01: Audit current bundle ✅
+**Completed: 2026-01-10**
+
+#### Bundle Analysis Results
+
+**Total Bundle Size:**
+- Raw: 2,327KB
+- Gzipped: 676KB (exceeds 300KB target by 376KB)
+
+**Chunks over 100KB (gzipped):**
+
+| Chunk | Raw Size | Gzipped | Contents |
+|-------|----------|---------|----------|
+| c6310d7ede71e829.js | 732KB | 206KB | THREE.js + GSAP + post-processing |
+| a9e58dccaba5c3ff.js | 732KB | 206KB | THREE.js + GSAP + post-processing |
+| 03666d851f44ca00.js | 219KB | 68KB | Next.js runtime |
+| 057bb69c6df45c1c.js | 139KB | 41KB | React/Next.js framework |
+| 2af30515a8cf43d2.js | 151KB | 39KB | App code / utilities |
+| a6dad97d9634a72d.js | 109KB | 38KB | App code / utilities |
+
+**THREE.js Impact:**
+- Two 732KB chunks (206KB gzipped each) = **412KB gzipped total**
+- Contains: THREE.js core, EffectComposer, RenderPass, UnrealBloomPass
+- Also includes GSAP and ScrollTrigger
+- Loaded synchronously on homepage via direct import
+
+**Key Findings:**
+1. THREE.js is directly imported in `app/[locale]/page.tsx` - no code splitting
+2. `ThreeBackground.tsx` imports THREE.js synchronously at module level
+3. Post-processing effects (bloom) add significant weight
+4. GSAP bundled with THREE.js chunks (could be separated)
+5. No dynamic imports or lazy loading in place
+
+**Optimization Opportunities:**
+- Dynamic import THREE.js with `next/dynamic` (saves ~412KB from initial load)
+- Add CSS gradient fallback for mobile/low-end devices
+- Intersection Observer to pause THREE.js when not visible
+- Reduce particle count (currently 1500)
+- Disable bloom on mobile
+
+---
+
+## Next Task: CRP-02 - Font optimization
