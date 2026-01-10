@@ -2,9 +2,8 @@
 
 import Navigation from "@/components/sections/Navigation";
 import Footer from "@/components/sections/Footer";
-import NoiseOverlay from "@/components/effects/NoiseOverlay";
-import { ThreeBackground } from "@/components/effects/ThreeBackground";
-import MouseGlow from "@/components/effects/MouseGlow";
+import { EffectsWrapper } from "@/components/effects/EffectsWrapper";
+import { ThreeBackgroundWrapper } from "@/components/effects/ThreeBackgroundWrapper";
 import AboutHero from "@/components/sections/about/AboutHero";
 import CompanyStory from "@/components/sections/about/CompanyStory";
 import Stats from "@/components/sections/about/Stats";
@@ -15,9 +14,8 @@ import AboutCTA from "@/components/sections/about/AboutCTA";
 export default function AboutPage() {
   return (
     <main className="min-h-screen relative selection:bg-blue-500/30 selection:text-white">
-      <NoiseOverlay />
-      <ThreeBackground />
-      <MouseGlow />
+      <EffectsWrapper />
+      <ThreeBackgroundWrapper />
       <Navigation />
       <AboutHero />
       <CompanyStory />

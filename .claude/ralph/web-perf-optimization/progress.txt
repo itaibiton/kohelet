@@ -491,4 +491,130 @@ const ContactWrapper = dynamic(
 
 ---
 
-## Next Task: SPLIT-04 - Effects lazy loading
+### SPLIT-04: Effects lazy loading ✅
+**Completed: 2026-01-10**
+
+#### Implementation
+
+**New Files Created:**
+
+1. **`components/effects/EffectsWrapper.tsx`**
+   - Dynamic imports for both MouseGlow and NoiseOverlay
+   - Uses `next/dynamic` with `ssr: false`
+   - No loading skeleton (visual enhancements fade in naturally)
+   - Client-side only rendering
+
+**Modified Files:**
+
+2. **`app/[locale]/page.tsx`**
+   - Replaced direct imports of MouseGlow and NoiseOverlay with EffectsWrapper
+   - Simplified component imports
+
+3. **`app/[locale]/about/page.tsx`**
+   - Updated to use EffectsWrapper instead of individual effect imports
+
+4. **`app/[locale]/blog/page.tsx`**
+   - Updated to use EffectsWrapper instead of individual effect imports
+
+5. **`app/[locale]/blog/[slug]/page.tsx`**
+   - Updated to use EffectsWrapper instead of individual effect imports
+
+#### EffectsWrapper Implementation
+
+```typescript
+"use client";
+
+import dynamic from "next/dynamic";
+
+// Dynamically import MouseGlow with no SSR
+const MouseGlow = dynamic(() => import("./MouseGlow"), {
+  ssr: false,
+});
+
+// Dynamically import NoiseOverlay with no SSR
+const NoiseOverlay = dynamic(() => import("./NoiseOverlay"), {
+  ssr: false,
+});
+
+export function EffectsWrapper() {
+  return (
+    <>
+      <NoiseOverlay />
+      <MouseGlow />
+    </>
+  );
+}
+```
+
+#### Bundle Impact
+
+- MouseGlow and NoiseOverlay removed from initial bundle
+- Effects loaded asynchronously after main content
+- No layout shift (effects are overlays with fixed/absolute positioning)
+- Progressive enhancement pattern maintained
+
+#### Key Benefits
+
+1. **Reduced Initial Bundle**: Effects code-split into separate chunks
+2. **Client-Side Only**: Proper `ssr: false` prevents hydration issues
+3. **No Loading Flicker**: Visual effects fade in naturally
+4. **Consistent Pattern**: Matches ThreeBackgroundWrapper and ContactWrapper
+5. **Site-Wide**: All pages (home, about, blog) now use EffectsWrapper
+
+**Verification:**
+- ✅ Build: Successful
+- ✅ No TypeScript errors
+- ✅ No direct imports of MouseGlow/NoiseOverlay in pages
+- ✅ All pages updated to use EffectsWrapper
+
+---
+
+### SPLIT-05: Route isolation ✅
+**Completed: 2026-01-11**
+
+#### Problem Identified
+
+The about, blog, and blog/[slug] pages were directly importing `ThreeBackground` instead of the optimized `ThreeBackgroundWrapper`. This caused:
+- THREE.js bundle (~412KB gzipped) loaded synchronously on these pages
+- No device capability detection (mobile/low-end fallback not working)
+- No lazy loading benefits from SPLIT-01
+
+#### Files Modified
+
+1. **`app/[locale]/about/page.tsx`**
+   - Changed: `import { ThreeBackground }` → `import { ThreeBackgroundWrapper }`
+   - Changed: `<ThreeBackground />` → `<ThreeBackgroundWrapper />`
+
+2. **`app/[locale]/blog/page.tsx`**
+   - Changed: `import { ThreeBackground }` → `import { ThreeBackgroundWrapper }`
+   - Changed: `<ThreeBackground />` → `<ThreeBackgroundWrapper />`
+
+3. **`app/[locale]/blog/[slug]/page.tsx`**
+   - Changed: `import { ThreeBackground }` → `import { ThreeBackgroundWrapper }`
+   - Changed: `<ThreeBackground />` → `<ThreeBackgroundWrapper />`
+
+#### Impact
+
+All pages now use consistent optimized imports:
+- **Home** (`page.tsx`): Uses `ThreeBackgroundWrapper` ✓
+- **About** (`about/page.tsx`): Uses `ThreeBackgroundWrapper` ✓
+- **Blog** (`blog/page.tsx`): Uses `ThreeBackgroundWrapper` ✓
+- **Blog Post** (`blog/[slug]/page.tsx`): Uses `ThreeBackgroundWrapper` ✓
+
+#### Bundle Benefits (Per Route)
+
+Each route now has:
+- THREE.js code-split into separate lazy-loaded chunk
+- Device capability detection (WebGL, CPU cores, mobile)
+- CSS gradient fallback for mobile/low-end devices
+- ~412KB savings on initial bundle per route
+
+#### Verification
+- ✅ Build: Successful
+- ✅ No TypeScript errors
+- ✅ All pages use ThreeBackgroundWrapper
+- ✅ No direct ThreeBackground imports in pages
+
+---
+
+## Next Task: ASSET-01 - Image format audit

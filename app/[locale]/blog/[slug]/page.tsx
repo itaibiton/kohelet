@@ -3,9 +3,8 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Navigation from "@/components/sections/Navigation";
 import Footer from "@/components/sections/Footer";
-import NoiseOverlay from "@/components/effects/NoiseOverlay";
-import { ThreeBackground } from "@/components/effects/ThreeBackground";
-import MouseGlow from "@/components/effects/MouseGlow";
+import { EffectsWrapper } from "@/components/effects/EffectsWrapper";
+import { ThreeBackgroundWrapper } from "@/components/effects/ThreeBackgroundWrapper";
 import { MDXContent } from "./mdx-content";
 
 interface Props {
@@ -98,9 +97,8 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <main className="min-h-screen relative selection:bg-blue-500/30 selection:text-white">
-      <NoiseOverlay />
-      <ThreeBackground />
-      <MouseGlow />
+      <EffectsWrapper />
+      <ThreeBackgroundWrapper />
       <Navigation />
 
       <article className="relative z-10 pt-32 pb-20">

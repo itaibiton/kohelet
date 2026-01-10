@@ -5,9 +5,8 @@ import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { allPosts } from "contentlayer/generated";
 import Navigation from "@/components/sections/Navigation";
 import Footer from "@/components/sections/Footer";
-import NoiseOverlay from "@/components/effects/NoiseOverlay";
-import { ThreeBackground } from "@/components/effects/ThreeBackground";
-import MouseGlow from "@/components/effects/MouseGlow";
+import { EffectsWrapper } from "@/components/effects/EffectsWrapper";
+import { ThreeBackgroundWrapper } from "@/components/effects/ThreeBackgroundWrapper";
 import {
   BlogHero,
   BlogFilters,
@@ -136,9 +135,8 @@ export default function BlogPage({ params }: Props) {
 
   return (
     <main className="min-h-screen relative selection:bg-blue-500/30 selection:text-white">
-      <NoiseOverlay />
-      <ThreeBackground />
-      <MouseGlow />
+      <EffectsWrapper />
+      <ThreeBackgroundWrapper />
       <Navigation />
       <BlogHero />
       <BlogFilters
