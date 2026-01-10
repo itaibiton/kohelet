@@ -194,6 +194,36 @@
 - Phase 3 (UI): 2/5 complete (UI-01, UI-02)
 - Phase 4 (INT): 0/3 complete
 
-### Next Task: COPY-05 - Write AboutCTA copy (EN + HE)
+- [x] COPY-05: Write AboutCTA copy (EN + HE)
+  - Verified existing copy in en.json and he.json already meets PRD-05 requirements
+  - English copy:
+    - headline: "Stop Burning 20+ Hours Per Week on Manual Work"
+    - subtext: "Book a free 30-minute discovery call. We'll analyze your workflows and show you exactly what 15-25 hours back looks like—in revenue terms."
+    - primaryButton: "Book Your Discovery Call"
+    - secondaryButton: "See What We Build"
+  - Hebrew copy:
+    - headline: "מבזבזים 20+ שעות בשבוע על עבודה ידנית?"
+    - subtext: "קבעו שיחת היכרות חינמית של 30 דקות. נבחן את התהליכים ונראה לכם בדיוק מה 15-25 שעות חזרה אומר—במונחים של הכנסות."
+    - primaryButton: "קבעו שיחת היכרות"
+    - secondaryButton: "ראו מה אנחנו בונים"
+  - Copy is action-oriented, creates urgency, and removes friction
+  - All translation keys properly structured under about.cta.*
+
+### Current State:
+- AboutHero.tsx exists
+- CompanyStory.tsx exists (UI-01 complete)
+- Stats.tsx exists (UI-02 complete)
+- Values.tsx exists (needs component implementation verification)
+- Team.tsx exists (needs component implementation verification)
+- AboutCTA.tsx exists (uses about.cta.* translations correctly)
+- ALL COPY TASKS COMPLETE (COPY-01 through COPY-05)
+
+### Progress Summary:
+- Phase 1 (PRD): 5/5 complete
+- Phase 2 (COPY): 5/5 complete - PHASE COMPLETE
+- Phase 3 (UI): 2/5 complete (UI-01, UI-02)
+- Phase 4 (INT): 0/3 complete
+
+### Next Task: UI-03 - Implement Values component
 
 ---
