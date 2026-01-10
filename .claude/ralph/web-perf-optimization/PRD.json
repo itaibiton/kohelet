@@ -216,7 +216,7 @@
         "SVGs still render correctly"
       ],
       "dependencies": ["ASSET-01"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "ASSET-04",
