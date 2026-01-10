@@ -247,7 +247,7 @@
         "No TypeScript errors"
       ],
       "dependencies": ["SPLIT-04"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "MT-02",

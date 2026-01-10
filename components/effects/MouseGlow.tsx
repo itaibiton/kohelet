@@ -1,20 +1,38 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useLocale } from "next-intl";
+import { useState, useEffect, useRef } from "react";
 
 export default function MouseGlow() {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const locale = useLocale();
+  const rafRef = useRef<number | null>(null);
+  const positionRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
+    // Don't show mouse glow on touch devices
+    if (window.matchMedia("(pointer: coarse)").matches) {
+      return;
+    }
+
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
+      // Store latest position
+      positionRef.current = { x: e.clientX, y: e.clientY };
+
+      // Only schedule if no pending frame
+      if (rafRef.current === null) {
+        rafRef.current = requestAnimationFrame(() => {
+          setMousePos(positionRef.current);
+          rafRef.current = null;
+        });
+      }
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
 
     return () => {
+      // Cancel any pending RAF
+      if (rafRef.current !== null) {
+        cancelAnimationFrame(rafRef.current);
+      }
       window.removeEventListener("mousemove", handleMouseMove);
     };
   }, []);
