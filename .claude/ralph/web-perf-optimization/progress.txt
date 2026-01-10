@@ -1171,4 +1171,74 @@ return () => {
 
 ---
 
-## Next Task: MT-03 - Reduce particle count
+### MT-03: Reduce particle count ✅
+**Completed: 2026-01-11**
+
+#### Problem
+The THREE.js scene was rendering 1500 particles per frame, each requiring position updates in the animation loop. This consumed unnecessary CPU cycles for the wave animation and GPU resources for rendering.
+
+#### Changes Made to `components/effects/ThreeBackground.tsx`
+
+**1. Reduced Particle Count (Line 140):**
+```typescript
+// Before
+const particlesCount = 1500;
+
+// After
+const particlesCount = 500;
+```
+
+- 67% reduction in particle count
+- Float32Array reduced from 4500 elements to 1500 elements
+
+**2. Increased Particle Size (Line 153):**
+```typescript
+// Before
+size: 0.04,
+
+// After
+size: 0.07,
+```
+
+- 75% increase in particle size
+- Compensates for fewer particles, maintaining visual density
+
+**3. Increased Particle Opacity (Line 156):**
+```typescript
+// Before
+opacity: 0.6,
+
+// After
+opacity: 0.75,
+```
+
+- 25% increase in opacity
+- Makes fewer particles more visible
+
+#### Performance Impact
+
+| Metric | Before | After | Improvement |
+|--------|--------|-------|-------------|
+| Particle count | 1500 | 500 | 67% reduction |
+| Position array size | 4500 floats | 1500 floats | 67% reduction |
+| Animation loop iterations | 1500 | 500 | 67% reduction |
+| GPU vertices | 1500 | 500 | 67% reduction |
+
+#### Visual Balance Maintained
+
+- Larger particles (0.07 vs 0.04) fill more screen space
+- Higher opacity (0.75 vs 0.6) ensures visibility
+- Bloom effect enhances remaining particles
+- Same 25-unit spread maintains spatial distribution
+- Wave animation and rotation still visible
+
+**Verification:**
+- ✅ Build: Successful
+- ✅ No TypeScript errors
+- ✅ Particle count reduced to 500
+- ✅ Visual compensation applied (size + opacity)
+- ✅ Animation loop uses correct count
+
+---
+
+## Next Task: MT-04 - Bloom optimization

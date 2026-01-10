@@ -137,7 +137,7 @@ export function ThreeBackground({ className }: ThreeBackgroundProps) {
 
     // Particles
     const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 1500;
+    const particlesCount = 500;
     const posArray = new Float32Array(particlesCount * 3);
 
     for (let i = 0; i < particlesCount * 3; i++) {
@@ -150,10 +150,10 @@ export function ThreeBackground({ className }: ThreeBackgroundProps) {
     );
 
     const particlesMaterial = new THREE.PointsMaterial({
-      size: 0.04,
+      size: 0.07,
       color: BRAND_BLUE,
       transparent: true,
-      opacity: 0.6,
+      opacity: 0.75,
     });
 
     const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
