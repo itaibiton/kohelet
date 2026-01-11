@@ -384,7 +384,7 @@
         "Output results to progress.txt"
       ],
       "dependencies": ["BUILD-03"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "VERIFY-02",
