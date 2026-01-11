@@ -355,7 +355,7 @@
         "No build errors"
       ],
       "dependencies": ["BUILD-01"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "BUILD-03",

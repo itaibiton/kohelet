@@ -1,8 +1,12 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 import { withContentlayer } from "next-contentlayer2";
+import bundleAnalyzer from "@next/bundle-analyzer";
 
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
 
 const nextConfig: NextConfig = {
   // Image optimization
@@ -65,4 +69,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withContentlayer(withNextIntl(nextConfig));
+export default withBundleAnalyzer(withContentlayer(withNextIntl(nextConfig)));

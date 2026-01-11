@@ -1550,4 +1550,70 @@ experimental: {
 
 ---
 
-## Next Task: BUILD-02 - Bundle analyzer setup
+### BUILD-02: Bundle analyzer setup ✅
+**Completed: 2026-01-11**
+
+#### Changes Made
+
+**1. Installed @next/bundle-analyzer:**
+```bash
+npm install --save-dev @next/bundle-analyzer
+```
+- Added as devDependency: `@next/bundle-analyzer: ^16.1.1`
+
+**2. Updated next.config.ts:**
+```typescript
+import bundleAnalyzer from "@next/bundle-analyzer";
+
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
+
+export default withBundleAnalyzer(withContentlayer(withNextIntl(nextConfig)));
+```
+
+**3. Added analyze script to package.json:**
+```json
+"scripts": {
+  "analyze": "ANALYZE=true next build --turbopack"
+}
+```
+
+#### How to Run Bundle Analysis
+
+```bash
+npm run analyze
+```
+
+This will:
+1. Build the project with Turbopack
+2. Generate interactive bundle analysis reports
+3. Open browser windows with:
+   - `client.html` - Client-side bundle visualization
+   - `server.html` - Server-side bundle visualization
+
+#### Treemap Visualization
+
+The analyzer generates interactive treemaps showing:
+- Module sizes (raw and gzipped)
+- Chunk composition
+- Dependencies between modules
+- Which packages contribute most to bundle size
+
+#### Use Cases
+
+1. **After adding dependencies**: Run `npm run analyze` to check bundle impact
+2. **Monitoring regressions**: Compare before/after screenshots
+3. **Identifying optimization targets**: Find large modules to code-split
+4. **Verifying optimizations**: Confirm THREE.js is in separate chunk
+
+#### Verification
+- ✅ Build: Successful
+- ✅ @next/bundle-analyzer installed
+- ✅ ANALYZE=true script added
+- ✅ next.config.ts updated with analyzer wrapper
+- ✅ Normal build unaffected (analyzer only runs when ANALYZE=true)
+
+---
+
+## Next Task: BUILD-03 - Performance budgets
