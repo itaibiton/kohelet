@@ -161,7 +161,7 @@
         "p for descriptive text only"
       ],
       "dependencies": [],
-      "pass": false
+      "pass": true
     },
     {
       "id": "SEMANTIC-02",
