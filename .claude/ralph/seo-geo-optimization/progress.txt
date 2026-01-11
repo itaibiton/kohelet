@@ -106,4 +106,17 @@ Optimize Kohelet website for traditional SEO and Generative Engine Optimization 
 
 ---
 
-## Next Task: SCHEMA-04 - Add Article schema to blog posts
+### SCHEMA-04 - Add Article schema to blog posts ✅
+- **Date**: 2026-01-11
+- **Status**: VERIFIED - blog post page already has Article and Breadcrumb schemas
+- **Location**: `/app/[locale]/blog/[slug]/page.tsx`
+- **Details**:
+  - ✅ Article schema with headline, author, datePublished (lines 106-114)
+  - ✅ BreadcrumbList with Home > Blog > Post (lines 116-120)
+  - ✅ Locale-aware titles in both Hebrew and English
+  - ✅ JSON-LD rendered in main element (line 124)
+  - ✅ Proper imports from @/lib/schema (lines 9-13)
+
+---
+
+## Next Task: META-01 - Add OpenGraph tags to layout

@@ -134,7 +134,7 @@
         "Locale-aware titles"
       ],
       "dependencies": ["SCHEMA-01"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "META-01",
