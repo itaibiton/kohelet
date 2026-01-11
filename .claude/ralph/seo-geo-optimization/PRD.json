@@ -148,7 +148,7 @@
         "Locale-aware og:locale"
       ],
       "dependencies": ["CRAWL-03"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "SEMANTIC-01",

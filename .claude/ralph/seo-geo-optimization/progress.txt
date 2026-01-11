@@ -119,4 +119,17 @@ Optimize Kohelet website for traditional SEO and Generative Engine Optimization 
 
 ---
 
-## Next Task: META-01 - Add OpenGraph tags to layout
+### META-01 - Add OpenGraph tags to layout ✅
+- **Date**: 2026-01-11
+- **Status**: VERIFIED - layout.tsx already has complete OG and Twitter metadata
+- **Location**: `/app/[locale]/layout.tsx` (lines 107-129)
+- **Details**:
+  - ✅ openGraph object with title, description, url, siteName (lines 107-123)
+  - ✅ twitter card configuration with summary_large_image (lines 124-129)
+  - ✅ Dynamic OG image URL using /api/og?locale=${locale}
+  - ✅ Locale-aware og:locale (he_IL or en_US)
+  - ✅ alternateLocale set for cross-locale discovery
+
+---
+
+## Next Task: SEMANTIC-01 - Fix header hierarchy in Hero
