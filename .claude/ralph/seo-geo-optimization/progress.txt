@@ -91,4 +91,19 @@ Optimize Kohelet website for traditional SEO and Generative Engine Optimization 
 
 ---
 
-## Next Task: SCHEMA-03 - Add Service schema to home page
+### SCHEMA-03 - Add Service schema to home page ✅
+- **Date**: 2026-01-11
+- **Status**: VERIFIED - page.tsx already has Service schemas
+- **Location**: `/app/[locale]/page.tsx`
+- **Details**:
+  - ✅ Three Service schemas defined (lines 13-32):
+    - Custom Software Development
+    - Business Automation
+    - AI Agents
+  - ✅ Each has name, description, serviceType
+  - ✅ Provider references Organization (via getServiceSchema)
+  - ✅ JSON-LD rendered in main element (lines 37-39)
+
+---
+
+## Next Task: SCHEMA-04 - Add Article schema to blog posts

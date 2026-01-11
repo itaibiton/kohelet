@@ -121,7 +121,7 @@
         "Provider references Organization"
       ],
       "dependencies": ["SCHEMA-01"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "SCHEMA-04",
