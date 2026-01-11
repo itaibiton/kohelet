@@ -39,6 +39,7 @@ export function ThreeBackground({ className }: ThreeBackgroundProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const isVisibleRef = useRef(true);
   const rafIdRef = useRef<number | null>(null);
+  const timelineRef = useRef<gsap.core.Timeline | null>(null);
   const sceneRef = useRef<{
     scene: THREE.Scene;
     camera: THREE.PerspectiveCamera;
@@ -273,6 +274,9 @@ export function ThreeBackground({ className }: ThreeBackgroundProps) {
       },
     });
 
+    // Store timeline ref for cleanup
+    timelineRef.current = tl;
+
     // Logo group animations
     tl.to(logoGroup.position, { z: -10, y: 5, duration: 2 }, 0)
       .to(logoGroup.rotation, { x: 1, duration: 2 }, 0);
@@ -345,7 +349,33 @@ export function ThreeBackground({ className }: ThreeBackgroundProps) {
       observer.disconnect();
 
       window.removeEventListener("resize", handleResize);
+
+      // Kill the timeline and all its child tweens
+      if (timelineRef.current) {
+        timelineRef.current.kill();
+        timelineRef.current = null;
+      }
+
+      // Kill all ScrollTrigger instances created by this component
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+
+      // Kill any orphaned tweens targeting these objects
+      if (sceneRef.current) {
+        const { particlesMaterial, wireframeMaterial, bloomPass, logoGroup, particlesMesh, spotlight1, scene, camera } = sceneRef.current;
+        gsap.killTweensOf(particlesMaterial.color);
+        gsap.killTweensOf(wireframeMaterial.color);
+        gsap.killTweensOf(logoGroup.position);
+        gsap.killTweensOf(logoGroup.rotation);
+        gsap.killTweensOf(particlesMesh.position);
+        gsap.killTweensOf(particlesMesh.scale);
+        gsap.killTweensOf(camera.position);
+        gsap.killTweensOf(camera.rotation);
+        gsap.killTweensOf(spotlight1);
+        gsap.killTweensOf(scene.fog);
+        if (bloomPass) {
+          gsap.killTweensOf(bloomPass);
+        }
+      }
 
       renderer.dispose();
       geometry.dispose();

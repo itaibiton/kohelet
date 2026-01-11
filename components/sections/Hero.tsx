@@ -46,16 +46,16 @@ export function Hero() {
           className="space-y-6 max-w-lg animate-fade-in-up"
           style={{ animationDelay: "0.4s" }}
         >
-          {/* Secondary title with underlined word */}
-          <p className="text-xl text-white font-medium">
+          {/* Secondary title with underlined word - h2 for proper header hierarchy */}
+          <h2 className="text-xl text-white font-medium">
             {t("secondary.prefix")}{" "}
             <span className="text-accent-blue border-b border-accent-blue/30 pb-0.5">
               {t("secondary.highlight")}
             </span>{" "}
             {t("secondary.suffix")}
-          </p>
+          </h2>
 
-          {/* Long subtitle */}
+          {/* Long subtitle - descriptive paragraph */}
           <p className="text-sm md:text-[15px] text-white/50 leading-relaxed font-light">
             {t("subtitle")}
           </p>

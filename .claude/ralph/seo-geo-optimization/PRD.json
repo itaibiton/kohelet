@@ -1,0 +1,215 @@
+{
+  "project": "SEO & GEO Optimization",
+  "version": "1.0.0",
+  "created": "2026-01-11",
+  "completion_promise": "SEO_GEO_OPTIMIZATION_COMPLETE",
+
+  "context": {
+    "tech_stack": ["Next.js 16", "React", "TypeScript", "Tailwind CSS", "Contentlayer", "next-intl"],
+    "i18n": "Hebrew (he) and English (en) with RTL support",
+    "theme": "Dark mode with accent-blue highlights",
+    "target_metrics": {
+      "lighthouse_seo": 100,
+      "structured_data": "Organization, WebSite, Service, Article, BreadcrumbList",
+      "ai_bot_access": "GPTBot, ClaudeBot, PerplexityBot, CCBot allowed"
+    },
+    "current_issues": [
+      "No robots.txt",
+      "No sitemap.xml",
+      "No JSON-LD schema",
+      "No canonical URLs",
+      "No hreflang tags",
+      "Missing OG tags on main pages",
+      "Inconsistent header hierarchy"
+    ],
+    "existing_components": [
+      "Dynamic OG image generator at /api/og",
+      "Blog with MDX and Contentlayer",
+      "i18n metadata infrastructure"
+    ]
+  },
+
+  "user_preferences": {
+    "strategy": "GEO-first (Generative Engine Optimization)",
+    "priority": "AI bot access and structured data",
+    "git": "Atomic commits per task with prefix"
+  },
+
+  "user_stories": [
+    {
+      "id": "CRAWL-01",
+      "title": "Create robots.txt with AI bot access",
+      "description": "Create /public/robots.txt that explicitly allows AI crawlers (GPTBot, ClaudeBot, PerplexityBot, CCBot, Google-Extended) and includes sitemap directive",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "robots.txt exists at /public/robots.txt",
+        "User-agent: * with Allow: /",
+        "AI bots explicitly allowed",
+        "Disallow: /api/* (except /api/og)",
+        "Sitemap directive pointing to sitemap.xml"
+      ],
+      "dependencies": [],
+      "pass": false
+    },
+    {
+      "id": "CRAWL-02",
+      "title": "Create dynamic sitemap",
+      "description": "Create /app/sitemap.ts with all pages and blog posts, including hreflang alternates for both locales",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "sitemap.ts exports MetadataRoute.Sitemap",
+        "Includes home, about, blog for both locales",
+        "Includes all published blog posts",
+        "Has alternates.languages for each URL",
+        "Correct lastModified dates"
+      ],
+      "dependencies": ["CRAWL-01"],
+      "pass": false
+    },
+    {
+      "id": "CRAWL-03",
+      "title": "Add canonical URLs and hreflang to layout",
+      "description": "Update /app/[locale]/layout.tsx generateMetadata to include canonical URLs, alternates.languages, and enhanced robot directives",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "metadataBase set to https://kohelet.digital",
+        "alternates.canonical set per locale",
+        "alternates.languages includes both locales",
+        "robots meta with index, follow"
+      ],
+      "dependencies": ["CRAWL-01"],
+      "pass": false
+    },
+    {
+      "id": "SCHEMA-01",
+      "title": "Create JSON-LD utilities",
+      "description": "Create /lib/schema.ts with helper functions for Organization, WebSite, Service, Article, BreadcrumbList, and FAQPage schemas",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "getOrganizationSchema() function",
+        "getWebSiteSchema(locale) function",
+        "getServiceSchema(service) function",
+        "getArticleSchema(article) function",
+        "getBreadcrumbSchema(items) function",
+        "jsonLdScriptProps() helper for rendering"
+      ],
+      "dependencies": [],
+      "pass": false
+    },
+    {
+      "id": "SCHEMA-02",
+      "title": "Add Organization and WebSite schema to layout",
+      "description": "Inject Organization and WebSite JSON-LD in /app/[locale]/layout.tsx head section",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "JSON-LD script tag in head",
+        "Organization schema with name, logo, url, contactPoint",
+        "WebSite schema with SearchAction",
+        "Locale-aware rendering"
+      ],
+      "dependencies": ["SCHEMA-01"],
+      "pass": false
+    },
+    {
+      "id": "SCHEMA-03",
+      "title": "Add Service schema to home page",
+      "description": "Add Service schemas for Custom Software, Business Automation, and AI Agents to /app/[locale]/page.tsx",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "Three Service schemas rendered",
+        "Each has name, description, serviceType",
+        "Provider references Organization"
+      ],
+      "dependencies": ["SCHEMA-01"],
+      "pass": false
+    },
+    {
+      "id": "SCHEMA-04",
+      "title": "Add Article schema to blog posts",
+      "description": "Add Article and BreadcrumbList schemas to /app/[locale]/blog/[slug]/page.tsx",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "Article schema with headline, author, datePublished",
+        "BreadcrumbList with Home > Blog > Post",
+        "Locale-aware titles"
+      ],
+      "dependencies": ["SCHEMA-01"],
+      "pass": false
+    },
+    {
+      "id": "META-01",
+      "title": "Add OpenGraph tags to layout",
+      "description": "Enhance /app/[locale]/layout.tsx with OpenGraph and Twitter Card metadata",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "openGraph object in metadata",
+        "twitter card configuration",
+        "Dynamic OG image URL using /api/og",
+        "Locale-aware og:locale"
+      ],
+      "dependencies": ["CRAWL-03"],
+      "pass": false
+    },
+    {
+      "id": "SEMANTIC-01",
+      "title": "Fix header hierarchy in Hero",
+      "description": "Update /components/sections/Hero.tsx to use proper h1 > h2 hierarchy instead of h1 > p",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "Single h1 for main headline",
+        "h2 for secondary title",
+        "p for descriptive text only"
+      ],
+      "dependencies": [],
+      "pass": false
+    },
+    {
+      "id": "SEMANTIC-02",
+      "title": "Add semantic list structure to Navigation",
+      "description": "Wrap navigation links in /components/sections/Navigation.tsx with ul/li structure",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "nav contains ul element",
+        "Each link wrapped in li",
+        "Mobile menu uses same structure"
+      ],
+      "dependencies": [],
+      "pass": false
+    },
+    {
+      "id": "SEMANTIC-03",
+      "title": "Wrap BlogCard in article element",
+      "description": "Update /components/blog/BlogCard.tsx to use article as outer wrapper",
+      "agent": "senior-frontend-dev",
+      "acceptance_criteria": [
+        "article element wraps card content",
+        "Link inside article for click handling",
+        "Proper heading (h3) for post title"
+      ],
+      "dependencies": [],
+      "pass": false
+    },
+    {
+      "id": "VERIFY-01",
+      "title": "Run build and type check",
+      "description": "Execute npm run build and verify no TypeScript or build errors",
+      "agent": "direct",
+      "acceptance_criteria": [
+        "npm run build succeeds",
+        "No TypeScript errors",
+        "All pages generate correctly"
+      ],
+      "dependencies": ["CRAWL-01", "CRAWL-02", "CRAWL-03", "SCHEMA-02", "SCHEMA-03", "SCHEMA-04", "META-01", "SEMANTIC-01", "SEMANTIC-02", "SEMANTIC-03"],
+      "pass": false
+    }
+  ],
+
+  "implementation_order": [
+    "Phase 1: Crawlability (CRAWL-01, CRAWL-02, CRAWL-03) - Enable bot access",
+    "Phase 2: Schema Foundation (SCHEMA-01) - Create utilities",
+    "Phase 3: Schema Implementation (SCHEMA-02, SCHEMA-03, SCHEMA-04) - Add structured data",
+    "Phase 4: Meta Tags (META-01) - Social previews",
+    "Phase 5: Semantics (SEMANTIC-01, SEMANTIC-02, SEMANTIC-03) - HTML structure",
+    "Phase 6: Verification (VERIFY-01) - Build and test"
+  ]
+}

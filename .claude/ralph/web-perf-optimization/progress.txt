@@ -1322,4 +1322,113 @@ This creates a progressive enhancement strategy:
 
 ---
 
-## Next Task: MT-05 - GSAP cleanup
+### MT-05: GSAP cleanup ✅
+**Completed: 2026-01-11**
+
+#### Problem
+The ThreeBackground component was not properly cleaning up GSAP resources on unmount:
+1. GSAP timeline created but never killed
+2. Individual gsap.to() tweens targeting THREE.js objects could become orphaned
+3. Potential memory leaks on route changes
+
+#### Analysis of Existing GSAP Usage
+
+**ThreeBackground.tsx:**
+- Creates a GSAP timeline with ScrollTrigger for scroll-based animations
+- Uses gsap.to() for color transitions (updateColors/resetColors)
+- Targets: logoGroup, particlesMesh, camera, spotlight, fog, bloomPass, materials
+
+**Stats.tsx (about page):**
+- Already uses proper `gsap.context()` pattern with `ctx.revert()` ✅
+- No changes needed
+
+#### Changes Made to `components/effects/ThreeBackground.tsx`
+
+**1. Added Timeline Ref (Line 42):**
+```typescript
+const timelineRef = useRef<gsap.core.Timeline | null>(null);
+```
+
+**2. Store Timeline in Ref (Line 277-278):**
+```typescript
+// Store timeline ref for cleanup
+timelineRef.current = tl;
+```
+
+**3. Enhanced Cleanup Function (Lines 341-389):**
+```typescript
+return () => {
+  // Cancel any pending animation frame
+  if (rafIdRef.current !== null) {
+    cancelAnimationFrame(rafIdRef.current);
+  }
+
+  // Disconnect observer
+  observer.disconnect();
+
+  window.removeEventListener("resize", handleResize);
+
+  // Kill the timeline and all its child tweens
+  if (timelineRef.current) {
+    timelineRef.current.kill();
+    timelineRef.current = null;
+  }
+
+  // Kill all ScrollTrigger instances created by this component
+  ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+
+  // Kill any orphaned tweens targeting these objects
+  if (sceneRef.current) {
+    const { particlesMaterial, wireframeMaterial, bloomPass, logoGroup,
+            particlesMesh, spotlight1, scene, camera } = sceneRef.current;
+    gsap.killTweensOf(particlesMaterial.color);
+    gsap.killTweensOf(wireframeMaterial.color);
+    gsap.killTweensOf(logoGroup.position);
+    gsap.killTweensOf(logoGroup.rotation);
+    gsap.killTweensOf(particlesMesh.position);
+    gsap.killTweensOf(particlesMesh.scale);
+    gsap.killTweensOf(camera.position);
+    gsap.killTweensOf(camera.rotation);
+    gsap.killTweensOf(spotlight1);
+    gsap.killTweensOf(scene.fog);
+    if (bloomPass) {
+      gsap.killTweensOf(bloomPass);
+    }
+  }
+
+  // THREE.js cleanup continues...
+};
+```
+
+#### GSAP Cleanup Best Practices Applied
+
+| Resource | Cleanup Method | Purpose |
+|----------|---------------|---------|
+| Timeline | `timeline.kill()` | Stops and removes all child tweens |
+| ScrollTrigger | `trigger.kill()` | Removes scroll listeners and references |
+| Individual Tweens | `gsap.killTweensOf(target)` | Kills all tweens on specific object |
+| RAF | `cancelAnimationFrame()` | Already implemented in MT-02 |
+
+#### Memory Leak Prevention
+
+Before cleanup enhancement:
+- Route change would leave GSAP tweens running in background
+- ScrollTrigger listeners persisted after component unmount
+- Timeline child tweens could continue targeting disposed objects
+
+After cleanup enhancement:
+- All GSAP resources explicitly destroyed
+- No orphaned tweens after unmount
+- Clean route transitions with no memory growth
+
+#### Verification
+- ✅ Build: Successful
+- ✅ No TypeScript errors
+- ✅ Timeline stored and killed on unmount
+- ✅ All ScrollTrigger instances killed
+- ✅ Individual tweens killed per target object
+- ✅ Stats.tsx already uses proper gsap.context() pattern
+
+---
+
+## Next Task: MT-06 - Memoize Pricing calculations

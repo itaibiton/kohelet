@@ -4,10 +4,17 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { isRtl, type Locale } from "@/i18n/config";
+import { isRtl, locales, type Locale } from "@/i18n/config";
 import { PricingProvider } from "@/context/PricingContext";
 import AnalyticsWrapper from "@/components/analytics/AnalyticsWrapper";
+import {
+  getOrganizationSchema,
+  getWebSiteSchema,
+  jsonLdScriptProps,
+} from "@/lib/schema";
 import "../globals.css";
+
+const BASE_URL = "https://kohelet.digital";
 
 // Hebrew locale font - includes Hebrew characters + Latin for numbers/common terms
 const heeboHebrew = Heebo({
@@ -47,21 +54,78 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
   const messages = await getMessages();
-  const meta = messages.meta as { title: string; description: string };
+  const meta = messages.meta as {
+    title: string;
+    description: string;
+    keywords?: string;
+  };
+
+  const title = meta?.title || "Kohelet | Digital Solutions & AI Architects";
+  const description =
+    meta?.description ||
+    "We engineer high-performance software ecosystems with AI integration.";
 
   return {
-    title: meta?.title || "Kohelet | Digital Solutions & AI Architects",
-    description:
-      meta?.description ||
-      "We engineer high-performance software ecosystems with AI integration.",
+    title,
+    description,
+    keywords: meta?.keywords,
+    authors: [{ name: "Kohelet Digital" }],
+    creator: "Kohelet Digital",
+    publisher: "Kohelet Digital",
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
     icons: {
       icon: [
         { url: "/favicon.svg", type: "image/svg+xml" },
         { url: "/favicon.ico", sizes: "any" },
       ],
       apple: "/favicon.svg",
+    },
+    metadataBase: new URL(BASE_URL),
+    alternates: {
+      canonical: `${BASE_URL}/${locale}`,
+      languages: Object.fromEntries(
+        locales.map((l) => [l, `${BASE_URL}/${l}`])
+      ),
+    },
+    openGraph: {
+      title,
+      description,
+      url: `${BASE_URL}/${locale}`,
+      siteName: "Kohelet Digital",
+      locale: locale === "he" ? "he_IL" : "en_US",
+      alternateLocale: locale === "he" ? "en_US" : "he_IL",
+      type: "website",
+      images: [
+        {
+          url: `${BASE_URL}/api/og?locale=${locale}`,
+          width: 1200,
+          height: 630,
+          alt: title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [`${BASE_URL}/api/og?locale=${locale}`],
     },
   };
 }
@@ -85,6 +149,14 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale} dir={dir} className={`scroll-smooth ${heebo.variable} font-sans`}>
+      <head>
+        <script
+          {...jsonLdScriptProps([
+            getOrganizationSchema(),
+            getWebSiteSchema(locale),
+          ])}
+        />
+      </head>
       <body
         className={`${heebo.className} ${jetbrainsMono.variable} antialiased`}
       >

@@ -6,6 +6,13 @@ import Footer from "@/components/sections/Footer";
 import { EffectsWrapper } from "@/components/effects/EffectsWrapper";
 import { ThreeBackgroundWrapper } from "@/components/effects/ThreeBackgroundWrapper";
 import { MDXContent } from "./mdx-content";
+import {
+  getArticleSchema,
+  getBreadcrumbSchema,
+  jsonLdScriptProps,
+} from "@/lib/schema";
+
+const BASE_URL = "https://kohelet.digital";
 
 interface Props {
   params: Promise<{
@@ -95,8 +102,26 @@ export default async function BlogPostPage({ params }: Props) {
     }
   );
 
+  // Generate structured data for SEO and AI engines
+  const articleSchema = getArticleSchema({
+    title,
+    description: locale === "he" && post.excerpt_he ? post.excerpt_he : post.excerpt,
+    url: `${BASE_URL}/${locale}/blog/${post.slug}`,
+    datePublished: post.date,
+    author: post.author,
+    image: post.thumbnail,
+    locale,
+  });
+
+  const breadcrumbSchema = getBreadcrumbSchema([
+    { name: locale === "he" ? "דף הבית" : "Home", url: `${BASE_URL}/${locale}` },
+    { name: locale === "he" ? "בלוג" : "Blog", url: `${BASE_URL}/${locale}/blog` },
+    { name: title, url: `${BASE_URL}/${locale}/blog/${post.slug}` },
+  ]);
+
   return (
     <main className="min-h-screen relative selection:bg-blue-500/30 selection:text-white">
+      <script {...jsonLdScriptProps([articleSchema, breadcrumbSchema])} />
       <EffectsWrapper />
       <ThreeBackgroundWrapper />
       <Navigation />

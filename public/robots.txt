@@ -1,0 +1,81 @@
+# Kohelet Digital - robots.txt
+# Optimized for Traditional SEO + Generative Engine Optimization (GEO)
+
+# =============================================================================
+# DEFAULT: Allow all crawlers
+# =============================================================================
+User-agent: *
+Allow: /
+Disallow: /api/
+Allow: /api/og
+Disallow: /_next/static/
+Disallow: /_next/image/
+
+# =============================================================================
+# AI ANSWER ENGINES - Explicitly allowed for GEO
+# =============================================================================
+
+# OpenAI's ChatGPT crawler
+User-agent: GPTBot
+Allow: /
+
+# Anthropic's Claude crawler
+User-agent: ClaudeBot
+Allow: /
+User-agent: Claude-Web
+Allow: /
+
+# Google's AI training crawler
+User-agent: Google-Extended
+Allow: /
+
+# Common Crawl (used by many AI systems)
+User-agent: CCBot
+Allow: /
+
+# Perplexity AI
+User-agent: PerplexityBot
+Allow: /
+
+# Cohere AI
+User-agent: cohere-ai
+Allow: /
+
+# Meta AI
+User-agent: FacebookBot
+Allow: /
+
+# Microsoft/Bing AI
+User-agent: bingbot
+Allow: /
+
+# Apple's crawler (for Siri/Spotlight)
+User-agent: Applebot
+Allow: /
+
+# =============================================================================
+# SEARCH ENGINE CRAWLERS
+# =============================================================================
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# =============================================================================
+# SITEMAP LOCATION
+# =============================================================================
+Sitemap: https://kohelet.digital/sitemap.xml

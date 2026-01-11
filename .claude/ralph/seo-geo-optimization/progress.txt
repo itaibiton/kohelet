@@ -1,0 +1,28 @@
+# SEO & GEO Optimization - Progress Log
+
+## Project Started: 2026-01-11
+
+## Goal
+Optimize Kohelet website for traditional SEO and Generative Engine Optimization (GEO).
+
+## Target Outcomes
+- Lighthouse SEO score: 100
+- All AI bots (GPTBot, ClaudeBot, etc.) can crawl
+- JSON-LD structured data on all pages
+- Proper canonical URLs and hreflang tags
+- Social media previews on all pages
+
+## Agent Workflow
+- CRAWL tasks → direct
+- SCHEMA tasks → senior-frontend-dev
+- META tasks → senior-frontend-dev
+- SEMANTIC tasks → senior-frontend-dev
+- VERIFY tasks → direct
+
+## Completed Tasks:
+
+(none yet)
+
+---
+
+## Next Task: CRAWL-01 - Create robots.txt with AI bot access
