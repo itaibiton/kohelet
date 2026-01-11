@@ -49,4 +49,18 @@ Optimize Kohelet website for traditional SEO and Generative Engine Optimization 
 
 ---
 
-## Next Task: CRAWL-03 - Add canonical URLs and hreflang to layout
+### CRAWL-03 - Add canonical URLs and hreflang to layout ✅
+- **Date**: 2026-01-11
+- **Status**: VERIFIED - layout.tsx already has all required metadata
+- **Location**: `/app/[locale]/layout.tsx`
+- **Details**:
+  - ✅ metadataBase set to `https://kohelet.digital` (line 100)
+  - ✅ alternates.canonical set per locale: `${BASE_URL}/${locale}` (line 102)
+  - ✅ alternates.languages includes both locales using `locales.map()` (lines 103-105)
+  - ✅ robots meta with index: true, follow: true (lines 82-92)
+  - ✅ googleBot directives with max-video-preview, max-image-preview, max-snippet
+  - ✅ OpenGraph and Twitter Card metadata also present
+
+---
+
+## Next Task: SCHEMA-01 - Create JSON-LD utilities

@@ -78,7 +78,7 @@
         "robots meta with index, follow"
       ],
       "dependencies": ["CRAWL-01"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "SCHEMA-01",
