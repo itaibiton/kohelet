@@ -78,4 +78,17 @@ Optimize Kohelet website for traditional SEO and Generative Engine Optimization 
 
 ---
 
-## Next Task: SCHEMA-02 - Add Organization and WebSite schema to layout
+### SCHEMA-02 - Add Organization and WebSite schema to layout ✅
+- **Date**: 2026-01-11
+- **Status**: VERIFIED - layout.tsx already has JSON-LD in head section
+- **Location**: `/app/[locale]/layout.tsx` (lines 152-158)
+- **Details**:
+  - ✅ JSON-LD script tag in head using jsonLdScriptProps()
+  - ✅ Organization schema injected via getOrganizationSchema()
+  - ✅ WebSite schema injected via getWebSiteSchema(locale)
+  - ✅ Locale-aware rendering (locale passed to getWebSiteSchema)
+  - ✅ Imports from @/lib/schema (lines 10-14)
+
+---
+
+## Next Task: SCHEMA-03 - Add Service schema to home page
