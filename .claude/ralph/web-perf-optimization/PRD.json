@@ -369,7 +369,7 @@
         "Document performance targets"
       ],
       "dependencies": ["BUILD-02"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "VERIFY-01",

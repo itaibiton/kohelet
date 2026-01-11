@@ -1616,4 +1616,80 @@ The analyzer generates interactive treemaps showing:
 
 ---
 
-## Next Task: BUILD-03 - Performance budgets
+### BUILD-03: Performance budgets ✅
+**Completed: 2026-01-11**
+
+#### Performance Targets
+
+| Metric | Target | Purpose |
+|--------|--------|---------|
+| Lighthouse Performance | ≥95 | Overall performance score |
+| Initial Bundle (gzipped) | <300KB | First load JS |
+| Total Blocking Time | <50ms | Main thread responsiveness |
+| First Contentful Paint | <1s | Time to first content |
+| Largest Contentful Paint | <1.5s | Time to largest element |
+| Page Data Size | <128KB | Server-side data per page |
+
+#### Configuration Added
+
+**next.config.ts:**
+```typescript
+experimental: {
+  optimizeCss: true,
+  // Performance budget: Warn if page data exceeds 128KB
+  largePageDataBytes: 128 * 1024,
+},
+
+logging: {
+  fetches: {
+    fullUrl: process.env.NODE_ENV === "development",
+  },
+},
+```
+
+#### Bundle Size Budgets
+
+| Chunk Type | Max Size (gzipped) | Notes |
+|------------|-------------------|-------|
+| Initial bundle | 300KB | Framework + core app code |
+| THREE.js chunk | 250KB | Lazy loaded, separate chunk |
+| Per-route chunk | 50KB | Route-specific code |
+| Total first load | 350KB | Initial + shared chunks |
+
+#### Monitoring Strategy
+
+1. **Development**: Use `npm run analyze` to check bundle composition
+2. **CI/CD**: Build logs warn if `largePageDataBytes` exceeded
+3. **Production**: Vercel Speed Insights tracks real user metrics
+4. **Manual**: Run Lighthouse CI for regression testing
+
+#### How to Monitor
+
+```bash
+# Check bundle sizes
+npm run analyze
+
+# Check for large page data warnings
+npm run build 2>&1 | grep -i "large"
+```
+
+#### No Size-Limit CI Configuration
+
+Size-limit npm package was evaluated but not added because:
+1. Vercel already provides bundle analysis in deployment
+2. @next/bundle-analyzer provides visual inspection
+3. Next.js largePageDataBytes provides runtime warnings
+4. Adding another tool creates maintenance overhead without significant benefit
+
+The existing tools provide sufficient visibility for this project scale.
+
+#### Verification
+- ✅ Build: Successful
+- ✅ experimental.largePageDataBytes set (128KB)
+- ✅ Performance targets documented
+- ✅ Bundle budgets defined
+- ✅ Monitoring strategy established
+
+---
+
+## Next Task: VERIFY-01 - Lighthouse audit

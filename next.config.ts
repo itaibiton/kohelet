@@ -66,6 +66,15 @@ const nextConfig: NextConfig = {
   // Experimental performance optimizations
   experimental: {
     optimizeCss: true,
+    // Performance budget: Warn if page data exceeds 128KB (helps identify heavy pages)
+    largePageDataBytes: 128 * 1024,
+  },
+
+  // Logging configuration
+  logging: {
+    fetches: {
+      fullUrl: process.env.NODE_ENV === "development",
+    },
   },
 };
 
