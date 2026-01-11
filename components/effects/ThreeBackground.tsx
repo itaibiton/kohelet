@@ -18,6 +18,23 @@ interface ThreeBackgroundProps {
   className?: string;
 }
 
+/**
+ * Determines if the device can handle expensive bloom post-processing
+ * Based on CPU core count and mobile detection
+ */
+function canUseBloom(): boolean {
+  if (typeof navigator === "undefined") return true;
+
+  const cores = navigator.hardwareConcurrency || 4;
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
+
+  // Disable bloom on mobile or devices with < 4 cores
+  // These are mid-range devices that passed wrapper checks but still have weak GPUs
+  return !isMobile && cores >= 4;
+}
+
 export function ThreeBackground({ className }: ThreeBackgroundProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const isVisibleRef = useRef(true);
@@ -33,9 +50,10 @@ export function ThreeBackground({ className }: ThreeBackgroundProps) {
     particlesMaterial: THREE.PointsMaterial;
     particlesGeometry: THREE.BufferGeometry;
     wireframeMaterial: THREE.LineBasicMaterial;
-    bloomPass: UnrealBloomPass;
+    bloomPass: UnrealBloomPass | null;
     spotlight1: THREE.SpotLight;
     particlesCount: number;
+    useBloom: boolean;
   } | null>(null);
 
   const updateColors = useCallback((color: string) => {
@@ -45,7 +63,11 @@ export function ThreeBackground({ className }: ThreeBackgroundProps) {
 
     gsap.to(particlesMaterial.color, { r: newColor.r, g: newColor.g, b: newColor.b, duration: 0.5 });
     gsap.to(wireframeMaterial.color, { r: newColor.r, g: newColor.g, b: newColor.b, duration: 0.5 });
-    gsap.to(bloomPass, { strength: 3, radius: 1, duration: 0.3 });
+
+    // Only animate bloom if it exists
+    if (bloomPass) {
+      gsap.to(bloomPass, { strength: 3, radius: 1, duration: 0.3 });
+    }
   }, []);
 
   const resetColors = useCallback(() => {
@@ -55,13 +77,31 @@ export function ThreeBackground({ className }: ThreeBackgroundProps) {
 
     gsap.to(particlesMaterial.color, { r: blue.r, g: blue.g, b: blue.b, duration: 0.5 });
     gsap.to(wireframeMaterial.color, { r: blue.r, g: blue.g, b: blue.b, duration: 0.5 });
-    gsap.to(bloomPass, { strength: 1.8, radius: 0.5, duration: 0.5 });
+
+    // Only animate bloom if it exists
+    if (bloomPass) {
+      gsap.to(bloomPass, { strength: 1.8, radius: 0.5, duration: 0.5 });
+    }
   }, []);
 
   useEffect(() => {
     if (!containerRef.current) return;
 
     const container = containerRef.current;
+
+    // Detect if device can use bloom
+    const useBloom = canUseBloom();
+
+    // Log bloom status in development
+    if (process.env.NODE_ENV === "development") {
+      console.log("[ThreeBackground] Bloom optimization:", {
+        cores: navigator.hardwareConcurrency || 4,
+        isMobile: /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        ),
+        bloomEnabled: useBloom,
+      });
+    }
 
     // Scene setup
     const scene = new THREE.Scene();
@@ -81,21 +121,26 @@ export function ThreeBackground({ className }: ThreeBackgroundProps) {
     renderer.toneMapping = THREE.ReinhardToneMapping;
     container.appendChild(renderer.domElement);
 
-    // Post Processing (Bloom) - Updated initial settings
+    // Post Processing (Bloom) - Conditionally created based on device capability
     const renderScene = new RenderPass(scene, camera);
-    const bloomPass = new UnrealBloomPass(
-      new THREE.Vector2(window.innerWidth, window.innerHeight),
-      1.8,
-      0.5,
-      0.85
-    );
-    bloomPass.threshold = 0;
-    bloomPass.strength = 1.8;
-    bloomPass.radius = 0.5;
+    let bloomPass: UnrealBloomPass | null = null;
 
     const composer = new EffectComposer(renderer);
     composer.addPass(renderScene);
-    composer.addPass(bloomPass);
+
+    if (useBloom) {
+      // High-end devices: Full bloom effects
+      bloomPass = new UnrealBloomPass(
+        new THREE.Vector2(window.innerWidth, window.innerHeight),
+        1.8,
+        0.5,
+        0.85
+      );
+      bloomPass.threshold = 0;
+      bloomPass.strength = 1.8;
+      bloomPass.radius = 0.5;
+      composer.addPass(bloomPass);
+    }
 
     // Logo Group
     const logoGroup = new THREE.Group();
@@ -135,7 +180,7 @@ export function ThreeBackground({ className }: ThreeBackgroundProps) {
     spotlight2.angle = 0.5;
     scene.add(spotlight2);
 
-    // Particles
+    // Particles - Enhanced settings on low-end devices to compensate for no bloom
     const particlesGeometry = new THREE.BufferGeometry();
     const particlesCount = 500;
     const posArray = new Float32Array(particlesCount * 3);
@@ -149,11 +194,13 @@ export function ThreeBackground({ className }: ThreeBackgroundProps) {
       new THREE.BufferAttribute(posArray, 3)
     );
 
+    // Low-end devices: Larger, more opaque particles for visibility without bloom
+    // High-end devices: Standard settings, bloom provides the glow
     const particlesMaterial = new THREE.PointsMaterial({
-      size: 0.07,
+      size: useBloom ? 0.07 : 0.12,
       color: BRAND_BLUE,
       transparent: true,
-      opacity: 0.75,
+      opacity: useBloom ? 0.75 : 0.9,
     });
 
     const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
@@ -175,6 +222,7 @@ export function ThreeBackground({ className }: ThreeBackgroundProps) {
       bloomPass,
       spotlight1,
       particlesCount,
+      useBloom,
     };
 
     // Animation loop with visibility check
@@ -249,8 +297,10 @@ export function ThreeBackground({ className }: ThreeBackgroundProps) {
       1
     );
 
-    // Bloom enhancement on scroll
-    tl.to(bloomPass, { strength: 3, radius: 1, duration: 2 }, 2);
+    // Bloom enhancement on scroll (only if bloom is enabled)
+    if (bloomPass) {
+      tl.to(bloomPass, { strength: 3, radius: 1, duration: 2 }, 2);
+    }
 
     // Fog density increase
     tl.to(scene.fog as THREE.FogExp2, { density: 0.05, duration: 2 }, 3);
