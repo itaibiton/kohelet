@@ -340,7 +340,7 @@
         "No build errors"
       ],
       "dependencies": ["MT-06"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "BUILD-02",
