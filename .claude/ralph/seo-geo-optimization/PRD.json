@@ -187,7 +187,7 @@
         "Proper heading (h3) for post title"
       ],
       "dependencies": [],
-      "pass": false
+      "pass": true
     },
     {
       "id": "VERIFY-01",

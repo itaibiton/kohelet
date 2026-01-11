@@ -34,10 +34,16 @@ export function BlogCard({
   });
 
   return (
-    <Link
-      href={`/blog/${slug}`}
-      className="group relative block rounded-xl overflow-hidden bg-brand-gray/50 backdrop-blur-md border border-white/10 hover:border-accent-blue/30 transition-all duration-500 hover:-translate-y-1"
-    >
+    <article className="group relative block rounded-xl overflow-hidden bg-brand-gray/50 backdrop-blur-md border border-white/10 hover:border-accent-blue/30 transition-all duration-500 hover:-translate-y-1">
+      {/* Overlay Link for click handling - covers entire card */}
+      <Link
+        href={`/blog/${slug}`}
+        className="absolute inset-0 z-30"
+        aria-label={`Read article: ${title}`}
+      >
+        <span className="sr-only">{title}</span>
+      </Link>
+
       {/* Hover glow effect */}
       <div className="absolute inset-0 bg-gradient-to-br from-accent-blue/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
@@ -124,7 +130,7 @@ export function BlogCard({
 
       {/* Bottom accent line on hover */}
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent-blue/50 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500" />
-    </Link>
+    </article>
   );
 }
 

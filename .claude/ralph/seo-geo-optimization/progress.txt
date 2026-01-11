@@ -158,4 +158,18 @@ Optimize Kohelet website for traditional SEO and Generative Engine Optimization 
 
 ---
 
-## Next Task: SEMANTIC-03 - Wrap BlogCard in article element
+### SEMANTIC-03 - Wrap BlogCard in article element ✅
+- **Date**: 2026-01-11
+- **Status**: IMPLEMENTED - Refactored BlogCard to use article wrapper
+- **Location**: `/components/sections/blog/BlogCard.tsx`
+- **Details**:
+  - ✅ article element now wraps card content (line 37)
+  - ✅ Link inside article as overlay for click handling (lines 38-45)
+  - ✅ Proper h3 for post title (already present)
+  - ✅ Added aria-label for accessibility
+  - ✅ Added sr-only text for screen readers
+  - ✅ Build verified successfully
+
+---
+
+## Next Task: VERIFY-01 - Run build and type check
