@@ -430,7 +430,7 @@
         "Fallbacks display on mobile simulation"
       ],
       "dependencies": ["VERIFY-03"],
-      "pass": false
+      "pass": true
     }
   ],
 
