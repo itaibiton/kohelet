@@ -200,7 +200,7 @@
         "All pages generate correctly"
       ],
       "dependencies": ["CRAWL-01", "CRAWL-02", "CRAWL-03", "SCHEMA-02", "SCHEMA-03", "SCHEMA-04", "META-01", "SEMANTIC-01", "SEMANTIC-02", "SEMANTIC-03"],
-      "pass": false
+      "pass": true
     }
   ],
 
