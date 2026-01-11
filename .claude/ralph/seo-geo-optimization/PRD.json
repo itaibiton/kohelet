@@ -49,7 +49,7 @@
         "Sitemap directive pointing to sitemap.xml"
       ],
       "dependencies": [],
-      "pass": false
+      "pass": true
     },
     {
       "id": "CRAWL-02",

@@ -21,8 +21,17 @@ Optimize Kohelet website for traditional SEO and Generative Engine Optimization 
 
 ## Completed Tasks:
 
-(none yet)
+### CRAWL-01 - Create robots.txt with AI bot access ✅
+- **Date**: 2026-01-11
+- **Status**: VERIFIED - robots.txt already existed and meets all criteria
+- **Location**: `/public/robots.txt`
+- **Details**:
+  - ✅ User-agent: * with Allow: /
+  - ✅ AI bots explicitly allowed: GPTBot, ClaudeBot, Claude-Web, PerplexityBot, CCBot, Google-Extended, cohere-ai, FacebookBot, Applebot
+  - ✅ Disallow: /api/ with Allow: /api/og exception
+  - ✅ Sitemap: https://kohelet.digital/sitemap.xml
+  - ✅ Also includes traditional search bots: Googlebot, Bingbot, Slurp, DuckDuckBot, Baiduspider, YandexBot
 
 ---
 
-## Next Task: CRAWL-01 - Create robots.txt with AI bot access
+## Next Task: CRAWL-02 - Create dynamic sitemap
