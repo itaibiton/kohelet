@@ -433,3 +433,39 @@ I've successfully completed the MT-04 task. Here's the summary:
 **Build:** ✅ Successful  
 **Commit:** `9039eef perf(bloom): MT-04 disable bloom on mobile/low-end devices`
 
+========================================
+--- Iteration 10 --- Sun Jan 11 08:49:59 IST 2026
+========================================
+**MT-05 GSAP Cleanup Complete ✅**
+
+## Summary
+
+I completed **MT-05: GSAP cleanup** which adds proper ScrollTrigger and GSAP timeline cleanup to prevent memory leaks on route changes.
+
+### Changes Made to `ThreeBackground.tsx`:
+
+1. **Added `timelineRef`** - New ref to track the GSAP timeline for cleanup
+
+2. **Store timeline reference** - After creating the timeline, it's stored in the ref
+
+3. **Enhanced cleanup function**:
+   - Kill the timeline and all its child tweens
+   - Kill all ScrollTrigger instances
+   - Kill orphaned tweens targeting specific objects (particles, wireframe, camera, spotlight, fog, bloom)
+
+### Objects with GSAP tweens now cleaned up:
+- `particlesMaterial.color`
+- `wireframeMaterial.color`
+- `logoGroup.position` & `logoGroup.rotation`
+- `particlesMesh.position` & `particlesMesh.scale`
+- `camera.position` & `camera.rotation`
+- `spotlight1`
+- `scene.fog`
+- `bloomPass` (when present)
+
+### Also verified:
+- `Stats.tsx` already uses the proper `gsap.context()` pattern with `ctx.revert()` - no changes needed
+
+**Build:** ✅ Successful  
+**Commit:** `ed4232b` - `perf(main-thread): MT-05 add GSAP cleanup on unmount`
+

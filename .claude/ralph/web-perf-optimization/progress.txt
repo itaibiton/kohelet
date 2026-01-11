@@ -1431,4 +1431,55 @@ After cleanup enhancement:
 
 ---
 
-## Next Task: MT-06 - Memoize Pricing calculations
+### MT-06: Memoize Pricing calculations ✅
+**Completed: 2026-01-11**
+
+#### Verification Audit
+
+This task was already completed as part of SPLIT-02 (Pricing component split). The memoization audit confirms all optimizations are in place.
+
+#### Pricing.tsx (Main Orchestrator)
+
+| Hook | Target | Purpose |
+|------|--------|---------|
+| `useCallback` | `toggleAddOn` | Stable reference for add-on toggle handler |
+| `useCallback` | `selectProduct` | Stable reference for product selection |
+| `useCallback` | `isProductSelected` | Stable reference for selection check |
+| `useCallback` | `getServiceSelectedCount` | Stable reference for count calculation |
+| `useMemo` | `selectedAddOnsCount` | Memoized add-on count (line 78-80) |
+| `useMemo` | `calculatedPrice` | Memoized price calculation (line 83-105) |
+
+#### Sub-Component Memoization
+
+| Component | React.memo | File |
+|-----------|------------|------|
+| `PricingSelector` | ✅ Line 32 | pricing/PricingSelector.tsx |
+| `PricingCalculator` | ✅ Line 23 | pricing/PricingCalculator.tsx |
+| `AddOnsSelector` | ✅ Line 23 | pricing/AddOnsSelector.tsx |
+| `ProductCard` | ✅ Line 21 | pricing/ProductCard.tsx |
+| `AddOnCheckbox` | ✅ Line 19 | pricing/AddOnCheckbox.tsx |
+
+#### Re-render Prevention Strategy
+
+1. **Stable Callbacks**: All event handlers wrapped in `useCallback` with proper dependencies
+2. **Memoized Calculations**: `calculatedPrice` and `selectedAddOnsCount` computed only when inputs change
+3. **Component Memoization**: All 5 sub-components wrapped in `React.memo()`
+4. **Props Optimization**: Passing only necessary props to each component
+
+#### Why This Works
+
+When a user:
+- Selects a product → Only `selectedProducts` changes → Only affected components re-render
+- Toggles an add-on → Only `addOns` changes → Only `AddOnsSelector` and `PricingCalculator` re-render
+- Opens a popover → Only local UI state changes → No child re-renders
+
+#### Verification
+- ✅ Build: Successful
+- ✅ All useMemo implementations verified
+- ✅ All useCallback implementations verified
+- ✅ All React.memo wrappers verified
+- ✅ No TypeScript errors
+
+---
+
+## Next Task: BUILD-01 - next.config optimization
