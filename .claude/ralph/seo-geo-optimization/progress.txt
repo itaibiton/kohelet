@@ -63,4 +63,19 @@ Optimize Kohelet website for traditional SEO and Generative Engine Optimization 
 
 ---
 
-## Next Task: SCHEMA-01 - Create JSON-LD utilities
+### SCHEMA-01 - Create JSON-LD utilities ✅
+- **Date**: 2026-01-11
+- **Status**: VERIFIED - lib/schema.ts already exists with all required functions
+- **Location**: `/lib/schema.ts`
+- **Details**:
+  - ✅ getOrganizationSchema() - Company info with logo, contact, knowsAbout (lines 11-64)
+  - ✅ getWebSiteSchema(locale) - Site info with SearchAction (lines 67-94)
+  - ✅ getServiceSchema(service) - Service type with provider reference (lines 104-126)
+  - ✅ getArticleSchema(article) - Article with author, publisher, dates (lines 140-174)
+  - ✅ getBreadcrumbSchema(items) - Navigation hierarchy (lines 182-193)
+  - ✅ jsonLdScriptProps() helper for rendering (lines 244-251)
+  - ✅ BONUS: getFAQSchema() and getLocalBusinessSchema() also included
+
+---
+
+## Next Task: SCHEMA-02 - Add Organization and WebSite schema to layout

@@ -94,7 +94,7 @@
         "jsonLdScriptProps() helper for rendering"
       ],
       "dependencies": [],
-      "pass": false
+      "pass": true
     },
     {
       "id": "SCHEMA-02",
