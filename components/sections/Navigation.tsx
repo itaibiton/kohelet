@@ -83,28 +83,30 @@ export function Navigation() {
         </Link>
 
         {/* Desktop Nav Links */}
-        <div className="hidden md:flex items-center gap-6">
+        <ul className="hidden md:flex items-center gap-6" role="list">
           {links.map((link) =>
             isRouteLink(link.href) ? (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-[11px] font-medium text-white/60 hover:text-white transition-colors"
-              >
-                {link.label}
-              </Link>
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="text-[11px] font-medium text-white/60 hover:text-white transition-colors"
+                >
+                  {link.label}
+                </Link>
+              </li>
             ) : (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleHashClick(e, link.href)}
-                className="text-[11px] font-medium text-white/60 hover:text-white transition-colors"
-              >
-                {link.label}
-              </a>
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  onClick={(e) => handleHashClick(e, link.href)}
+                  className="text-[11px] font-medium text-white/60 hover:text-white transition-colors"
+                >
+                  {link.label}
+                </a>
+              </li>
             )
           )}
-        </div>
+        </ul>
 
         {/* Desktop CTA */}
         <a
@@ -160,30 +162,34 @@ export function Navigation() {
                 🇮🇱 עברית
               </button>
             </div>
-            {links.map((link) =>
-              isRouteLink(link.href) ? (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-sm font-medium text-white/80 hover:text-white py-2 transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ) : (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={(e) => {
-                    handleHashClick(e, link.href);
-                    setMobileMenuOpen(false);
-                  }}
-                  className="text-sm font-medium text-white/80 hover:text-white py-2 transition-colors"
-                >
-                  {link.label}
-                </a>
-              )
-            )}
+            <ul className="flex flex-col gap-4" role="list">
+              {links.map((link) =>
+                isRouteLink(link.href) ? (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="text-sm font-medium text-white/80 hover:text-white py-2 transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ) : (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      onClick={(e) => {
+                        handleHashClick(e, link.href);
+                        setMobileMenuOpen(false);
+                      }}
+                      className="text-sm font-medium text-white/80 hover:text-white py-2 transition-colors"
+                    >
+                      {link.label}
+                    </a>
+                  </li>
+                )
+              )}
+            </ul>
             <a
               href={cta.href}
               onClick={(e) => {

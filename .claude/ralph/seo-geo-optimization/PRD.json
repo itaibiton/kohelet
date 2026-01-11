@@ -174,7 +174,7 @@
         "Mobile menu uses same structure"
       ],
       "dependencies": [],
-      "pass": false
+      "pass": true
     },
     {
       "id": "SEMANTIC-03",

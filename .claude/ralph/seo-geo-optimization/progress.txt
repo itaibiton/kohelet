@@ -144,4 +144,18 @@ Optimize Kohelet website for traditional SEO and Generative Engine Optimization 
 
 ---
 
-## Next Task: SEMANTIC-02 - Add semantic list structure to Navigation
+### SEMANTIC-02 - Add semantic list structure to Navigation ✅
+- **Date**: 2026-01-11
+- **Status**: IMPLEMENTED - Added ul/li semantic structure to Navigation
+- **Location**: `/components/sections/Navigation.tsx`
+- **Details**:
+  - ✅ Desktop nav: Changed div wrapper to ul with role="list" (lines 86-109)
+  - ✅ Each desktop link wrapped in li element
+  - ✅ Mobile menu: Added ul wrapper with role="list" (lines 165-192)
+  - ✅ Each mobile link wrapped in li element
+  - ✅ CTA button kept separate from navigation list (proper semantics)
+  - ✅ Build verified successfully
+
+---
+
+## Next Task: SEMANTIC-03 - Wrap BlogCard in article element
