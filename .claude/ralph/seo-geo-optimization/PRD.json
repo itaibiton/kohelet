@@ -64,7 +64,7 @@
         "Correct lastModified dates"
       ],
       "dependencies": ["CRAWL-01"],
-      "pass": false
+      "pass": true
     },
     {
       "id": "CRAWL-03",

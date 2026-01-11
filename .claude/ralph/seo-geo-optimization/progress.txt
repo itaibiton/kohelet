@@ -34,4 +34,19 @@ Optimize Kohelet website for traditional SEO and Generative Engine Optimization 
 
 ---
 
-## Next Task: CRAWL-02 - Create dynamic sitemap
+### CRAWL-02 - Create dynamic sitemap ✅
+- **Date**: 2026-01-11
+- **Status**: VERIFIED - sitemap.ts already existed and meets all criteria
+- **Location**: `/app/sitemap.ts`
+- **Details**:
+  - ✅ Exports `MetadataRoute.Sitemap` type
+  - ✅ Includes static pages (home, about, blog) for both locales (he/en)
+  - ✅ Includes all published blog posts from Contentlayer
+  - ✅ Has `alternates.languages` for hreflang support on every URL
+  - ✅ Uses correct `lastModified` dates (current date for static pages, post.date for blog posts)
+  - ✅ Proper priority values (1.0 home, 0.9 blog index, 0.8 about, 0.7 posts)
+  - ✅ Build verified successfully
+
+---
+
+## Next Task: CRAWL-03 - Add canonical URLs and hreflang to layout
