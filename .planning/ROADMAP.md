@@ -12,7 +12,7 @@ Replace the broken contentlayer2 system with Velite, restructure content to sepa
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Content Migration** - Restructure existing MDX files to separate locale files
+- [x] **Phase 1: Content Migration** - Restructure existing MDX files to separate locale files
 - [ ] **Phase 2: Velite Implementation** - Replace contentlayer2 with Velite build system
 - [ ] **Phase 3: Bilingual Integration** - RTL/LTR handling and author profiles
 - [ ] **Phase 4: SEO & Metadata** - Structured data, hreflang, and search optimization
@@ -32,7 +32,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 1 plan
 
 Plans:
-- [ ] 01-01-PLAN.md — Migrate all 5 blog posts to folder-based locale structure
+- [x] 01-01-PLAN.md — Migrate all 5 blog posts to folder-based locale structure
 
 ### Phase 2: Velite Implementation
 **Goal**: Velite processes MDX files and generates type-safe content at build time
@@ -102,7 +102,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Content Migration | 0/1 | Planned | - |
+| 1. Content Migration | 1/1 | Complete ✓ | 2026-01-25 |
 | 2. Velite Implementation | 0/TBD | Not started | - |
 | 3. Bilingual Integration | 0/TBD | Not started | - |
 | 4. SEO & Metadata | 0/TBD | Not started | - |
