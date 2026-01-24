@@ -44,10 +44,11 @@ Plans:
   3. Reading time is computed automatically for each post
   4. Slug is derived from folder name consistently
   5. Build completes without contentlayer2 hanging issues
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- TBD
+- [ ] 02-01-PLAN.md — Install Velite, create config, integrate with Next.js
+- [ ] 02-02-PLAN.md — Update blog pages to use Velite, remove contentlayer2
 
 ### Phase 3: Bilingual Integration
 **Goal**: Hebrew and English content render correctly with proper text direction and author information
@@ -102,8 +103,8 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Content Migration | 1/1 | Complete ✓ | 2026-01-25 |
-| 2. Velite Implementation | 0/TBD | Not started | - |
+| 1. Content Migration | 1/1 | Complete | 2026-01-25 |
+| 2. Velite Implementation | 0/2 | Planned | - |
 | 3. Bilingual Integration | 0/TBD | Not started | - |
 | 4. SEO & Metadata | 0/TBD | Not started | - |
 | 5. Discovery Features | 0/TBD | Not started | - |
