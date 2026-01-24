@@ -2,7 +2,7 @@
 
 import React, { useState, useCallback, useRef, useMemo, useEffect } from "react";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-import { allPosts } from "contentlayer/generated";
+import { posts } from "@/.velite";
 import Navigation from "@/components/sections/Navigation";
 import Footer from "@/components/sections/Footer";
 import { EffectsWrapper } from "@/components/effects/EffectsWrapper";
@@ -19,34 +19,33 @@ type Props = {
 };
 
 /**
- * Transform Contentlayer posts to BlogPost interface with locale-aware fields
+ * Transform Velite posts to BlogPost interface with locale filtering
+ * Posts are already locale-specific from Velite (separate en.mdx/he.mdx files)
  */
 function transformPosts(locale: string): BlogPost[] {
-  const isHebrew = locale === "he";
-
-  return allPosts
-    .filter((post) => post.published !== false) // Filter only published posts
+  return posts
+    .filter((post) => post.locale === locale && post.published)
     .map((post) => ({
       id: post.slug,
-      title: isHebrew && post.title_he ? post.title_he : post.title,
-      excerpt: isHebrew && post.excerpt_he ? post.excerpt_he : post.excerpt,
-      thumbnail: post.thumbnail,
+      title: post.title,
+      excerpt: post.excerpt,
+      thumbnail: undefined, // TODO: Add thumbnail support in Phase 3
       author: {
         name: post.author,
-        avatar: post.authorAvatar,
+        avatar: undefined, // TODO: Add author avatar support in Phase 3
       },
       date: post.date,
-      category: isHebrew && post.category_he ? post.category_he : post.category,
+      category: post.category,
       slug: post.slug,
     }))
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); // Sort by date descending (newest first)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 export default function BlogPage({ params }: Props) {
   const { locale } = React.use(params);
 
-  // Transform Contentlayer posts to BlogPost interface
-  const posts = useMemo(() => transformPosts(locale), [locale]);
+  // Transform Velite posts to BlogPost interface (now locale-filtered)
+  const blogPosts = useMemo(() => transformPosts(locale), [locale]);
 
   // URL params for shareable filtered views
   const searchParams = useSearchParams();
@@ -83,16 +82,15 @@ export default function BlogPage({ params }: Props) {
     );
   }, [activeCategory, debouncedSearch, pathname, router]);
 
-  // Derive unique categories from real posts
+  // Derive unique categories from filtered posts
   const categories = Array.from(
-    new Set(posts.map((post) => post.category))
+    new Set(blogPosts.map((post) => post.category))
   ).sort();
 
   // Debounced search handler
   const handleSearchChange = useCallback((query: string) => {
-    setSearchQuery(query); // Update input immediately for UI
+    setSearchQuery(query);
 
-    // Debounce the filter update
     if (debounceRef.current) {
       clearTimeout(debounceRef.current);
     }
@@ -117,12 +115,10 @@ export default function BlogPage({ params }: Props) {
 
   // Filter logic with memoization
   const filteredPosts = useMemo(() => {
-    return posts.filter((post) => {
-      // Category filter
+    return blogPosts.filter((post) => {
       const matchesCategory =
         activeCategory === null || post.category === activeCategory;
 
-      // Search filter (case-insensitive, matches title and excerpt)
       const searchLower = debouncedSearch.toLowerCase();
       const matchesSearch =
         debouncedSearch === "" ||
@@ -131,7 +127,7 @@ export default function BlogPage({ params }: Props) {
 
       return matchesCategory && matchesSearch;
     });
-  }, [posts, activeCategory, debouncedSearch]);
+  }, [blogPosts, activeCategory, debouncedSearch]);
 
   return (
     <main className="min-h-screen relative selection:bg-blue-500/30 selection:text-white">
