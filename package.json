@@ -31,6 +31,7 @@
     "rehype-autolink-headings": "^7.1.0",
     "rehype-highlight": "^7.0.2",
     "rehype-slug": "^6.0.0",
+    "remark-gfm": "^4.0.1",
     "shadcn": "^3.6.3",
     "tailwind-merge": "^2.6.0",
     "three": "^0.182.0",
