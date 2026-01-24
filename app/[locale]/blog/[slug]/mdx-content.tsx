@@ -1,18 +1,28 @@
-"use client";
+'use client'
 
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import * as runtime from 'react/jsx-runtime'
 
 interface MDXContentProps {
-  content: string;
-  locale: string;
+  code: string
+  locale: string
 }
 
 /**
- * Client Component for rendering Markdown content
- * Uses react-markdown for simple, reliable rendering
+ * Hook to create MDX component from Velite-compiled code
+ * Velite compiles MDX to a function string that exports a default component
  */
-export function MDXContent({ content, locale }: MDXContentProps) {
+const useMDXComponent = (code: string) => {
+  const fn = new Function(code)
+  return fn({ ...runtime }).default
+}
+
+/**
+ * Client Component for rendering Velite-compiled MDX content
+ * Receives the compiled code string from Velite's s.mdx() output
+ */
+export function MDXContent({ code, locale }: MDXContentProps) {
+  const Component = useMDXComponent(code)
+
   return (
     <div
       className="prose prose-invert prose-lg max-w-none
@@ -31,7 +41,7 @@ export function MDXContent({ content, locale }: MDXContentProps) {
         prose-img:rounded-xl prose-img:shadow-2xl"
       dir={locale === "he" ? "rtl" : "ltr"}
     >
-      <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+      <Component />
     </div>
-  );
+  )
 }
