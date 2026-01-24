@@ -29,10 +29,10 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Frontmatter fields are clean (no _he suffix duplication)
   3. All 5 existing posts are migrated without content loss
   4. Content structure aligns with next-intl locale-first philosophy
-**Plans**: TBD
+**Plans**: 1 plan
 
 Plans:
-- TBD
+- [ ] 01-01-PLAN.md — Migrate all 5 blog posts to folder-based locale structure
 
 ### Phase 2: Velite Implementation
 **Goal**: Velite processes MDX files and generates type-safe content at build time
@@ -102,7 +102,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Content Migration | 0/TBD | Not started | - |
+| 1. Content Migration | 0/1 | Planned | - |
 | 2. Velite Implementation | 0/TBD | Not started | - |
 | 3. Bilingual Integration | 0/TBD | Not started | - |
 | 4. SEO & Metadata | 0/TBD | Not started | - |
