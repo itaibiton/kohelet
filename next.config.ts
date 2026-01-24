@@ -1,6 +1,5 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
-import { withContentlayer } from "next-contentlayer2";
 import bundleAnalyzer from "@next/bundle-analyzer";
 
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
@@ -78,4 +77,5 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withBundleAnalyzer(withContentlayer(withNextIntl(nextConfig)));
+// Note: withContentlayer removed - Velite uses programmatic API above
+export default withBundleAnalyzer(withNextIntl(nextConfig));

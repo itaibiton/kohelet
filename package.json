@@ -4,11 +4,11 @@
   "private": true,
   "scripts": {
     "contentlayer": "contentlayer2 build",
-    "dev": "next dev --turbopack",
-    "build": "next build --turbopack",
+    "dev": "velite --watch & next dev --turbopack",
+    "build": "velite && next build --turbopack",
     "start": "next start",
     "lint": "eslint",
-    "analyze": "ANALYZE=true next build --turbopack"
+    "analyze": "velite && ANALYZE=true next build --turbopack"
   },
   "dependencies": {
     "@hugeicons/core-free-icons": "^3.1.1",
