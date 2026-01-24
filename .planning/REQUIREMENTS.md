@@ -9,12 +9,12 @@ Requirements for this milestone. Each maps to roadmap phases.
 
 ### Content System
 
-- [ ] **CONT-01**: Blog posts are processed from MDX files using Velite
+- [x] **CONT-01**: Blog posts are processed from MDX files using Velite
 - [x] **CONT-02**: Each post has separate locale files (en.mdx + he.mdx in same folder)
-- [ ] **CONT-03**: Frontmatter is validated with TypeScript types (title, excerpt, date, author, category, published)
-- [ ] **CONT-04**: Content is indexed at build time (not runtime file I/O)
-- [ ] **CONT-05**: Reading time is computed automatically from content
-- [ ] **CONT-06**: Slug is derived from folder name
+- [x] **CONT-03**: Frontmatter is validated with TypeScript types (title, excerpt, date, author, category, published)
+- [x] **CONT-04**: Content is indexed at build time (not runtime file I/O)
+- [x] **CONT-05**: Reading time is computed automatically from content
+- [x] **CONT-06**: Slug is derived from folder name
 
 ### Bilingual/i18n
 
@@ -77,12 +77,12 @@ Deferred to future milestone.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CONT-01 | Phase 2 | Pending |
+| CONT-01 | Phase 2 | Complete |
 | CONT-02 | Phase 1 | Complete |
-| CONT-03 | Phase 2 | Pending |
-| CONT-04 | Phase 2 | Pending |
-| CONT-05 | Phase 2 | Pending |
-| CONT-06 | Phase 2 | Pending |
+| CONT-03 | Phase 2 | Complete |
+| CONT-04 | Phase 2 | Complete |
+| CONT-05 | Phase 2 | Complete |
+| CONT-06 | Phase 2 | Complete |
 | I18N-01 | Phase 3 | Pending |
 | I18N-02 | Phase 3 | Pending |
 | I18N-03 | Phase 3 | Pending |
@@ -110,4 +110,4 @@ Deferred to future milestone.
 
 ---
 *Requirements defined: 2026-01-24*
-*Last updated: 2026-01-25 after Phase 1 completion*
+*Last updated: 2026-01-25 after Phase 2 completion*
