@@ -1,4 +1,4 @@
-import { posts } from "@/.velite";
+import { posts, authors } from "@/.velite";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Navigation from "@/components/sections/Navigation";
@@ -6,6 +6,7 @@ import Footer from "@/components/sections/Footer";
 import { EffectsWrapper } from "@/components/effects/EffectsWrapper";
 import { ThreeBackgroundWrapper } from "@/components/effects/ThreeBackgroundWrapper";
 import { MDXContent } from "./mdx-content";
+import { AuthorProfile } from "@/components/blog/author-profile";
 import {
   getArticleSchema,
   getBreadcrumbSchema,
@@ -137,6 +138,9 @@ export default async function BlogPostPage({ params }: Props) {
     notFound();
   }
 
+  // Look up author profile
+  const author = authors.find(a => a.id === post.author);
+
   // Format date for display
   const formattedDate = new Date(post.date).toLocaleDateString(
     locale === "he" ? "he-IL" : "en-US",
@@ -209,6 +213,16 @@ export default async function BlogPostPage({ params }: Props) {
               </div>
             </div>
           </header>
+
+          {/* Author Profile */}
+          {author && (
+            <AuthorProfile
+              name={author.name}
+              bio={author.bio}
+              avatar={author.avatar}
+              locale={locale}
+            />
+          )}
 
           {/* MDX Content - now using Velite's compiled output */}
           <MDXContent code={post.content} locale={locale} />
