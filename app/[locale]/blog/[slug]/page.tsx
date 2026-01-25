@@ -182,7 +182,7 @@ export default async function BlogPostPage({ params }: Props) {
       <ThreeBackgroundWrapper />
       <Navigation />
 
-      <article className="relative z-10 pt-32 pb-20">
+      <article className="relative z-10 pt-32 pb-20" dir={locale === "he" ? "rtl" : "ltr"}>
         <div className="container max-w-4xl mx-auto px-6">
           {/* Post Header */}
           <header className="mb-12">

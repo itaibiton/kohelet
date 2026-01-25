@@ -148,7 +148,7 @@ export default async function LocaleLayout({
   const heebo = getHeeboFont(locale);
 
   return (
-    <html lang={locale} dir={dir} className={`scroll-smooth ${heebo.variable} font-sans`}>
+    <html lang={locale} dir={dir} className={`dark scroll-smooth ${heebo.variable} font-sans`}>
       <head>
         <script
           {...jsonLdScriptProps([
