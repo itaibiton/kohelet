@@ -36,6 +36,17 @@ const posts = defineCollection({
     }),
 })
 
+const authors = defineCollection({
+  name: 'Author',
+  pattern: 'authors/*.json',
+  schema: s.object({
+    id: s.string(),
+    name: s.string().max(100),
+    bio: s.string().max(500),
+    avatar: s.string(), // Path relative to public/
+  }),
+})
+
 export default defineConfig({
   root: 'content',
   output: {
@@ -45,7 +56,7 @@ export default defineConfig({
     name: '[name]-[hash:6].[ext]',
     clean: true,
   },
-  collections: { posts },
+  collections: { posts, authors },
   mdx: {
     remarkPlugins: [remarkGfm],
     rehypePlugins: [
