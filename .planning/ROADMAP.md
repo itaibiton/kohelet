@@ -60,10 +60,11 @@ Plans:
   3. Code blocks and blockquotes maintain proper direction in RTL context
   4. Posts display author name, avatar, and bio
   5. Content loads correctly based on current locale from next-intl
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- TBD
+- [ ] 03-01-PLAN.md — Update MDX prose wrapper to use CSS logical properties for RTL/LTR
+- [ ] 03-02-PLAN.md — Implement author profiles with Velite schema and display component
 
 ### Phase 4: SEO & Metadata
 **Goal**: Search engines can discover and understand content in both languages with proper structured data
@@ -105,6 +106,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. Content Migration | 1/1 | Complete | 2026-01-25 |
 | 2. Velite Implementation | 2/2 | Complete | 2026-01-25 |
-| 3. Bilingual Integration | 0/TBD | Not started | - |
+| 3. Bilingual Integration | 0/2 | Not started | - |
 | 4. SEO & Metadata | 0/TBD | Not started | - |
 | 5. Discovery Features | 0/TBD | Not started | - |
