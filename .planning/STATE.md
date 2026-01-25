@@ -10,18 +10,18 @@ See: .planning/PROJECT.md (updated 2026-01-24)
 ## Current Position
 
 Phase: 3 of 5 (Bilingual Integration)
-Plan: 0 of TBD
-Status: Not started
-Last activity: 2026-01-25 — Completed Phase 2 (Velite Implementation)
+Plan: 1 of TBD
+Status: In progress
+Last activity: 2026-01-25 — Completed 03-01-PLAN.md (RTL/LTR Direction Support)
 
 Progress: [████░░░░░░] 40%
 
 ## Performance Metrics
 
 **Velocity:**
-- Total plans completed: 3
-- Average duration: 7 min
-- Total execution time: 0.33 hours
+- Total plans completed: 4
+- Average duration: 5 min
+- Total execution time: 0.37 hours
 
 **By Phase:**
 
@@ -29,10 +29,11 @@ Progress: [████░░░░░░] 40%
 |-------|-------|-------|----------|
 | 01-content-migration | 1 | 12min | 12min |
 | 02-velite-implementation | 2 | 8min | 4min |
+| 03-bilingual-integration | 1 | 1min | 1min |
 
 **Recent Trend:**
-- Last 5 plans: 01-01 (12min), 02-01 (3min), 02-02 (5min)
-- Trend: Consistent velocity (~4min avg for Velite implementation)
+- Last 5 plans: 01-01 (12min), 02-01 (3min), 02-02 (5min), 03-01 (1min)
+- Trend: Accelerating velocity (1min for CSS-only changes)
 
 *Updated after each plan completion*
 
@@ -51,6 +52,8 @@ Recent decisions affecting current work:
 - Use npm script sequencing instead of Velite programmatic API (Next.js config doesn't support top-level await) (02-01)
 - Keep remark-gfm for Velite MDX compilation (GitHub Flavored Markdown support) (02-02)
 - Remove react-markdown (replaced by Velite's compiled MDX) (02-02)
+- Use CSS logical properties (border-s, ps) instead of physical (border-l, pl) for direction-agnostic styling (03-01)
+- Isolate code blocks with direction:ltr and unicode-bidi:isolate to prevent reversal in RTL (03-01)
 
 ### Pending Todos
 
@@ -70,7 +73,7 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-01-25
-Stopped at: Completed Phase 2 - Velite fully integrated, contentlayer2 removed
+Last session: 2026-01-25T00:15:52Z
+Stopped at: Completed 03-01-PLAN.md (RTL/LTR Direction Support)
 Resume file: None
-Next: Phase 3 (Bilingual Integration) - RTL/LTR handling and author profiles
+Next: Continue Phase 3 (Bilingual Integration) - Additional RTL/LTR enhancements
