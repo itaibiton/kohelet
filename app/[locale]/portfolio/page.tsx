@@ -164,7 +164,8 @@ export default function PortfolioPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="my-16 md:my-24 relative z-10">
+      <section className="relative z-10">
+        <div className="h-24 md:h-32" />
         <div className="w-full text-center">
           <div className="w-full p-12 md:p-20 border-y border-white/5 bg-[#080808] relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-accent-blue/5 to-transparent" />
