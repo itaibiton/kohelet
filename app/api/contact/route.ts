@@ -31,7 +31,7 @@ export async function POST(request: Request) {
     }
 
     await resend.emails.send({
-      from: "Kohelet Website <noreply@kohelet.digital>",
+      from: process.env.RESEND_FROM_EMAIL || "Kohelet Website <onboarding@resend.dev>",
       to: TO_EMAIL,
       replyTo: email,
       subject: `New Contact: ${name}${service ? ` - ${service}` : ""}`,
