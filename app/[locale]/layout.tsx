@@ -5,7 +5,6 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { isRtl, locales, type Locale } from "@/i18n/config";
-import { PricingProvider } from "@/context/PricingContext";
 import AnalyticsWrapper from "@/components/analytics/AnalyticsWrapper";
 import {
   getOrganizationSchema,
@@ -161,9 +160,7 @@ export default async function LocaleLayout({
         className={`${heebo.className} ${jetbrainsMono.variable} antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
-          <PricingProvider>
             {children}
-          </PricingProvider>
         </NextIntlClientProvider>
         <AnalyticsWrapper />
       </body>

@@ -9,7 +9,7 @@
     "links": [
       { "label": "Services", "href": "/#solutions" },
       { "label": "Capabilities", "href": "/#capabilities" },
-      { "label": "Pricing", "href": "/#pricing" },
+      { "label": "Portfolio", "href": "/portfolio" },
       { "label": "About", "href": "/about" },
       { "label": "Contact", "href": "/#contact" }
     ],
@@ -234,6 +234,146 @@
         }
       }
     }
+  },
+  "portfolio": {
+    "badge": "Our Work",
+    "section_title": "Selected Projects",
+    "section_subtitle": "Real solutions we've built for real people. Community platforms, luxury experiences, and mission-critical tools.",
+    "view_all": "View All Projects",
+    "featured": [
+      {
+        "title": "Yachad — Crisis Response Platform",
+        "description": "Real-time community platform connecting stranded Israelis abroad with emergency flights, services, and mutual aid during crisis situations.",
+        "category": "Community Platform",
+        "image": "/portfolio/yachad.png",
+        "tech": ["Next.js", "Real-time", "RTL", "Supabase"],
+        "url": "https://www.yachad.world/he"
+      },
+      {
+        "title": "Blue Marine — Luxury Bridal Venue",
+        "description": "Elegant digital presence for a seafront luxury penthouse venue in Ashdod, designed for brides preparing for their special day.",
+        "category": "Business Website",
+        "image": "/portfolio/blue-marine.png",
+        "tech": ["Next.js", "Tailwind CSS", "RTL"],
+        "url": "https://www.blue-marine.co.il"
+      },
+      {
+        "title": "Remember Amir Tzur — Memorial Project",
+        "description": "Interactive memorial connecting 19 physical QR-coded monuments across Israel to rich digital stories, continuing Amir's educational legacy.",
+        "category": "Memorial / Educational",
+        "image": "/portfolio/rememberamirzur.png",
+        "tech": ["Next.js", "QR Integration", "Maps"],
+        "url": "https://rememberamirzur.co.il"
+      },
+      {
+        "title": "Iron Swords Missing — Emergency Registry",
+        "description": "Volunteer-built platform for reporting and tracking missing persons during Operation Iron Swords, with real-time search and community board.",
+        "category": "Humanitarian Tool",
+        "image": "/portfolio/ironswords.png",
+        "tech": ["Next.js", "Tailwind CSS", "Vercel"],
+        "url": "https://ironswordsmissing.vercel.app"
+      }
+    ]
+  },
+  "portfolioPage": {
+    "backHome": "Back to Home",
+    "badge": "Portfolio",
+    "headline": "What We've Built",
+    "subtitle": "Every project starts with a problem worth solving. Community platforms, luxury digital experiences, and mission-critical humanitarian tools.",
+    "emptyState": "No projects found in this category.",
+    "categories": [
+      { "key": "all", "label": "All" },
+      { "key": "platform", "label": "Platforms" },
+      { "key": "business", "label": "Business" },
+      { "key": "memorial", "label": "Memorial & Impact" }
+    ],
+    "modal": {
+      "highlights": "Key Results",
+      "techStack": "Tech Stack",
+      "cta": "Start a Similar Project"
+    },
+    "cta": {
+      "badge": "Ready to Build?",
+      "headline": "Have a Project in Mind?",
+      "subtitle": "Tell us about your challenge. We'll show you how custom software and automation can solve it.",
+      "button": "Get in Touch"
+    },
+    "projects": [
+      {
+        "title": "Yachad — Crisis Response Platform",
+        "description": "Real-time community platform connecting stranded Israelis abroad with emergency flights and mutual aid.",
+        "longDescription": "Yachad (\"Together\") is a real-time crisis-response platform built to help Israeli nationals stranded abroad during emergencies. The platform connects people with emergency extraction flights, local services like embassies and Chabad centers, and a community feed for mutual aid. Features include real-time chat rooms organized by country, a travel agent portal for posting available flights, and live-updating news from verified sources.",
+        "category": "Community Platform",
+        "filterCategory": "platform",
+        "icon": "globe",
+        "image": "/portfolio/yachad.png",
+        "url": "https://www.yachad.world/he",
+        "tech": ["Next.js", "Real-time Chat", "Supabase", "RTL/LTR", "Vercel"],
+        "metric": { "value": "6", "label": "Core modules" },
+        "highlights": [
+          "Real-time emergency flight finder with seat-sharing capabilities",
+          "Country-specific chat rooms and direct messaging",
+          "Interactive services map: synagogues, embassies, Chabad centers worldwide",
+          "Bilingual Hebrew/English with full RTL support",
+          "Travel agent portal for managing flight listings"
+        ]
+      },
+      {
+        "title": "Blue Marine — Luxury Bridal Venue",
+        "description": "Elegant digital presence for a seafront luxury penthouse venue for wedding day preparation.",
+        "longDescription": "Blue Marine is a luxury penthouse rental in Ashdod, Israel, positioned on the first line to the sea with panoramic ocean views. We built an elegant, modern website that captures the venue's premium atmosphere — featuring a photo gallery showcasing the spacious salon, open terrace, and sea views. The site includes direct booking CTAs, Google Maps integration, and a design language that mirrors the venue's refined coastal aesthetic.",
+        "category": "Business Website",
+        "filterCategory": "business",
+        "icon": "globe",
+        "image": "/portfolio/blue-marine.png",
+        "url": "https://www.blue-marine.co.il",
+        "tech": ["Next.js", "Tailwind CSS", "RTL Hebrew", "Image Optimization"],
+        "metric": { "value": "1st", "label": "Line to sea" },
+        "highlights": [
+          "Modern, luxury-tier design matching the venue's premium positioning",
+          "Professional photo gallery with optimized image loading",
+          "Direct phone and Google Maps integration for instant booking",
+          "Fully RTL Hebrew layout with responsive mobile design"
+        ]
+      },
+      {
+        "title": "Remember Amir Tzur — Memorial Project",
+        "description": "Interactive memorial bridging 19 physical monuments with digital stories across Israel.",
+        "longDescription": "\"Shelo Netze Borim\" (Let Us Not Be Ignorant) is a memorial project honoring Amir Tzur, a combat officer killed during October 7th at Kfar Aza. The project bridges the physical and digital worlds: 19 monuments placed at meaningful locations across Israel, each embedded with QR codes linking to rich digital stories about the location, Amir's connection to it, and his values. The site features an interactive map, biographical content, and links to interviews, documentaries, and Amir's own writings including his '33 Life Tips.'",
+        "category": "Memorial / Educational",
+        "filterCategory": "memorial",
+        "icon": "globe",
+        "image": "/portfolio/rememberamirzur.png",
+        "url": "https://rememberamirzur.co.il",
+        "tech": ["Next.js", "QR Integration", "Heebo Font", "Responsive Grid"],
+        "metric": { "value": "19", "label": "Memorial points" },
+        "highlights": [
+          "19 physical QR-coded monuments across Israel linked to digital stories",
+          "Interactive location-based navigation system",
+          "Warm, minimal design with intentional typography and whitespace",
+          "Curated external resources: documentaries, podcasts, articles",
+          "Bilingual content preserving Amir's educational legacy"
+        ]
+      },
+      {
+        "title": "Iron Swords Missing — Emergency Registry",
+        "description": "Volunteer-built platform for tracking and reporting missing persons during Operation Iron Swords.",
+        "longDescription": "Built rapidly as a volunteer project during the crisis following October 7th, this platform enabled families and community members to report and search for missing persons. The site features a searchable database of reported individuals, a community message board for coordination, and a simple reporting form. It includes data verification processes and serves as a critical information hub during the most urgent moments.",
+        "category": "Humanitarian Tool",
+        "filterCategory": "memorial",
+        "icon": "chart",
+        "image": "/portfolio/ironswords.png",
+        "url": "https://ironswordsmissing.vercel.app",
+        "tech": ["Next.js", "Tailwind CSS", "Vercel", "Real-time DB"],
+        "metric": { "value": "24/7", "label": "Active" },
+        "highlights": [
+          "Rapid deployment during active crisis for immediate community use",
+          "Searchable missing persons database with verification system",
+          "Community message board for coordination and updates",
+          "Clean, functional UI prioritizing speed and accessibility"
+        ]
+      }
+    ]
   },
   "contact": {
     "headline_line1": "Ready to Automate?",

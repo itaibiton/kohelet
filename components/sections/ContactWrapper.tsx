@@ -15,7 +15,6 @@ import { Mail, Phone } from "lucide-react";
 
 // Dynamically import Contact with no SSR
 const Contact = dynamic(() => import("./Contact").then((mod) => mod.Contact), {
-  ssr: false,
   loading: () => <ContactSkeleton />,
 });
 

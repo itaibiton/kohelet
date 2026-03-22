@@ -3,13 +3,9 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Mail, Phone, ChevronDown, CheckCircle, XCircle } from "lucide-react";
-import { usePricing, formatPricingForWebhook } from "@/context/PricingContext";
 
 export function Contact() {
   const t = useTranslations("contact");
-
-  // Get pricing selections from context
-  const { selectedProducts, addOns, estimatedTotal, clearSelections } = usePricing();
 
   const [formState, setFormState] = useState({
     name: "",
@@ -29,25 +25,16 @@ export function Contact() {
     setStatus("loading");
 
     try {
-      // Include pricing selections if any were made
-      const pricingSelections = selectedProducts.length > 0 || Object.values(addOns).some(Boolean)
-        ? formatPricingForWebhook(selectedProducts, addOns, estimatedTotal)
-        : null;
-
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...formState,
-          pricingSelections,
-        }),
+        body: JSON.stringify(formState),
       });
 
       if (!response.ok) throw new Error("Failed to submit");
 
       setStatus("success");
       setFormState({ name: "", email: "", phone: "", service: "", message: "" });
-      clearSelections(); // Clear pricing selections after successful submission
     } catch {
       setStatus("error");
     }

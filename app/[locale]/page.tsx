@@ -2,7 +2,7 @@ import Navigation from "@/components/sections/Navigation";
 import Hero from "@/components/sections/Hero";
 import Solutions from "@/components/sections/Solutions";
 import Capabilities from "@/components/sections/Capabilities";
-import Pricing from "@/components/sections/Pricing";
+import Portfolio from "@/components/sections/Portfolio";
 import { ContactWrapper } from "@/components/sections/ContactWrapper";
 import Footer from "@/components/sections/Footer";
 import { ThreeBackgroundWrapper } from "@/components/effects/ThreeBackgroundWrapper";
@@ -43,7 +43,7 @@ export default function Home() {
       <Hero />
       <Solutions />
       <Capabilities />
-      <Pricing />
+      <Portfolio />
       <ContactWrapper />
       <Footer />
     </main>
