@@ -1,10 +1,19 @@
 import { NextResponse } from "next/server";
+import { Resend } from "resend";
 
-const N8N_WEBHOOK_URL = process.env.N8N_WEBHOOK_URL;
 const TO_EMAIL = process.env.CONTACT_EMAIL || "info@kohelet.digital";
 
 export async function POST(request: Request) {
   try {
+    if (!process.env.RESEND_API_KEY) {
+      console.error("RESEND_API_KEY is not configured");
+      return NextResponse.json(
+        { error: "Email service not configured" },
+        { status: 500 }
+      );
+    }
+
+    const resend = new Resend(process.env.RESEND_API_KEY);
     const body = await request.json();
     const { name, email, phone, service, message } = body as {
       name: string;
@@ -21,37 +30,21 @@ export async function POST(request: Request) {
       );
     }
 
-    if (N8N_WEBHOOK_URL) {
-      const webhookResponse = await fetch(N8N_WEBHOOK_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          to: TO_EMAIL,
-          name,
-          email,
-          phone,
-          service,
-          message,
-          submittedAt: new Date().toISOString(),
-        }),
-      });
-
-      if (!webhookResponse.ok) {
-        console.error("Webhook failed:", await webhookResponse.text());
-        return NextResponse.json(
-          { error: "Failed to process submission" },
-          { status: 500 }
-        );
-      }
-    } else {
-      console.log("Contact form submission (no webhook configured):", {
-        name,
-        email,
-        phone,
-        service,
-        message,
-      });
-    }
+    await resend.emails.send({
+      from: "Kohelet Website <noreply@kohelet.digital>",
+      to: TO_EMAIL,
+      replyTo: email,
+      subject: `New Contact: ${name}${service ? ` - ${service}` : ""}`,
+      text: [
+        `Name: ${name}`,
+        `Email: ${email}`,
+        phone ? `Phone: ${phone}` : null,
+        service ? `Service: ${service}` : null,
+        `\nMessage:\n${message}`,
+      ]
+        .filter(Boolean)
+        .join("\n"),
+    });
 
     return NextResponse.json({ success: true });
   } catch (error) {
