@@ -241,6 +241,17 @@
   border-radius: 3px;
 }
 
+/* ── Golden text selection ───────────────────────────────────────────── */
+[data-page="777"] ::selection {
+  background-color: rgba(251, 191, 36, 0.3);
+  color: #fde68a;
+}
+
+[data-page="777"] ::-moz-selection {
+  background-color: rgba(251, 191, 36, 0.3);
+  color: #fde68a;
+}
+
 /* ── Golden cursor ──────────────────────────────────────────────────── */
 [data-page="777"],
 [data-page="777"] * {
