@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useCallback } from "react";
+// videoEnded state removed — ping-pong video handles looping natively
 import {
   Palette,
   LayoutGrid,
@@ -36,51 +37,15 @@ const iconMap: Record<IconName, React.ReactNode> = {
 export default function LandingPage777() {
   const featuresRef = useSlideIn();
   const videoRef = useRef<HTMLVideoElement>(null);
-  const [videoEnded, setVideoEnded] = useState(false);
-
-  const reversingRef = useRef(false);
-  const rafRef = useRef(0);
-
-  const playReverse = useCallback(() => {
-    const video = videoRef.current;
-    if (!video) return;
-    reversingRef.current = true;
-    video.pause();
-    let lastTime = performance.now();
-
-    const step = (now: number) => {
-      if (!reversingRef.current || !videoRef.current) return;
-      const dt = (now - lastTime) / 1000;
-      lastTime = now;
-      videoRef.current.currentTime = Math.max(0, videoRef.current.currentTime - dt);
-      if (videoRef.current.currentTime <= 0.05) {
-        // Reached start — play forward again
-        reversingRef.current = false;
-        videoRef.current.currentTime = 0;
-        videoRef.current.play();
-        return;
-      }
-      rafRef.current = requestAnimationFrame(step);
-    };
-    rafRef.current = requestAnimationFrame(step);
-  }, []);
 
   const handleVideoEnd = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
-
-    if (!videoEnded) {
-      // First video ended — switch to loop video
-      video.src = "/777/video-loop.mp4";
-      video.loop = false;
-      video.play();
-      setVideoEnded(true);
-      return;
-    }
-
-    // Loop video ended forward — play it in reverse
-    playReverse();
-  }, [videoEnded, playReverse]);
+    // Intro ended — switch to ping-pong loop
+    video.src = "/777/video-pingpong.mp4";
+    video.loop = true;
+    video.play();
+  }, []);
 
   const [form, setForm] = useState({ name: "", phone: "", email: "" });
   const [submitted, setSubmitted] = useState(false);
@@ -190,18 +155,16 @@ export default function LandingPage777() {
         <video
           ref={videoRef}
           autoPlay
-          loop={videoEnded}
           muted
           playsInline
           src="/777/video.mp4"
           onEnded={handleVideoEnd}
           className="absolute inset-0 w-full h-full object-cover object-[30%_center] sm:object-center"
           style={{ zIndex: -10 }}
-          suppressHydrationWarning
         />
 
         {/* Dark overlay */}
-        <div className="absolute inset-0 hero-animate-fade" style={{ backgroundColor: "rgba(0,0,0,0.6)", zIndex: -5 }} />
+        <div className="absolute inset-0" style={{ backgroundColor: "rgba(0,0,0,0.6)", zIndex: -5 }} />
 
         {/* Subtle gold radial glow */}
         <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 70% 50% at 50% 0%, rgba(251,191,36,0.10), transparent)", zIndex: -4 }} />
@@ -222,7 +185,7 @@ export default function LandingPage777() {
 
             <h1
               className="hero-animate text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight"
-              style={{ animationDelay: "0.5s", color: "#fbbf24", marginBottom: "1.5rem", fontWeight: 900 }}
+              style={{ animationDelay: "0.5s", color: "#fbbf24", marginBottom: "1.5rem", fontWeight: 900, textShadow: "0 0 20px rgba(251,191,36,0.5), 0 0 60px rgba(251,191,36,0.2)" }}
             >
               דף נחיתה בזק: <CountUp to={777} duration={0.6} separator="," className="inline" /> ₪. <CountUp to={7} duration={0.4} className="inline" /> ימי עסקים. בול!
             </h1>
@@ -368,92 +331,53 @@ export default function LandingPage777() {
         </div>
       </section>
 
-      {/* SECTION 4 — TESTIMONIALS */}
+      {/* SECTION 4 — TESTIMONIALS (Constellation) */}
       <section className="min-h-screen flex flex-col justify-center py-16 sm:py-20 relative overflow-hidden" style={{ backgroundColor: "#09090b" }}>
-        <div className="max-w-6xl mx-auto px-6 sm:px-8 text-center mb-12">
-          <p className="text-amber-400/70 text-xs font-semibold tracking-widest uppercase mb-3">מה אומרים עלינו</p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-amber-400 mb-3">לקוחות מרוצים</h2>
-          <p className="text-zinc-400 text-base sm:text-lg max-w-xl mx-auto">תוצאות אמיתיות, עסקים אמיתיים</p>
+        <div className="max-w-6xl mx-auto px-6 sm:px-8 text-center" style={{ marginBottom: "2rem" }}>
+          <p className="text-xs font-semibold tracking-widest uppercase" style={{ color: "rgba(251,191,36,0.7)", marginBottom: "0.75rem" }}>מה אומרים עלינו</p>
+          <h2 className="text-3xl sm:text-4xl font-extrabold" style={{ color: "#fbbf24", marginBottom: "0.75rem" }}>לקוחות מרוצים</h2>
+          <p className="text-base sm:text-lg max-w-xl mx-auto" style={{ color: "#a1a1aa" }}>תוצאות אמיתיות, עסקים אמיתיים</p>
         </div>
 
-        <div dir="ltr" className="w-full overflow-hidden" style={{ maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)", WebkitMaskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)" }}>
-          <div className="flex w-max marquee-scroll gap-6 py-4">
-            {testimonials.slice(0, 8).map((t, i) => (
-              <div key={`a-${i}`} dir="rtl" className="w-[340px] sm:w-[380px] shrink-0 rounded-2xl p-6 flex flex-col gap-4 bg-zinc-900 border border-amber-500/10 transition-all hover:border-amber-500/30 hover:shadow-xl">
-                <div className="flex gap-0.5">
-                  {Array.from({ length: 5 }).map((_, s) => (
-                    <svg key={s} className="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                  ))}
-                </div>
-                <blockquote className="text-sm leading-relaxed flex-1 text-zinc-300">&ldquo;{t.text}&rdquo;</blockquote>
-                <div className="flex items-center gap-3 pt-4 border-t border-zinc-800">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-600 to-yellow-500 flex items-center justify-center text-sm font-bold text-black shrink-0 select-none">{t.avatar}</div>
-                  <div>
-                    <p className="font-semibold text-sm text-white">{t.name}</p>
-                    <p className="text-xs text-zinc-500">{t.role}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-            {testimonials.slice(0, 8).map((t, i) => (
-              <div key={`b-${i}`} aria-hidden="true" dir="rtl" className="w-[340px] sm:w-[380px] shrink-0 rounded-2xl p-6 flex flex-col gap-4 bg-zinc-900 border border-amber-500/10">
-                <div className="flex gap-0.5">
-                  {Array.from({ length: 5 }).map((_, s) => (
-                    <svg key={s} className="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                  ))}
-                </div>
-                <blockquote className="text-sm leading-relaxed flex-1 text-zinc-300">&ldquo;{t.text}&rdquo;</blockquote>
-                <div className="flex items-center gap-3 pt-4 border-t border-zinc-800">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-600 to-yellow-500 flex items-center justify-center text-sm font-bold text-black shrink-0 select-none">{t.avatar}</div>
-                  <div>
-                    <p className="font-semibold text-sm text-white">{t.name}</p>
-                    <p className="text-xs text-zinc-500">{t.role}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <main className="constellation max-w-6xl mx-auto w-full">
+          {testimonials.slice(0, 5).map((t, i) => {
+            const positions = ["wrapper-center", "wrapper-tl", "wrapper-tr", "wrapper-bl", "wrapper-br"];
+            const floats = ["float-1", "float-2", "float-3", "float-4", "float-5"];
+            const isCenter = i === 0;
+            return (
+              <div key={i} className={`card-wrapper ${floats[i]} ${positions[i]}`}>
+                <div className="glass-card" dir="rtl">
+                  <span className="absolute top-2 right-6 font-serif leading-none quote-icon" style={{ fontSize: isCenter ? "5rem" : "4rem" }}>&ldquo;</span>
 
-        {/* Second row — reverse direction, different speed, different testimonials */}
-        <div dir="ltr" className="w-full overflow-hidden mt-3" style={{ maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)", WebkitMaskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)" }}>
-          <div className="flex w-max gap-6 py-4" style={{ animation: "marquee-777-reverse 35s linear infinite" }}>
-            {testimonials.slice(8, 16).map((t, i) => (
-              <div key={`c-${i}`} dir="rtl" className="w-[340px] sm:w-[380px] shrink-0 rounded-2xl flex flex-col gap-4 transition-all" style={{ backgroundColor: "#18181b", border: "1px solid rgba(245,158,11,0.1)", padding: "1.5rem" }}>
-                <div className="flex gap-0.5">
-                  {Array.from({ length: 5 }).map((_, s) => (
-                    <svg key={s} className="w-4 h-4 fill-current" style={{ color: "#fbbf24" }} viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                  ))}
-                </div>
-                <blockquote className="text-sm leading-relaxed flex-1" style={{ color: "#d4d4d8" }}>&ldquo;{t.text}&rdquo;</blockquote>
-                <div className="flex items-center gap-3 pt-4" style={{ borderTop: "1px solid #27272a" }}>
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shrink-0 select-none" style={{ background: "linear-gradient(to bottom right, #d97706, #eab308)", color: "#000" }}>{t.avatar}</div>
-                  <div>
-                    <p className="font-semibold text-sm" style={{ color: "#ffffff" }}>{t.name}</p>
-                    <p className="text-xs" style={{ color: "#71717a" }}>{t.role}</p>
+                  <div className="flex items-center gap-1.5" style={{ marginBottom: isCenter ? "1.5rem" : "1rem" }}>
+                    {Array.from({ length: 5 }).map((_, s) => (
+                      <svg key={s} className="star fill-current" style={{ width: isCenter ? "1rem" : "0.875rem", height: isCenter ? "1rem" : "0.875rem" }} viewBox="0 0 24 24">
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                      </svg>
+                    ))}
+                  </div>
+
+                  <blockquote className="relative z-10 font-light leading-relaxed" style={{ fontSize: isCenter ? "1.125rem" : "0.875rem", color: isCenter ? "#f3f4f6" : "#d1d5db", marginBottom: isCenter ? "2rem" : "1.5rem" }}>
+                    {t.text}
+                  </blockquote>
+
+                  <div className="flex items-center gap-3 relative z-10" style={{ paddingTop: isCenter ? "1.5rem" : "1rem", borderTop: "1px solid rgba(251,191,36,0.08)" }}>
+                    <div className="relative shrink-0 flex items-center justify-center" style={{ width: isCenter ? "3rem" : "2.5rem", height: isCenter ? "3rem" : "2.5rem" }}>
+                      <div className="avatar-glow" />
+                      <div className="relative z-10 w-full h-full rounded-full flex items-center justify-center text-sm font-bold select-none" style={{ background: "linear-gradient(to bottom right, #d97706, #eab308)", color: "#000", border: "1px solid rgba(255,255,255,0.2)" }}>
+                        {t.avatar}
+                      </div>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="font-semibold tracking-wide" style={{ fontSize: "0.875rem", color: "#fff" }}>{t.name}</span>
+                      <span className="font-medium tracking-wider uppercase" style={{ fontSize: "0.625rem", color: "#9ca3af", marginTop: "0.125rem" }}>{t.role}</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            ))}
-            {testimonials.slice(8, 16).map((t, i) => (
-              <div key={`d-${i}`} aria-hidden="true" dir="rtl" className="w-[340px] sm:w-[380px] shrink-0 rounded-2xl flex flex-col gap-4" style={{ backgroundColor: "#18181b", border: "1px solid rgba(245,158,11,0.1)", padding: "1.5rem" }}>
-                <div className="flex gap-0.5">
-                  {Array.from({ length: 5 }).map((_, s) => (
-                    <svg key={s} className="w-4 h-4 fill-current" style={{ color: "#fbbf24" }} viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>
-                  ))}
-                </div>
-                <blockquote className="text-sm leading-relaxed flex-1" style={{ color: "#d4d4d8" }}>&ldquo;{t.text}&rdquo;</blockquote>
-                <div className="flex items-center gap-3 pt-4" style={{ borderTop: "1px solid #27272a" }}>
-                  <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shrink-0 select-none" style={{ background: "linear-gradient(to bottom right, #d97706, #eab308)", color: "#000" }}>{t.avatar}</div>
-                  <div>
-                    <p className="font-semibold text-sm" style={{ color: "#ffffff" }}>{t.name}</p>
-                    <p className="text-xs" style={{ color: "#71717a" }}>{t.role}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+            );
+          })}
+        </main>
       </section>
 
       {/* FOOTER */}
