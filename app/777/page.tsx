@@ -232,7 +232,7 @@ export default function LandingPage777() {
         </div>
 
         {/* Watermark cover — bottom right, hidden on mobile */}
-        <div className="absolute pointer-events-none watermark-blob" style={{ bottom: 0, right: 0, width: "22rem", height: "12rem", background: "radial-gradient(ellipse at bottom right, #000000 50%, #000000cc 65%, transparent 90%)", zIndex: 15 }} />
+        <div className="absolute pointer-events-none watermark-blob" style={{ bottom: "-3rem", right: "-3rem", width: "20rem", height: "20rem", borderRadius: "50%", background: "#000000", filter: "blur(40px)", zIndex: 15 }} />
 
       </section>
 
