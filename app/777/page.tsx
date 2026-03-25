@@ -107,21 +107,48 @@ export default function LandingPage777() {
         className="bg-black text-white font-sans antialiased"
       >
 
-      {/* SECTION 1 — HERO */}
-      <section className="relative isolate min-h-screen flex items-center overflow-hidden">
+      {/* Floating nav — same style as main kohelet site */}
+      <nav className="fixed top-6 left-0 w-full flex justify-center px-4 pointer-events-none" style={{ zIndex: 60 }}>
+        <div
+          className="pointer-events-auto px-6 py-3 rounded-full flex justify-between items-center gap-8 md:gap-12"
+          style={{
+            backgroundColor: "rgba(0,0,0,0.4)",
+            backdropFilter: "blur(40px)",
+            WebkitBackdropFilter: "blur(40px)",
+            border: "1px solid rgba(251,191,36,0.15)",
+            boxShadow: "0 0 20px rgba(0,0,0,0.5)",
+          }}
+        >
+          {/* Logo */}
+          <a href="/he" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+            <img src="/logo-vertical-no-digital.svg" alt="Kohelet Digital" width={32} height={32} />
+          </a>
 
-        {/* Site header — z-50 to stay above everything */}
-        <div className="absolute top-0 left-0 right-0 max-w-7xl mx-auto flex items-center justify-between" style={{ zIndex: 50, padding: "1.5rem 1.5rem" }}>
-          <a href="/he" className="hero-animate" style={{ animationDelay: "0.1s" }}><img src="/logo-vertical-no-digital.svg" alt="Kohelet Digital" className="h-12 sm:h-14" /></a>
+          {/* Nav links — desktop */}
+          <ul className="hidden md:flex items-center gap-6">
+            <li><button onClick={scrollToForm} className="text-[11px] font-medium cursor-pointer transition-colors" style={{ color: "rgba(255,255,255,0.6)" }}>צור קשר</button></li>
+            <li><a href="/he" className="text-[11px] font-medium transition-colors" style={{ color: "rgba(255,255,255,0.6)" }}>אתר ראשי</a></li>
+            <li><a href="https://instagram.com/kohelet.digital" target="_blank" rel="noopener noreferrer" className="text-[11px] font-medium transition-colors" style={{ color: "rgba(255,255,255,0.6)" }}>אינסטגרם</a></li>
+          </ul>
+
+          {/* CTA */}
           <button
-            type="button"
             onClick={scrollToForm}
-            className="hero-animate text-sm rounded-full cursor-pointer transition-colors duration-200"
-            style={{ animationDelay: "0.2s", border: "1px solid rgba(251,191,36,0.4)", color: "#fcd34d", padding: "0.5rem 1.25rem" }}
+            className="flex items-center gap-2 text-[10px] font-bold rounded-full transition-all cursor-pointer hover:brightness-110"
+            style={{
+              background: "linear-gradient(to left, #f59e0b, #facc15)",
+              color: "#000",
+              padding: "0.5rem 1.25rem",
+              boxShadow: "0 0 15px rgba(251,191,36,0.3)",
+            }}
           >
-            צור קשר
+            {heroContent.ctaButton}
           </button>
         </div>
+      </nav>
+
+      {/* SECTION 1 — HERO */}
+      <section className="relative isolate min-h-screen flex items-center overflow-hidden">
 
         {/* Video background */}
         <video
