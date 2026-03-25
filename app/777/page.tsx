@@ -189,7 +189,7 @@ export default function LandingPage777() {
               className="hero-animate text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight"
               style={{ animationDelay: "0.5s", color: "#fbbf24", marginBottom: "1.5rem", fontWeight: 900 }}
             >
-              דף נחיתה בזק: <CountUp to={777} duration={1.5} separator="," className="inline" /> ₪. <CountUp to={7} duration={1} className="inline" /> ימי עסקים. בול!
+              דף נחיתה בזק: <CountUp to={777} duration={0.6} separator="," className="inline" /> ₪. <CountUp to={7} duration={0.4} className="inline" /> ימי עסקים. בול!
             </h1>
 
             <p
