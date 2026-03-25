@@ -21,6 +21,7 @@ import { useSlideIn } from "@/components/777/useSlideIn";
 import MagicBento from "@/components/777/MagicBento";
 import ChatIllustration from "@/components/777/ChatIllustration";
 import FormIllustration from "@/components/777/FormIllustration";
+import CountUp from "@/components/777/CountUp";
 
 type IconName = "Palette" | "LayoutGrid" | "MessageCircle" | "FileText" | "Server";
 
@@ -188,7 +189,7 @@ export default function LandingPage777() {
               className="hero-animate text-3xl sm:text-4xl lg:text-5xl leading-tight tracking-tight"
               style={{ animationDelay: "0.5s", color: "#fbbf24", marginBottom: "1.5rem", fontWeight: 900 }}
             >
-              {heroContent.headline}
+              דף נחיתה בזק: <CountUp to={777} duration={1.5} separator="," className="inline" /> ₪. <CountUp to={7} duration={1} className="inline" /> ימי עסקים. בול!
             </h1>
 
             <p
