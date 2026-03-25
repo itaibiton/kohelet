@@ -229,8 +229,8 @@ export default function LandingPage777() {
           </div>
         </div>
 
-        {/* Watermark cover — bottom right, above video but below content */}
-        <div className="absolute pointer-events-none" style={{ bottom: 0, right: 0, width: "13rem", height: "7rem", backgroundColor: "#000000", zIndex: 5 }} />
+        {/* Watermark cover — bottom right, hidden on mobile */}
+        <div className="absolute pointer-events-none hidden sm:block" style={{ bottom: 0, right: 0, width: "13rem", height: "7rem", backgroundColor: "#000000", zIndex: 5 }} />
 
       </section>
 
