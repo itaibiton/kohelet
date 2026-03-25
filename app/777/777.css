@@ -241,12 +241,6 @@
   border-radius: 3px;
 }
 
-/* ── Snap scroll ────────────────────────────────────────────────────── */
-[data-page="777"] > section,
-[data-page="777"] > footer {
-  scroll-snap-align: start;
-}
-
 /* ── Watermark blob — hidden below lg, visible on large screens ─────── */
 .watermark-blob {
   display: none !important;
