@@ -241,6 +241,16 @@
   border-radius: 3px;
 }
 
+/* ── Watermark blob — hidden below lg, visible on large screens ─────── */
+.watermark-blob {
+  display: none !important;
+}
+@media (min-width: 1024px) {
+  .watermark-blob {
+    display: block !important;
+  }
+}
+
 /* ── SVG fills ───────────────────────────────────────────────────────── */
 [data-page="777"] .fill-current { fill: currentColor !important; }
 
