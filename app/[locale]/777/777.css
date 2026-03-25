@@ -1,0 +1,240 @@
+/* ==========================================================================
+   777 Landing Page — Complete CSS Isolation
+   All styles scoped under [data-page="777"] to prevent conflicts
+   with the main kohelet site's CSS (shadcn, dark mode, etc.)
+   ========================================================================== */
+
+/* ── Variable Resets ─────────────────────────────────────────────────────── */
+[data-page="777"],
+.dark [data-page="777"] {
+  --background: #000000 !important;
+  --foreground: #ffffff !important;
+  --border: transparent !important;
+  --input: rgba(255, 255, 255, 0.1) !important;
+  --ring: rgba(251, 191, 36, 0.3) !important;
+  --card: #09090b !important;
+  --card-foreground: #ffffff !important;
+  --primary: #fbbf24 !important;
+  --primary-foreground: #000000 !important;
+  --muted: #27272a !important;
+  --muted-foreground: #a1a1aa !important;
+  --accent: #fbbf24 !important;
+  --accent-foreground: #000000 !important;
+  --text-primary: #ffffff !important;
+  --text-secondary: #a1a1aa !important;
+  --text-tertiary: #71717a !important;
+  --brand-dark: #000000 !important;
+  --border-subtle: transparent !important;
+  --border-default: transparent !important;
+  --spacing: 0.25rem;
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+/* ── Kill inherited borders & outlines from * { border-border } ──────── */
+[data-page="777"] *,
+[data-page="777"] *::before,
+[data-page="777"] *::after {
+  border-color: transparent;
+  outline-color: transparent;
+}
+
+/* ── Re-enable explicit border classes (attribute selector = higher specificity) */
+[data-page="777"] [class*="border-amber"] { border-color: revert-layer; }
+[data-page="777"] [class*="border-zinc"] { border-color: revert-layer; }
+[data-page="777"] [class*="border-black"] { border-color: revert-layer; }
+[data-page="777"] [class*="border-white"] { border-color: revert-layer; }
+
+/* Explicit border color overrides since revert-layer may not work everywhere */
+[data-page="777"] .border-amber-400\/10 { border-color: rgba(251, 191, 36, 0.1) !important; }
+[data-page="777"] .border-amber-400\/15 { border-color: rgba(251, 191, 36, 0.15) !important; }
+[data-page="777"] .border-amber-400\/20 { border-color: rgba(251, 191, 36, 0.2) !important; }
+[data-page="777"] .border-amber-400\/30 { border-color: rgba(251, 191, 36, 0.3) !important; }
+[data-page="777"] .border-amber-400\/40 { border-color: rgba(251, 191, 36, 0.4) !important; }
+[data-page="777"] .border-amber-500\/10 { border-color: rgba(245, 158, 11, 0.1) !important; }
+[data-page="777"] .border-amber-500\/30 { border-color: rgba(245, 158, 11, 0.3) !important; }
+[data-page="777"] .border-zinc-700 { border-color: #3f3f46 !important; }
+[data-page="777"] .border-zinc-800 { border-color: #27272a !important; }
+[data-page="777"] .border-zinc-800\/40 { border-color: rgba(39, 39, 42, 0.4) !important; }
+[data-page="777"] .border-t { border-top-color: currentColor; }
+
+/* ── Gradient fix — Tailwind v4 uses oklab, force standard sRGB ──────── */
+[data-page="777"] .bg-gradient-to-l {
+  background-image: linear-gradient(to left, var(--tw-gradient-stops)) !important;
+}
+[data-page="777"] .bg-gradient-to-b {
+  background-image: linear-gradient(to bottom, var(--tw-gradient-stops)) !important;
+}
+[data-page="777"] .bg-gradient-to-br {
+  background-image: linear-gradient(to bottom right, var(--tw-gradient-stops)) !important;
+}
+[data-page="777"] .from-amber-500 {
+  --tw-gradient-from: #f59e0b;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(245, 158, 11, 0));
+}
+[data-page="777"] .from-amber-600 {
+  --tw-gradient-from: #d97706;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(217, 119, 6, 0));
+}
+[data-page="777"] .from-amber-700 {
+  --tw-gradient-from: #b45309;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgba(180, 83, 9, 0));
+}
+[data-page="777"] .to-yellow-400 { --tw-gradient-to: #facc15; }
+[data-page="777"] .to-yellow-500 { --tw-gradient-to: #eab308; }
+[data-page="777"] .to-yellow-600 { --tw-gradient-to: #ca8a04; }
+[data-page="777"] .via-yellow-400 {
+  --tw-gradient-via: #facc15;
+  --tw-gradient-stops: var(--tw-gradient-from), #facc15, var(--tw-gradient-to, rgba(250, 204, 21, 0));
+}
+
+/* ── Keyframes ───────────────────────────────────────────────────────── */
+
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes hero-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes marquee-777 {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-777-reverse {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.marquee-scroll-reverse {
+  animation: marquee-777-reverse 35s linear infinite;
+}
+
+.marquee-scroll-reverse:hover {
+  animation-play-state: paused;
+}
+
+@keyframes pop-in-777 {
+  from { opacity: 0; transform: scale(0.7); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slide-in-rtl-777 {
+  from { opacity: 0; transform: translateX(60px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Animation utility classes ───────────────────────────────────────── */
+
+.hero-animate {
+  opacity: 0;
+  animation: hero-fade-up 0.8s ease-out forwards;
+}
+
+.hero-animate-fade {
+  opacity: 0;
+  animation: hero-fade-in 1s ease-out forwards;
+}
+
+.marquee-scroll {
+  animation: marquee-777 50s linear infinite;
+}
+
+.marquee-scroll:hover {
+  animation-play-state: paused;
+}
+
+.animate-slide-in {
+  animation: slide-in-rtl-777 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-pop-in {
+  animation: pop-in-777 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: 0;
+}
+
+/* ── Background color overrides ──────────────────────────────────────── */
+[data-page="777"] .bg-black { background-color: #000000 !important; }
+[data-page="777"] .bg-black\/60 { background-color: rgba(0,0,0,0.6) !important; }
+[data-page="777"] .bg-zinc-950 { background-color: #09090b !important; }
+[data-page="777"] .bg-zinc-900 { background-color: #18181b !important; }
+[data-page="777"] .bg-zinc-900\/60 { background-color: rgba(24,24,27,0.6) !important; }
+[data-page="777"] .bg-zinc-800 { background-color: #27272a !important; }
+[data-page="777"] .bg-white\/10 { background-color: rgba(255,255,255,0.1) !important; }
+[data-page="777"] .bg-amber-400\/10 { background-color: rgba(251,191,36,0.1) !important; }
+[data-page="777"] .bg-amber-400\/20 { background-color: rgba(251,191,36,0.2) !important; }
+
+/* ── Text color overrides ───────────────────────────────────────────── */
+[data-page="777"] .text-white { color: #ffffff !important; }
+[data-page="777"] .text-black { color: #000000 !important; }
+[data-page="777"] .text-black\/60 { color: rgba(0,0,0,0.6) !important; }
+[data-page="777"] .text-black\/70 { color: rgba(0,0,0,0.7) !important; }
+[data-page="777"] .text-amber-400 { color: #fbbf24 !important; }
+[data-page="777"] .text-amber-400\/55 { color: rgba(251,191,36,0.55) !important; }
+[data-page="777"] .text-amber-400\/70 { color: rgba(251,191,36,0.7) !important; }
+[data-page="777"] .text-amber-300 { color: #fcd34d !important; }
+[data-page="777"] .text-amber-200\/70 { color: rgba(253,230,138,0.7) !important; }
+[data-page="777"] .text-amber-200\/80 { color: rgba(253,230,138,0.8) !important; }
+[data-page="777"] .text-amber-100\/75 { color: rgba(254,243,199,0.75) !important; }
+[data-page="777"] .text-zinc-300 { color: #d4d4d8 !important; }
+[data-page="777"] .text-zinc-400 { color: #a1a1aa !important; }
+[data-page="777"] .text-zinc-500 { color: #71717a !important; }
+[data-page="777"] .text-zinc-700 { color: #3f3f46 !important; }
+
+/* ── Padding overrides — force via !important ───────────────────────── */
+[data-page="777"] .py-16 { padding-top: 4rem !important; padding-bottom: 4rem !important; }
+[data-page="777"] .py-14 { padding-top: 3.5rem !important; padding-bottom: 3.5rem !important; }
+[data-page="777"] .py-6 { padding-top: 1.5rem !important; padding-bottom: 1.5rem !important; }
+[data-page="777"] .py-4 { padding-top: 1rem !important; padding-bottom: 1rem !important; }
+[data-page="777"] .py-3 { padding-top: 0.75rem !important; padding-bottom: 0.75rem !important; }
+[data-page="777"] .py-2 { padding-top: 0.5rem !important; padding-bottom: 0.5rem !important; }
+[data-page="777"] .px-6 { padding-left: 1.5rem !important; padding-right: 1.5rem !important; }
+[data-page="777"] .px-5 { padding-left: 1.25rem !important; padding-right: 1.25rem !important; }
+[data-page="777"] .px-4 { padding-left: 1rem !important; padding-right: 1rem !important; }
+[data-page="777"] .px-10 { padding-left: 2.5rem !important; padding-right: 2.5rem !important; }
+[data-page="777"] .p-8 { padding: 2rem !important; }
+[data-page="777"] .p-6 { padding: 1.5rem !important; }
+
+/* ── Margin overrides ───────────────────────────────────────────────── */
+[data-page="777"] .mb-12 { margin-bottom: 3rem !important; }
+[data-page="777"] .mb-8 { margin-bottom: 2rem !important; }
+[data-page="777"] .mb-6 { margin-bottom: 1.5rem !important; }
+[data-page="777"] .mb-3 { margin-bottom: 0.75rem !important; }
+[data-page="777"] .mt-10 { margin-top: 2.5rem !important; }
+[data-page="777"] .mt-2 { margin-top: 0.5rem !important; }
+[data-page="777"] .mt-1 { margin-top: 0.25rem !important; }
+
+/* ── Gap overrides ──────────────────────────────────────────────────── */
+[data-page="777"] .gap-6 { gap: 1.5rem !important; }
+[data-page="777"] .gap-4 { gap: 1rem !important; }
+[data-page="777"] .gap-3 { gap: 0.75rem !important; }
+[data-page="777"] .gap-2 { gap: 0.5rem !important; }
+[data-page="777"] .gap-1 { gap: 0.25rem !important; }
+[data-page="777"] .gap-0\.5 { gap: 0.125rem !important; }
+
+/* ── Responsive padding ─────────────────────────────────────────────── */
+@media (min-width: 640px) {
+  [data-page="777"] .sm\:py-20 { padding-top: 5rem !important; padding-bottom: 5rem !important; }
+  [data-page="777"] .sm\:px-8 { padding-left: 2rem !important; padding-right: 2rem !important; }
+}
+
+/* ── Spacing utilities ──────────────────────────────────────────────── */
+[data-page="777"] .space-y-5 > * + * { margin-top: 1.25rem !important; }
+[data-page="777"] .space-y-4 > * + * { margin-top: 1rem !important; }
+[data-page="777"] .space-y-1\.5 > * + * { margin-top: 0.375rem !important; }
+
+/* ── SVG fills ───────────────────────────────────────────────────────── */
+[data-page="777"] .fill-current { fill: currentColor !important; }
+
+/* ── Shadow overrides ───────────────────────────────────────────────── */
+[data-page="777"] .shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -4px rgba(0,0,0,0.1) !important;
+}
+[data-page="777"] .shadow-md {
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1) !important;
+}
