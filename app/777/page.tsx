@@ -336,7 +336,7 @@ export default function LandingPage777() {
       <TestimonialsSection />
 
       {/* FOOTER */}
-      <footer style={{ backgroundColor: "#09090b", borderTop: "1px solid rgba(251,191,36,0.1)" }}>
+      <footer style={{ backgroundColor: "#09090b" }}>
         <div className="max-w-6xl mx-auto px-6 sm:px-8 py-14">
           <div className="flex flex-col items-center gap-6">
             <h4 className="text-amber-400 text-xs font-bold tracking-widest uppercase">צור קשר</h4>

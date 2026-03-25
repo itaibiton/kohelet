@@ -43,17 +43,24 @@ const testimonialData: Testimonial[] = [
     text: "הדף הביא לי 20 לקוחות חדשים בחודש הראשון. לא חלמתי על תוצאות כאלה.",
     avatar: "ש",
   },
+  {
+    name: "נועה פרידמן",
+    role: "מעצבת גרפית",
+    text: "לא האמנתי שאפשר לקבל דף כל כך יפה במחיר הזה. הלקוחות שלי מתלהבים!",
+    avatar: "נ",
+  },
 ];
 
 /* ------------------------------------------------------------------ */
 /*  Per-card layout offsets (desktop asymmetric stagger)               */
 /* ------------------------------------------------------------------ */
 const cardLayouts = [
-  { gridCol: "1 / 2", gridRow: "1 / 2", translateY: 0, rotate: -1.2, scale: 1 },
-  { gridCol: "2 / 3", gridRow: "1 / 2", translateY: 48, rotate: 0.8, scale: 1.03 },
-  { gridCol: "3 / 4", gridRow: "1 / 3", translateY: -16, rotate: -0.5, scale: 1.06 },
-  { gridCol: "1 / 2", gridRow: "2 / 3", translateY: -24, rotate: 1, scale: 1 },
-  { gridCol: "2 / 3", gridRow: "2 / 3", translateY: 16, rotate: -0.7, scale: 1.02 },
+  { gridCol: "1 / 2", gridRow: "1 / 2", translateY: 0, rotate: -0.6, scale: 1 },
+  { gridCol: "2 / 3", gridRow: "1 / 2", translateY: 12, rotate: 0.4, scale: 1 },
+  { gridCol: "3 / 4", gridRow: "1 / 2", translateY: -8, rotate: -0.3, scale: 1 },
+  { gridCol: "1 / 2", gridRow: "2 / 3", translateY: 8, rotate: 0.5, scale: 1 },
+  { gridCol: "2 / 3", gridRow: "2 / 3", translateY: -6, rotate: -0.4, scale: 1 },
+  { gridCol: "3 / 4", gridRow: "2 / 3", translateY: 10, rotate: 0.3, scale: 1 },
 ];
 
 /* ------------------------------------------------------------------ */
