@@ -107,7 +107,7 @@ export default function LandingPage777() {
         dir="rtl"
         data-page="777"
         className="bg-black text-white font-sans antialiased"
-        style={{ scrollSnapType: "y proximity", overflowY: "auto", height: "100vh" }}
+        style={{ scrollSnapType: "y mandatory", overflowY: "scroll", height: "100dvh" }}
       >
 
       {/* Floating nav — same style as main kohelet site */}
