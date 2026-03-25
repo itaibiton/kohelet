@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import {
   Palette,
   LayoutGrid,
@@ -34,6 +34,18 @@ const iconMap: Record<IconName, React.ReactNode> = {
 
 export default function LandingPage777() {
   const featuresRef = useSlideIn();
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [videoEnded, setVideoEnded] = useState(false);
+
+  const handleVideoEnd = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.src = "/777/video-loop.mp4";
+    video.loop = true;
+    video.play();
+    setVideoEnded(true);
+  }, []);
+
   const [form, setForm] = useState({ name: "", phone: "", email: "" });
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -113,11 +125,12 @@ export default function LandingPage777() {
 
         {/* Video background */}
         <video
+          ref={videoRef}
           autoPlay
-          loop
           muted
           playsInline
           src="/777/video.mp4"
+          onEnded={handleVideoEnd}
           className="absolute inset-0 w-full h-full object-cover object-[30%_center] sm:object-center"
           style={{ zIndex: -10 }}
         />
