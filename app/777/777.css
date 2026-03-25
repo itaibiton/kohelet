@@ -114,9 +114,6 @@
   animation: marquee-777-reverse 35s linear infinite;
 }
 
-.marquee-scroll-reverse:hover {
-  animation-play-state: paused;
-}
 
 @keyframes pop-in-777 {
   from { opacity: 0; transform: scale(0.7); }
@@ -144,9 +141,6 @@
   animation: marquee-777 50s linear infinite;
 }
 
-.marquee-scroll:hover {
-  animation-play-state: paused;
-}
 
 .animate-slide-in {
   animation: slide-in-rtl-777 0.5s ease-out forwards;
