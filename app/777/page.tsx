@@ -230,7 +230,7 @@ export default function LandingPage777() {
         </div>
 
         {/* Watermark cover — bottom right, hidden on mobile */}
-        <div className="absolute pointer-events-none hidden sm:block" style={{ bottom: 0, right: 0, width: "13rem", height: "7rem", backgroundColor: "#000000", zIndex: 5 }} />
+        <div className="absolute pointer-events-none hidden lg:block" style={{ bottom: 0, right: 0, width: "13rem", height: "7rem", backgroundColor: "#000000", zIndex: 5 }} />
 
       </section>
 
