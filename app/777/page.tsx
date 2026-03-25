@@ -38,14 +38,49 @@ export default function LandingPage777() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [videoEnded, setVideoEnded] = useState(false);
 
+  const reversingRef = useRef(false);
+  const rafRef = useRef(0);
+
+  const playReverse = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    reversingRef.current = true;
+    video.pause();
+    let lastTime = performance.now();
+
+    const step = (now: number) => {
+      if (!reversingRef.current || !videoRef.current) return;
+      const dt = (now - lastTime) / 1000;
+      lastTime = now;
+      videoRef.current.currentTime = Math.max(0, videoRef.current.currentTime - dt);
+      if (videoRef.current.currentTime <= 0.05) {
+        // Reached start — play forward again
+        reversingRef.current = false;
+        videoRef.current.currentTime = 0;
+        videoRef.current.play();
+        return;
+      }
+      rafRef.current = requestAnimationFrame(step);
+    };
+    rafRef.current = requestAnimationFrame(step);
+  }, []);
+
   const handleVideoEnd = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
-    video.src = "/777/video-loop.mp4";
-    video.loop = true;
-    video.play();
-    setVideoEnded(true);
-  }, []);
+
+    if (!videoEnded) {
+      // First video ended — switch to loop video
+      video.src = "/777/video-loop.mp4";
+      video.loop = false;
+      video.play();
+      setVideoEnded(true);
+      return;
+    }
+
+    // Loop video ended forward — play it in reverse
+    playReverse();
+  }, [videoEnded, playReverse]);
 
   const [form, setForm] = useState({ name: "", phone: "", email: "" });
   const [submitted, setSubmitted] = useState(false);
