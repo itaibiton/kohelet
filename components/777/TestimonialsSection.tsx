@@ -284,7 +284,7 @@ export default function TestimonialsSection({
     return () => obs.disconnect();
   }, []);
 
-  const items = testimonials.slice(0, 5);
+  const items = testimonials.slice(0, 6);
 
   return (
     <section
@@ -508,18 +508,6 @@ export default function TestimonialsSection({
           מאות בעלי עסקים כבר קיבלו דף נחיתה שעובד. הנה מה שהם אומרים.
         </p>
 
-        {/* Decorative line */}
-        <div
-          style={{
-            width: 80,
-            height: 2,
-            background: "linear-gradient(to left, transparent, #fbbf24, transparent)",
-            margin: "28px auto 0",
-            transformOrigin: "center",
-            animation: visible ? "lineExpand 0.8s ease-out 0.3s forwards" : "none",
-            transform: visible ? undefined : "scaleX(0)",
-          }}
-        />
       </div>
 
       {/* ---------- Testimonials grid ---------- */}
@@ -546,15 +534,6 @@ export default function TestimonialsSection({
         ))}
       </div>
 
-      {/* ---------- Bottom decorative line ---------- */}
-      <div
-        style={{
-          maxWidth: 600,
-          height: 1,
-          background: "linear-gradient(to left, transparent, rgba(251,191,36,0.15), transparent)",
-          margin: "80px auto 0",
-        }}
-      />
     </section>
   );
 }
