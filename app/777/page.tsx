@@ -127,12 +127,14 @@ export default function LandingPage777() {
         <video
           ref={videoRef}
           autoPlay
+          loop={videoEnded}
           muted
           playsInline
           src="/777/video.mp4"
           onEnded={handleVideoEnd}
           className="absolute inset-0 w-full h-full object-cover object-[30%_center] sm:object-center"
           style={{ zIndex: -10 }}
+          suppressHydrationWarning
         />
 
         {/* Dark overlay */}
