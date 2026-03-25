@@ -2,7 +2,7 @@ export const heroContent = {
   headline: "דף נחיתה בזק: 777 ₪. 7 ימי עסקים. בול!",
   subheadline:
     "העסק שלך חייב לעבוד, גם עכשיו. קבל דף נחיתה מקצועי, מעוצב וממיר, בלי סיבוכים ובלי להמתין. השאר פרטים ונחזור אליך תוך שעה.",
-  ctaButton: "אני רוצה את חבילת ה-777!",
+  ctaButton: "אני רוצה את חבילת ה-₪777!",
 };
 
 export const formFields = {
@@ -14,12 +14,12 @@ export const formFields = {
 export const features = [
   {
     icon: "Palette" as const,
-    title: "עיצוב מבוסס תבנית",
-    description: "תבנית מקצועית ומותאמת לעסק שלך, עם מראה מרשים ומודרני",
+    title: "עיצוב מודרני מותאם ל2026",
+    description: "עיצוב מודרני ומותאם לעסק שלך, עם מראה מרשים ומודרני",
   },
   {
     icon: "LayoutGrid" as const,
-    title: "עד 4 סקשנים",
+    title: "עד 7 סקשנים",
     description: "מבנה דף אופטימלי שמוביל את הגולש ישירות לפעולה",
   },
   {

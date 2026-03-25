@@ -23,6 +23,7 @@ import MagicBento from "@/components/777/MagicBento";
 import ChatIllustration from "@/components/777/ChatIllustration";
 import FormIllustration from "@/components/777/FormIllustration";
 import CountUp from "@/components/777/CountUp";
+import TestimonialsSection from "@/components/777/TestimonialsSection";
 
 type IconName = "Palette" | "LayoutGrid" | "MessageCircle" | "FileText" | "Server";
 
@@ -331,54 +332,8 @@ export default function LandingPage777() {
         </div>
       </section>
 
-      {/* SECTION 4 — TESTIMONIALS (Constellation) */}
-      <section className="min-h-screen flex flex-col justify-center py-16 sm:py-20 relative overflow-hidden" style={{ backgroundColor: "#09090b" }}>
-        <div className="max-w-6xl mx-auto px-6 sm:px-8 text-center" style={{ marginBottom: "2rem" }}>
-          <p className="text-xs font-semibold tracking-widest uppercase" style={{ color: "rgba(251,191,36,0.7)", marginBottom: "0.75rem" }}>מה אומרים עלינו</p>
-          <h2 className="text-3xl sm:text-4xl font-extrabold" style={{ color: "#fbbf24", marginBottom: "0.75rem" }}>לקוחות מרוצים</h2>
-          <p className="text-base sm:text-lg max-w-xl mx-auto" style={{ color: "#a1a1aa" }}>תוצאות אמיתיות, עסקים אמיתיים</p>
-        </div>
-
-        <main className="constellation max-w-6xl mx-auto w-full">
-          {testimonials.slice(0, 5).map((t, i) => {
-            const positions = ["wrapper-center", "wrapper-tl", "wrapper-tr", "wrapper-bl", "wrapper-br"];
-            const floats = ["float-1", "float-2", "float-3", "float-4", "float-5"];
-            const isCenter = i === 0;
-            return (
-              <div key={i} className={`card-wrapper ${floats[i]} ${positions[i]}`}>
-                <div className="glass-card" dir="rtl">
-                  <span className="absolute top-2 right-6 font-serif leading-none quote-icon" style={{ fontSize: isCenter ? "5rem" : "4rem" }}>&ldquo;</span>
-
-                  <div className="flex items-center gap-1.5" style={{ marginBottom: isCenter ? "1.5rem" : "1rem" }}>
-                    {Array.from({ length: 5 }).map((_, s) => (
-                      <svg key={s} className="star fill-current" style={{ width: isCenter ? "1rem" : "0.875rem", height: isCenter ? "1rem" : "0.875rem" }} viewBox="0 0 24 24">
-                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                      </svg>
-                    ))}
-                  </div>
-
-                  <blockquote className="relative z-10 font-light leading-relaxed" style={{ fontSize: isCenter ? "1.125rem" : "0.875rem", color: isCenter ? "#f3f4f6" : "#d1d5db", marginBottom: isCenter ? "2rem" : "1.5rem" }}>
-                    {t.text}
-                  </blockquote>
-
-                  <div className="flex items-center gap-3 relative z-10" style={{ paddingTop: isCenter ? "1.5rem" : "1rem", borderTop: "1px solid rgba(251,191,36,0.08)" }}>
-                    <div className="relative shrink-0 flex items-center justify-center" style={{ width: isCenter ? "3rem" : "2.5rem", height: isCenter ? "3rem" : "2.5rem" }}>
-                      <div className="avatar-glow" />
-                      <div className="relative z-10 w-full h-full rounded-full flex items-center justify-center text-sm font-bold select-none" style={{ background: "linear-gradient(to bottom right, #d97706, #eab308)", color: "#000", border: "1px solid rgba(255,255,255,0.2)" }}>
-                        {t.avatar}
-                      </div>
-                    </div>
-                    <div className="flex flex-col">
-                      <span className="font-semibold tracking-wide" style={{ fontSize: "0.875rem", color: "#fff" }}>{t.name}</span>
-                      <span className="font-medium tracking-wider uppercase" style={{ fontSize: "0.625rem", color: "#9ca3af", marginTop: "0.125rem" }}>{t.role}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </main>
-      </section>
+      {/* SECTION 4 — TESTIMONIALS */}
+      <TestimonialsSection />
 
       {/* FOOTER */}
       <footer style={{ backgroundColor: "#09090b", borderTop: "1px solid rgba(251,191,36,0.1)" }}>
