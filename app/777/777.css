@@ -241,6 +241,17 @@
   border-radius: 3px;
 }
 
+/* ── Kill any inherited enter/exit animations on video and overlay ──── */
+[data-page="777"] video,
+[data-page="777"] video + div,
+[data-page="777"] video + div + div {
+  animation: none !important;
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  transition: none !important;
+}
+
 /* ── Golden text selection ───────────────────────────────────────────── */
 [data-page="777"] ::selection {
   background-color: rgba(251, 191, 36, 0.3);
