@@ -99,7 +99,7 @@ export default function LandingPage777() {
       <section className="relative isolate min-h-screen flex items-center overflow-hidden">
 
         {/* Site header — z-50 to stay above everything */}
-        <div className="absolute top-0 left-0 right-0 max-w-7xl mx-auto flex items-center justify-between" style={{ zIndex: 50, padding: "1.5rem 0" }}>
+        <div className="absolute top-0 left-0 right-0 max-w-7xl mx-auto flex items-center justify-between" style={{ zIndex: 50, padding: "1.5rem 1.5rem" }}>
           <a href="/he" className="hero-animate" style={{ animationDelay: "0.1s" }}><img src="/logo-vertical-no-digital.svg" alt="Kohelet Digital" className="h-12 sm:h-14" /></a>
           <button
             type="button"
@@ -129,7 +129,7 @@ export default function LandingPage777() {
         <div className="absolute inset-0" style={{ background: "radial-gradient(ellipse 70% 50% at 50% 0%, rgba(251,191,36,0.10), transparent)", zIndex: -4 }} />
 
         {/* Content */}
-        <div className="relative z-10 w-full">
+        <div className="relative z-10 w-full" style={{ padding: "0 1.5rem" }}>
           <div className="max-w-7xl mx-auto">
           <div className="max-w-xl">
 
