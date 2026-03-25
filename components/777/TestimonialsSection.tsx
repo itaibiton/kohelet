@@ -278,7 +278,7 @@ export default function TestimonialsSection({
           obs.disconnect();
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.05 }
     );
     obs.observe(el);
     return () => obs.disconnect();
@@ -366,6 +366,8 @@ export default function TestimonialsSection({
             transform: none !important;
             grid-column: unset !important;
             grid-row: unset !important;
+            opacity: 1 !important;
+            animation: none !important;
           }
         }
 
@@ -461,7 +463,7 @@ export default function TestimonialsSection({
             padding: "8px 20px",
             marginBottom: 24,
             animation: visible ? "badgeFadeIn 0.6s ease-out forwards" : "none",
-            opacity: visible ? undefined : 0,
+            opacity: visible ? undefined : 1,
           }}
         >
           <span style={{ fontSize: 14, color: "#fbbf24", fontWeight: 500 }}>
@@ -521,7 +523,7 @@ export default function TestimonialsSection({
           gridTemplateRows: "auto auto",
           gap: "32px",
           alignItems: "start",
-          visibility: visible ? "visible" : "hidden",
+          visibility: "visible",
         }}
       >
         {items.map((t, i) => (
