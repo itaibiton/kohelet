@@ -158,6 +158,7 @@ export default function LandingPage777() {
           autoPlay
           muted
           playsInline
+          poster="/777/poster.jpg"
           src="/777/video.mp4"
           onEnded={handleVideoEnd}
           className="absolute inset-0 w-full h-full object-cover object-[30%_center] sm:object-center"
