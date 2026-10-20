@@ -1,0 +1,52 @@
+{
+  "url": "http://127.0.0.1:3102/codex-landing",
+  "generatedAt": "2026-10-20T11:31:08.174Z",
+  "scenarios": [
+    {
+      "name": "native required, email, and whitespace validation",
+      "passed": true,
+      "requestCount": 0,
+      "required": true,
+      "email": true,
+      "whitespaceName": true,
+      "whitespaceMessage": true
+    },
+    {
+      "name": "real local endpoint has no configured email credentials",
+      "passed": true,
+      "httpStatus": 500,
+      "body": {
+        "error": "Email service not configured"
+      },
+      "retainedInput": true,
+      "externalSend": false
+    },
+    {
+      "name": "HTTP 200 success:false is an error",
+      "passed": true,
+      "retainedInput": true,
+      "emailFallback": true
+    },
+    {
+      "name": "pending disabled, duplicate guard, success reset, trimmed payload",
+      "passed": true,
+      "requestCount": 1,
+      "disabledWhilePending": true,
+      "busyState": true,
+      "resetOnSuccess": true,
+      "payloadTrimmed": true
+    },
+    {
+      "name": "HTTP 500 shows recoverable failure",
+      "passed": true,
+      "retainedInput": true
+    },
+    {
+      "name": "network abort shows recoverable failure",
+      "passed": true,
+      "retainedInput": true
+    }
+  ],
+  "pageErrors": [],
+  "passed": true
+}

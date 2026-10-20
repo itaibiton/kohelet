@@ -1,0 +1,39 @@
+{
+  "metadata": {
+    "title": "Kohelet — Make AI work for your business",
+    "lang": "en",
+    "canonical": "https://kohelet.digital/codex-landing",
+    "description": "Practical AI search optimization, implementation, automation, and consulting. Build stronger discoverability, connected workflows, and a clear plan with Kohelet."
+  },
+  "layouts": [
+    {
+      "viewport": 1440,
+      "document": 1440
+    },
+    {
+      "viewport": 768,
+      "document": 768
+    },
+    {
+      "viewport": 390,
+      "document": 390
+    },
+    {
+      "viewport": 320,
+      "document": 320
+    }
+  ],
+  "brokenAnchors": [],
+  "violations": [],
+  "reducedMotion": {
+    "matches": true,
+    "scrollBehavior": "auto",
+    "animations": 0
+  },
+  "firstFocus": {
+    "tag": "A",
+    "text": "Skip to content",
+    "outline": "solid"
+  },
+  "pageErrors": []
+}
