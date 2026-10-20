@@ -6,7 +6,7 @@ Local production-build preview: http://127.0.0.1:3103/codex-landing
 
 ## Implemented
 
-Standalone English page at the exact URL, with an interactive service map, three service narratives, process, two existing portfolio examples, native FAQ, and accessible contact form. Kohelet assets are reused. Scoped CSS preserves the other root layouts. The existing email endpoint now validates input and checks provider acceptance rather than reporting rejected sends as success.
+English page at `/codex-landing` and complete Hebrew counterpart at `/he/codex-landing`, with an interactive service map, three service narratives, process, two existing portfolio examples, native FAQ, and accessible contact form. Kohelet assets are reused. Scoped CSS preserves the other root layouts. The existing email endpoint now validates input and checks provider acceptance rather than reporting rejected sends as success.
 
 ## Checks
 
@@ -19,6 +19,16 @@ Standalone English page at the exact URL, with an interactive service map, three
 - Header follow-up: Hebrew logo is aligned to the far right, with the contact CTA on the left. Verified at 320/390/768/1440px, without overflow; see [header results](header-results.json). Build and focused lint pass. Screenshots updated and the existing in-app preview refreshed.
 
 The browser harnesses used transient Playwright and axe tooling outside the repository. Screenshots below were taken against the local production build, after scrolling to load and decode the existing project images.
+
+## Complete Hebrew version
+
+- `/he/codex-landing` uses the existing Hebrew root layout and Heebo font, with translated navigation, hero, service map, services, process, project captions/alt text, FAQ, footer, and form labels/placeholders/validation/pending/success/error messages.
+- Language links stay visible on mobile and navigate between the Hebrew route and exact English `/codex-landing`. English locale-prefixed duplicate redirects to the canonical English route.
+- RTL mirrors layout and directional icons while keeping the Hebrew logo at the physical right. Email addresses and domains remain LTR. Canonical URLs, hreflang, Open Graph/Twitter text, and sitemap language alternates are localized.
+- Production-build checks pass at 320/390/768/1440px: no overflow, logo on right, language round trip, diagram selection, FAQ keyboard interaction. Desktop and mobile automated WCAG scans report zero violations; zero browser page errors. Hebrew native required/email messages, pending, accepted/reset, real missing-credentials error, input retention, and reduced motion pass. All six original English contact scenarios also pass. See [Hebrew results](hebrew-results.json).
+- Remaining legacy Hebrew blog/UI translations are handled separately in issue #8, stacked on this landing work.
+
+[Hebrew desktop](hebrew-desktop.png) · [Hebrew mobile](hebrew-mobile.png)
 
 ## Emil Kowalski animation review
 

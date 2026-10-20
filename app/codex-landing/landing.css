@@ -33,6 +33,8 @@
 .kl-page .kl-brand-divider { width: 1px; height: 28px; background: #c8c9c0; }
 .kl-page .kl-brand-caption { font-size: 12px; line-height: 1.45; font-weight: 500; letter-spacing: .02em; }
 .kl-page .kl-nav { display: flex; gap: 32px; font-size: 14px; font-weight: 500; }
+.kl-page .kl-header-actions { display: flex; align-items: center; gap: 18px; }
+.kl-page .kl-language-switch { padding: 10px 4px; font-size: 13px; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
 .kl-page .kl-nav a { position: relative; padding-block: 10px; }
 .kl-page .kl-nav a::after { content: ""; position: absolute; bottom: 5px; left: 0; width: 100%; height: 1px; background: currentColor; transform: scaleX(0); transform-origin: left; transition: transform 180ms var(--kl-ease); }
 .kl-page .kl-nav-contact { display: flex; align-items: center; gap: 24px; padding: 11px 18px; border: 1px solid var(--kl-ink); border-radius: 3px; font-size: 14px; font-weight: 600; transition: background 180ms ease, color 180ms ease, transform 140ms var(--kl-ease); }
@@ -361,4 +363,39 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .kl-page *, .kl-page *::before, .kl-page *::after { animation: none !important; scroll-behavior: auto !important; transition-duration: 0ms !important; }
+}
+
+/* Hebrew keeps the same composition with native type and right-to-left flow. */
+.kl-page[dir="rtl"] { font-family: var(--font-heebo), sans-serif; text-align: right; }
+.kl-page[dir="rtl"] :is(h1, h2, h3, h4, em, .kl-eyebrow, .kl-label, .kl-node-top, .kl-brand-caption, .kl-tags) { letter-spacing: normal; }
+.kl-page[dir="rtl"] em { font-family: inherit; font-style: normal; font-weight: 500; }
+.kl-page[dir="rtl"] .kl-header, .kl-page[dir="rtl"] .kl-header .kl-brand { flex-direction: row; }
+.kl-page[dir="rtl"] .kl-hero h1 { font-size: clamp(56px, 6.2vw, 88px); line-height: 1.13; letter-spacing: normal; }
+.kl-page[dir="rtl"] .kl-hero h1 em { font-size: 1em; line-height: 1.13; letter-spacing: normal; }
+.kl-page[dir="rtl"] h2 { line-height: 1.2; }
+.kl-page[dir="rtl"] .kl-map-node { text-align: right; }
+.kl-page[dir="rtl"] .kl-map-node strong { letter-spacing: normal; }
+.kl-page[dir="rtl"] .kl-map-node-1, .kl-page[dir="rtl"] .kl-map-node-3 { left: auto; right: 7%; }
+.kl-page[dir="rtl"] .kl-map-node-2 { right: auto; left: 7%; }
+.kl-page[dir="rtl"] .kl-map-lines { transform: scaleX(-1); }
+.kl-page[dir="rtl"] .kl-map-orbit { right: auto; left: 16%; transform: rotate(10deg); }
+.kl-page[dir="rtl"] .kl-map-top > span:last-child, .kl-page[dir="rtl"] .kl-node-top > svg:last-child { margin-left: 0; margin-right: auto; }
+.kl-page[dir="rtl"] .kl-map-caption > span { direction: ltr; }
+.kl-page[dir="rtl"] .kl-map-hint { right: auto; left: 0; }
+.kl-page[dir="rtl"] .kl-process-track { margin-left: 20px; margin-right: 0; }
+.kl-page[dir="rtl"] .kl-process p { padding-left: 26px; padding-right: 0; }
+.kl-page[dir="rtl"] .kl-approach-heading > p { padding-left: 12px; padding-right: 0; }
+.kl-page[dir="rtl"] .kl-project-visit { right: auto; left: 16px; }
+.kl-page[dir="rtl"] .kl-browser-bar { direction: ltr; }
+.kl-page[dir="rtl"] .kl-contact-email { direction: ltr; }
+.kl-page[dir="rtl"] :is(.kl-nav-contact, .kl-button, .kl-service-outcome, .kl-process-track, .kl-project-visit, .kl-node-top, .kl-map-orbit) > svg:last-child { transform: scaleX(-1); }
+.kl-page[dir="rtl"] .kl-skip-link { left: auto; right: 12px; }
+@media (max-width: 700px) {
+  .kl-page .kl-header-actions { gap: 10px; }
+  .kl-page .kl-language-switch { font-size: 12px; }
+  .kl-page .kl-nav-contact { gap: 12px; }
+  .kl-page[dir="rtl"] .kl-hero h1 { font-size: clamp(52px, 12vw, 68px); }
+}
+@media (max-width: 370px) {
+  .kl-page[dir="rtl"] .kl-hero h1 { font-size: 48px; }
 }
