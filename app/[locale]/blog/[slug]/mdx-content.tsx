@@ -26,6 +26,8 @@ export function MDXContent({ code, locale }: MDXContentProps) {
   return (
     <div
       className="prose prose-invert prose-lg max-w-none
+        [&_pre]:max-w-full [&_pre]:overflow-x-auto [&_pre]:[direction:ltr] [&_pre]:[unicode-bidi:isolate]
+        [&_code]:[direction:ltr] [&_code]:[unicode-bidi:isolate]
         prose-headings:font-bold prose-headings:text-white
         prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6
         prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-4

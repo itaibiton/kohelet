@@ -2,6 +2,7 @@
 
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
+import { useLocale, useTranslations } from "next-intl";
 import { Calendar, User } from "lucide-react";
 
 export interface BlogCardProps {
@@ -26,8 +27,9 @@ export function BlogCard({
   category,
   slug,
 }: BlogCardProps) {
-  // Format date - using browser's locale automatically
-  const formattedDate = new Date(date).toLocaleDateString(undefined, {
+  const locale = useLocale();
+  const t = useTranslations("blog.card");
+  const formattedDate = new Date(date).toLocaleDateString(locale === "he" ? "he-IL" : "en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
@@ -39,7 +41,7 @@ export function BlogCard({
       <Link
         href={`/blog/${slug}`}
         className="absolute inset-0 z-30"
-        aria-label={`Read article: ${title}`}
+        aria-label={t("readArticle", { title })}
       >
         <span className="sr-only">{title}</span>
       </Link>

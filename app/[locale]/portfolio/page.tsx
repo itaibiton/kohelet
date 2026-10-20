@@ -205,6 +205,7 @@ export default function PortfolioPage() {
           >
             <button
               onClick={() => setSelectedProject(null)}
+              aria-label={t("modal.close")}
               className="absolute top-4 end-4 z-10 p-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 transition-colors"
             >
               <X className="w-4 h-4 text-white/60" />
@@ -283,7 +284,7 @@ export default function PortfolioPage() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-xs font-bold bg-white/5 hover:bg-white/10 border border-white/10 text-white px-5 py-2.5 rounded-full transition-colors"
                 >
-                  Visit Site
+                  {t("modal.visitSite")}
                   <ExternalLink className="w-3 h-3" />
                 </a>
                 <Link
