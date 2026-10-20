@@ -1,0 +1,152 @@
+{
+  "base": "http://127.0.0.1:3108",
+  "checkedAt": "2026-10-20T12:08:01.825Z",
+  "checks": [
+    {
+      "name": "Hebrew blog dates and article labels use route locale even in English browser",
+      "passed": true,
+      "cardDate": "24 בינו׳ 2026",
+      "hebrewAccessibleLinks": 5
+    },
+    {
+      "name": "Hebrew full article: ai-powered-development-workflow",
+      "passed": true,
+      "headingCount": 16,
+      "proseBlockCount": 55,
+      "codeBlocks": 2,
+      "codeDirections": [
+        "ltr",
+        "ltr"
+      ],
+      "overflow": {
+        "scroll": 1440,
+        "viewport": 1440
+      }
+    },
+    {
+      "name": "Hebrew full article: building-modern-websites-nextjs",
+      "passed": true,
+      "headingCount": 8,
+      "proseBlockCount": 24,
+      "codeBlocks": 3,
+      "codeDirections": [
+        "ltr",
+        "ltr",
+        "ltr"
+      ],
+      "overflow": {
+        "scroll": 1440,
+        "viewport": 1440
+      }
+    },
+    {
+      "name": "Hebrew full article: design-systems-at-scale",
+      "passed": true,
+      "headingCount": 21,
+      "proseBlockCount": 74,
+      "codeBlocks": 3,
+      "codeDirections": [
+        "ltr",
+        "ltr",
+        "ltr"
+      ],
+      "overflow": {
+        "scroll": 1440,
+        "viewport": 1440
+      }
+    },
+    {
+      "name": "Hebrew full article: scaling-digital-products",
+      "passed": true,
+      "headingCount": 29,
+      "proseBlockCount": 122,
+      "codeBlocks": 1,
+      "codeDirections": [
+        "ltr"
+      ],
+      "overflow": {
+        "scroll": 1440,
+        "viewport": 1440
+      }
+    },
+    {
+      "name": "Hebrew portfolio modal labels",
+      "passed": true,
+      "visitSiteLocalized": true,
+      "closeLocalized": true
+    },
+    {
+      "name": "Hebrew language menu switches article route and English remains English",
+      "passed": true,
+      "routePreserved": true,
+      "englishLabels": true,
+      "englishDate": true
+    },
+    {
+      "name": "Combined English and Hebrew landing routes",
+      "passed": true,
+      "bothRoutes": true
+    },
+    {
+      "name": "Hebrew missing-article metadata",
+      "passed": false,
+      "error": "Missing article metadata not Hebrew"
+    },
+    {
+      "name": "Hebrew mobile article layout",
+      "passed": true,
+      "overflow": {
+        "scroll": 390,
+        "viewport": 390
+      }
+    },
+    {
+      "name": "Hebrew mobile navigation and About CTA accessibility label",
+      "passed": true,
+      "consultationLabel": true,
+      "mobileNavLabels": true
+    }
+  ],
+  "pageErrors": [],
+  "screenshots": [
+    "he-blog-desktop.png",
+    "he-building-modern-websites-nextjs-desktop.png",
+    "he-portfolio-modal-desktop.png",
+    "he-scaling-body-mobile.png",
+    "he-code-keyboard-mobile.png",
+    "he-about-cta-mobile.png"
+  ],
+  "axe": [
+    {
+      "route": "/he/blog",
+      "violations": [
+        {
+          "id": "button-name",
+          "impact": "critical",
+          "nodes": 1,
+          "description": "Ensure buttons have discernible text"
+        },
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 1,
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds"
+        }
+      ]
+    },
+    {
+      "route": "/he/blog/scaling-digital-products",
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": 1,
+          "description": "Ensure the contrast between foreground and background colors meets WCAG 2 AA minimum contrast ratio thresholds"
+        }
+      ]
+    }
+  ],
+  "passed": false,
+  "functionalChecksPassed": 10,
+  "known404BoundaryGap": true
+}
