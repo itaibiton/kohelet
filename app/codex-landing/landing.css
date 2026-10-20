@@ -26,8 +26,9 @@
 .kl-page .kl-container { width: min(1280px, calc(100% - 112px)); margin-inline: auto; }
 .kl-page .kl-skip-link { position: fixed; z-index: 30; top: 12px; left: 12px; padding: 12px 20px; background: var(--kl-blue); color: white; transform: translateY(-180%); }
 .kl-page .kl-skip-link:focus { transform: translateY(0); }
-.kl-page .kl-header { min-height: 112px; display: flex; align-items: center; justify-content: space-between; gap: 28px; border-bottom: 1px solid var(--kl-line); }
+.kl-page .kl-header { min-height: 112px; display: flex; flex-direction: row-reverse; align-items: center; justify-content: space-between; gap: 28px; border-bottom: 1px solid var(--kl-line); }
 .kl-page .kl-brand { display: flex; align-items: center; gap: 22px; }
+.kl-page .kl-header .kl-brand { flex-direction: row-reverse; }
 .kl-page .kl-brand img { filter: brightness(0); width: 108px; height: auto; }
 .kl-page .kl-brand-divider { width: 1px; height: 28px; background: #c8c9c0; }
 .kl-page .kl-brand-caption { font-size: 12px; line-height: 1.45; font-weight: 500; letter-spacing: .02em; }
