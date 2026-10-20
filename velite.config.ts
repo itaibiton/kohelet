@@ -43,6 +43,7 @@ const authors = defineCollection({
     id: s.string(),
     name: s.string().max(100),
     bio: s.string().max(500),
+    bioHe: s.string().max(500).optional(),
     avatar: s.string(), // Path relative to public/
   }),
 })
