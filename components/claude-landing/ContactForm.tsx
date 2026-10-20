@@ -195,7 +195,7 @@ export function ContactForm() {
         <div className="cl-field">
           <label htmlFor={`${uid}-service`}>What are you looking into?</label>
           <div className="cl-select-wrap">
-            <select className="cl-input pr-10" {...field("service")}>
+            <select className="cl-input" {...field("service")}>
               <option value="">Choose one</option>
               {contact.serviceOptions.map((o) => (
                 <option key={o} value={o}>

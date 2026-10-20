@@ -77,7 +77,7 @@ function LoopSvg({
       <path d={variant.returnPath} className="cl-loop-track" />
       <path d={variant.returnPath} className="cl-loop-track-dash" />
       {showPulse && (
-        <g>
+        <g className="cl-loop-pulse-group">
           <circle r="11" className="cl-loop-pulse-halo">
             <animateMotion
               dur={`${CYCLE_S}s`}
@@ -115,6 +115,7 @@ export function ValueLoop() {
   const [captionState, setCaptionState] = useState<"in" | "out">("in");
   const [auto, setAuto] = useState(true);
   const [running, setRunning] = useState(false);
+  const [startedState, setStartedState] = useState(false);
 
   const svgs = useRef<Set<SVGSVGElement>>(new Set());
   const rootRef = useRef<HTMLDivElement>(null);
@@ -190,6 +191,7 @@ export function ValueLoop() {
           }
         });
         if (visible) {
+          if (!started.current) setStartedState(true);
           started.current = true;
           if (auto) {
             setRunning(true);
@@ -201,7 +203,7 @@ export function ValueLoop() {
           cancelAnimationFrame(raf);
         }
       },
-      { threshold: 0.35 }
+      { threshold: 0.25 }
     );
     io.observe(root);
     return () => {
@@ -230,17 +232,18 @@ export function ValueLoop() {
       ref={rootRef}
       className="cl-loop"
       data-active={stages[active].id}
+      data-started={startedState ? "true" : "false"}
     >
       <div className="relative">
         <LoopSvg
           variant={DESKTOP}
-          className="hidden md:block"
+          className="cl-loop-svg-desktop"
           svgRef={registerSvg}
           showPulse={showPulse}
         />
         <LoopSvg
           variant={MOBILE}
-          className="block md:hidden"
+          className="cl-loop-svg-mobile"
           svgRef={registerSvg}
           showPulse={showPulse}
         />

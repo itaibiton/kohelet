@@ -221,18 +221,22 @@
   z-index: 50;
   transition:
     background-color 200ms ease,
-    border-color 200ms ease,
-    backdrop-filter 200ms ease;
+    border-color 200ms ease;
   border-bottom: 1px solid transparent;
   background: transparent;
 }
 
-.cl-nav[data-scrolled="true"],
-.cl-nav[data-open="true"] {
+.cl-nav[data-scrolled="true"] {
   background: rgba(11, 12, 15, 0.78);
   border-bottom-color: var(--cl-line);
   backdrop-filter: blur(16px) saturate(140%);
   -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+
+/* Open menu sits on an opaque surface so hero text never bleeds through */
+.cl-nav[data-open="true"] {
+  background: var(--cl-bg);
+  border-bottom-color: var(--cl-line);
 }
 
 .cl-nav-link {
@@ -308,10 +312,27 @@
 }
 
 .cl-loop-svg {
-  display: block;
   width: 100%;
   height: auto;
   overflow: visible;
+}
+
+/* Variant switching lives here (unlayered rules beat Tailwind utilities) */
+@media (min-width: 768px) {
+  .cl-loop-svg-mobile { display: none; }
+  .cl-loop-svg-desktop { display: block; }
+}
+@media (max-width: 767.98px) {
+  .cl-loop-svg-desktop { display: none; }
+  .cl-loop-svg-mobile { display: block; }
+}
+
+.cl-loop-pulse-group {
+  transition: opacity 300ms ease;
+}
+
+.cl-loop[data-started="false"] .cl-loop-pulse-group {
+  opacity: 0;
 }
 
 .cl-loop-track {
@@ -364,15 +385,24 @@
   border: 1px solid var(--cl-line-strong);
   color: var(--cl-ink-2);
   cursor: pointer;
-  box-shadow:
-    0 0 0 0 rgba(79, 134, 255, 0),
-    0 10px 30px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
   transition:
     transform 160ms var(--ease-out),
-    box-shadow 250ms var(--ease-out),
     border-color 200ms ease,
     color 200ms ease;
   transform: translateZ(0);
+}
+
+/* Selection halo: a pseudo-element whose opacity animates (GPU) */
+.cl-node::after {
+  content: "";
+  position: absolute;
+  inset: -7px;
+  border-radius: inherit;
+  border: 6px solid rgba(79, 134, 255, 0.14);
+  opacity: 0;
+  transition: opacity 200ms var(--ease-out);
+  pointer-events: none;
 }
 
 .cl-node:active {
@@ -395,9 +425,10 @@
 .cl-node[aria-pressed="true"] {
   border-color: var(--cl-accent);
   color: var(--cl-ink);
-  box-shadow:
-    0 0 0 6px rgba(79, 134, 255, 0.14),
-    0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.cl-node[aria-pressed="true"]::after {
+  opacity: 1;
 }
 
 .cl-node[aria-pressed="true"] svg {
@@ -566,7 +597,7 @@
 }
 
 .cl-work-card img {
-  transition: transform 600ms var(--ease-out);
+  transition: transform 400ms var(--ease-out);
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -575,7 +606,7 @@
     transform: translateY(-2px);
   }
   .cl-work-card:hover img {
-    transform: scale(1.03);
+    transform: scale(1.02);
   }
 }
 
@@ -689,6 +720,10 @@
   border-bottom: 1.5px solid var(--cl-ink-3);
   transform: translateY(-70%) rotate(45deg);
   pointer-events: none;
+}
+
+.cl-select-wrap .cl-input {
+  padding-right: 2.5rem;
 }
 
 .cl-select-wrap select option {
