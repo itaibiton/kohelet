@@ -51,8 +51,6 @@ export default function Landing({ locale = "en" }: { locale?: LandingLocale }) {
       <header className="kl-header kl-container">
         <a href="#top" className="kl-brand" aria-label={copy.backToTopLabel}>
           <Image src="/logo-horizontal-no-digital.svg" alt={copy.brand} width={108} height={44} priority />
-          <span className="kl-brand-divider" />
-          <span className="kl-brand-caption">{copy.brandCaption[0]}<br />{copy.brandCaption[1]}</span>
         </a>
         <nav className="kl-nav" aria-label={copy.navigationLabel}>
           <a href="#services">{copy.navigation.services}</a>

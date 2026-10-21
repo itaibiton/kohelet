@@ -30,8 +30,6 @@
 .kl-page .kl-brand { display: flex; align-items: center; gap: 22px; }
 .kl-page .kl-header .kl-brand { flex-direction: row-reverse; }
 .kl-page .kl-brand img { filter: brightness(0); width: 108px; height: auto; }
-.kl-page .kl-brand-divider { width: 1px; height: 28px; background: #c8c9c0; }
-.kl-page .kl-brand-caption { font-size: 12px; line-height: 1.45; font-weight: 500; letter-spacing: .02em; }
 .kl-page .kl-nav { display: flex; gap: 32px; font-size: 14px; font-weight: 500; }
 .kl-page .kl-header-actions { display: flex; align-items: center; gap: 18px; }
 .kl-page .kl-language-switch { padding: 10px 4px; font-size: 13px; font-weight: 600; text-decoration: underline; text-underline-offset: 4px; }
@@ -224,7 +222,6 @@
 }
 @media (max-width: 900px) {
   .kl-page .kl-nav { gap: 20px; font-size: 12px; }
-  .kl-page .kl-brand-caption, .kl-page .kl-brand-divider { display: none; }
   .kl-page .kl-hero { grid-template-columns: 1fr 1fr; gap: 30px; padding-block: 55px; }
   .kl-page .kl-hero h1 { font-size: 7.3vw; }
   .kl-page .kl-hero-description { font-size: 14px; }
@@ -367,7 +364,7 @@
 
 /* Hebrew keeps the same composition with native type and right-to-left flow. */
 .kl-page[dir="rtl"] { font-family: var(--font-heebo), sans-serif; text-align: right; }
-.kl-page[dir="rtl"] :is(h1, h2, h3, h4, em, .kl-eyebrow, .kl-label, .kl-node-top, .kl-brand-caption, .kl-tags) { letter-spacing: normal; }
+.kl-page[dir="rtl"] :is(h1, h2, h3, h4, em, .kl-eyebrow, .kl-label, .kl-node-top, .kl-tags) { letter-spacing: normal; }
 .kl-page[dir="rtl"] em { font-family: inherit; font-style: normal; font-weight: 500; }
 .kl-page[dir="rtl"] .kl-header, .kl-page[dir="rtl"] .kl-header .kl-brand { flex-direction: row; }
 .kl-page[dir="rtl"] .kl-hero h1 { font-size: clamp(56px, 6.2vw, 88px); line-height: 1.13; letter-spacing: normal; }

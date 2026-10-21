@@ -52,3 +52,7 @@ Local provider credentials were not copied. The actual contact endpoint returns 
 ![Desktop hero](desktop-hero.png)
 
 [Full desktop page](desktop.png) · [Full mobile page](mobile.png) · [iPhone emulation viewport](mobile-hero.png)
+
+## Header caption removal follow-up
+
+Removed the English “AI, with purpose.” caption and its Hebrew counterpart, plus the header divider and unused copy/styles. The logo remains at the physical right. Footer copy is unchanged. Production build, focused native Next ESLint, and `git diff --check` pass. Browser checks at actual CSS widths 1800px and 487px confirm both language headers have no caption/divider or document overflow. See [results](header-caption-results.json) and [updated header](header-caption-removed.png); the `header-caption-*` screenshots supersede earlier header captures.

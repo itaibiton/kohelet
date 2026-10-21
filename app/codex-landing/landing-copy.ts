@@ -11,7 +11,6 @@ export type LandingCopy = {
   backToTopLabel: string;
   skip: string;
   navigationLabel: string;
-  brandCaption: TwoLines;
   navigation: { services: string; approach: string; work: string };
   contactShort: string;
   languageSwitch: { text: string; label: string; href: string; locale: LandingLocale };
@@ -32,7 +31,6 @@ export const landingCopy: Record<LandingLocale, LandingCopy> = {
     backToTopLabel: "Kohelet — back to top",
     skip: "Skip to content",
     navigationLabel: "Main navigation",
-    brandCaption: ["AI, with", "purpose."],
     navigation: { services: "What we do", approach: "Our approach", work: "Selected work" },
     contactShort: "Let’s talk",
     languageSwitch: { text: "עברית", label: "מעבר לעברית", href: "/he/codex-landing", locale: "he" },
@@ -109,7 +107,6 @@ export const landingCopy: Record<LandingLocale, LandingCopy> = {
     backToTopLabel: "קהלת — חזרה לראש העמוד",
     skip: "דילוג לתוכן",
     navigationLabel: "ניווט ראשי",
-    brandCaption: ["AI עם", "מטרה."],
     navigation: { services: "מה אנחנו עושים", approach: "איך אנחנו עובדים", work: "פרויקטים נבחרים" },
     contactShort: "בואו נדבר",
     languageSwitch: { text: "English", label: "Switch to English", href: "/codex-landing", locale: "en" },
