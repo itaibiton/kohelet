@@ -2,7 +2,6 @@ export type LandingLocale = "en" | "he";
 
 type TwoLines = [string, string];
 type ThreeLines = [string, string, string];
-type PathwayCopy = { number: string; label: string; title: string; subtitle: string; description: string };
 type ServiceCopy = { number: string; eyebrow: string; title: TwoLines; problem: string; description: string; tags: string[]; outcome: string };
 type ProjectCopy = { key: string; title: string; description: string; category: string; alt: string; visitLabel: string; domain: string; href: string; image: string; height: number };
 
@@ -14,8 +13,7 @@ export type LandingCopy = {
   navigation: { services: string; approach: string; work: string };
   contactShort: string;
   languageSwitch: { text: string; label: string; href: string; locale: LandingLocale };
-  hero: { eyebrow: string; title: ThreeLines; description: TwoLines; cta: string; explore: string; note: string };
-  map: { label: string; eyebrow: string; brand: string; total: string; hint: string; pathways: PathwayCopy[] };
+  hero: { eyebrow: string; title: ThreeLines; description: TwoLines; cta: string; explore: string; note: string; imageAlt: string };
   strip: { title: TwoLines; benefits: ThreeLines };
   services: { eyebrow: string; title: TwoLines; description: TwoLines; areasLabel: string; items: ServiceCopy[] };
   approach: { eyebrow: string; title: TwoLines; description: ThreeLines; steps: { number: string; title: string; text: string }[]; foot: string };
@@ -41,18 +39,7 @@ export const landingCopy: Record<LandingLocale, LandingCopy> = {
       cta: "Let’s talk about your business",
       explore: "Explore our services",
       note: "Human thinking. Useful technology.",
-    },
-    map: {
-      label: "Explore our connected approach to AI",
-      eyebrow: "A CONNECTED APPROACH",
-      brand: "KOHELET / AI",
-      total: "03",
-      hint: "Select a step to explore",
-      pathways: [
-        { number: "01", label: "Visibility", title: "Be found.", subtitle: "Show up where customers look.", description: "Build a clearer, more discoverable presence across search engines and AI-powered answers." },
-        { number: "02", label: "Connected workflows", title: "Free up the work.", subtitle: "Let your tools work together.", description: "Connect everyday processes so your team can spend less time on repetitive tasks." },
-        { number: "03", label: "Clear decisions", title: "Move with clarity.", subtitle: "Know what to do next.", description: "Turn a world of AI options into a practical plan that fits your people and your business." },
-      ],
+      imageAlt: "Kohelet’s robot king in a crown and cobalt cape, arranging floating data tiles.",
     },
     strip: { title: ["BIG POSSIBILITIES.", "PRACTICAL STARTING POINTS."], benefits: ["Stronger visibility", "Smarter workflows", "Clearer decisions"] },
     services: {
@@ -117,18 +104,7 @@ export const landingCopy: Record<LandingLocale, LandingCopy> = {
       cta: "בואו נדבר על העסק שלכם",
       explore: "לכל השירותים שלנו",
       note: "חשיבה אנושית. טכנולוגיה שימושית.",
-    },
-    map: {
-      label: "גלו איך נראות בחיפוש, תהליכי עבודה והחלטות מתחברים בעסק שלכם",
-      eyebrow: "מחברים את התמונה",
-      brand: "קהלת / AI",
-      total: "03",
-      hint: "בחרו שלב וגלו עוד",
-      pathways: [
-        { number: "01", label: "נראות בחיפוש", title: "שימצאו אתכם.", subtitle: "להופיע איפה שהלקוחות מחפשים.", description: "נוכחות ברורה ונגישה יותר במנועי חיפוש ובתשובות של מערכות בינה מלאכותית." },
-        { number: "02", label: "תהליכים מחוברים", title: "לפנות זמן לעיקר.", subtitle: "לחבר בין הכלים שכבר יש לכם.", description: "מחברים תהליכים יומיומיים כדי שהצוות יקדיש פחות זמן למשימות שחוזרות על עצמן." },
-        { number: "03", label: "החלטות ברורות", title: "לדעת איך להתקדם.", subtitle: "להבין מה נכון לעשות עכשיו.", description: "הופכים את שפע האפשרויות של AI לתוכנית מעשית שמתאימה לעסק ולאנשים שלכם." },
-      ],
+      imageAlt: "המלך הרובוטי של קהלת, עם כתר וגלימה כחולה, מסדר אריחי מידע מרחפים.",
     },
     strip: { title: ["אפשרויות גדולות.", "צעדים מעשיים."], benefits: ["נראות חזקה יותר", "תהליכים חכמים יותר", "החלטות ברורות יותר"] },
     services: {

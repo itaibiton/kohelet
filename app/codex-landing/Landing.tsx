@@ -1,47 +1,9 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
-import { ArrowDown, ArrowRight, ArrowUpRight, Check, Compass, MoveUpRight, Network, Plus, Search } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight, Check, Compass, Network, Plus, Search } from "lucide-react";
 import ContactForm from "./ContactForm";
-import { landingCopy, type LandingCopy, type LandingLocale } from "./landing-copy";
+import { landingCopy, type LandingLocale } from "./landing-copy";
 
 const serviceIcons = [Search, Network, Compass];
-
-function BusinessMap({ copy }: { copy: LandingCopy["map"] }) {
-  const [active, setActive] = useState(0);
-  return (
-    <div className="kl-map" aria-label={copy.label}>
-      <div className="kl-map-top"><span className="kl-map-dot" />{copy.eyebrow}<span>{copy.brand}</span></div>
-      <div className="kl-map-canvas">
-        <svg className="kl-map-lines" viewBox="0 0 510 440" fill="none" aria-hidden="true">
-          <path d="M164 108H356V224H148V350H350" stroke="currentColor" strokeWidth="1" strokeDasharray="4 5" />
-          <circle cx="356" cy="108" r="5" fill="currentColor" />
-          <circle cx="148" cy="224" r="5" fill="currentColor" />
-          <circle cx="350" cy="350" r="5" fill="currentColor" />
-          <circle cx="389" cy="325" r="83" stroke="currentColor" strokeOpacity=".17" />
-          <circle cx="389" cy="325" r="104" stroke="currentColor" strokeOpacity=".12" />
-        </svg>
-        <span className="kl-map-orbit" aria-hidden="true"><MoveUpRight strokeWidth={1} /></span>
-        {copy.pathways.map((pathway, index) => {
-          const Icon = serviceIcons[index];
-          return (
-            <button key={pathway.number} type="button" className={`kl-map-node kl-map-node-${index + 1}`} aria-pressed={active === index} onClick={() => setActive(index)}>
-              <span className="kl-node-top"><Icon size={17} strokeWidth={1.5} /><span><bdi dir="ltr">{pathway.number}</bdi> / {pathway.label}</span><ArrowUpRight size={15} /></span>
-              <strong>{pathway.title}</strong>
-              <span className="kl-node-description">{pathway.subtitle}</span>
-            </button>
-          );
-        })}
-      </div>
-      <div className="kl-map-caption" aria-live="polite" aria-atomic="true">
-        <span><bdi dir="ltr">{copy.pathways[active].number}</bdi><span className="kl-map-caption-line" /><bdi dir="ltr">{copy.total}</bdi></span>
-        <p>{copy.pathways[active].description}</p>
-      </div>
-      <span className="kl-map-hint">{copy.hint}<ArrowUpRight size={12} /></span>
-    </div>
-  );
-}
 
 export default function Landing({ locale = "en" }: { locale?: LandingLocale }) {
   const copy = landingCopy[locale];
@@ -75,7 +37,16 @@ export default function Landing({ locale = "en" }: { locale?: LandingLocale }) {
             </div>
             <div className="kl-hero-note"><span />{copy.hero.note}</div>
           </div>
-          <BusinessMap copy={copy.map} />
+          <div className="kl-hero-art">
+            <Image
+              src="/images/codex-landing/kohelet-robot-king-transparent.webp"
+              alt={copy.hero.imageAlt}
+              width={1254}
+              height={1254}
+              sizes="(max-width: 700px) 100vw, (max-width: 1392px) 44vw, 573px"
+              priority
+            />
+          </div>
         </section>
 
         <div className="kl-intro-strip kl-container">

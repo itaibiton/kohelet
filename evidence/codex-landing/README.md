@@ -1,12 +1,14 @@
 # Kohelet landing verification
 
+Current hero (2026-10-21): the approved Robot King illustration replaces the retired interactive blue map. The latest screenshots are `robot-king-*`; older map interaction checks and screenshots below are historical. [Asset and generation prompt](robot-king-asset.md).
+
 Issue #2 · branch `agent/codex/2-codex-landing` · 2026-10-20
 
 Local production-build preview: http://127.0.0.1:3103/codex-landing
 
 ## Implemented
 
-English page at `/codex-landing` and complete Hebrew counterpart at `/he/codex-landing`, with an interactive service map, three service narratives, process, two existing portfolio examples, native FAQ, and accessible contact form. Kohelet assets are reused. Scoped CSS preserves the other root layouts. The existing email endpoint now validates input and checks provider acceptance rather than reporting rejected sends as success.
+English page at `/codex-landing` and complete Hebrew counterpart at `/he/codex-landing`, with the Robot King hero illustration, three service narratives, process, two existing portfolio examples, native FAQ, and accessible contact form. Kohelet assets are reused. Scoped CSS preserves the other root layouts. The existing email endpoint now validates input and checks provider acceptance rather than reporting rejected sends as success.
 
 ## Checks
 
@@ -60,3 +62,27 @@ Removed the English “AI, with purpose.” caption and its Hebrew counterpart, 
 ## Right-aligned footer logo follow-up
 
 The footer logo now sits at the physical right in English and Hebrew. The tagline sits to its left. Production build, focused native Next lint, and diff checks pass. Browser checks at actual CSS widths 1800px and 487px verify the logo position and no horizontal overflow in both languages. See [results](footer-right-results.json), [English desktop](footer-right-english-desktop.jpg), [Hebrew desktop](footer-right-hebrew-desktop.jpg), [English mobile](footer-right-english-mobile.jpg), and [Hebrew mobile](footer-right-hebrew-mobile.jpg). These captures supersede the footer layout in earlier full-page screenshots.
+
+## Robot King hero — final verification
+
+The approved Robot King now sits directly on the page background in both languages. The real-alpha 1254px WebP is 246,120 bytes; the verified 640px negotiated AVIF response is 48,667 bytes with alpha preserved. The image is responsive, prioritized, uncropped and unmirrored, with localized alt text. Retired map code/copy/styles are removed; the landing is server-rendered while its contact form remains client-side.
+
+- Production build and TypeScript pass across all 26 routes. Focused native Next lint and `git diff --check` pass. The full `npm run lint` reproduces the existing circular FlatCompat configuration error (#3/#7).
+- Eight browser layout checks cover English/Hebrew at 320, 390, 768 and 1440px: loaded image, square dimensions, object-fit contain, localized alt/direction, no retired map, no horizontal overflow, header/footer logos remain at the physical right.
+- Browser keyboard checks pass for both FAQ languages, skip-link focus, contact anchor, language switching and empty required-form validation. No form data was sent. Browser error log is empty.
+- Existing reduced-motion and fine-pointer hover gates remain intact. The artwork has only the existing first-view 550ms entrance (transform/opacity, custom ease, 160ms delay), with no ongoing movement. Reduced-motion handling was reviewed in source; this follow-up does not add a new browser media-emulation test.
+- Exact standalone English/Hebrew routes and direct/optimized image requests return HTTP 200.
+
+[Browser results](robot-king-results.json) · [English desktop](robot-king-english-desktop.jpg) · [English mobile](robot-king-english-mobile.jpg) · [Hebrew desktop](robot-king-hebrew-desktop.jpg) · [Hebrew mobile](robot-king-hebrew-mobile.jpg)
+
+Hebrew captures retain the in-app browser canvas context. Earlier diagram and footer captures remain historical evidence.
+
+### Emil animation review for this change
+
+| Before | After | Why |
+| --- | --- | --- |
+| Stateful interactive hero map | Server-rendered mascot image; form stays client-side | Removes unnecessary state and hydration. |
+| Fixed canvas heights and RTL map mirroring | Responsive square artwork, unmirrored | Preserves the approved character in both languages. |
+| Map entrance | Existing restrained artwork entrance | Uses transform/opacity and preserves reduced motion; adds no ongoing animation. |
+
+Independent source-review verdict: **Approve**. No actionable findings. No production deployment, merge, or live email verification performed.
