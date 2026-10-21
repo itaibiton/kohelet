@@ -1,0 +1,14 @@
+{
+  "action": "jump",
+  "cycleTime": "3.47",
+  "dpr": 0.800000011920929,
+  "drawCalls": "36",
+  "fps": "144.0",
+  "height": 1000,
+  "pixelRatio": "0.80",
+  "playing": "true",
+  "renderMs": "0.28",
+  "state": "ready",
+  "triangles": "39678",
+  "width": 1440
+}
