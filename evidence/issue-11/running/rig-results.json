@@ -1,0 +1,132 @@
+{
+  "cycleSeconds": 0.82,
+  "jointCount": 11,
+  "modelScale": 1.004399165845843,
+  "preciseVertexBounds": true,
+  "minimumFootY": -0.009026769067294826,
+  "maximumLowerFootY": 0.08762516770681966,
+  "samples": [
+    {
+      "phase": 0,
+      "rightFootMinimumY": -0.009026769067294826,
+      "leftFootMinimumY": 0.2726223382596431
+    },
+    {
+      "phase": 0.041666666666666664,
+      "rightFootMinimumY": -0.0034137761346917372,
+      "leftFootMinimumY": 0.2521054798586222
+    },
+    {
+      "phase": 0.08333333333333333,
+      "rightFootMinimumY": 0.013110797572461308,
+      "leftFootMinimumY": 0.1972544364753468
+    },
+    {
+      "phase": 0.125,
+      "rightFootMinimumY": 0.03982994487899044,
+      "leftFootMinimumY": 0.13081932672656138
+    },
+    {
+      "phase": 0.16666666666666666,
+      "rightFootMinimumY": 0.07595887436973936,
+      "leftFootMinimumY": 0.09085064411500032
+    },
+    {
+      "phase": 0.20833333333333334,
+      "rightFootMinimumY": 0.08095941777881999,
+      "leftFootMinimumY": 0.08829076780292378
+    },
+    {
+      "phase": 0.25,
+      "rightFootMinimumY": 0.08762516770681966,
+      "leftFootMinimumY": 0.09412883195710536
+    },
+    {
+      "phase": 0.2916666666666667,
+      "rightFootMinimumY": 0.08612877603133351,
+      "leftFootMinimumY": 0.09174136233416852
+    },
+    {
+      "phase": 0.3333333333333333,
+      "rightFootMinimumY": 0.08860524216957977,
+      "leftFootMinimumY": 0.0867529649383369
+    },
+    {
+      "phase": 0.375,
+      "rightFootMinimumY": 0.12856187433919153,
+      "leftFootMinimumY": 0.050423399271737945
+    },
+    {
+      "phase": 0.4166666666666667,
+      "rightFootMinimumY": 0.19506118382942494,
+      "leftFootMinimumY": 0.02353436504815759
+    },
+    {
+      "phase": 0.4583333333333333,
+      "rightFootMinimumY": 0.24996999395432207,
+      "leftFootMinimumY": 0.006897830660461124
+    },
+    {
+      "phase": 0.5,
+      "rightFootMinimumY": 0.27051386260232424,
+      "leftFootMinimumY": 0.0012459619358382024
+    },
+    {
+      "phase": 0.5416666666666666,
+      "rightFootMinimumY": 0.24996999395432162,
+      "leftFootMinimumY": 0.006897830660460902
+    },
+    {
+      "phase": 0.5833333333333334,
+      "rightFootMinimumY": 0.19506118382942517,
+      "leftFootMinimumY": 0.023534365048157813
+    },
+    {
+      "phase": 0.625,
+      "rightFootMinimumY": 0.12856187433919153,
+      "leftFootMinimumY": 0.050423399271738
+    },
+    {
+      "phase": 0.6666666666666666,
+      "rightFootMinimumY": 0.0886052421695801,
+      "leftFootMinimumY": 0.0867529649383369
+    },
+    {
+      "phase": 0.7083333333333334,
+      "rightFootMinimumY": 0.08612877603133362,
+      "leftFootMinimumY": 0.09174136233416852
+    },
+    {
+      "phase": 0.75,
+      "rightFootMinimumY": 0.08762516770681966,
+      "leftFootMinimumY": 0.09412883195710542
+    },
+    {
+      "phase": 0.7916666666666666,
+      "rightFootMinimumY": 0.08095941777882032,
+      "leftFootMinimumY": 0.08829076780292389
+    },
+    {
+      "phase": 0.8333333333333334,
+      "rightFootMinimumY": 0.07595887436973969,
+      "leftFootMinimumY": 0.09085064411500032
+    },
+    {
+      "phase": 0.875,
+      "rightFootMinimumY": 0.03982994487899044,
+      "leftFootMinimumY": 0.13081932672656127
+    },
+    {
+      "phase": 0.9166666666666666,
+      "rightFootMinimumY": 0.013110797572461641,
+      "leftFootMinimumY": 0.19725443647534646
+    },
+    {
+      "phase": 0.9583333333333334,
+      "rightFootMinimumY": -0.0034137761346917372,
+      "leftFootMinimumY": 0.2521054798586222
+    }
+  ],
+  "contactPlaneY": -0.025,
+  "minimumClearanceAboveContactPlane": 0.015973230932705175
+}

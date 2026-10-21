@@ -1,0 +1,9 @@
+{
+  "cycleSeconds": 0.82,
+  "samples": 241,
+  "loopContinuityError": 1.887379141862766e-15,
+  "opposingLimbError": 0,
+  "maxAdjacentRotationStep": 0.027476377027545795,
+  "nonNegativeKneeBend": true,
+  "finiteTransforms": true
+}

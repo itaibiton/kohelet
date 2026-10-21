@@ -232,7 +232,7 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
     resize();
 
     void (async () => {
-      const response = await fetch("/models/kohelet-robot-king.glb", { signal: abort.signal });
+      const response = await fetch("/models/kohelet-robot-king.glb?v=running", { signal: abort.signal });
       if (!response.ok) throw new Error("Robot model unavailable");
       const buffer = await response.arrayBuffer();
       if (disposed) return;

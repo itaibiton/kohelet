@@ -8,7 +8,7 @@ Original custom Blender mesh sculpture following the user-approved Kohelet masco
 - `kohelet-robot-king.blend`: editable source with 231 individually named mesh parts, articulated animation pivots, studio lights and hero camera. The saved scene shows a sample running stride.
 - `asset-metadata.json`: dimensions, orientation, exact neutral transforms, hierarchy, full-cycle running bounds, a 24-phase foot contact sweep and export statistics.
 - `../../public/models/kohelet-robot-king.glb`: neutral browser delivery rig. Export merges rigid geometry within each pivot while preserving the editable source objects.
-- `../../public/images/codex-landing/robot-king-3d-poster.webp`: transparent 1280 × 1280 studio render of a running stride for loading and fallback states.
+- `../../public/images/codex-landing/robot-king-running-poster.webp`: transparent 1280 × 1280 studio render of a running stride for loading and fallback states.
 
 ## Build
 

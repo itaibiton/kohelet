@@ -17,7 +17,7 @@ BASE = Path(__file__).resolve().parents[2]
 OUT = BASE / "public/models/kohelet-robot-king.glb"
 SOURCE = Path(__file__).resolve().parent / "kohelet-robot-king.blend"
 PREVIEW = Path(__file__).resolve().parent / "preview.png"
-POSTER = BASE / "public/images/codex-landing/robot-king-3d-poster.webp"
+POSTER = BASE / "public/images/codex-landing/robot-king-running-poster.webp"
 
 bpy.ops.object.select_all(action='SELECT')
 bpy.ops.object.delete(use_global=False)

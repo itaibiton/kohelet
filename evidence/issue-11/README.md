@@ -1,5 +1,7 @@
 # Animated Blender Robot King — issue #11
 
+Latest version: [continuous running animation](running/README.md), with an articulated runner rig and updated assets. The evidence below records the earlier idle version.
+
 The hero now renders an original Blender model through the existing Three.js dependency on `/codex-landing` and `/he/codex-landing`. The crown, digital visor, hands, armor, cape and data tiles are actual mesh geometry. Named pivots drive restrained head/body/arm movement and floating tiles; runtime motion is authored in TypeScript, with no baked GLB animation.
 
 ## Delivered assets

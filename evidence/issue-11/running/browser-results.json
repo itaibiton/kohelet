@@ -1,0 +1,414 @@
+{
+  "layout": [
+    {
+      "canvasCount": 1,
+      "control": {
+        "bottom": 742.91015625,
+        "height": 43.984375,
+        "left": 1202.0703125,
+        "right": 1338.6328125,
+        "top": 698.92578125,
+        "width": 136.5625,
+        "x": 1202.0703125,
+        "y": 698.92578125
+      },
+      "headerCTA": {
+        "bottom": 78.80859375,
+        "height": 46.89453125,
+        "left": 70.625,
+        "right": 209.51171875,
+        "top": 31.9140625,
+        "width": 138.88671875,
+        "x": 70.625,
+        "y": 31.9140625
+      },
+      "headerLogo": {
+        "bottom": 77.48046875,
+        "height": 44.23828125,
+        "left": 1242.63671875,
+        "right": 1350.625,
+        "top": 33.2421875,
+        "width": 107.98828125,
+        "x": 1242.63671875,
+        "y": 33.2421875
+      },
+      "height": 900,
+      "locale": "en",
+      "overflow": false,
+      "playing": "true",
+      "stage": {
+        "bottom": 750.8984375,
+        "height": 572.91015625,
+        "left": 777.71484375,
+        "right": 1350.625,
+        "top": 177.98828125,
+        "width": 572.91015625,
+        "x": 777.71484375,
+        "y": 177.98828125
+      },
+      "state": "ready",
+      "width": 1440
+    },
+    {
+      "canvasCount": 1,
+      "control": {
+        "bottom": 552.67578125,
+        "height": 43.984375,
+        "left": 565.4296875,
+        "right": 701.9921875,
+        "top": 508.69140625,
+        "width": 136.5625,
+        "x": 565.4296875,
+        "y": 508.69140625
+      },
+      "headerCTA": {
+        "bottom": 78.80859375,
+        "height": 46.89453125,
+        "left": 35.99609375,
+        "right": 174.8828125,
+        "top": 31.9140625,
+        "width": 138.88671875,
+        "x": 35.99609375,
+        "y": 31.9140625
+      },
+      "headerLogo": {
+        "bottom": 77.48046875,
+        "height": 44.23828125,
+        "left": 605.99609375,
+        "right": 713.984375,
+        "top": 33.2421875,
+        "width": 107.98828125,
+        "x": 605.99609375,
+        "y": 33.2421875
+      },
+      "height": 1250,
+      "locale": "en",
+      "overflow": false,
+      "playing": "true",
+      "stage": {
+        "bottom": 560.6640625,
+        "height": 324.00390625,
+        "left": 389.98046875,
+        "right": 713.984375,
+        "top": 236.66015625,
+        "width": 324.00390625,
+        "x": 389.98046875,
+        "y": 236.66015625
+      },
+      "state": "ready",
+      "width": 768
+    },
+    {
+      "canvasCount": 1,
+      "control": {
+        "bottom": 1036.015625,
+        "height": 43.984375,
+        "left": 202.6953125,
+        "right": 339.2578125,
+        "top": 992.03125,
+        "width": 136.5625,
+        "x": 202.6953125,
+        "y": 992.03125
+      },
+      "headerCTA": {
+        "bottom": 64.35546875,
+        "height": 43.984375,
+        "left": 20,
+        "right": 132.63671875,
+        "top": 20.37109375,
+        "width": 112.63671875,
+        "x": 20,
+        "y": 20.37109375
+      },
+      "headerLogo": {
+        "bottom": 61.62109375,
+        "height": 38.49609375,
+        "left": 257.265625,
+        "right": 351.25,
+        "top": 23.125,
+        "width": 93.984375,
+        "x": 257.265625,
+        "y": 23.125
+      },
+      "height": 1250,
+      "locale": "en",
+      "overflow": false,
+      "playing": "true",
+      "stage": {
+        "bottom": 984.04296875,
+        "height": 331.25,
+        "left": 20,
+        "right": 351.25,
+        "top": 652.79296875,
+        "width": 331.25,
+        "x": 20,
+        "y": 652.79296875
+      },
+      "state": "ready",
+      "width": 390
+    },
+    {
+      "canvasCount": 1,
+      "control": {
+        "bottom": 943.9453125,
+        "height": 43.984375,
+        "left": 136.6796875,
+        "right": 273.2421875,
+        "top": 899.9609375,
+        "width": 136.5625,
+        "x": 136.6796875,
+        "y": 899.9609375
+      },
+      "headerCTA": {
+        "bottom": 64.35546875,
+        "height": 43.984375,
+        "left": 15.99609375,
+        "right": 114.62890625,
+        "top": 20.37109375,
+        "width": 98.6328125,
+        "x": 15.99609375,
+        "y": 20.37109375
+      },
+      "headerLogo": {
+        "bottom": 61.62109375,
+        "height": 38.49609375,
+        "left": 191.25,
+        "right": 285.234375,
+        "top": 23.125,
+        "width": 93.984375,
+        "x": 191.25,
+        "y": 23.125
+      },
+      "height": 1250,
+      "locale": "en",
+      "overflow": false,
+      "playing": "true",
+      "stage": {
+        "bottom": 891.97265625,
+        "height": 269.23828125,
+        "left": 15.99609375,
+        "right": 285.234375,
+        "top": 622.734375,
+        "width": 269.23828125,
+        "x": 15.99609375,
+        "y": 622.734375
+      },
+      "state": "ready",
+      "width": 320
+    },
+    {
+      "canvasCount": 1,
+      "control": {
+        "bottom": 961.5674438476562,
+        "height": 43.984375,
+        "left": 31.9921875,
+        "right": 165.95703125,
+        "top": 917.5830688476562,
+        "width": 133.96484375,
+        "x": 31.9921875,
+        "y": 917.5830688476562
+      },
+      "headerCTA": {
+        "bottom": 64.35546875,
+        "height": 43.984375,
+        "left": 83.984375,
+        "right": 193.88671875,
+        "top": 20.37109375,
+        "width": 109.90234375,
+        "x": 83.984375,
+        "y": 20.37109375
+      },
+      "headerLogo": {
+        "bottom": 61.62109375,
+        "height": 38.49609375,
+        "left": 272.265625,
+        "right": 366.25,
+        "top": 23.125,
+        "width": 93.984375,
+        "x": 272.265625,
+        "y": 23.125
+      },
+      "height": 1250,
+      "locale": "he",
+      "overflow": false,
+      "playing": "true",
+      "stage": {
+        "bottom": 909.5947875976562,
+        "height": 346.25,
+        "left": 20,
+        "right": 366.25,
+        "top": 563.3447875976562,
+        "width": 346.25,
+        "x": 20,
+        "y": 563.3447875976562
+      },
+      "state": "ready",
+      "width": 390
+    },
+    {
+      "canvasCount": 1,
+      "control": {
+        "bottom": 931.42578125,
+        "height": 43.984375,
+        "left": 28.0078125,
+        "right": 161.97265625,
+        "top": 887.44140625,
+        "width": 133.96484375,
+        "x": 28.0078125,
+        "y": 887.44140625
+      },
+      "headerCTA": {
+        "bottom": 64.35546875,
+        "height": 43.984375,
+        "left": 77.98828125,
+        "right": 173.88671875,
+        "top": 20.37109375,
+        "width": 95.8984375,
+        "x": 77.98828125,
+        "y": 20.37109375
+      },
+      "headerLogo": {
+        "bottom": 61.62109375,
+        "height": 38.49609375,
+        "left": 206.26953125,
+        "right": 300.25390625,
+        "top": 23.125,
+        "width": 93.984375,
+        "x": 206.26953125,
+        "y": 23.125
+      },
+      "height": 900,
+      "locale": "he",
+      "overflow": false,
+      "playing": "true",
+      "stage": {
+        "bottom": 879.453125,
+        "height": 284.23828125,
+        "left": 16.015625,
+        "right": 300.25390625,
+        "top": 595.21484375,
+        "width": 284.23828125,
+        "x": 16.015625,
+        "y": 595.21484375
+      },
+      "state": "ready",
+      "width": 320
+    },
+    {
+      "canvasCount": 1,
+      "control": {
+        "bottom": 564.58984375,
+        "height": 43.984375,
+        "left": 48.0078125,
+        "right": 181.97265625,
+        "top": 520.60546875,
+        "width": 133.96484375,
+        "x": 48.0078125,
+        "y": 520.60546875
+      },
+      "headerCTA": {
+        "bottom": 78.80859375,
+        "height": 46.89453125,
+        "left": 114.00390625,
+        "right": 249.94140625,
+        "top": 31.9140625,
+        "width": 135.9375,
+        "x": 114.00390625,
+        "y": 31.9140625
+      },
+      "headerLogo": {
+        "bottom": 77.48046875,
+        "height": 44.23828125,
+        "left": 621.015625,
+        "right": 729.00390625,
+        "top": 33.2421875,
+        "width": 107.98828125,
+        "x": 621.015625,
+        "y": 33.2421875
+      },
+      "height": 900,
+      "locale": "he",
+      "overflow": false,
+      "playing": "true",
+      "stage": {
+        "bottom": 572.578125,
+        "height": 331.50390625,
+        "left": 36.015625,
+        "right": 367.51953125,
+        "top": 241.07421875,
+        "width": 331.50390625,
+        "x": 36.015625,
+        "y": 241.07421875
+      },
+      "state": "ready",
+      "width": 768
+    },
+    {
+      "canvasCount": 1,
+      "control": {
+        "bottom": 742.91015625,
+        "height": 43.984375,
+        "left": 90.1171875,
+        "right": 224.08203125,
+        "top": 698.92578125,
+        "width": 133.96484375,
+        "x": 90.1171875,
+        "y": 698.92578125
+      },
+      "headerCTA": {
+        "bottom": 78.80859375,
+        "height": 46.89453125,
+        "left": 156.11328125,
+        "right": 292.05078125,
+        "top": 31.9140625,
+        "width": 135.9375,
+        "x": 156.11328125,
+        "y": 31.9140625
+      },
+      "headerLogo": {
+        "bottom": 77.48046875,
+        "height": 44.23828125,
+        "left": 1250.13671875,
+        "right": 1358.125,
+        "top": 33.2421875,
+        "width": 107.98828125,
+        "x": 1250.13671875,
+        "y": 33.2421875
+      },
+      "height": 900,
+      "locale": "he",
+      "overflow": false,
+      "playing": "true",
+      "stage": {
+        "bottom": 750.8984375,
+        "height": 572.91015625,
+        "left": 78.125,
+        "right": 651.03515625,
+        "top": 177.98828125,
+        "width": 572.91015625,
+        "x": 78.125,
+        "y": 177.98828125
+      },
+      "state": "ready",
+      "width": 1440
+    }
+  ],
+  "englishPause": {
+    "label": "Play animation — Kohelet’s robot king",
+    "outline": "solid",
+    "playing": "false",
+    "scrollY": 0
+  },
+  "hebrewPause": {
+    "label": "הפעלת האנימציה — המלך הרובוטי של קהלת",
+    "outline": "solid",
+    "playing": "false"
+  },
+  "resumed": "true",
+  "errors": [],
+  "notes": [
+    "Actual running cycle repeats continuously while visible and playing.",
+    "System preference and hidden/offscreen scheduler safeguards preserved and source-reviewed.",
+    "Viewport emulation, not a physical-device performance test."
+  ]
+}
