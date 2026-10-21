@@ -68,7 +68,7 @@ export function AboutCTA({ calendlyUrl }: AboutCTAProps) {
               href={consultationHref}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Schedule a consultation with Kohelet"
+              aria-label={t("primaryButtonAria")}
               className="
                 bg-accent-blue hover:bg-accent-blue-hover
                 text-white text-sm md:text-base font-semibold
@@ -89,7 +89,7 @@ export function AboutCTA({ calendlyUrl }: AboutCTAProps) {
           ) : (
             <Link
               href={consultationHref}
-              aria-label="Schedule a consultation with Kohelet"
+              aria-label={t("primaryButtonAria")}
               className="
                 bg-accent-blue hover:bg-accent-blue-hover
                 text-white text-sm md:text-base font-semibold

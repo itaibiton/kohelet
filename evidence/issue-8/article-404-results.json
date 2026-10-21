@@ -1,0 +1,122 @@
+{
+  "checkedAt": "2026-10-21T12:08:51.928Z",
+  "base": "http://127.0.0.1:3108",
+  "functionalChecks": [
+    {
+      "name": "he missing article desktop",
+      "locale": "he",
+      "viewport": 1440,
+      "passed": true,
+      "status": 404,
+      "title": "המאמר לא נמצא",
+      "htmlLanguage": "he",
+      "htmlDirection": "rtl",
+      "bodyLocalized": true,
+      "metadataLocalized": true,
+      "keyboardReturnPreservesLocale": true,
+      "dimensions": {
+        "viewport": 1440,
+        "scroll": 1440
+      }
+    },
+    {
+      "name": "en missing article desktop",
+      "locale": "en",
+      "viewport": 1440,
+      "passed": true,
+      "status": 404,
+      "title": "Post Not Found",
+      "htmlLanguage": "en",
+      "htmlDirection": "ltr",
+      "bodyLocalized": true,
+      "metadataLocalized": true,
+      "keyboardReturnPreservesLocale": true,
+      "dimensions": {
+        "viewport": 1440,
+        "scroll": 1440
+      }
+    },
+    {
+      "name": "he missing article mobile",
+      "locale": "he",
+      "viewport": 390,
+      "passed": true,
+      "status": 404,
+      "title": "המאמר לא נמצא",
+      "htmlLanguage": "he",
+      "htmlDirection": "rtl",
+      "bodyLocalized": true,
+      "metadataLocalized": true,
+      "keyboardReturnPreservesLocale": true,
+      "dimensions": {
+        "viewport": 390,
+        "scroll": 390
+      }
+    },
+    {
+      "name": "en missing article mobile",
+      "locale": "en",
+      "viewport": 390,
+      "passed": true,
+      "status": 404,
+      "title": "Post Not Found",
+      "htmlLanguage": "en",
+      "htmlDirection": "ltr",
+      "bodyLocalized": true,
+      "metadataLocalized": true,
+      "keyboardReturnPreservesLocale": true,
+      "dimensions": {
+        "viewport": 390,
+        "scroll": 390
+      }
+    },
+    {
+      "name": "he valid article regression",
+      "passed": true,
+      "status": 200,
+      "codeBlocks": 3
+    },
+    {
+      "name": "en valid article regression",
+      "passed": true,
+      "status": 200,
+      "codeBlocks": 3
+    }
+  ],
+  "pageErrors": [],
+  "accessibilityAudits": [
+    {
+      "route": "/he/blog/qa-missing-article",
+      "viewport": 1440,
+      "scope": "article 404 boundary only",
+      "violations": []
+    },
+    {
+      "route": "/en/blog/qa-missing-article",
+      "viewport": 1440,
+      "scope": "article 404 boundary only",
+      "violations": []
+    },
+    {
+      "route": "/he/blog/qa-missing-article",
+      "viewport": 390,
+      "scope": "article 404 boundary only",
+      "violations": []
+    },
+    {
+      "route": "/en/blog/qa-missing-article",
+      "viewport": 390,
+      "scope": "article 404 boundary only",
+      "violations": []
+    }
+  ],
+  "screenshots": [
+    "he-article-404-desktop.png",
+    "en-article-404-desktop.png",
+    "he-article-404-mobile.png",
+    "en-article-404-mobile.png"
+  ],
+  "functionalPass": true,
+  "article404AccessibilityPass": true,
+  "wholeSiteAccessibilityClaim": false
+}

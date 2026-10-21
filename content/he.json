@@ -6,6 +6,12 @@
   },
   "navigation": {
     "logo": "קהלת",
+    "openMenu": "פתיחת התפריט",
+    "closeMenu": "סגירת התפריט",
+    "languageSwitcher": {
+      "label": "בחירת שפה",
+      "switchTo": "מעבר לשפה {language}"
+    },
     "links": [
       { "label": "שירותים", "href": "/#solutions" },
       { "label": "יכולות", "href": "/#capabilities" },
@@ -289,6 +295,8 @@
     ],
     "modal": {
       "highlights": "תוצאות עיקריות",
+      "visitSite": "ביקור באתר",
+      "close": "סגירת פרטי הפרויקט",
       "techStack": "סטאק טכנולוגי",
       "cta": "התחילו פרויקט דומה"
     },
@@ -454,6 +462,9 @@
       "Case Study": "מקרה בוחן",
       "Business": "עסקים"
     },
+    "card": {
+      "readArticle": "לקריאת המאמר: {title}"
+    },
     "post": {
       "readingTime": "{minutes} דקות קריאה",
       "shareArticle": "שתף מאמר זה",
@@ -583,6 +594,7 @@
       "headline": "מבזבזים 20+ שעות בשבוע על עבודה ידנית?",
       "subtext": "קבעו שיחת היכרות חינמית של 30 דקות. נבחן את התהליכים ונראה לכם בדיוק מה 15-25 שעות חזרה אומר—במונחים של הכנסות.",
       "primaryButton": "קבעו שיחת היכרות",
+      "primaryButtonAria": "קביעת שיחת ייעוץ עם קהלת",
       "secondaryButton": "ראו מה אנחנו בונים"
     }
   }

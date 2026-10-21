@@ -100,8 +100,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!post) {
     return {
-      title: "Post Not Found",
-      description: "The requested blog post could not be found.",
+      title: locale === "he" ? "המאמר לא נמצא" : "Post Not Found",
+      description: locale === "he"
+        ? "לא ניתן למצוא את המאמר המבוקש."
+        : "The requested blog post could not be found.",
     };
   }
 
@@ -218,7 +220,7 @@ export default async function BlogPostPage({ params }: Props) {
           {author && (
             <AuthorProfile
               name={author.name}
-              bio={author.bio}
+              bio={locale === "he" && author.bioHe ? author.bioHe : author.bio}
               avatar={author.avatar}
               locale={locale}
             />
