@@ -56,3 +56,7 @@ Local provider credentials were not copied. The actual contact endpoint returns 
 ## Header caption removal follow-up
 
 Removed the English “AI, with purpose.” caption and its Hebrew counterpart, plus the header divider and unused copy/styles. The logo remains at the physical right. Footer copy is unchanged. Production build, focused native Next ESLint, and `git diff --check` pass. Browser checks at actual CSS widths 1800px and 487px confirm both language headers have no caption/divider or document overflow. See [results](header-caption-results.json) and [updated header](header-caption-removed.png); the `header-caption-*` screenshots supersede earlier header captures.
+
+## Right-aligned footer logo follow-up
+
+The footer logo now sits at the physical right in English and Hebrew. The tagline sits to its left. Production build, focused native Next lint, and diff checks pass. Browser checks at actual CSS widths 1800px and 487px verify the logo position and no horizontal overflow in both languages. See [results](footer-right-results.json), [English desktop](footer-right-english-desktop.png), [Hebrew desktop](footer-right-hebrew-desktop.png), [English mobile](footer-right-english-mobile.png), and [Hebrew mobile](footer-right-hebrew-mobile.png). These captures supersede the footer layout in earlier full-page screenshots.
