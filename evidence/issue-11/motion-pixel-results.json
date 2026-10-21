@@ -1,0 +1,14 @@
+{
+  "playing": {
+    "changedPixelsAbove12": 54662,
+    "pixels": 289680,
+    "meanAbsoluteDifference": 8.275675457976618
+  },
+  "paused": {
+    "changedPixelsAbove12": 0,
+    "pixels": 289680,
+    "meanAbsoluteDifference": 0.0
+  },
+  "playingChanges": true,
+  "pausedStable": true
+}

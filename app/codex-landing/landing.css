@@ -253,6 +253,7 @@
   .kl-page .kl-text-link { font-size: 12px; }
   .kl-page .kl-hero-note { margin-top: 20px; font-size: 11px; }
   .kl-page .kl-hero-art { width: 100%; max-width: 510px; margin-inline: auto; }
+  .kl-page .kl-robot-control { position: static; display: flex; width: fit-content; margin-block-start: 8px; margin-inline-start: auto; margin-inline-end: 12px; }
   .kl-page .kl-intro-strip { grid-template-columns: 1fr 1fr; gap: 22px 15px; padding-block: 23px; }
   .kl-page .kl-intro-strip > p { font-size: 10px; }
   .kl-page .kl-intro-strip > div { font-size: 12px; gap: 8px; }
