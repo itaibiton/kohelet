@@ -1,0 +1,89 @@
+{
+  "asset": "Kohelet Robot King",
+  "generator": "Blender 5.2.1, custom original mesh geometry",
+  "front": "Blender -Y; glTF +Z",
+  "up": "Blender +Z; glTF +Y",
+  "feetOrigin": 0,
+  "blenderBounds": {
+    "min": [
+      -2.1102142333984375,
+      -0.8303955793380737,
+      -3.3527612686157227e-08
+    ],
+    "max": [
+      2.322305679321289,
+      1.2000036239624023,
+      4.4084391593933105
+    ]
+  },
+  "gltfBounds": {
+    "min": [
+      -2.1102142333984375,
+      -3.3527612686157227e-08,
+      -1.2000036239624023
+    ],
+    "max": [
+      2.322305679321289,
+      4.4084391593933105,
+      0.8303955793380737
+    ]
+  },
+  "triangles": 45192,
+  "editableMeshObjects": 221,
+  "exportedMeshObjects": 10,
+  "materialDrawCalls": 42,
+  "exportedNodes": 21,
+  "bytes": 840708,
+  "pivots": [
+    "Robot_Root",
+    "Body_Pivot",
+    "Head_Pivot",
+    "Arm_R_Pivot",
+    "Arm_L_Pivot",
+    "Data_Tile_01",
+    "Data_Tile_02",
+    "Data_Tile_03",
+    "Data_Tile_04",
+    "Data_Tile_05",
+    "Data_Tile_06"
+  ],
+  "camera": {
+    "blenderPosition": [
+      5.400000095367432,
+      -9.5,
+      5.199999809265137
+    ],
+    "blenderTarget": [
+      0.18000000715255737,
+      0.0,
+      2.119999885559082
+    ],
+    "orthographicScale": 5.300000190734863,
+    "gltfPosition": [
+      5.400000095367432,
+      5.199999809265137,
+      9.5
+    ],
+    "gltfTarget": [
+      0.18000000715255737,
+      2.119999885559082,
+      -0.0
+    ]
+  },
+  "materials": [
+    "Cape \u00b7 royal cobalt fabric",
+    "Cape \u00b7 satin inner blue",
+    "Ceramic \u00b7 porcelain edge",
+    "Ceramic \u00b7 warm ivory",
+    "Display \u00b7 warm ivory LEDs",
+    "Enamel \u00b7 Kohelet cobalt",
+    "Gem \u00b7 sapphire blue",
+    "Joint \u00b7 dark graphite",
+    "Metal \u00b7 brushed royal gold",
+    "Metal \u00b7 champagne bevel",
+    "Metal \u00b7 polished titanium",
+    "Visor \u00b7 blue chrome edge",
+    "Visor \u00b7 midnight blue glass"
+  ],
+  "animation": "No baked animation. Named pivots preserve the authored pose and support tiny frontend offsets."
+}
