@@ -86,3 +86,24 @@ Hebrew captures retain the in-app browser canvas context. Earlier diagram and fo
 | Map entrance | Existing restrained artwork entrance | Uses transform/opacity and preserves reduced motion; adds no ongoing animation. |
 
 Independent source-review verdict: **Approve**. No actionable findings. No production deployment, merge, or live email verification performed.
+
+## Header flag dropdown
+
+The contact CTA is followed by a flag dropdown in each language’s reading order. The current language flag appears on the trigger; the menu contains English and עברית with flags and a current-page check. Installed Radix DropdownMenu supplies keyboard focus, arrow navigation, Escape and outside dismissal. Inline content retains the landing’s scoped colors and fonts. Both header controls have 44px minimum heights; narrow layouts retain a single-line contact CTA.
+
+- Production build/TypeScript, focused native Next ESLint and diff checks pass. Full `npm run lint` still fails before source checks on existing #3/#7.
+- Eight production-browser checks pass at 320/390/768/1440px in both languages, with the flag after the CTA, right-side logo and no horizontal overflow.
+- Pointer, Enter, Space and ArrowDown opening/navigation, Escape focus restoration in both languages, outside dismissal, language round-trip and contact-anchor dismissal pass. Browser error log is empty. No form data sent.
+- No new menu animation: keyboard state changes are immediate. Existing reduced-motion support remains; reviewed in source, without a new media-emulation test.
+
+[Results](language-dropdown-results.json) · [English desktop](language-dropdown-english-desktop.jpg) · [English mobile](language-dropdown-english-mobile.jpg) · [Hebrew desktop](language-dropdown-hebrew-desktop.jpg) · [Hebrew mobile](language-dropdown-hebrew-mobile.jpg). Hebrew captures retain browser canvas context.
+
+### Emil animation review
+
+| Before | After | Why |
+| --- | --- | --- |
+| Plain language link | Immediate flag menu | Keyboard-initiated state changes remain immediate. |
+| Switch before CTA | CTA followed by flag trigger | Preserves each language’s reading order. |
+| No menu controls | Scoped 44px controls, static pointer-gated hover feedback | Clear state and adequate touch targets without added motion. |
+
+Independent review verdict: **Approve**, with no actionable source findings. Browser verification passes after the narrow-width spacing fix.

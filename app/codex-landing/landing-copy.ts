@@ -12,7 +12,7 @@ export type LandingCopy = {
   navigationLabel: string;
   navigation: { services: string; approach: string; work: string };
   contactShort: string;
-  languageSwitch: { text: string; label: string; href: string; locale: LandingLocale };
+  languageSwitchLabel: string;
   hero: { eyebrow: string; title: ThreeLines; description: TwoLines; cta: string; explore: string; note: string; imageAlt: string };
   strip: { title: TwoLines; benefits: ThreeLines };
   services: { eyebrow: string; title: TwoLines; description: TwoLines; areasLabel: string; items: ServiceCopy[] };
@@ -31,7 +31,7 @@ export const landingCopy: Record<LandingLocale, LandingCopy> = {
     navigationLabel: "Main navigation",
     navigation: { services: "What we do", approach: "Our approach", work: "Selected work" },
     contactShort: "Let’s talk",
-    languageSwitch: { text: "עברית", label: "מעבר לעברית", href: "/he/codex-landing", locale: "he" },
+    languageSwitchLabel: "Choose language",
     hero: {
       eyebrow: "PRACTICAL AI. REAL BUSINESS.",
       title: ["Make AI", "work for", "your business."],
@@ -96,7 +96,7 @@ export const landingCopy: Record<LandingLocale, LandingCopy> = {
     navigationLabel: "ניווט ראשי",
     navigation: { services: "מה אנחנו עושים", approach: "איך אנחנו עובדים", work: "פרויקטים נבחרים" },
     contactShort: "בואו נדבר",
-    languageSwitch: { text: "English", label: "Switch to English", href: "/codex-landing", locale: "en" },
+    languageSwitchLabel: "בחירת שפה",
     hero: {
       eyebrow: "בינה מלאכותית. ערך לעסק.",
       title: ["AI שעובד", "בשביל", "העסק שלכם."],

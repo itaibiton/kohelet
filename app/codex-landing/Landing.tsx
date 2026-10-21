@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { ArrowDown, ArrowRight, ArrowUpRight, Check, Compass, Network, Plus, Search } from "lucide-react";
 import ContactForm from "./ContactForm";
+import LanguageMenu from "./LanguageMenu";
 import { landingCopy, type LandingLocale } from "./landing-copy";
 
 const serviceIcons = [Search, Network, Compass];
@@ -20,8 +21,8 @@ export default function Landing({ locale = "en" }: { locale?: LandingLocale }) {
           <a href="#work">{copy.navigation.work}</a>
         </nav>
         <div className="kl-header-actions">
-          <a className="kl-language-switch" href={copy.languageSwitch.href} hrefLang={copy.languageSwitch.locale} lang={copy.languageSwitch.locale} aria-label={copy.languageSwitch.label}>{copy.languageSwitch.text}</a>
           <a href="#contact" className="kl-nav-contact">{copy.contactShort}<ArrowUpRight size={17} /></a>
+          <LanguageMenu locale={locale} label={copy.languageSwitchLabel} />
         </div>
       </header>
 
