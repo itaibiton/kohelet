@@ -18,7 +18,15 @@ magic,version,length=struct.unpack_from('<III',data)
 assert magic==0x46546c67 and version==2 and length==len(data)
 chunk_length,chunk_type=struct.unpack_from('<II',data,12)
 document=json.loads(data[20:20+chunk_length])
-assert not document.get('textures')
+assert len(document.get('images',[]))==4
+assert len(document.get('textures',[]))==4
+assert len(document['materials'])==3
+assert all('bufferView' in image and image.get('mimeType')=='image/png' for image in document['images'])
+binary_offset=20+chunk_length+8
+for image in document['images']:
+    view=document['bufferViews'][image['bufferView']]
+    png=data[binary_offset+view.get('byteOffset',0):binary_offset+view.get('byteOffset',0)+view['byteLength']]
+    assert png[:8]==b'\x89PNG\r\n\x1a\n' and struct.unpack_from('>II',png,16)==(128,128)
 expected=['Robot_Root','Body_Pivot','Head_Pivot','Arm_R_Pivot','Arm_L_Pivot','Cape_Pivot']+[
     part+'_'+side+'_Pivot' for side in ['R','L'] for part in ['Leg','Knee','Boot']
 ]+['Data_Tile_'+str(i).zfill(2) for i in range(1,7)]
@@ -32,10 +40,21 @@ for side in ['R','L']:
     assert document['nodes'].index(by_name['Knee_'+side+'_Pivot']) in by_name['Leg_'+side+'_Pivot']['children']
     assert document['nodes'].index(by_name['Boot_'+side+'_Pivot']) in by_name['Knee_'+side+'_Pivot']['children']
 for mat in document['materials']:
-    if mat['name'].startswith('Cape'):
-        assert 'KHR_materials_sheen' not in mat.get('extensions',{})
+    assert not mat.get('doubleSided',False), 'Closed geometry should cull hidden backfaces'
+    assert 'KHR_materials_sheen' not in mat.get('extensions',{})
+    assert 'KHR_materials_clearcoat' not in mat.get('extensions',{})
+    assert mat['pbrMetallicRoughness']['metallicFactor']<=.73
+    if mat['name'].endswith('palette'):
+        assert mat.get('normalTexture')
+        assert mat['pbrMetallicRoughness'].get('metallicRoughnessTexture')
+for mesh in document['meshes']:
+    for primitive in mesh['primitives']:
+        assert 'TEXCOORD_0' in primitive['attributes']
+        color=document['accessors'][primitive['attributes']['COLOR_0']]
+        assert color['componentType']==5121 and color['normalized'] and color['type']=='VEC4'
 triangles=sum(document['accessors'][primitive['indices']]['count']//3 for mesh in document['meshes'] for primitive in mesh['primitives'])
-assert triangles < 80000 and len(data)<2_000_000
+assert triangles < 42000 and len(data)<1_700_000
+assert sum(len(mesh['primitives']) for mesh in document['meshes'])<=35
 root=bpy.data.objects['Robot_Root']
 for obj in reversed([root]+list(root.children_recursive)):
     bpy.data.objects.remove(obj,do_unlink=True)
@@ -55,6 +74,7 @@ def sample_pose(phase):
         obj.location=location.copy()
         obj.rotation_euler=rotation.copy()
     stride=math.sin(phase)
+    bpy.data.objects['Robot_Root'].rotation_euler.z=-.55
     for side,value in [('R',stride),('L',-stride)]:
         hip_x=-.72*value
         knee_x=.16+1.05*max(0,-value)**2

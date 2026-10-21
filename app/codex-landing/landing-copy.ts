@@ -42,7 +42,7 @@ export const landingCopy: Record<LandingLocale, LandingCopy> = {
       animationControlLabel: "Kohelet’s robot king",
       playAnimation: "Play animation",
       pauseAnimation: "Pause animation",
-      imageAlt: "Kohelet’s crowned robot king running in place, with a flowing cobalt cape and trailing data tiles.",
+      imageAlt: "Kohelet’s crowned robot king runs, jumps, writes code and connects an automation workflow, wearing a flowing cobalt cape.",
     },
     strip: { title: ["BIG POSSIBILITIES.", "PRACTICAL STARTING POINTS."], benefits: ["Stronger visibility", "Smarter workflows", "Clearer decisions"] },
     services: {
@@ -110,7 +110,7 @@ export const landingCopy: Record<LandingLocale, LandingCopy> = {
       animationControlLabel: "המלך הרובוטי של קהלת",
       playAnimation: "הפעלת האנימציה",
       pauseAnimation: "השהיית האנימציה",
-      imageAlt: "המלך הרובוטי של קהלת רץ במקום, עם כתר, גלימה כחולה מתנופפת ואריחי מידע מאחוריו.",
+      imageAlt: "המלך הרובוטי של קהלת רץ, קופץ, כותב קוד ומחבר תהליך אוטומציה, עם כתר וגלימה כחולה מתנופפת.",
     },
     strip: { title: ["אפשרויות גדולות.", "צעדים מעשיים."], benefits: ["נראות חזקה יותר", "תהליכים חכמים יותר", "החלטות ברורות יותר"] },
     services: {

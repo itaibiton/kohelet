@@ -6,21 +6,21 @@
   "feetOrigin": 0,
   "blenderBounds": {
     "min": [
-      -2.1102142333984375,
+      -2.109529495239258,
       -0.8303955793380737,
       -3.725290298461914e-09
     ],
     "max": [
       2.294151782989502,
-      1.2000036239624023,
+      1.200015664100647,
       4.4084391593933105
     ]
   },
   "gltfBounds": {
     "min": [
-      -2.1102142333984375,
+      -2.109529495239258,
       -3.725290298461914e-09,
-      -1.2000036239624023
+      -1.200015664100647
     ],
     "max": [
       2.294151782989502,
@@ -28,12 +28,12 @@
       0.8303955793380737
     ]
   },
-  "triangles": 46940,
+  "triangles": 39676,
   "editableMeshObjects": 231,
   "exportedMeshObjects": 17,
-  "materialDrawCalls": 64,
+  "materialDrawCalls": 35,
   "exportedNodes": 35,
-  "bytes": 833396,
+  "bytes": 1521284,
   "pivots": [
     "Robot_Root",
     "Body_Pivot",
@@ -400,14 +400,14 @@
   },
   "runningGltfBounds": {
     "min": [
-      -2.1837029457092285,
+      -1.9588744640350342,
       -0.0035121520049870014,
-      -1.7951171398162842
+      -2.5001838207244873
     ],
     "max": [
-      2.294151782989502,
+      2.4121954441070557,
       4.456142902374268,
-      1.0825529098510742
+      1.372335433959961
     ]
   },
   "gaitContactSweep": [
@@ -558,7 +558,8 @@
   ],
   "posterPose": {
     "phaseRadians": 1.5707963267948966,
-    "cycleSeconds": 0.82,
+    "referenceCycleSeconds": 0.82,
+    "rootYawRadians": -0.55,
     "exportRemainsNeutral": true
   },
   "runtimeAxes": {
@@ -593,19 +594,30 @@
     ]
   },
   "materials": [
+    "Cape \u00b7 matte inner blue",
     "Cape \u00b7 royal cobalt fabric",
-    "Cape \u00b7 satin inner blue",
-    "Ceramic \u00b7 porcelain edge",
-    "Ceramic \u00b7 warm ivory",
+    "Ceramic \u00b7 Kohelet cobalt",
+    "Ceramic \u00b7 pale sand edge",
+    "Ceramic \u00b7 warm sandstone",
     "Display \u00b7 warm ivory LEDs",
-    "Enamel \u00b7 Kohelet cobalt",
-    "Gem \u00b7 sapphire blue",
+    "Gem \u00b7 satin sapphire blue",
     "Joint \u00b7 dark graphite",
-    "Metal \u00b7 brushed royal gold",
-    "Metal \u00b7 champagne bevel",
-    "Metal \u00b7 polished titanium",
-    "Visor \u00b7 blue chrome edge",
-    "Visor \u00b7 midnight blue glass"
+    "Metal \u00b7 brushed antique gold",
+    "Metal \u00b7 brushed titanium",
+    "Metal \u00b7 warm brass bevel",
+    "Visor \u00b7 midnight mineral",
+    "Visor \u00b7 satin cobalt edge"
   ],
-  "animation": "Neutral articulated glTF rig for runtime running in place. No baked animation. Saved Blender studio and poster show a sample running stride."
+  "deliveryMaterials": [
+    "Delivery \u00b7 brushed antique metal palette",
+    "Delivery \u00b7 matte mineral palette",
+    "Delivery \u00b7 warm display pixels"
+  ],
+  "embeddedTextureImages": 4,
+  "surfaceFinish": "Warm matte sand ceramic, mineral cobalt and brushed antique gold. Embedded 128px normal/roughness maps with vertex-tinted palette; no clearcoat; all closed meshes use backface culling.",
+  "animation": "Neutral articulated glTF rig for runtime action choreography. No baked animation. Saved Blender studio and poster show a three-quarter running stride.",
+  "textureDimensions": [
+    128,
+    128
+  ]
 }

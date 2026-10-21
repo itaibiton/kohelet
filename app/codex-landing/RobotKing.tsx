@@ -85,11 +85,11 @@ export default function RobotKing({ label, controlLabel, playLabel, pauseLabel }
       <div className="kl-robot-stage" ref={stageRef} role="img" aria-label={label}>
         <Image
           className="kl-robot-poster"
-          src="/images/codex-landing/robot-king-running-poster.webp"
+          src="/images/codex-landing/robot-king-action-poster.webp"
           alt=""
           aria-hidden="true"
-          width={1254}
-          height={1254}
+          width={1280}
+          height={1280}
           sizes="(max-width: 700px) 100vw, (max-width: 1392px) 44vw, 573px"
           priority
         />

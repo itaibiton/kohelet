@@ -10,6 +10,7 @@ import bpy
 import json
 import math
 import struct
+import numpy as np
 from pathlib import Path
 from mathutils import Vector
 
@@ -17,20 +18,23 @@ BASE = Path(__file__).resolve().parents[2]
 OUT = BASE / "public/models/kohelet-robot-king.glb"
 SOURCE = Path(__file__).resolve().parent / "kohelet-robot-king.blend"
 PREVIEW = Path(__file__).resolve().parent / "preview.png"
-POSTER = BASE / "public/images/codex-landing/robot-king-running-poster.webp"
+POSTER = BASE / "public/images/codex-landing/robot-king-action-poster.webp"
 
 bpy.ops.object.select_all(action='SELECT')
 bpy.ops.object.delete(use_global=False)
 
-def material(name, color, metallic=0, roughness=.3, coat=.0, emission=0, sheen=0):
+def material(name, color, metallic=0, roughness=.76, coat=.0, emission=0, sheen=0):
     mat = bpy.data.materials.new(name)
     mat.use_nodes = True
+    mat.use_backface_culling = True
     node = next(node for node in mat.node_tree.nodes if node.type == 'BSDF_PRINCIPLED')
     node.inputs['Base Color'].default_value = (*color, 1)
     node.inputs['Metallic'].default_value = metallic
     node.inputs['Roughness'].default_value = roughness
     node.inputs['Coat Weight'].default_value = coat
-    node.inputs['Coat Roughness'].default_value = .18
+    # A nonzero clearcoat roughness exports the clearcoat extension even when
+    # coat weight is zero, needlessly choosing Three's heavier Physical shader.
+    node.inputs['Coat Roughness'].default_value = .18 if coat else 0
     node.inputs['Sheen Weight'].default_value = sheen
     if emission:
         node.inputs['Emission Color'].default_value = (*color, 1)
@@ -38,22 +42,86 @@ def material(name, color, metallic=0, roughness=.3, coat=.0, emission=0, sheen=0
     mat.diffuse_color = (*color, 1)
     return mat
 
-ivory = material('Ceramic · warm ivory', (.80,.69,.49), .08,.29,.28)
-ivory_light = material('Ceramic · porcelain edge', (.91,.82,.64), .05,.26,.25)
-gold = material('Metal · brushed royal gold', (.66,.35,.08), .79,.25,.25)
-gold_light = material('Metal · champagne bevel', (.86,.55,.17), .7,.23,.25)
-chrome = material('Metal · polished titanium', (.43,.48,.55), .92,.19,.3)
-joint = material('Joint · dark graphite', (.022,.03,.052), .65,.26)
-cobalt = material('Enamel · Kohelet cobalt', (.008,.035,.57), .32,.22,.32)
-sapphire = material('Gem · sapphire blue', (.008,.027,.36), .45,.12,.8)
-visor = material('Visor · midnight blue glass', (.004,.011,.065), .48,.12,.8)
-visor_edge = material('Visor · blue chrome edge', (.026,.055,.38), .75,.15,.7)
+ivory = material('Ceramic · warm sandstone', (.43,.32,.205), .0,.80)
+ivory_light = material('Ceramic · pale sand edge', (.61,.48,.315), .0,.78)
+gold = material('Metal · brushed antique gold', (.48,.23,.055), .72,.61)
+gold_light = material('Metal · warm brass bevel', (.63,.37,.115), .72,.59)
+chrome = material('Metal · brushed titanium', (.22,.26,.29), .72,.63)
+joint = material('Joint · dark graphite', (.018,.025,.033), .0,.80)
+cobalt = material('Ceramic · Kohelet cobalt', (.009,.028,.32), .0,.77)
+sapphire = material('Gem · satin sapphire blue', (.009,.025,.22), .0,.65)
+visor = material('Visor · midnight mineral', (.004,.011,.033), .0,.65)
+visor_edge = material('Visor · satin cobalt edge', (.018,.039,.21), .0,.72)
 # White Principled sheen exports as a pale glTF sheen lobe under browser studio
 # environments. Keep these two cloth materials sheen-free to retain royal blue.
-cape_mat = material('Cape · royal cobalt fabric', (.016,.035,.39), .02,.48,.05)
-cape_lining = material('Cape · satin inner blue', (.018,.06,.55), .05,.4,.1)
-led = material('Display · warm ivory LEDs', (1,.72,.24), .15,.24,emission=3)
+cape_mat = material('Cape · royal cobalt fabric', (.012,.025,.28), .0,.85)
+cape_lining = material('Cape · matte inner blue', (.018,.05,.37), .0,.82)
+led = material('Display · warm ivory LEDs', (1,.60,.16), .0,.65,emission=2)
 led_dim = material('Display · dark pixel substrate', (.018,.035,.15), .2,.26)
+
+# Real, tiny seamless surface textures are embedded in glTF. No runtime noise or
+# procedural shader work: each surface family samples two tiny 128px maps.
+def surface_maps(name, brushed=False):
+    size=128
+    rng=np.random.default_rng(21 if brushed else 11)
+    grain=rng.random((size,size)).astype(np.float32)
+    for _ in range(2):
+        grain=(grain*4+np.roll(grain,1,0)+np.roll(grain,-1,0)+np.roll(grain,1,1)+np.roll(grain,-1,1))/8
+    grain-=grain.mean()
+    grain/=max(float(np.abs(grain).max()),.001)
+    if brushed:
+        y=np.arange(size,dtype=np.float32)[:,None]
+        grain=.70*grain+.30*np.sin(y*2*np.pi*19/size)
+    dx=np.roll(grain,-1,1)-np.roll(grain,1,1)
+    dy=np.roll(grain,-1,0)-np.roll(grain,1,0)
+    normal=np.dstack((-dx*.17,-dy*.17,np.ones_like(grain)))
+    normal/=np.linalg.norm(normal,axis=2,keepdims=True)
+    normals=np.ones((size,size,4),dtype=np.float32)
+    normals[:,:,:3]=normal*.5+.5
+    rough=np.ones_like(normals)
+    rough[:,:,:3]=np.clip((.61 if brushed else .79)+grain[:,:,None]*.055,0,1)
+    outputs=[]
+    for suffix,pixels in [('normal',normals),('roughness',rough)]:
+        image=bpy.data.images.new(name+' · '+suffix,width=size,height=size,alpha=False)
+        image.colorspace_settings.name='Non-Color'
+        image.pixels.foreach_set(pixels.ravel())
+        image.pack()
+        outputs.append(image)
+    return outputs
+
+stone_maps=surface_maps('Sand ceramic micrograin')
+metal_maps=surface_maps('Antique metal brushing',True)
+def surface_nodes(mat, maps):
+    nodes=mat.node_tree.nodes
+    links=mat.node_tree.links
+    shader=next(node for node in nodes if node.type=='BSDF_PRINCIPLED')
+    normal_texture=nodes.new('ShaderNodeTexImage')
+    normal_texture.image=maps[0]
+    normal_texture.interpolation='Linear'
+    normal=nodes.new('ShaderNodeNormalMap')
+    normal.inputs['Strength'].default_value=.45
+    links.new(normal_texture.outputs['Color'],normal.inputs['Color'])
+    links.new(normal.outputs['Normal'],shader.inputs['Normal'])
+    roughness_texture=nodes.new('ShaderNodeTexImage')
+    roughness_texture.image=maps[1]
+    links.new(roughness_texture.outputs['Color'],shader.inputs['Roughness'])
+
+for mat in [ivory,ivory_light,joint,cobalt,sapphire,visor,visor_edge,cape_mat,cape_lining]:
+    surface_nodes(mat,stone_maps)
+for mat in [gold,gold_light,chrome]:
+    surface_nodes(mat,metal_maps)
+
+# Vertex tint keeps the complete authored palette while each rigid joint needs
+# only one matte and one metal material, plus a small emissive face primitive.
+export_stone=material('Delivery · matte mineral palette',(1,1,1),0,.79)
+export_metal=material('Delivery · brushed antique metal palette',(1,1,1),.72,.61)
+export_led=material('Delivery · warm display pixels',(1,.60,.16),0,.65,emission=2)
+for mat,maps in [(export_stone,stone_maps),(export_metal,metal_maps)]:
+    surface_nodes(mat,maps)
+    shader=next(node for node in mat.node_tree.nodes if node.type=='BSDF_PRINCIPLED')
+    color=mat.node_tree.nodes.new('ShaderNodeVertexColor')
+    color.layer_name='SurfaceTint'
+    mat.node_tree.links.new(color.outputs['Color'],shader.inputs['Base Color'])
 
 def parent_keep_world(obj, parent):
     if parent:
@@ -91,7 +159,7 @@ def finish(obj, name, mat, parent, bevel=0, segments=3):
     if bevel:
         mod = obj.modifiers.new('Manufactured soft edge', 'BEVEL')
         mod.width = bevel
-        mod.segments = segments
+        mod.segments = min(segments,3)
         mod.limit_method = 'ANGLE'
         bpy.context.view_layer.objects.active = obj
         bpy.ops.object.modifier_apply(modifier=mod.name)
@@ -116,7 +184,7 @@ def box(name, loc, dims, mat, parent=body_pivot, bevel=.06, rotation=None, segme
     return obj
 
 def sphere(name, loc, scale, mat, parent=body_pivot, segments=20, rings=12):
-    bpy.ops.mesh.primitive_uv_sphere_add(segments=segments, ring_count=rings, radius=1, location=loc)
+    bpy.ops.mesh.primitive_uv_sphere_add(segments=min(segments,16), ring_count=min(rings,10), radius=1, location=loc)
     obj = bpy.context.object
     obj.scale = scale
     bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
@@ -125,7 +193,7 @@ def sphere(name, loc, scale, mat, parent=body_pivot, segments=20, rings=12):
 def cylinder(name, a, b, radius, mat, parent=body_pivot, vertices=24, bevel=.012):
     a,b = Vector(a),Vector(b)
     delta = b-a
-    bpy.ops.mesh.primitive_cylinder_add(vertices=vertices, radius=radius, depth=delta.length, location=(a+b)/2)
+    bpy.ops.mesh.primitive_cylinder_add(vertices=min(vertices,20), radius=radius, depth=delta.length, location=(a+b)/2)
     obj = bpy.context.object
     obj.rotation_euler = delta.to_track_quat('Z', 'Y').to_euler()
     bpy.ops.object.transform_apply(location=False, rotation=False, scale=True)
@@ -290,7 +358,7 @@ for side,label,parent in [(-1,'R',arm_r),(1,'L',arm_l)]:
         cylinder('Thumb_'+label+' armor '+str(j),a,b,.058,ivory,parent,14,.019)
 
 # Real double-sided closed cape mesh, softly folded and asymmetric at the hem.
-nu,nv=28,18
+nu,nv=22,14
 verts=[]
 for j in range(nv+1):
     v=j/nv
@@ -343,9 +411,23 @@ head_pivot.rotation_euler=(math.radians(-4),math.radians(-12),math.radians(-7))
 body_pivot.rotation_euler=(0,0,math.radians(3))
 bpy.context.view_layer.update()
 
+# UVs use a fixed physical density, so ceramic grains remain the same size on
+# head armor, finger segments, boots and cloth instead of stretching per part.
+for obj in [root]+list(root.children_recursive):
+    if obj.type!='MESH': continue
+    while obj.data.uv_layers: obj.data.uv_layers.remove(obj.data.uv_layers[0])
+    uv=obj.data.uv_layers.new(name='SurfaceGrain')
+    for polygon in obj.data.polygons:
+        normal=obj.matrix_world.to_3x3()@polygon.normal
+        axis=max(range(3),key=lambda axis:abs(normal[axis]))
+        projected=[i for i in range(3) if i!=axis]
+        for index in polygon.loop_indices:
+            point=obj.matrix_world@obj.data.vertices[obj.data.loops[index].vertex_index].co
+            uv.data[index].uv=(point[projected[0]]*5,point[projected[1]]*5)
+
 # Export an optimized duplicate hierarchy, retaining every editable source part.
-# Joining each pivot's rigid geometry preserves material primitives while reducing
-# 231 editable parts to 17 articulated mesh groups and 64 material draw calls.
+# Join rigid parts by pivot and consolidate their color palette into vertex tint.
+# Two tactile material families retain all colors with far fewer draw calls.
 bpy.ops.object.select_all(action='DESELECT')
 model_objects=[root]+list(root.children_recursive)
 pivots=[obj for obj in model_objects if obj.type=='EMPTY']
@@ -381,13 +463,84 @@ for pivot in pivots:
         bpy.ops.object.join()
         merged=bpy.context.object
         merged.name=source_names[pivot]+'__RigidGeometry'
+        previous_materials=list(merged.data.materials)
+        tint=merged.data.color_attributes.new(name='SurfaceTint',type='FLOAT_COLOR',domain='CORNER')
+        merged.data.color_attributes.active_color=tint
+        while merged.data.uv_layers: merged.data.uv_layers.remove(merged.data.uv_layers[0])
+        uv=merged.data.uv_layers.new(name='SurfaceGrain')
+        target_materials=[]
+        target_indices=[]
+        for polygon in merged.data.polygons:
+            original=previous_materials[polygon.material_index]
+            target=export_led if original==led else export_metal if original in [gold,gold_light,chrome] else export_stone
+            if target not in target_materials: target_materials.append(target)
+            target_indices.append(target_materials.index(target))
+            color=original.diffuse_color[:3]
+            normal=merged.matrix_world.to_3x3()@polygon.normal
+            axis=max(range(3),key=lambda axis:abs(normal[axis]))
+            projected=[i for i in range(3) if i!=axis]
+            for index in polygon.loop_indices:
+                point=merged.matrix_world@merged.data.vertices[merged.data.loops[index].vertex_index].co
+                # Very slight mineral variation avoids large flat plastic areas.
+                mineral=1+.018*math.sin(point.x*13.3+point.z*8.7)*math.sin(point.y*11.1+point.z*5.7)
+                tint.data[index].color=(*(min(1,c*mineral) for c in color),1)
+                uv.data[index].uv=(point[projected[0]]*5,point[projected[1]]*5)
+        merged.data.materials.clear()
+        for mat in target_materials: merged.data.materials.append(mat)
+        for polygon,index in zip(merged.data.polygons,target_indices): polygon.material_index=index
         draw_calls+=len(merged.data.materials)
         optimized.append(merged)
 bpy.ops.object.select_all(action='DESELECT')
 for obj in optimized: obj.select_set(True)
 bpy.context.view_layer.objects.active=mapping[root]
 OUT.parent.mkdir(parents=True,exist_ok=True)
-bpy.ops.export_scene.gltf(filepath=str(OUT),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_animations=False,export_extras=True,export_cameras=False,export_lights=False,export_texcoords=False,export_normals=True,export_materials='EXPORT')
+bpy.ops.export_scene.gltf(filepath=str(OUT),export_format='GLB',use_selection=True,export_apply=True,export_yup=True,export_animations=False,export_extras=True,export_cameras=False,export_lights=False,export_texcoords=True,export_normals=True,export_materials='EXPORT')
+
+# glTF supports normalized byte colors without an extension. Blender exports
+# FLOAT VEC3 colors, so pack those as UBYTE VEC4 (opaque alpha), saving ~250KiB
+# while preserving the vertex-tinted palette to within 1/255 linear intensity.
+delivery=OUT.read_bytes()
+json_size=struct.unpack_from('<I',delivery,12)[0]
+delivery_document=json.loads(delivery[20:20+json_size])
+# Blender emits a roughness-only clearcoat extension for the zero-weight lobe.
+# glTF defaults its factor to zero: removing that no-op keeps StandardMaterial.
+for delivered_material in delivery_document['materials']:
+    extensions=delivered_material.get('extensions',{})
+    coat=extensions.get('KHR_materials_clearcoat')
+    if coat is not None:
+        assert not coat.get('clearcoatFactor',0) and not coat.get('clearcoatTexture')
+        del extensions['KHR_materials_clearcoat']
+    if not extensions: delivered_material.pop('extensions',None)
+if 'extensionsUsed' in delivery_document:
+    delivery_document['extensionsUsed']=[name for name in delivery_document['extensionsUsed'] if name!='KHR_materials_clearcoat']
+binary_offset=20+json_size+8
+binary=delivery[binary_offset:]
+replacement_views={}
+color_accessors={primitive['attributes']['COLOR_0'] for mesh in delivery_document['meshes'] for primitive in mesh['primitives'] if 'COLOR_0' in primitive['attributes']}
+for index in color_accessors:
+    accessor=delivery_document['accessors'][index]
+    view=delivery_document['bufferViews'][accessor['bufferView']]
+    assert accessor['componentType']==5126 and accessor['type']=='VEC3'
+    assert not accessor.get('byteOffset') and not view.get('byteStride')
+    values=np.frombuffer(binary,dtype='<f4',count=accessor['count']*3,offset=view.get('byteOffset',0)).reshape((-1,3))
+    packed=np.full((accessor['count'],4),255,dtype=np.uint8)
+    packed[:,:3]=np.rint(np.clip(values,0,1)*255).astype(np.uint8)
+    replacement_views[accessor['bufferView']]=packed.tobytes()
+    accessor.update({'componentType':5121,'type':'VEC4','normalized':True})
+rebuilt=bytearray()
+for index,view in enumerate(delivery_document['bufferViews']):
+    content=replacement_views.get(index)
+    if content is None: content=binary[view.get('byteOffset',0):view.get('byteOffset',0)+view['byteLength']]
+    rebuilt.extend(b'\0'*(-len(rebuilt)%4))
+    view['byteOffset']=len(rebuilt)
+    view['byteLength']=len(content)
+    rebuilt.extend(content)
+rebuilt.extend(b'\0'*(-len(rebuilt)%4))
+delivery_document['buffers'][0]['byteLength']=len(rebuilt)
+packed_json=json.dumps(delivery_document,separators=(',',':')).encode()
+packed_json+=b' '*(-len(packed_json)%4)
+total_size=12+8+len(packed_json)+8+len(rebuilt)
+OUT.write_bytes(struct.pack('<III',0x46546c67,2,total_size)+struct.pack('<II',len(packed_json),0x4e4f534a)+packed_json+struct.pack('<II',len(rebuilt),0x004e4942)+rebuilt)
 optimized_meshes=sum(obj.type=='MESH' for obj in optimized)
 for obj in reversed(optimized): bpy.data.objects.remove(obj,do_unlink=True)
 for obj,name in source_names.items(): obj.name=name
@@ -459,6 +612,7 @@ def sample_running_pose(phase):
         pivot.location=location.copy()
         pivot.rotation_euler=rotation.copy()
     stride=math.sin(phase)
+    root.rotation_euler.z=-.55
     for label,value in [('R',stride),('L',-stride)]:
         hip,knee,boot=leg_pivots[label]
         hip_x=-.72*value
@@ -505,11 +659,15 @@ metadata={
     'neutralNodeTransforms':neutral_nodes,
     'runningGltfBounds':{'min':[running_min[0],running_min[2],-running_max[1]],'max':[running_max[0],running_max[2],-running_min[1]]},
     'gaitContactSweep':contact_sweep,
-    'posterPose':{'phaseRadians':math.pi/2,'cycleSeconds':.82,'exportRemainsNeutral':True},
+    'posterPose':{'phaseRadians':math.pi/2,'referenceCycleSeconds':.82,'rootYawRadians':-.55,'exportRemainsNeutral':True},
     'runtimeAxes':{'pitch':'local +X','yaw':'local +Y','roll':'local +Z','forward':'glTF +Z','hipForward':'negative X','kneeHeelBack':'positive X'},
     'camera':{'blenderPosition':list(camera.location),'blenderTarget':list(target),'orthographicScale':camera_data.ortho_scale,'gltfPosition':[camera.location.x,camera.location.z,-camera.location.y],'gltfTarget':[target.x,target.z,-target.y]},
     'materials':sorted({mat.name for obj in model_objects if obj.type=='MESH' for mat in obj.data.materials}),
-    'animation':'Neutral articulated glTF rig for runtime running in place. No baked animation. Saved Blender studio and poster show a sample running stride.',
+    'deliveryMaterials':[mat['name'] for mat in glb_document['materials']],
+    'embeddedTextureImages':len(glb_document.get('images',[])),
+    'textureDimensions':[128,128],
+    'surfaceFinish':'Warm matte sand ceramic, mineral cobalt and brushed antique gold. Embedded 128px normal/roughness maps with vertex-tinted palette; no clearcoat; all closed meshes use backface culling.',
+    'animation':'Neutral articulated glTF rig for runtime action choreography. No baked animation. Saved Blender studio and poster show a three-quarter running stride.',
 }
 (SOURCE.parent/'asset-metadata.json').write_text(json.dumps(metadata,indent=2))
 bpy.context.preferences.filepaths.save_version=0
