@@ -9,6 +9,7 @@ Model faces -Y in Blender; feet sit at Z=0. The glTF exporter converts Z up to Y
 import bpy
 import json
 import math
+import struct
 from pathlib import Path
 from mathutils import Vector
 
@@ -75,6 +76,13 @@ body_pivot = empty('Body_Pivot', (0,0,1.56), root)
 head_pivot = empty('Head_Pivot', (0,0,2.82), body_pivot)
 arm_r = empty('Arm_R_Pivot', (-.65,0,1.85), body_pivot)
 arm_l = empty('Arm_L_Pivot', (.65,0,1.85), body_pivot)
+cape_pivot = empty('Cape_Pivot', (0,.29,2.01), body_pivot)
+leg_pivots = {}
+for side,label in [(-1,'R'),(1,'L')]:
+    hip = empty('Leg_'+label+'_Pivot', (side*.39,0,1.14), body_pivot)
+    knee = empty('Knee_'+label+'_Pivot', (side*.39,0,.73), hip)
+    boot = empty('Boot_'+label+'_Pivot', (side*.39,0,.38), knee)
+    leg_pivots[label] = (hip,knee,boot)
 
 def finish(obj, name, mat, parent, bevel=0, segments=3):
     obj.name = name
@@ -228,20 +236,24 @@ for side in [-1,1]:
     for z in [1.51,1.60,1.69]:
         box('Body · side vent '+str(side)+' '+str(z),(side*.54,.025,z),(.035,.32,.038),joint,body_pivot,.01,rotation=(0,side*.15,0))
 
-# Chrome hip ball joints and oversized cobalt boots with layered gold soles.
-for side in [-1,1]:
-    x=side*.37
-    sphere('Hip · swivel '+str(side),(x,0,1.12),(.20,.20,.20),chrome)
-    cylinder('Leg · thigh dark core '+str(side),(x,0,1.08),(side*.42,-.02,.71),.135,joint)
-    cylinder('Leg · ivory upper armor '+str(side),(x,0,1.04),(side*.42,-.02,.77),.175,ivory,vertices=24,bevel=.035)
-    sphere('Knee · titanium joint '+str(side),(side*.42,-.01,.65),(.15,.16,.15),chrome)
-    box('Boot · raised cobalt cuff '+str(side),(side*.43,-.02,.53),(.46,.50,.45),cobalt,bevel=.10,rotation=(0,side*.07,0),segments=4)
-    box('Boot · gold sole '+str(side),(side*.43,-.19,.085),(.66,.96,.14),gold_light,bevel=.065,segments=4)
-    box('Boot · black outsole '+str(side),(side*.43,-.19,.035),(.62,.91,.07),joint,bevel=.032,segments=3)
-    box('Boot · rounded cobalt toe '+str(side),(side*.43,-.24,.27),(.63,.88,.43),cobalt,bevel=.19,segments=5)
-    tube('Boot · ivory toe seam '+str(side),[(side*.43-.26,-.58,.21),(side*.43,-.65,.23),(side*.43+.26,-.58,.21)],.012,ivory_light)
-    cylinder('Boot · ankle gold disk '+str(side),(side*.65,0,.47),(side*.71,0,.47),.125,gold_light,vertices=24)
-    cylinder('Boot · ankle inset '+str(side),(side*.708,0,.47),(side*.725,0,.47),.092,ivory,vertices=24)
+# Articulated legs: hip -> knee -> ankle, with meaningful local X pitch axes.
+# The glTF neutral rig is straight and unanimated; the poster gets a sample stride.
+for side,label in [(-1,'R'),(1,'L')]:
+    x=side*.39
+    hip,knee,boot=leg_pivots[label]
+    sphere('Hip · swivel '+label,(x,0,1.14),(.18,.18,.18),chrome,hip)
+    cylinder('Leg · thigh dark core '+label,(x,0,1.10),(x,0,.75),.125,joint,hip)
+    cylinder('Leg · ivory upper armor '+label,(x,0,1.04),(x,0,.79),.17,ivory,hip,24,.035)
+    sphere('Knee · titanium joint '+label,(x,0,.73),(.145,.15,.145),chrome,knee)
+    cylinder('Shin · titanium core '+label,(x,0,.72),(x,0,.38),.115,chrome,knee)
+    cylinder('Shin · ivory upper cuff '+label,(x,0,.65),(x,0,.52),.135,ivory,knee,24,.025)
+    box('Boot · raised cobalt cuff '+label,(x,-.02,.43),(.46,.50,.36),cobalt,boot,.10,segments=4)
+    box('Boot · gold sole '+label,(x,-.19,.085),(.66,.96,.14),gold_light,boot,.065,segments=4)
+    box('Boot · black outsole '+label,(x,-.19,.035),(.62,.91,.07),joint,boot,.032,segments=3)
+    box('Boot · rounded cobalt toe '+label,(x,-.24,.25),(.63,.88,.40),cobalt,boot,.18,segments=5)
+    tube('Boot · ivory toe seam '+label,[(x-.26,-.58,.20),(x,-.65,.22),(x+.26,-.58,.20)],.012,ivory_light,boot)
+    cylinder('Boot · ankle gold disk '+label,(x+side*.22,0,.40),(x+side*.28,0,.40),.125,gold_light,boot,24)
+    cylinder('Boot · ankle inset '+label,(x+side*.278,0,.40),(x+side*.295,0,.40),.092,ivory,boot,24)
 
 # Each arm is a real hierarchy with machined sleeves, joint rings and fingers.
 def limb(prefix, a, b, radius, parent):
@@ -254,46 +266,28 @@ for side,parent in [(-1,arm_r),(1,arm_l)]:
     shoulder=(side*.67,0,1.86)
     sphere('Shoulder · chrome swivel '+str(side),shoulder,(.20,.20,.20),chrome,parent)
     cylinder('Shoulder · sapphire socket '+str(side),(side*.56,0,1.86),(side*.72,0,1.86),.22,cobalt,parent,28)
-    if side==-1:
-        elbow=(-.99,-.03,1.52)
-        wrist=(-.79,-.36,1.28)
-    else:
-        elbow=(1.00,-.02,1.54)
-        wrist=(1.29,-.19,1.93)
+    elbow=(side*.81,.01,1.49)
+    wrist=(side*.81,-.36,1.49)
     limb('Arm '+str(side)+' upper',shoulder,elbow,.17,parent)
     sphere('Elbow · titanium ball '+str(side),elbow,(.155,.155,.155),chrome,parent)
     limb('Arm '+str(side)+' lower',elbow,wrist,.195,parent)
     sphere('Wrist · titanium ball '+str(side),wrist,(.12,.12,.12),chrome,parent)
 
-# Left hand: open palm with four individually segmented, gently curling fingers.
-box('Palm_L · ceramic shell',(1.43,-.32,2.015),(.43,.39,.21),ivory_light,arm_l,.09,segments=4)
-box('Palm_L · blue energy inset',(1.44,-.31,2.13),(.16,.19,.025),cobalt,arm_l,.045)
-for i in range(4):
-    x=1.25+i*.12
-    length=1-(abs(i-1.5)*.07)
-    points=[(x,-.43,2.04),(x,-.54,2.08),(x,-.65*length,2.17),(x,-.67*length,2.28)]
-    for j,(a,b) in enumerate(zip(points,points[1:])):
-        sphere('Finger_L '+str(i)+' joint '+str(j),a,(.052,.052,.052),chrome,arm_l,12,8)
-        cylinder('Finger_L '+str(i)+' segment '+str(j),a,b,.053,ivory_light,arm_l,12,.018)
-    sphere('Finger_L '+str(i)+' rounded tip',points[-1],(.053,.053,.063),ivory_light,arm_l,12,8)
-thumb=[(1.21,-.27,2.00),(1.07,-.39,2.06),(1.02,-.52,2.17)]
-for j,(a,b) in enumerate(zip(thumb,thumb[1:])):
-    sphere('Thumb_L joint '+str(j),a,(.067,.067,.067),chrome,arm_l,12,8)
-    cylinder('Thumb_L segment '+str(j),a,b,.069,ivory,arm_l,14,.022)
-sphere('Thumb_L ceramic tip',thumb[-1],(.072,.065,.078),ivory_light,arm_l,14,8)
-
-# Right hand rests confidently on the hip; separate knuckles preserve silhouette.
-box('Palm_R · ceramic shell',(-.66,-.48,1.25),(.32,.24,.30),ivory_light,arm_r,.075,rotation=(0,.25,-.3))
-for i in range(4):
-    x=-.79+i*.09
-    a=(x,-.55,1.26)
-    b=(x+.025,-.65,1.16)
-    c=(x+.055,-.61,1.09)
-    for j,(p,q) in enumerate([(a,b),(b,c)]):
-        sphere('Finger_R joint '+str(i)+' '+str(j),p,(.044,.044,.044),chrome,arm_r,12,8)
-        cylinder('Finger_R segment '+str(i)+' '+str(j),p,q,.047,ivory,arm_r,12,.017)
-sphere('Thumb_R joint',(-.47,-.47,1.31),(.06,.06,.06),chrome,arm_r,12,8)
-cylinder('Thumb_R armor',(-.47,-.47,1.31),(-.43,-.59,1.24),.06,ivory,arm_r,14,.02)
+# Compact ceramic fists keep four articulated fingers and a distinct thumb.
+for side,label,parent in [(-1,'R',arm_r),(1,'L',arm_l)]:
+    center=side*.81
+    box('Palm_'+label+' · compact fist',(center,-.48,1.49),(.34,.29,.29),ivory_light,parent,.075,segments=4)
+    box('Palm_'+label+' · sapphire back inset',(center,-.49,1.65),(.14,.13,.025),cobalt,parent,.035)
+    for i in range(4):
+        x=center+(i-1.5)*.078
+        points=[(x,-.54,1.57),(x,-.65,1.56),(x,-.66,1.46),(x,-.57,1.42)]
+        for j,(a,b) in enumerate(zip(points,points[1:])):
+            sphere('Finger_'+label+' joint '+str(i)+' '+str(j),a,(.038,.038,.038),chrome,parent,12,8)
+            cylinder('Finger_'+label+' curled segment '+str(i)+' '+str(j),a,b,.042,ivory_light,parent,12,.014)
+    thumb=[(center-side*.16,-.45,1.51),(center-side*.19,-.57,1.52),(center-side*.08,-.64,1.49)]
+    for j,(a,b) in enumerate(zip(thumb,thumb[1:])):
+        sphere('Thumb_'+label+' joint '+str(j),a,(.055,.055,.055),chrome,parent,12,8)
+        cylinder('Thumb_'+label+' armor '+str(j),a,b,.058,ivory,parent,14,.019)
 
 # Real double-sided closed cape mesh, softly folded and asymmetric at the hem.
 nu,nv=28,18
@@ -323,20 +317,20 @@ solid.thickness=.038
 solid.material_offset=1
 bpy.context.view_layer.objects.active=obj
 bpy.ops.object.modifier_apply(modifier=solid.name)
-parent_keep_world(obj,body_pivot)
+parent_keep_world(obj,cape_pivot)
 for name,indices in [
     ('Cape · gold left edge',[j*(nu+1) for j in range(nv+1)]),
     ('Cape · gold right edge',[j*(nu+1)+nu for j in range(nv+1)]),
     ('Cape · gold scalloped hem',[nv*(nu+1)+i for i in range(nu+1)]),
 ]:
-    tube(name,[verts[i] for i in indices],.022,gold_light,body_pivot,3)
+    tube(name,[verts[i] for i in indices],.022,gold_light,cape_pivot,3)
 profile('Cape · shoulder clasp outer',[(-.82,2.04),(-.31,2.13),(-.10,1.96),(-.74,1.91)],-.43,.16,gold_light,body_pivot,.035)
 profile('Cape · shoulder blue enamel',[(-.79,2.04),(-.33,2.105),(-.15,1.98),(-.72,1.94)],-.465,-.43,cape_mat,body_pivot,.025)
 cylinder('Cape · gold circular brooch',(-.34,-.47,2.035),(-.34,-.515,2.035),.085,gold_light,body_pivot,28)
 sphere('Cape · brooch dome',(-.34,-.535,2.035),(.064,.023,.064),gold_light,body_pivot,20,10)
 
-# Floating squares have independent origins for restrained frontend motion.
-tile_positions=[(1.53,-.32,2.53),(1.88,-.23,2.86),(2.10,-.09,3.22),(2.10,.01,3.58),(1.90,.015,3.92),(1.56,-.04,4.15)]
+# Floating squares stream behind the runner rather than hovering over a palm.
+tile_positions=[(1.05,.30,1.15),(1.24,.40,1.34),(1.45,.50,1.52),(1.64,.60,1.70),(1.84,.70,1.86),(2.04,.80,2.03)]
 for i,pos in enumerate(tile_positions):
     pivot=empty('Data_Tile_'+str(i+1).zfill(2),pos,root)
     size=.31 if i in [0,2,4] else .35
@@ -344,14 +338,14 @@ for i,pos in enumerate(tile_positions):
     box('Tile '+str(i+1)+' · enamel face',(pos[0],pos[1]-.05,pos[2]),(size,.055,size),cobalt if i%2 else ivory_light,pivot,.04,segments=3)
     pivot.rotation_euler=(math.radians(9*(-1 if i%2 else 1)),math.radians(-12+i*7),math.radians(-15+i*4))
 
-# Gentle one-time pose; frontend is free to layer tiny motion over these pivots.
+# Neutral delivery pose; runtime supplies a continuously articulated running gait.
 head_pivot.rotation_euler=(math.radians(-4),math.radians(-12),math.radians(-7))
 body_pivot.rotation_euler=(0,0,math.radians(3))
 bpy.context.view_layer.update()
 
 # Export an optimized duplicate hierarchy, retaining every editable source part.
 # Joining each pivot's rigid geometry preserves material primitives while reducing
-# 221 tiny object nodes to ten draw groups and roughly forty material draw calls.
+# 231 editable parts to 17 articulated mesh groups and 64 material draw calls.
 bpy.ops.object.select_all(action='DESELECT')
 model_objects=[root]+list(root.children_recursive)
 pivots=[obj for obj in model_objects if obj.type=='EMPTY']
@@ -438,7 +432,7 @@ camera.location=(5.4,-9.5,5.2)
 target=Vector((.18,0,2.12))
 camera.rotation_euler=(target-camera.location).to_track_quat('-Z','Y').to_euler()
 camera_data.type='ORTHO'
-camera_data.ortho_scale=5.3
+camera_data.ortho_scale=5.5
 camera_data.lens=50
 scene.camera=camera
 
@@ -446,6 +440,59 @@ points=[obj.matrix_world@Vector(corner) for obj in model_objects if obj.type=='M
 mins=[min(p[i] for p in points) for i in range(3)]
 maxs=[max(p[i] for p in points) for i in range(3)]
 triangles=sum(sum(len(p.vertices)-2 for p in obj.data.polygons) for obj in model_objects if obj.type=='MESH')
+glb_bytes=OUT.read_bytes()
+json_length=struct.unpack_from('<I',glb_bytes,12)[0]
+glb_document=json.loads(glb_bytes[20:20+json_length])
+parent_names={child:node.get('name') for node in glb_document['nodes'] for child in node.get('children',[])}
+neutral_nodes={node['name']:{
+    'parent':parent_names.get(index),
+    'translation':node.get('translation',[0,0,0]),
+    'quaternion':node.get('rotation',[0,0,0,1]),
+    'scale':node.get('scale',[1,1,1]),
+} for index,node in enumerate(glb_document['nodes']) if node.get('name') in source_names.values()}
+
+# Match the runtime's literal running-in-place cycle for the saved studio pose.
+# This happens AFTER the neutral glTF export and never bakes its gait into GLB.
+rest_transforms={pivot:(pivot.location.copy(),pivot.rotation_euler.copy()) for pivot in pivots}
+def sample_running_pose(phase):
+    for pivot,(location,rotation) in rest_transforms.items():
+        pivot.location=location.copy()
+        pivot.rotation_euler=rotation.copy()
+    stride=math.sin(phase)
+    for label,value in [('R',stride),('L',-stride)]:
+        hip,knee,boot=leg_pivots[label]
+        hip_x=-.72*value
+        knee_x=.16+1.05*max(0,-value)**2
+        boot_x=-.16-.72*hip_x-.38*knee_x
+        hip.rotation_euler.x+=hip_x
+        knee.rotation_euler.x+=knee_x
+        boot.rotation_euler.x+=boot_x
+    arm_r.rotation_euler.x+=.64*stride
+    arm_l.rotation_euler.x-=.64*stride
+    body_pivot.rotation_euler.x+=.16
+    body_pivot.rotation_euler.z+=.045*stride
+    body_pivot.rotation_euler.y-=.025*stride
+    body_pivot.location.z+=.033+.09*math.cos(2*phase)
+    head_pivot.rotation_euler.x+=-.09+.035*math.cos(2*phase)
+    cape_pivot.rotation_euler.x+=.16+.08*math.sin(2*phase-.7)
+    bpy.context.view_layer.update()
+
+contact_sweep=[]
+running_points=[]
+for frame in range(24):
+    phase=2*math.pi*frame/24+math.pi/2
+    sample_running_pose(phase)
+    feet={}
+    for label in ['R','L']:
+        foot=leg_pivots[label][2]
+        soles=[obj for obj in foot.children if obj.type=='MESH' and 'outsole' in obj.name]
+        feet[label]=min((obj.matrix_world@vert.co).z for obj in soles for vert in obj.data.vertices)
+    contact_sweep.append({'phase':phase,'rightFootMinZ':feet['R'],'leftFootMinZ':feet['L'],'lowestFootZ':min(feet.values())})
+    running_points.extend(obj.matrix_world@Vector(corner) for obj in model_objects if obj.type=='MESH' for corner in obj.bound_box)
+running_min=[min(point[i] for point in running_points) for i in range(3)]
+running_max=[max(point[i] for point in running_points) for i in range(3)]
+sample_running_pose(math.pi/2)
+
 metadata={
     'asset':'Kohelet Robot King','generator':'Blender 5.2.1, custom original mesh geometry',
     'front':'Blender -Y; glTF +Z','up':'Blender +Z; glTF +Y','feetOrigin':0,
@@ -454,10 +501,15 @@ metadata={
     'triangles':triangles,'editableMeshObjects':sum(obj.type=='MESH' for obj in model_objects),
     'exportedMeshObjects':optimized_meshes,'materialDrawCalls':draw_calls,'exportedNodes':len(pivots)+optimized_meshes,
     'bytes':OUT.stat().st_size,
-    'pivots':['Robot_Root','Body_Pivot','Head_Pivot','Arm_R_Pivot','Arm_L_Pivot']+['Data_Tile_'+str(i).zfill(2) for i in range(1,7)],
+    'pivots':list(source_names.values()),
+    'neutralNodeTransforms':neutral_nodes,
+    'runningGltfBounds':{'min':[running_min[0],running_min[2],-running_max[1]],'max':[running_max[0],running_max[2],-running_min[1]]},
+    'gaitContactSweep':contact_sweep,
+    'posterPose':{'phaseRadians':math.pi/2,'cycleSeconds':.82,'exportRemainsNeutral':True},
+    'runtimeAxes':{'pitch':'local +X','yaw':'local +Y','roll':'local +Z','forward':'glTF +Z','hipForward':'negative X','kneeHeelBack':'positive X'},
     'camera':{'blenderPosition':list(camera.location),'blenderTarget':list(target),'orthographicScale':camera_data.ortho_scale,'gltfPosition':[camera.location.x,camera.location.z,-camera.location.y],'gltfTarget':[target.x,target.z,-target.y]},
     'materials':sorted({mat.name for obj in model_objects if obj.type=='MESH' for mat in obj.data.materials}),
-    'animation':'No baked animation. Named pivots preserve the authored pose and support tiny frontend offsets.',
+    'animation':'Neutral articulated glTF rig for runtime running in place. No baked animation. Saved Blender studio and poster show a sample running stride.',
 }
 (SOURCE.parent/'asset-metadata.json').write_text(json.dumps(metadata,indent=2))
 bpy.context.preferences.filepaths.save_version=0

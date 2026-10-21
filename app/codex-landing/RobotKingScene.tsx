@@ -8,6 +8,7 @@ import {
 } from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import { getRobotRunPose, RUN_CYCLE_SECONDS, type RunJoint } from "./robot-run-cycle";
 
 type SceneOptions = { playing: boolean; visible: boolean; onReady: () => void; onError: () => void };
 export type RobotKingController = { setPlaying: (playing: boolean) => void; setVisible: (visible: boolean) => void; dispose: () => void };
@@ -36,7 +37,7 @@ function disposeObject(root: Object3D) {
   });
 }
 
-/** A rare marketing illustration: gentle character motion explains the floating data motif. */
+/** A continuous character run, with a fixed camera and explicit playback control. */
 export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions): RobotKingController {
   const renderer = new WebGLRenderer({ alpha: true, antialias: true, powerPreference: "low-power" });
   const scene = new Scene();
@@ -58,6 +59,7 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
   let modelHeight = 4;
   let centerY = 0;
   const movingParts: MovingPart[] = [];
+  const poseEnvelope = new Box3();
   const viewDirection = new Vector3(5.22, 3.08, 9.5).normalize();
 
   function dispose() {
@@ -103,18 +105,20 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
   }
 
   function animateParts(time: number) {
-    framing.position.y = -centerY + Math.sin(time * 0.8) * modelHeight * 0.006;
+    const { phase, bodyLift, joints } = getRobotRunPose(time);
+    const scale = modelHeight / 4.4;
+    framing.position.y = -centerY;
     movingParts.forEach(({ object, position, rotation, index }) => {
       if (object.name.startsWith("Data_Tile_")) {
-        object.position.y = position.y + (Math.sin(time * 0.75 + index * 0.85) - Math.sin(index * 0.85)) * modelHeight * 0.018;
-        object.rotation.z = rotation.z + (Math.sin(time * 0.5 + index * 0.6) - Math.sin(index * 0.6)) * 0.035;
-      } else if (object.name === "Head_Pivot") {
-        object.rotation.y = rotation.y + Math.sin(time * 0.6) * 0.045;
-        object.rotation.z = rotation.z + Math.sin(time * 0.8) * 0.02;
-      } else if (object.name === "Body_Pivot") {
-        object.rotation.z = rotation.z + Math.sin(time * 0.65) * 0.012;
+        const offset = index * 0.8;
+        object.position.y = position.y + (Math.sin(phase + offset) - Math.sin(Math.PI / 2 + offset)) * 0.07 * scale;
+        object.position.z = position.z + (Math.cos(phase + offset) - Math.cos(Math.PI / 2 + offset)) * 0.12 * scale;
+        object.rotation.z = rotation.z + (Math.sin(phase + offset) - Math.sin(Math.PI / 2 + offset)) * 0.09;
       } else {
-        object.rotation.z = rotation.z + (Math.sin(time * 0.7 + index) - Math.sin(index)) * 0.025;
+        const joint = joints[object.name as RunJoint];
+        if (!joint) return;
+        object.rotation.set(rotation.x + joint.x, rotation.y + joint.y, rotation.z + joint.z);
+        object.position.y = position.y + (object.name === "Body_Pivot" ? bodyLift * scale : 0);
       }
     });
   }
@@ -157,23 +161,10 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
     camera.far = distance + radius * 5;
     camera.lookAt(0, 0, 0);
     camera.updateMatrixWorld();
-    framing.updateMatrixWorld(true);
-    const projected = new Box3();
-    framing.traverse((object) => {
-      if (!(object instanceof Mesh)) return;
-      object.geometry.computeBoundingBox();
-      const bounds = object.geometry.boundingBox;
-      if (!bounds) return;
-      for (const x of [bounds.min.x, bounds.max.x]) {
-        for (const y of [bounds.min.y, bounds.max.y]) {
-          for (const z of [bounds.min.z, bounds.max.z]) {
-            projected.expandByPoint(new Vector3(x, y, z).applyMatrix4(object.matrixWorld).applyMatrix4(camera.matrixWorldInverse));
-          }
-        }
-      }
-    });
-    const size = projected.isEmpty() ? new Vector3(4, 4, 4) : projected.getSize(new Vector3());
-    const center = projected.isEmpty() ? new Vector3() : projected.getCenter(new Vector3());
+    const projected = poseEnvelope.clone();
+    if (projected.isEmpty()) projected.setFromCenterAndSize(new Vector3(), new Vector3(4, 4, 4));
+    const size = projected.getSize(new Vector3());
+    const center = projected.getCenter(new Vector3());
     const aspect = width / height;
     const frameHeight = Math.max(size.y, size.x / aspect) * 1.12;
     const frameWidth = frameHeight * aspect;
@@ -183,6 +174,31 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
     camera.bottom = center.y - frameHeight / 2;
     camera.updateProjectionMatrix();
     renderFrame();
+  }
+
+  function measureRunEnvelope() {
+    camera.position.copy(viewDirection).multiplyScalar(radius * 4);
+    camera.lookAt(0, 0, 0);
+    camera.updateMatrixWorld();
+    poseEnvelope.makeEmpty();
+    for (let sample = 0; sample < 24; sample++) {
+      animateParts((sample / 24) * RUN_CYCLE_SECONDS);
+      framing.updateMatrixWorld(true);
+      framing.traverse((object) => {
+        if (!(object instanceof Mesh)) return;
+        if (!object.geometry.boundingBox) object.geometry.computeBoundingBox();
+        const bounds = object.geometry.boundingBox;
+        if (!bounds) return;
+        for (const x of [bounds.min.x, bounds.max.x]) {
+          for (const y of [bounds.min.y, bounds.max.y]) {
+            for (const z of [bounds.min.z, bounds.max.z]) {
+              poseEnvelope.expandByPoint(new Vector3(x, y, z).applyMatrix4(object.matrixWorld).applyMatrix4(camera.matrixWorldInverse));
+            }
+          }
+        }
+      });
+    }
+    animateParts(elapsed);
   }
 
   try {
@@ -231,10 +247,11 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
       framing.position.copy(center).negate();
       framing.add(gltf.scene);
       gltf.scene.traverse((object) => {
-        if (/^(Body_Pivot|Head_Pivot|Arm_[RL]_Pivot|Data_Tile_\d+)$/.test(object.name)) {
+        if (/^(Body_Pivot|Head_Pivot|Arm_[RL]_Pivot|Leg_[RL]_Pivot|Knee_[RL]_Pivot|Boot_[RL]_Pivot|Cape_Pivot|Data_Tile_\d+)$/.test(object.name)) {
           movingParts.push({ object, position: object.position.clone(), rotation: object.rotation.clone(), index: movingParts.length });
         }
       });
+      measureRunEnvelope();
       const shadowCanvas = document.createElement("canvas");
       shadowCanvas.width = 128; shadowCanvas.height = 128;
       const shadowContext = shadowCanvas.getContext("2d");
