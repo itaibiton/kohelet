@@ -1,0 +1,49 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "footerBottom": 1249.4921875,
+      "footerTop": 1121.50390625,
+      "footerVisible": true,
+      "height": 1250,
+      "logoRight": true,
+      "overflow": false,
+      "taglineLeftOfLogo": true,
+      "url": "http://127.0.0.1:3102/codex-landing",
+      "width": 1800
+    },
+    {
+      "footerBottom": 1249.8828125,
+      "footerTop": 1121.89453125,
+      "footerVisible": true,
+      "height": 1250,
+      "logoRight": true,
+      "overflow": false,
+      "taglineLeftOfLogo": true,
+      "url": "http://127.0.0.1:3102/he/codex-landing",
+      "width": 1800
+    },
+    {
+      "footerBottom": 1055.44921875,
+      "footerTop": 905.44921875,
+      "footerVisible": true,
+      "height": 1055,
+      "logoRight": true,
+      "overflow": false,
+      "taglineLeftOfLogo": true,
+      "url": "http://127.0.0.1:3102/he/codex-landing",
+      "width": 487
+    },
+    {
+      "footerBottom": 1054.86328125,
+      "footerTop": 904.86328125,
+      "footerVisible": true,
+      "height": 1055,
+      "logoRight": true,
+      "overflow": false,
+      "taglineLeftOfLogo": true,
+      "url": "http://127.0.0.1:3102/codex-landing",
+      "width": 487
+    }
+  ]
+}

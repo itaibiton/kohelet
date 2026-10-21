@@ -1,0 +1,46 @@
+{
+  "results": [
+    {
+      "mode": "desktop",
+      "serviceMapPointer": true,
+      "serviceMapKeyboard": true,
+      "keyboardTransitionDuration": "0s",
+      "faqKeyboard": true,
+      "contactAnchor": true,
+      "skipLinkFocus": true,
+      "reducedMotionHoverStable": true
+    },
+    {
+      "mode": "mobile",
+      "serviceMapPointer": true,
+      "serviceMapKeyboard": true,
+      "keyboardTransitionDuration": "0s",
+      "faqKeyboard": true,
+      "contactAnchor": true,
+      "skipLinkFocus": true,
+      "reducedMotionHoverStable": true
+    }
+  ],
+  "preserved": [
+    {
+      "route": "/en",
+      "status": 200,
+      "redirect": null
+    },
+    {
+      "route": "/he",
+      "status": 200,
+      "redirect": null
+    },
+    {
+      "route": "/777",
+      "status": 200,
+      "redirect": null
+    },
+    {
+      "route": "/codex-landing",
+      "status": 200,
+      "redirect": null
+    }
+  ]
+}

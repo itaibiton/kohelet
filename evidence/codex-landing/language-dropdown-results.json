@@ -1,0 +1,390 @@
+{
+  "layout": [
+    {
+      "clientWidth": 301,
+      "cta": {
+        "bottom": 64.35546875,
+        "height": 43.984375,
+        "left": 15.99609375,
+        "right": 114.62890625,
+        "top": 20.37109375,
+        "width": 98.6328125,
+        "x": 15.99609375,
+        "y": 20.37109375
+      },
+      "locale": "en",
+      "logo": {
+        "bottom": 61.62109375,
+        "height": 38.49609375,
+        "left": 191.25,
+        "right": 285.234375,
+        "top": 23.125,
+        "width": 93.984375,
+        "x": 191.25,
+        "y": 23.125
+      },
+      "menu": {
+        "bottom": 172.96875,
+        "height": 100.46875,
+        "left": 16.25,
+        "right": 190.234375,
+        "top": 72.5,
+        "width": 173.984375,
+        "x": 16.25,
+        "y": 72.5
+      },
+      "overflow": false,
+      "trigger": {
+        "bottom": 64.35546875,
+        "height": 43.984375,
+        "left": 122.6171875,
+        "right": 176.6015625,
+        "top": 20.37109375,
+        "width": 53.984375,
+        "x": 122.6171875,
+        "y": 20.37109375
+      },
+      "width": 320
+    },
+    {
+      "clientWidth": 316,
+      "cta": {
+        "bottom": 64.35546875,
+        "height": 43.984375,
+        "left": 77.98828125,
+        "right": 173.88671875,
+        "top": 20.37109375,
+        "width": 95.8984375,
+        "x": 77.98828125,
+        "y": 20.37109375
+      },
+      "locale": "he",
+      "logo": {
+        "bottom": 61.62109375,
+        "height": 38.49609375,
+        "left": 206.26953125,
+        "right": 300.25390625,
+        "top": 23.125,
+        "width": 93.984375,
+        "x": 206.26953125,
+        "y": 23.125
+      },
+      "menu": {
+        "bottom": 172.96875,
+        "height": 100.46875,
+        "left": 16.25,
+        "right": 190.234375,
+        "top": 72.5,
+        "width": 173.984375,
+        "x": 16.25,
+        "y": 72.5
+      },
+      "overflow": false,
+      "trigger": {
+        "bottom": 64.35546875,
+        "height": 43.984375,
+        "left": 16.015625,
+        "right": 70,
+        "top": 20.37109375,
+        "width": 53.984375,
+        "x": 16.015625,
+        "y": 20.37109375
+      },
+      "width": 320
+    },
+    {
+      "clientWidth": 386,
+      "cta": {
+        "bottom": 64.35546875,
+        "height": 43.984375,
+        "left": 83.984375,
+        "right": 193.88671875,
+        "top": 20.37109375,
+        "width": 109.90234375,
+        "x": 83.984375,
+        "y": 20.37109375
+      },
+      "locale": "he",
+      "logo": {
+        "bottom": 61.62109375,
+        "height": 38.49609375,
+        "left": 272.265625,
+        "right": 366.25,
+        "top": 23.125,
+        "width": 93.984375,
+        "x": 272.265625,
+        "y": 23.125
+      },
+      "menu": {
+        "bottom": 172.96875,
+        "height": 100.46875,
+        "left": 20,
+        "right": 193.984375,
+        "top": 72.5,
+        "width": 173.984375,
+        "x": 20,
+        "y": 72.5
+      },
+      "overflow": false,
+      "trigger": {
+        "bottom": 64.35546875,
+        "height": 43.984375,
+        "left": 20,
+        "right": 73.984375,
+        "top": 20.37109375,
+        "width": 53.984375,
+        "x": 20,
+        "y": 20.37109375
+      },
+      "width": 390
+    },
+    {
+      "clientWidth": 1436,
+      "cta": {
+        "bottom": 78.80859375,
+        "height": 46.89453125,
+        "left": 156.11328125,
+        "right": 292.05078125,
+        "top": 31.9140625,
+        "width": 135.9375,
+        "x": 156.11328125,
+        "y": 31.9140625
+      },
+      "locale": "he",
+      "logo": {
+        "bottom": 77.48046875,
+        "height": 44.23828125,
+        "left": 1250.13671875,
+        "right": 1358.125,
+        "top": 33.2421875,
+        "width": 107.98828125,
+        "x": 1250.13671875,
+        "y": 33.2421875
+      },
+      "menu": {
+        "bottom": 185.46875,
+        "height": 100.46875,
+        "left": 78.75,
+        "right": 252.734375,
+        "top": 85,
+        "width": 173.984375,
+        "x": 78.75,
+        "y": 85
+      },
+      "overflow": false,
+      "trigger": {
+        "bottom": 77.34375,
+        "height": 43.984375,
+        "left": 78.125,
+        "right": 138.125,
+        "top": 33.359375,
+        "width": 60,
+        "x": 78.125,
+        "y": 33.359375
+      },
+      "width": 1440
+    },
+    {
+      "clientWidth": 371,
+      "cta": {
+        "bottom": 64.35546875,
+        "height": 43.984375,
+        "left": 20,
+        "right": 132.63671875,
+        "top": 20.37109375,
+        "width": 112.63671875,
+        "x": 20,
+        "y": 20.37109375
+      },
+      "locale": "en",
+      "logo": {
+        "bottom": 61.62109375,
+        "height": 38.49609375,
+        "left": 257.265625,
+        "right": 351.25,
+        "top": 23.125,
+        "width": 93.984375,
+        "x": 257.265625,
+        "y": 23.125
+      },
+      "menu": {
+        "bottom": 172.96875,
+        "height": 100.46875,
+        "left": 22.5,
+        "right": 196.484375,
+        "top": 72.5,
+        "width": 173.984375,
+        "x": 22.5,
+        "y": 72.5
+      },
+      "overflow": false,
+      "trigger": {
+        "bottom": 64.35546875,
+        "height": 43.984375,
+        "left": 142.63671875,
+        "right": 196.62109375,
+        "top": 20.37109375,
+        "width": 53.984375,
+        "x": 142.63671875,
+        "y": 20.37109375
+      },
+      "width": 390
+    },
+    {
+      "clientWidth": 1421,
+      "cta": {
+        "bottom": 78.80859375,
+        "height": 46.89453125,
+        "left": 70.625,
+        "right": 209.51171875,
+        "top": 31.9140625,
+        "width": 138.88671875,
+        "x": 70.625,
+        "y": 31.9140625
+      },
+      "locale": "en",
+      "logo": {
+        "bottom": 77.48046875,
+        "height": 44.23828125,
+        "left": 1242.63671875,
+        "right": 1350.625,
+        "top": 33.2421875,
+        "width": 107.98828125,
+        "x": 1242.63671875,
+        "y": 33.2421875
+      },
+      "menu": {
+        "bottom": 185.46875,
+        "height": 100.46875,
+        "left": 113.75,
+        "right": 287.734375,
+        "top": 85,
+        "width": 173.984375,
+        "x": 113.75,
+        "y": 85
+      },
+      "overflow": false,
+      "trigger": {
+        "bottom": 77.34375,
+        "height": 43.984375,
+        "left": 227.5,
+        "right": 287.5,
+        "top": 33.359375,
+        "width": 60,
+        "x": 227.5,
+        "y": 33.359375
+      },
+      "width": 1440
+    },
+    {
+      "clientWidth": 750,
+      "cta": {
+        "bottom": 78.80859375,
+        "height": 46.89453125,
+        "left": 35.99609375,
+        "right": 174.8828125,
+        "top": 31.9140625,
+        "width": 138.88671875,
+        "x": 35.99609375,
+        "y": 31.9140625
+      },
+      "locale": "en",
+      "logo": {
+        "bottom": 77.48046875,
+        "height": 44.23828125,
+        "left": 605.99609375,
+        "right": 713.984375,
+        "top": 33.2421875,
+        "width": 107.98828125,
+        "x": 605.99609375,
+        "y": 33.2421875
+      },
+      "menu": {
+        "bottom": 185.46875,
+        "height": 100.46875,
+        "left": 78.75,
+        "right": 252.734375,
+        "top": 85,
+        "width": 173.984375,
+        "x": 78.75,
+        "y": 85
+      },
+      "overflow": false,
+      "trigger": {
+        "bottom": 77.34375,
+        "height": 43.984375,
+        "left": 192.87109375,
+        "right": 252.87109375,
+        "top": 33.359375,
+        "width": 60,
+        "x": 192.87109375,
+        "y": 33.359375
+      },
+      "width": 768
+    },
+    {
+      "clientWidth": 765,
+      "cta": {
+        "bottom": 78.80859375,
+        "height": 46.89453125,
+        "left": 114.00390625,
+        "right": 249.94140625,
+        "top": 31.9140625,
+        "width": 135.9375,
+        "x": 114.00390625,
+        "y": 31.9140625
+      },
+      "locale": "he",
+      "logo": {
+        "bottom": 77.48046875,
+        "height": 44.23828125,
+        "left": 621.015625,
+        "right": 729.00390625,
+        "top": 33.2421875,
+        "width": 107.98828125,
+        "x": 621.015625,
+        "y": 33.2421875
+      },
+      "menu": {
+        "bottom": 185.46875,
+        "height": 100.46875,
+        "left": 36.25,
+        "right": 210.234375,
+        "top": 85,
+        "width": 173.984375,
+        "x": 36.25,
+        "y": 85
+      },
+      "overflow": false,
+      "trigger": {
+        "bottom": 77.34375,
+        "height": 43.984375,
+        "left": 36.015625,
+        "right": 96.015625,
+        "top": 33.359375,
+        "width": 60,
+        "x": 36.015625,
+        "y": 33.359375
+      },
+      "width": 768
+    }
+  ],
+  "interactions": {
+    "pointerOpen": true,
+    "enterOpen": true,
+    "spaceOpen": true,
+    "arrowNavigation": true,
+    "escapeRestoresFocusBothLanguages": true,
+    "outsideDismiss": true,
+    "pointerHebrewNavigation": true,
+    "keyboardEnglishReturn": true,
+    "ctaAnchor": "http://127.0.0.1:3102/he/codex-landing#contact",
+    "ctaClosesMenu": true
+  },
+  "errors": [],
+  "notes": [
+    "Keyboard menu state is immediate. No new animation.",
+    "Reduced motion reviewed in source; no new media-emulation test.",
+    "Hebrew screenshots retain in-app browser canvas context."
+  ]
+}

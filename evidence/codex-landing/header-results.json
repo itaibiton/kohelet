@@ -1,0 +1,26 @@
+[
+  {
+    "viewport": 1440,
+    "logoAtRight": true,
+    "ctaAtLeft": true,
+    "overflow": false
+  },
+  {
+    "viewport": 768,
+    "logoAtRight": true,
+    "ctaAtLeft": true,
+    "overflow": false
+  },
+  {
+    "viewport": 390,
+    "logoAtRight": true,
+    "ctaAtLeft": true,
+    "overflow": false
+  },
+  {
+    "viewport": 320,
+    "logoAtRight": true,
+    "ctaAtLeft": true,
+    "overflow": false
+  }
+]

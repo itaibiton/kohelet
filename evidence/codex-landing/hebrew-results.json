@@ -1,0 +1,64 @@
+{
+  "base": "http://127.0.0.1:3102",
+  "layouts": [
+    {
+      "width": 1440,
+      "overflow": {
+        "window": 1440,
+        "document": 1440,
+        "page": 1440
+      },
+      "logoAtRight": true,
+      "languageRoundTrip": true,
+      "mapSelection": true,
+      "faqKeyboard": true
+    },
+    {
+      "width": 768,
+      "overflow": {
+        "window": 768,
+        "document": 768,
+        "page": 768
+      },
+      "logoAtRight": true,
+      "languageRoundTrip": true,
+      "mapSelection": true,
+      "faqKeyboard": true
+    },
+    {
+      "width": 390,
+      "overflow": {
+        "window": 390,
+        "document": 390,
+        "page": 390
+      },
+      "logoAtRight": true,
+      "languageRoundTrip": true,
+      "mapSelection": true,
+      "faqKeyboard": true
+    },
+    {
+      "width": 320,
+      "overflow": {
+        "window": 320,
+        "document": 320,
+        "page": 320
+      },
+      "logoAtRight": true,
+      "languageRoundTrip": true,
+      "mapSelection": true,
+      "faqKeyboard": true
+    }
+  ],
+  "violations": [],
+  "pageErrors": [],
+  "form": {
+    "required": "נא להזין את השם שלכם.",
+    "invalidEmail": "נא להזין כתובת אימייל תקינה.",
+    "localizedPending": true,
+    "localizedSuccess": true,
+    "actualUnconfiguredFailure": true,
+    "inputRetained": true
+  },
+  "reducedMotion": true
+}

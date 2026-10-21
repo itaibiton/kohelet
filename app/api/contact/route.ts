@@ -1,7 +1,15 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { z } from "zod";
 
 const TO_EMAIL = process.env.CONTACT_EMAIL || "info@kohelet.digital";
+const contactSchema = z.object({
+  name: z.string().trim().min(1).max(120),
+  email: z.string().trim().email().max(254),
+  message: z.string().trim().min(1).max(5000),
+  phone: z.string().trim().max(80).optional(),
+  service: z.string().trim().max(160).optional(),
+});
 
 export async function POST(request: Request) {
   try {
@@ -14,23 +22,16 @@ export async function POST(request: Request) {
     }
 
     const resend = new Resend(process.env.RESEND_API_KEY);
-    const body = await request.json();
-    const { name, email, phone, service, message } = body as {
-      name: string;
-      email: string;
-      phone?: string;
-      service?: string;
-      message: string;
-    };
-
-    if (!name || !email || !message) {
+    const parsed = contactSchema.safeParse(await request.json().catch(() => null));
+    if (!parsed.success) {
       return NextResponse.json(
-        { error: "Name, email, and message are required" },
+        { error: "Please provide a valid name, email, and message" },
         { status: 400 }
       );
     }
+    const { name, email, phone, service, message } = parsed.data;
 
-    await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from: process.env.RESEND_FROM_EMAIL || "Kohelet Website <onboarding@resend.dev>",
       to: TO_EMAIL,
       replyTo: email,
@@ -46,9 +47,13 @@ export async function POST(request: Request) {
         .join("\n"),
     });
 
+    if (error || !data?.id) {
+      return NextResponse.json({ error: "Unable to send message" }, { status: 502 });
+    }
+
     return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error("Contact form error:", error);
+  } catch {
+    console.error("Contact form request failed");
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

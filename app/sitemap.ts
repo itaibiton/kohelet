@@ -54,5 +54,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }));
   });
 
-  return [...staticEntries, ...blogEntries];
+  const landingLanguages = {
+    en: `${BASE_URL}/codex-landing`,
+    he: `${BASE_URL}/he/codex-landing`,
+  };
+  const landingEntries: MetadataRoute.Sitemap = Object.values(landingLanguages).map((url) => ({
+    url,
+    lastModified: currentDate,
+    changeFrequency: "monthly",
+    priority: 0.8,
+    alternates: { languages: landingLanguages },
+  }));
+
+  return [...staticEntries, ...landingEntries, ...blogEntries];
 }
