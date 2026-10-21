@@ -1,0 +1,28 @@
+{
+  "english": {
+    "locale": "en",
+    "paused": {
+      "focused": true,
+      "outline": "solid",
+      "playing": "false"
+    },
+    "resumed": {
+      "focused": true,
+      "outline": "solid",
+      "playing": "true"
+    }
+  },
+  "hebrew": {
+    "locale": "he",
+    "keyboardPlay": {
+      "focused": true,
+      "outline": "solid",
+      "playing": "true"
+    },
+    "keyboardPause": {
+      "focused": true,
+      "outline": "solid",
+      "playing": "false"
+    }
+  }
+}

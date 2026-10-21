@@ -1,0 +1,102 @@
+{
+  "actions": [
+    {
+      "name": "english-running",
+      "action": "run",
+      "overflow": false,
+      "paused": true
+    },
+    {
+      "name": "english-jump",
+      "action": "jump",
+      "overflow": false,
+      "paused": true
+    },
+    {
+      "name": "english-automation",
+      "action": "automate",
+      "overflow": false,
+      "paused": true
+    }
+  ],
+  "responsive": [
+    {
+      "locale": "en",
+      "targetWidth": 320,
+      "controlBelowStage": true,
+      "direction": "ltr",
+      "overflow": false,
+      "paused": true,
+      "state": "ready",
+      "width": 320
+    },
+    {
+      "locale": "en",
+      "targetWidth": 390,
+      "controlBelowStage": true,
+      "direction": "ltr",
+      "overflow": false,
+      "paused": true,
+      "state": "ready",
+      "width": 390
+    },
+    {
+      "locale": "en",
+      "targetWidth": 768,
+      "controlBelowStage": false,
+      "direction": "ltr",
+      "overflow": false,
+      "state": "ready",
+      "width": 768
+    },
+    {
+      "locale": "en",
+      "targetWidth": 1440,
+      "controlBelowStage": false,
+      "direction": "ltr",
+      "overflow": false,
+      "paused": true,
+      "state": "ready",
+      "width": 1440
+    },
+    {
+      "locale": "he",
+      "targetWidth": 320,
+      "controlBelowStage": true,
+      "direction": "rtl",
+      "overflow": false,
+      "paused": true,
+      "state": "ready",
+      "width": 320
+    },
+    {
+      "locale": "he",
+      "targetWidth": 390,
+      "controlBelowStage": true,
+      "direction": "rtl",
+      "overflow": false,
+      "paused": true,
+      "state": "ready",
+      "width": 390
+    },
+    {
+      "locale": "he",
+      "targetWidth": 768,
+      "controlBelowStage": false,
+      "direction": "rtl",
+      "overflow": false,
+      "state": "ready",
+      "width": 768
+    },
+    {
+      "locale": "he",
+      "targetWidth": 1440,
+      "controlBelowStage": false,
+      "direction": "rtl",
+      "overflow": false,
+      "paused": true,
+      "state": "ready",
+      "width": 1440
+    }
+  ]
+}

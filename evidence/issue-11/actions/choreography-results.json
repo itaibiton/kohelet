@@ -1,0 +1,21 @@
+{
+  "motion": {
+    "samples": 1441,
+    "duration": 14.4,
+    "stride": 0.6,
+    "maximumBoundaryGap": 0.0001904489318710345,
+    "maximumVelocityGap": 0.0023029332441026895,
+    "maximumJump": 0.67,
+    "minimumForwardVelocity": 0,
+    "result": "pass"
+  },
+  "rig": {
+    "rigSamples": 721,
+    "bootMeshes": 4,
+    "minimumFootY": -0.016660930775046823,
+    "minimumClearance": 0.008339069224953179,
+    "lowestTime": 8.7,
+    "contactPlaneY": -0.025,
+    "result": "pass"
+  }
+}

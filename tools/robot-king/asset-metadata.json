@@ -1,0 +1,623 @@
+{
+  "asset": "Kohelet Robot King",
+  "generator": "Blender 5.2.1, custom original mesh geometry",
+  "front": "Blender -Y; glTF +Z",
+  "up": "Blender +Z; glTF +Y",
+  "feetOrigin": 0,
+  "blenderBounds": {
+    "min": [
+      -2.109529495239258,
+      -0.8303955793380737,
+      -3.725290298461914e-09
+    ],
+    "max": [
+      2.294151782989502,
+      1.200015664100647,
+      4.4084391593933105
+    ]
+  },
+  "gltfBounds": {
+    "min": [
+      -2.109529495239258,
+      -3.725290298461914e-09,
+      -1.200015664100647
+    ],
+    "max": [
+      2.294151782989502,
+      4.4084391593933105,
+      0.8303955793380737
+    ]
+  },
+  "triangles": 39676,
+  "editableMeshObjects": 231,
+  "exportedMeshObjects": 17,
+  "materialDrawCalls": 35,
+  "exportedNodes": 35,
+  "bytes": 1521284,
+  "pivots": [
+    "Robot_Root",
+    "Body_Pivot",
+    "Arm_L_Pivot",
+    "Arm_R_Pivot",
+    "Cape_Pivot",
+    "Head_Pivot",
+    "Leg_L_Pivot",
+    "Knee_L_Pivot",
+    "Boot_L_Pivot",
+    "Leg_R_Pivot",
+    "Knee_R_Pivot",
+    "Boot_R_Pivot",
+    "Data_Tile_01",
+    "Data_Tile_02",
+    "Data_Tile_03",
+    "Data_Tile_04",
+    "Data_Tile_05",
+    "Data_Tile_06"
+  ],
+  "neutralNodeTransforms": {
+    "Arm_L_Pivot": {
+      "parent": "Body_Pivot",
+      "translation": [
+        0.6499999761581421,
+        0.29000020027160645,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Arm_R_Pivot": {
+      "parent": "Body_Pivot",
+      "translation": [
+        -0.6499999761581421,
+        0.29000020027160645,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Cape_Pivot": {
+      "parent": "Body_Pivot",
+      "translation": [
+        0,
+        0.45000016689300537,
+        -0.28999993205070496
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Head_Pivot": {
+      "parent": "Body_Pivot",
+      "translation": [
+        0,
+        1.2600001096725464,
+        0
+      ],
+      "quaternion": [
+        -0.04102100431919098,
+        -0.06431831419467926,
+        0.10215108841657639,
+        0.991839587688446
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Boot_L_Pivot": {
+      "parent": "Knee_L_Pivot",
+      "translation": [
+        0,
+        -0.34999996423721313,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Knee_L_Pivot": {
+      "parent": "Leg_L_Pivot",
+      "translation": [
+        0,
+        -0.4099999666213989,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Leg_L_Pivot": {
+      "parent": "Body_Pivot",
+      "translation": [
+        0.3899999260902405,
+        -0.4199998378753662,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Boot_R_Pivot": {
+      "parent": "Knee_R_Pivot",
+      "translation": [
+        0,
+        -0.34999996423721313,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Knee_R_Pivot": {
+      "parent": "Leg_R_Pivot",
+      "translation": [
+        0,
+        -0.4099999666213989,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Leg_R_Pivot": {
+      "parent": "Body_Pivot",
+      "translation": [
+        -0.3899999260902405,
+        -0.4199998378753662,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Body_Pivot": {
+      "parent": "Robot_Root",
+      "translation": [
+        0,
+        1.559999942779541,
+        0
+      ],
+      "quaternion": [
+        0,
+        0.026176948100328445,
+        0,
+        0.9996573328971863
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Data_Tile_01": {
+      "parent": "Robot_Root",
+      "translation": [
+        1.0499999523162842,
+        1.149999976158142,
+        -0.30000001192092896
+      ],
+      "quaternion": [
+        0.06376008689403534,
+        -0.12127994745969772,
+        0.11349961906671524,
+        0.9840445518493652
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Data_Tile_02": {
+      "parent": "Robot_Root",
+      "translation": [
+        1.2400000095367432,
+        1.340000033378601,
+        -0.4000000059604645
+      ],
+      "quaternion": [
+        -0.08219139277935028,
+        -0.09886593371629715,
+        0.03577190637588501,
+        0.9910552501678467
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Data_Tile_03": {
+      "parent": "Robot_Root",
+      "translation": [
+        1.4500000476837158,
+        1.5199999809265137,
+        -0.5
+      ],
+      "quaternion": [
+        0.07936298847198486,
+        -0.0622178316116333,
+        -0.012577071785926819,
+        0.9948227405548096
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Data_Tile_04": {
+      "parent": "Robot_Root",
+      "translation": [
+        1.6399999856948853,
+        1.7000000476837158,
+        -0.6000000238418579
+      ],
+      "quaternion": [
+        -0.07614294439554214,
+        -0.019862087443470955,
+        -0.08023793250322342,
+        0.9936647415161133
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Data_Tile_05": {
+      "parent": "Robot_Root",
+      "translation": [
+        1.840000033378601,
+        1.8600000143051147,
+        -0.699999988079071
+      ],
+      "quaternion": [
+        0.07648181915283203,
+        -0.0023040117230266333,
+        -0.13941681385040283,
+        0.987273097038269
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Data_Tile_06": {
+      "parent": "Robot_Root",
+      "translation": [
+        2.0399999618530273,
+        2.0299999713897705,
+        -0.800000011920929
+      ],
+      "quaternion": [
+        -0.08548033237457275,
+        0.05823929235339165,
+        -0.1952105462551117,
+        0.9752918481826782
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Robot_Root": {
+      "parent": null,
+      "translation": [
+        0,
+        0,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    }
+  },
+  "runningGltfBounds": {
+    "min": [
+      -1.9588744640350342,
+      -0.0035121520049870014,
+      -2.5001838207244873
+    ],
+    "max": [
+      2.4121954441070557,
+      4.456142902374268,
+      1.372335433959961
+    ]
+  },
+  "gaitContactSweep": [
+    {
+      "phase": 1.5707963267948966,
+      "rightFootMinZ": 0.0005578207783401012,
+      "leftFootMinZ": 0.2709515690803528,
+      "lowestFootZ": 0.0005578207783401012
+    },
+    {
+      "phase": 1.832595714594046,
+      "rightFootMinZ": 0.006005784031003714,
+      "leftFootMinZ": 0.2503916323184967,
+      "lowestFootZ": 0.006005784031003714
+    },
+    {
+      "phase": 2.0943951023931953,
+      "rightFootMinZ": 0.02205241657793522,
+      "leftFootMinZ": 0.19544263184070587,
+      "lowestFootZ": 0.02205241657793522
+    },
+    {
+      "phase": 2.356194490192345,
+      "rightFootMinZ": 0.04802864044904709,
+      "leftFootMinZ": 0.12889596819877625,
+      "lowestFootZ": 0.04802864044904709
+    },
+    {
+      "phase": 2.617993877991494,
+      "rightFootMinZ": 0.08321596682071686,
+      "leftFootMinZ": 0.08889560401439667,
+      "lowestFootZ": 0.08321596682071686
+    },
+    {
+      "phase": 2.879793265790644,
+      "rightFootMinZ": 0.08688739687204361,
+      "leftFootMinZ": 0.0864454135298729,
+      "lowestFootZ": 0.0864454135298729
+    },
+    {
+      "phase": 3.141592653589793,
+      "rightFootMinZ": 0.09252732992172241,
+      "leftFootMinZ": 0.09252732992172241,
+      "lowestFootZ": 0.09252732992172241
+    },
+    {
+      "phase": 3.4033920413889422,
+      "rightFootMinZ": 0.0864454135298729,
+      "leftFootMinZ": 0.08688739687204361,
+      "lowestFootZ": 0.0864454135298729
+    },
+    {
+      "phase": 3.665191429188092,
+      "rightFootMinZ": 0.08889560401439667,
+      "leftFootMinZ": 0.08321596682071686,
+      "lowestFootZ": 0.08321596682071686
+    },
+    {
+      "phase": 3.9269908169872414,
+      "rightFootMinZ": 0.12889596819877625,
+      "leftFootMinZ": 0.04802864044904709,
+      "lowestFootZ": 0.04802864044904709
+    },
+    {
+      "phase": 4.188790204786391,
+      "rightFootMinZ": 0.19544263184070587,
+      "leftFootMinZ": 0.02205241657793522,
+      "lowestFootZ": 0.02205241657793522
+    },
+    {
+      "phase": 4.4505895925855405,
+      "rightFootMinZ": 0.2503916323184967,
+      "leftFootMinZ": 0.006005784031003714,
+      "lowestFootZ": 0.006005784031003714
+    },
+    {
+      "phase": 4.71238898038469,
+      "rightFootMinZ": 0.2709515690803528,
+      "leftFootMinZ": 0.0005578207783401012,
+      "lowestFootZ": 0.0005578207783401012
+    },
+    {
+      "phase": 4.974188368183839,
+      "rightFootMinZ": 0.2503916323184967,
+      "leftFootMinZ": 0.006005784031003714,
+      "lowestFootZ": 0.006005784031003714
+    },
+    {
+      "phase": 5.235987755982988,
+      "rightFootMinZ": 0.19544263184070587,
+      "leftFootMinZ": 0.02205241657793522,
+      "lowestFootZ": 0.02205241657793522
+    },
+    {
+      "phase": 5.497787143782137,
+      "rightFootMinZ": 0.12889596819877625,
+      "leftFootMinZ": 0.04802864044904709,
+      "lowestFootZ": 0.04802864044904709
+    },
+    {
+      "phase": 5.759586531581287,
+      "rightFootMinZ": 0.08889560401439667,
+      "leftFootMinZ": 0.08321596682071686,
+      "lowestFootZ": 0.08321596682071686
+    },
+    {
+      "phase": 6.021385919380437,
+      "rightFootMinZ": 0.0864454135298729,
+      "leftFootMinZ": 0.08688739687204361,
+      "lowestFootZ": 0.0864454135298729
+    },
+    {
+      "phase": 6.283185307179586,
+      "rightFootMinZ": 0.09252732992172241,
+      "leftFootMinZ": 0.09252732992172241,
+      "lowestFootZ": 0.09252732992172241
+    },
+    {
+      "phase": 6.544984694978735,
+      "rightFootMinZ": 0.08688739687204361,
+      "leftFootMinZ": 0.0864454135298729,
+      "lowestFootZ": 0.0864454135298729
+    },
+    {
+      "phase": 6.806784082777885,
+      "rightFootMinZ": 0.08321596682071686,
+      "leftFootMinZ": 0.08889560401439667,
+      "lowestFootZ": 0.08321596682071686
+    },
+    {
+      "phase": 7.0685834705770345,
+      "rightFootMinZ": 0.04802864044904709,
+      "leftFootMinZ": 0.12889596819877625,
+      "lowestFootZ": 0.04802864044904709
+    },
+    {
+      "phase": 7.330382858376184,
+      "rightFootMinZ": 0.02205241657793522,
+      "leftFootMinZ": 0.19544263184070587,
+      "lowestFootZ": 0.02205241657793522
+    },
+    {
+      "phase": 7.592182246175333,
+      "rightFootMinZ": 0.006005784031003714,
+      "leftFootMinZ": 0.2503916323184967,
+      "lowestFootZ": 0.006005784031003714
+    }
+  ],
+  "posterPose": {
+    "phaseRadians": 1.5707963267948966,
+    "referenceCycleSeconds": 0.82,
+    "rootYawRadians": -0.55,
+    "exportRemainsNeutral": true
+  },
+  "runtimeAxes": {
+    "pitch": "local +X",
+    "yaw": "local +Y",
+    "roll": "local +Z",
+    "forward": "glTF +Z",
+    "hipForward": "negative X",
+    "kneeHeelBack": "positive X"
+  },
+  "camera": {
+    "blenderPosition": [
+      5.400000095367432,
+      -9.5,
+      5.199999809265137
+    ],
+    "blenderTarget": [
+      0.18000000715255737,
+      0.0,
+      2.119999885559082
+    ],
+    "orthographicScale": 5.5,
+    "gltfPosition": [
+      5.400000095367432,
+      5.199999809265137,
+      9.5
+    ],
+    "gltfTarget": [
+      0.18000000715255737,
+      2.119999885559082,
+      -0.0
+    ]
+  },
+  "materials": [
+    "Cape \u00b7 matte inner blue",
+    "Cape \u00b7 royal cobalt fabric",
+    "Ceramic \u00b7 Kohelet cobalt",
+    "Ceramic \u00b7 pale sand edge",
+    "Ceramic \u00b7 warm sandstone",
+    "Display \u00b7 warm ivory LEDs",
+    "Gem \u00b7 satin sapphire blue",
+    "Joint \u00b7 dark graphite",
+    "Metal \u00b7 brushed antique gold",
+    "Metal \u00b7 brushed titanium",
+    "Metal \u00b7 warm brass bevel",
+    "Visor \u00b7 midnight mineral",
+    "Visor \u00b7 satin cobalt edge"
+  ],
+  "deliveryMaterials": [
+    "Delivery \u00b7 brushed antique metal palette",
+    "Delivery \u00b7 matte mineral palette",
+    "Delivery \u00b7 warm display pixels"
+  ],
+  "embeddedTextureImages": 4,
+  "surfaceFinish": "Warm matte sand ceramic, mineral cobalt and brushed antique gold. Embedded 128px normal/roughness maps with vertex-tinted palette; no clearcoat; all closed meshes use backface culling.",
+  "animation": "Neutral articulated glTF rig for runtime action choreography. No baked animation. Saved Blender studio and poster show a three-quarter running stride.",
+  "textureDimensions": [
+    128,
+    128
+  ]
+}
