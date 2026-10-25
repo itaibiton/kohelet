@@ -19,18 +19,18 @@ All additions are original procedural Three.js geometry. No new asset download, 
 - Final production-browser English and Hebrew at actual CSS widths **320 / 390 / 768 / 1440**: ready playing canvas, correct language/direction, zero mascot buttons and no horizontal overflow. [Measurements](browser-results.json).
 - Reviewed the hurdle approach, airborne clearance, landing and coding composition in the production browser. [Pose record](pose-results.json).
 - Normal-speed desktop sample: **144.0fps**, **0.59ms CPU submission/update**, DPR **0.80**, **60 draws / 44,096 triangles**. Browser error/warning log empty. [Runtime record](runtime-results.json). This is one Mac/display setup; CPU timing is not GPU timing or a phone performance guarantee.
-- Artwork-only frames contain **57,122 pixels** differing by more than 12 in the same 715 × 715 raster region. [Motion comparison](motion-pixel-results.json).
+- Matched screenshot regions contain **57,122 pixels** differing by more than 12 during playback in the same 715 × 715 raster area. [Motion comparison](motion-pixel-results.json).
 - Main preview on port 3103 was restarted with the final optimized build, confirmed ready/playing, with no warnings/errors. Temporary development/QA servers and tabs were closed.
 
 The fixed camera includes the new scenery; the robot is approximately 9.3% smaller than in the earlier character-only frame. Desktop/mobile inspection confirms the character and obstacle remain legible. System reduced-motion, offscreen/hidden suspension and cleanup remain source-reviewed; those system events were not newly emulated. No physical mobile performance test or live form submission was performed.
 
 ## Screenshots
 
-[Jump in page](jump-desktop.jpg) · [Jump artwork](jump-artwork.jpg) · [Approach](approach-desktop.jpg) · [Landing](landing-desktop.jpg) · [Coding](coding-desktop.jpg)
+[Jump in page](jump-desktop.jpg) · [Approach](approach-desktop.jpg) · [Landing](landing-desktop.jpg) · [Coding](coding-desktop.jpg)
 
 [English mobile](english-mobile.jpg) · [Hebrew mobile](hebrew-mobile.jpg) · [Hebrew desktop](hebrew-desktop.jpg)
 
-Pose screenshots use the existing opt-in diagnostic playback at one-tenth speed. Normal visitors run at full speed. Hebrew screenshots retain browser canvas context to avoid the browser screenshot tool's RTL clipping issue.
+Pose screenshots use the existing opt-in diagnostic playback at one-tenth speed. Normal visitors run at full speed. The jump and Hebrew screenshots retain browser canvas context to avoid the browser screenshot tool's clipping issue.
 
 [English preview](http://127.0.0.1:3103/codex-landing) · [Hebrew preview](http://127.0.0.1:3103/he/codex-landing) · [PR #12](https://github.com/itaibiton/kohelet/pull/12)
 
