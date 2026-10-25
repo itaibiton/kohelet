@@ -1,0 +1,25 @@
+{
+  "hebrewPlaying": {
+    "focusVisible": true,
+    "label": "השהיית האנימציה — המלך הרובוטי של קהלת",
+    "pressed": "true"
+  },
+  "hebrewPaused": {
+    "focusVisible": true,
+    "label": "הפעלת האנימציה — המלך הרובוטי של קהלת",
+    "pressed": "false"
+  },
+  "english": {
+    "enterPaused": true,
+    "spaceResumed": true,
+    "focusVisible": true
+  },
+  "languageSwitch": {
+    "from": "/he/codex-landing",
+    "to": "/codex-landing",
+    "lang": "en",
+    "dir": "ltr"
+  },
+  "contactHash": "#contact",
+  "dataSubmitted": false
+}

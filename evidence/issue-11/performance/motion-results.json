@@ -1,0 +1,33 @@
+{
+  "reports": [
+    {
+      "samples": 2017,
+      "duration": 20.16,
+      "stride": 0.48,
+      "maximumBoundaryGap": 9.380244239684532e-05,
+      "maximumVelocityGap": 0.005969566313488883,
+      "maximumJump": 0.7359999999999998,
+      "minimumForwardVelocity": 0,
+      "result": "pass"
+    },
+    {
+      "rigSamples": 2017,
+      "minimumClearance": 0.0020001911615610615,
+      "minimumFootY": -0.02299980883843894,
+      "worstTime": 4.7,
+      "maximumContactError": 5.338533896316611e-06,
+      "worstContactTime": 16.01,
+      "result": "pass"
+    },
+    {
+      "workflowHandTargets": "pass",
+      "independentTypingJoints": "pass",
+      "pressBeforePackets": "pass"
+    },
+    {
+      "denseQuaternionSamples": 4839,
+      "maximumAngularStep": 0.14681590387996338,
+      "result": "pass"
+    }
+  ]
+}

@@ -1,0 +1,170 @@
+[
+  {
+    "canvas": true,
+    "dir": "ltr",
+    "height": 1250,
+    "lang": "en",
+    "logoCenter": 238.2421875,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.109"
+    },
+    "ready": {},
+    "route": "/codex-landing",
+    "scrollWidth": 301,
+    "stage": {
+      "height": 269.2382507324219,
+      "width": 269.23828125,
+      "x": 15.99609375,
+      "y": 622.7376098632812
+    },
+    "width": 320
+  },
+  {
+    "canvas": true,
+    "dir": "ltr",
+    "height": 1250,
+    "lang": "en",
+    "logoCenter": 304.2578125,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.119"
+    },
+    "ready": {},
+    "route": "/codex-landing",
+    "scrollWidth": 371,
+    "stage": {
+      "height": 331.25,
+      "width": 331.25,
+      "x": 20,
+      "y": 652.7932739257812
+    },
+    "width": 390
+  },
+  {
+    "canvas": true,
+    "dir": "ltr",
+    "height": 1000,
+    "lang": "en",
+    "logoCenter": 659.990234375,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.120"
+    },
+    "ready": {},
+    "route": "/codex-landing",
+    "scrollWidth": 750,
+    "stage": {
+      "height": 324.00390625,
+      "width": 324.00390625,
+      "x": 389.98046875,
+      "y": 236.66099548339844
+    },
+    "width": 768
+  },
+  {
+    "canvas": true,
+    "dir": "ltr",
+    "height": 1000,
+    "lang": "en",
+    "logoCenter": 1296.630859375,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.119"
+    },
+    "ready": {},
+    "route": "/codex-landing",
+    "scrollWidth": 1421,
+    "stage": {
+      "height": 572.9100952148438,
+      "width": 572.91015625,
+      "x": 777.71484375,
+      "y": 177.98880004882812
+    },
+    "width": 1440
+  },
+  {
+    "canvas": true,
+    "dir": "rtl",
+    "height": 1250,
+    "lang": "he",
+    "logoCenter": 253.26171875,
+    "pose": {
+      "action": "code",
+      "poseTime": "7.170"
+    },
+    "ready": {},
+    "route": "/he/codex-landing",
+    "scrollWidth": 316,
+    "stage": {
+      "height": 284.2382507324219,
+      "width": 284.23828125,
+      "x": 16.015625,
+      "y": 595.2156372070312
+    },
+    "width": 320
+  },
+  {
+    "canvas": true,
+    "dir": "rtl",
+    "height": 1250,
+    "lang": "he",
+    "logoCenter": 319.2578125,
+    "pose": {
+      "action": "code",
+      "poseTime": "7.169"
+    },
+    "ready": {},
+    "route": "/he/codex-landing",
+    "scrollWidth": 386,
+    "stage": {
+      "height": 346.2499694824219,
+      "width": 346.25,
+      "x": 20,
+      "y": 560.58642578125
+    },
+    "width": 390
+  },
+  {
+    "canvas": true,
+    "dir": "rtl",
+    "height": 1000,
+    "lang": "he",
+    "logoCenter": 675.009765625,
+    "pose": {
+      "action": "code",
+      "poseTime": "7.168"
+    },
+    "ready": {},
+    "route": "/he/codex-landing",
+    "scrollWidth": 765,
+    "stage": {
+      "height": 331.50390625,
+      "width": 331.50390625,
+      "x": 36.015625,
+      "y": 241.0747528076172
+    },
+    "width": 768
+  },
+  {
+    "canvas": true,
+    "dir": "rtl",
+    "height": 1000,
+    "lang": "he",
+    "logoCenter": 1304.130859375,
+    "pose": {
+      "action": "code",
+      "poseTime": "7.168"
+    },
+    "ready": {},
+    "route": "/he/codex-landing",
+    "scrollWidth": 1436,
+    "stage": {
+      "height": 572.9100952148438,
+      "width": 572.91015625,
+      "x": 78.125,
+      "y": 177.98880004882812
+    },
+    "width": 1440
+  }
+]

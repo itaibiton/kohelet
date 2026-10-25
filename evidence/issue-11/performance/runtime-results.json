@@ -1,0 +1,13 @@
+{
+  "normalSpeed": {
+    "action": "run",
+    "cycleTime": "15.01",
+    "drawCalls": "50",
+    "fps": "143.9",
+    "pixelRatio": "0.80",
+    "poseTime": "15.311",
+    "renderMs": "0.37",
+    "triangles": "40894"
+  },
+  "logs": []
+}

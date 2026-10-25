@@ -1,6 +1,6 @@
 # Animated Blender Robot King — issue #11
 
-Latest version: [matte Robot King action story](actions/README.md), with faster running, jumping, coding, automation and rendering improvements. The [previous running evidence](running/README.md) and the idle evidence below are retained as historical records.
+Latest version: [articulated Robot King performance](performance/README.md), with planted-foot running, a banking turn, tucked jump, weighted landing, expressive face, independent hands and responsive task props. The [earlier action story](actions/README.md), [running evidence](running/README.md) and the original idle evidence below are historical records; their asset and runtime figures describe those earlier versions.
 
 The hero now renders an original Blender model through the existing Three.js dependency on `/codex-landing` and `/he/codex-landing`. The crown, digital visor, hands, armor, cape and data tiles are actual mesh geometry. Named pivots drive restrained head/body/arm movement and floating tiles; runtime motion is authored in TypeScript, with no baked GLB animation.
 

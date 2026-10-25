@@ -1,0 +1,18 @@
+{
+  "playing": {
+    "size": [
+      715,
+      715
+    ],
+    "changedPixelsOver12": 75978,
+    "identical": false
+  },
+  "paused": {
+    "size": [
+      715,
+      715
+    ],
+    "changedPixelsOver12": 0,
+    "identical": true
+  }
+}
