@@ -1,0 +1,296 @@
+[
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.000"
+    },
+    "requested": "?robot-debug=1&robot-start=0&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  },
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.030"
+    },
+    "requested": "?robot-debug=1&robot-start=0.03&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  },
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.060"
+    },
+    "requested": "?robot-debug=1&robot-start=0.06&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  },
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.090"
+    },
+    "requested": "?robot-debug=1&robot-start=0.09&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  },
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.120"
+    },
+    "requested": "?robot-debug=1&robot-start=0.12&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  },
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.150"
+    },
+    "requested": "?robot-debug=1&robot-start=0.15&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  },
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.180"
+    },
+    "requested": "?robot-debug=1&robot-start=0.18&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  },
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.210"
+    },
+    "requested": "?robot-debug=1&robot-start=0.21&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  },
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.240"
+    },
+    "requested": "?robot-debug=1&robot-start=0.24&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  },
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.270"
+    },
+    "requested": "?robot-debug=1&robot-start=0.27&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  },
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.300"
+    },
+    "requested": "?robot-debug=1&robot-start=0.3&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  },
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.330"
+    },
+    "requested": "?robot-debug=1&robot-start=0.33&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  },
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.360"
+    },
+    "requested": "?robot-debug=1&robot-start=0.36&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  },
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.390"
+    },
+    "requested": "?robot-debug=1&robot-start=0.39&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  },
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.420"
+    },
+    "requested": "?robot-debug=1&robot-start=0.42&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  },
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.450"
+    },
+    "requested": "?robot-debug=1&robot-start=0.45&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  },
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.480"
+    },
+    "requested": "?robot-debug=1&robot-start=0.48&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  },
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.510"
+    },
+    "requested": "?robot-debug=1&robot-start=0.51&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  },
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.540"
+    },
+    "requested": "?robot-debug=1&robot-start=0.54&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  },
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.570"
+    },
+    "requested": "?robot-debug=1&robot-start=0.57&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  },
+  {
+    "opacity": "1",
+    "pose": {
+      "action": "run",
+      "poseTime": "0.600"
+    },
+    "requested": "?robot-debug=1&robot-start=0.6&robot-freeze=1",
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625,
+      "x": 857.71484375,
+      "y": 201.9921875
+    }
+  }
+]

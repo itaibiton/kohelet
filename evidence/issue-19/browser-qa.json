@@ -1,0 +1,264 @@
+[
+  {
+    "canvasVisible": "1",
+    "controls": [
+      "Choose language: English",
+      "Let’s talk about your business↗"
+    ],
+    "lang": "en",
+    "overflow": false,
+    "pose": {
+      "action": "run",
+      "poseTime": "0.120"
+    },
+    "poster": "http://127.0.0.1:3019/_next/image?url=%2Fimages%2Fcodex-landing%2Frobot-king-matte-poster.webp&w=640&q=75",
+    "ready": "ready",
+    "url": "http://127.0.0.1:3019/codex-landing?robot-debug=1&robot-start=0.12&robot-freeze=1",
+    "width": 1600
+  },
+  {
+    "canvasVisible": "1",
+    "controls": [
+      "Choose language: English",
+      "Let’s talk about your business↗"
+    ],
+    "lang": "en",
+    "overflow": false,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.050"
+    },
+    "poster": "http://127.0.0.1:3019/_next/image?url=%2Fimages%2Fcodex-landing%2Frobot-king-matte-poster.webp&w=640&q=75",
+    "ready": "ready",
+    "url": "http://127.0.0.1:3019/codex-landing?robot-debug=1&robot-start=4.05&robot-freeze=1",
+    "width": 1600
+  },
+  {
+    "canvasVisible": "1",
+    "controls": [
+      "Choose language: English",
+      "Let’s talk about your business↗"
+    ],
+    "lang": "en",
+    "overflow": false,
+    "pose": {
+      "action": "code",
+      "poseTime": "7.000"
+    },
+    "poster": "http://127.0.0.1:3019/_next/image?url=%2Fimages%2Fcodex-landing%2Frobot-king-matte-poster.webp&w=640&q=75",
+    "ready": "ready",
+    "url": "http://127.0.0.1:3019/codex-landing?robot-debug=1&robot-start=7&robot-freeze=1",
+    "width": 1600
+  },
+  {
+    "canvasVisible": "1",
+    "controls": [
+      "Choose language: English",
+      "Let’s talk about your business↗"
+    ],
+    "lang": "en",
+    "overflow": false,
+    "pose": {
+      "action": "automate",
+      "poseTime": "11.800"
+    },
+    "poster": "http://127.0.0.1:3019/_next/image?url=%2Fimages%2Fcodex-landing%2Frobot-king-matte-poster.webp&w=640&q=75",
+    "ready": "ready",
+    "url": "http://127.0.0.1:3019/codex-landing?robot-debug=1&robot-start=11.8&robot-freeze=1",
+    "width": 1600
+  },
+  {
+    "canvasVisible": "1",
+    "controls": [
+      "Choose language: English",
+      "Let’s talk about your business↗"
+    ],
+    "lang": "en",
+    "overflow": false,
+    "pose": {
+      "action": "celebrate",
+      "poseTime": "14.500"
+    },
+    "poster": "http://127.0.0.1:3019/_next/image?url=%2Fimages%2Fcodex-landing%2Frobot-king-matte-poster.webp&w=640&q=75",
+    "ready": "ready",
+    "url": "http://127.0.0.1:3019/codex-landing?robot-debug=1&robot-start=14.5&robot-freeze=1",
+    "width": 1600
+  },
+  {
+    "check": "full-speed",
+    "playing": "true",
+    "pose": {
+      "action": "celebrate",
+      "cycleTime": "14.17",
+      "drawCalls": "65",
+      "fps": "144.0",
+      "pixelRatio": "0.80",
+      "poseTime": "14.929",
+      "renderMs": "0.52",
+      "triangles": "44984"
+    },
+    "reducedMotion": false
+  },
+  {
+    "afterPoseTime": "14.978",
+    "beforePoseTime": "14.978",
+    "check": "offscreen",
+    "scrollY": 3780
+  },
+  {
+    "check": "responsive",
+    "dir": "ltr",
+    "documentWidth": 301,
+    "fourServices": true,
+    "lang": "en",
+    "overflow": false,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.050"
+    },
+    "ready": "ready",
+    "selectedWorkHidden": true,
+    "stage": {
+      "height": 269.23828125,
+      "width": 269.23828125
+    },
+    "width": 320
+  },
+  {
+    "check": "responsive",
+    "dir": "ltr",
+    "documentWidth": 371,
+    "fourServices": true,
+    "lang": "en",
+    "overflow": false,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.050"
+    },
+    "ready": "ready",
+    "selectedWorkHidden": true,
+    "stage": {
+      "height": 331.25,
+      "width": 331.25
+    },
+    "width": 390
+  },
+  {
+    "check": "responsive",
+    "dir": "ltr",
+    "documentWidth": 750,
+    "fourServices": true,
+    "lang": "en",
+    "overflow": false,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.050"
+    },
+    "ready": "ready",
+    "selectedWorkHidden": true,
+    "stage": {
+      "height": 324.00390625,
+      "width": 324.00390625
+    },
+    "width": 768
+  },
+  {
+    "check": "responsive",
+    "dir": "ltr",
+    "documentWidth": 1421,
+    "fourServices": true,
+    "lang": "en",
+    "overflow": false,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.050"
+    },
+    "ready": "ready",
+    "selectedWorkHidden": true,
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625
+    },
+    "width": 1440
+  },
+  {
+    "check": "responsive",
+    "dir": "rtl",
+    "documentWidth": 316,
+    "fourServices": true,
+    "lang": "he",
+    "overflow": false,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.050"
+    },
+    "ready": "ready",
+    "selectedWorkHidden": true,
+    "stage": {
+      "height": 284.2382507324219,
+      "width": 284.23828125
+    },
+    "width": 320
+  },
+  {
+    "check": "responsive",
+    "dir": "rtl",
+    "documentWidth": 386,
+    "fourServices": true,
+    "lang": "he",
+    "overflow": false,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.050"
+    },
+    "ready": "ready",
+    "selectedWorkHidden": true,
+    "stage": {
+      "height": 346.25,
+      "width": 346.25
+    },
+    "width": 390
+  },
+  {
+    "check": "responsive",
+    "dir": "rtl",
+    "documentWidth": 765,
+    "fourServices": true,
+    "lang": "he",
+    "overflow": false,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.050"
+    },
+    "ready": "ready",
+    "selectedWorkHidden": true,
+    "stage": {
+      "height": 331.50390625,
+      "width": 331.50390625
+    },
+    "width": 768
+  },
+  {
+    "check": "responsive",
+    "dir": "rtl",
+    "documentWidth": 1436,
+    "fourServices": true,
+    "lang": "he",
+    "overflow": false,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.050"
+    },
+    "ready": "ready",
+    "selectedWorkHidden": true,
+    "stage": {
+      "height": 572.91015625,
+      "width": 572.91015625
+    },
+    "width": 1440
+  },
+  {
+    "check": "console",
+    "warningsOrErrors": []
+  }
+]

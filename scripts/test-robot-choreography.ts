@@ -20,7 +20,8 @@ for (const time of ACTION_BOUNDARIES) {
 }
 assert(maximumBoundaryGap < 0.001, `Pose discontinuity at${worstBoundary}: ${maximumBoundaryGap}`);
 assert(maximumVelocityGap < 0.1, `Velocity discontinuity: ${maximumVelocityGap}`);
-assert.equal(Math.round(ACTION_CYCLE_SECONDS / RUN_CYCLE_SECONDS), 42);
+const stridesPerStory = ACTION_CYCLE_SECONDS / RUN_CYCLE_SECONDS;
+assert(Math.abs(stridesPerStory - Math.round(stridesPerStory)) < 1e-9, "Story must close on a complete stride");
 let minimumForwardVelocity = Infinity, maximumJump = 0;
 for (let sample = 0; sample <= 2016; sample++) {
   const time = sample / 100, p = getRobotActionPose(time);
