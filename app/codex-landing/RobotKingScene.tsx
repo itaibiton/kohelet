@@ -13,6 +13,7 @@ import { createRobotTaskProps } from "./robot-task-props";
 import { createRobotGroundEffects, prepareRobotCape } from "./robot-secondary-motion";
 import { createRobotSceneAtmosphere } from "./robot-scene-atmosphere";
 import { createRobotTechHurdle } from "./robot-tech-hurdle";
+import { applyRobotMatteMaterials } from "./robot-materials";
 
 type SceneOptions = { playing: boolean; visible: boolean; onReady: () => void; onError: () => void };
 export type RobotKingController = { setPlaying: (playing: boolean) => void; setVisible: (visible: boolean) => void; dispose: () => void };
@@ -70,6 +71,8 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
   let lastTick = 0;
   const parameters = new URLSearchParams(window.location.search);
   const diagnostics = parameters.has("robot-debug");
+  // QA-only held poses let the real browser renderer be inspected frame by frame.
+  const heldPose = diagnostics && parameters.has("robot-freeze");
   const requestedStart = Number(parameters.get("robot-start"));
   const requestedRate = Number(parameters.get("robot-rate") ?? 1);
   const playbackRate = diagnostics && Number.isFinite(requestedRate) ? Math.max(0.1, Math.min(2, requestedRate)) : 1;
@@ -193,7 +196,7 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
 
   function tick(now: number) {
     frame = null;
-    if (!canRender() || !playing) return;
+    if (!canRender() || !playing || heldPose) return;
     frame = requestAnimationFrame(tick);
     const delta = now - lastTick;
     elapsed += Math.min(delta / 1000, 0.1) * playbackRate;
@@ -235,7 +238,7 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
     frame = null;
     if (!canRender()) return;
     renderFrame();
-    if (playing && !disposed) {
+    if (playing && !heldPose && !disposed) {
       lastTick = performance.now();
       sampledFrames = sampledTime = renderTime = slowFrames = 0;
       frame = requestAnimationFrame(tick);
@@ -300,7 +303,7 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
     renderer.setClearColor(0x000000, 0);
     renderer.outputColorSpace = SRGBColorSpace;
     renderer.toneMapping = ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 0.94;
+    renderer.toneMappingExposure = 0.98;
     renderer.domElement.setAttribute("aria-hidden", "true");
     renderer.domElement.tabIndex = -1;
     host.appendChild(renderer.domElement);
@@ -311,14 +314,14 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
     try { environment = pmrem.fromScene(room, 0.04); }
     finally { room.dispose(); pmrem.dispose(); }
     scene.environment = environment.texture;
-    scene.environmentIntensity = 0.38;
-    scene.add(new HemisphereLight(0xfff8e8, 0x697695, 0.65));
-    const key = new DirectionalLight(0xfff1da, 2.3);
-    key.position.set(4, 7, 6);
+    scene.environmentIntensity = 0.24;
+    scene.add(new HemisphereLight(0xfff8ed, 0x7b8190, 1.05));
+    const key = new DirectionalLight(0xfff3e1, 1.75);
+    key.position.set(-3, 7, 6);
     scene.add(key);
-    const fill = new DirectionalLight(0xdde7ff, 0.85);
+    const fill = new DirectionalLight(0xe6ebff, 0.7);
     fill.position.set(-4, 3, 4); scene.add(fill);
-    const rim = new DirectionalLight(0xffdfa5, 0.95);
+    const rim = new DirectionalLight(0xffe7be, 0.45);
     rim.position.set(2, 5, -4); scene.add(rim);
     scene.add(framing);
     resizeObserver = new ResizeObserver(resize);
@@ -344,6 +347,8 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
       framing.position.copy(center).negate();
       actionRoot.add(gltf.scene);
       cape = prepareRobotCape(gltf.scene);
+      // Apply after cape setup so its vertex deformation and the surface finish compose.
+      applyRobotMatteMaterials(gltf.scene);
       gltf.scene.traverse((object) => {
         const rest = { object, position: object.position.clone(), rotation: object.rotation.clone(), scale: object.scale.clone(), index: movingParts.length };
         if (/^(Body_Pivot|Torso_Pivot|Head_Pivot|Arm_[RL]_Pivot|Elbow_[RL]_Pivot|Wrist_[RL]_Pivot|Leg_[RL]_Pivot|Knee_[RL]_Pivot|Boot_[RL]_Pivot|Cape_Pivot|Data_Tile_\d+)$/.test(object.name)) {

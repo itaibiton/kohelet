@@ -76,7 +76,7 @@ export default function RobotKing({ label }: RobotKingProps) {
       <div className="kl-robot-stage" ref={stageRef} role="img" aria-label={label}>
         <Image
           className="kl-robot-poster"
-          src="/images/codex-landing/robot-king-performance-poster.webp"
+          src="/images/codex-landing/robot-king-matte-poster.webp"
           alt=""
           aria-hidden="true"
           width={1280}

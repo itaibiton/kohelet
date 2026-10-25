@@ -8,7 +8,8 @@ Original custom Blender mesh sculpture following the user-approved Kohelet masco
 - `kohelet-robot-king.blend`: editable source with individually named mesh parts, 28 articulated controls, studio lights and hero camera. The saved scene shows an expressive sprint stride.
 - `asset-metadata.json`: dimensions, orientation, exact neutral transforms, hierarchy, full-cycle running bounds, a 24-phase foot contact sweep and export statistics.
 - `../../public/models/kohelet-robot-king.glb`: neutral browser delivery rig. Export merges rigid geometry within each pivot, consolidates its palette using byte vertex colors, and embeds the surface maps, while preserving the editable source objects.
-- `../../public/images/codex-landing/robot-king-performance-poster.webp`: transparent 1280 × 1280 studio render of a three-quarter sprint stride for loading and fallback states. The new filename invalidates the prior animation poster cache.
+- `render_matte_poster.py`: isolated headless render of the saved studio, with the refined matte finish and forward gaze. It never saves over the editable studio or changes the GLB.
+- `../../public/images/codex-landing/robot-king-matte-poster.webp`: transparent 1280 × 1280 studio render for loading and fallback states. Its separate filename avoids the old glossy poster cache.
 
 ## Build
 
@@ -53,15 +54,27 @@ The transparent poster is a render of this model, so fallback and canvas represe
 
 ## Browser action story
 
-The browser uses a seamless 20.16-second performance from `app/codex-landing/robot-run-cycle.ts`: a 0.48-second sprint stride, banking turn, anticipation and ballistic jump, tucked flight, knee absorption on landing, braking, articulated typing, deliberate Enter press, workflow grab/drag/activation, acknowledgment and acceleration back into the sprint. Leg targets are solved with two-bone IK and the actual boot support hull; arm targets use shoulder/elbow/wrist IK. Running implies a moving ground, while task foot targets hold in model-root space. Root translation and body lift use authored model units directly; no height-based rescaling is applied to the IK results.
+The browser uses a seamless 20.16-second performance from `app/codex-landing/robot-run-cycle.ts`: a 0.63-second running stride, anticipation and ballistic jump, tucked flight, knee absorption on landing, braking, articulated typing, deliberate Enter press, workflow grab/drag/activation, acknowledgment and acceleration back into the run. The 32 complete strides close the story loop. Stance travels at ground speed and joins a continuous recovery path; compact hand arcs drive the articulated arms, while the pelvis leads restrained chest/cape follow-through. Head orientation compensates for the actual exported rest rotation and upper-body movement, keeping gaze aligned with the lane or task. The former banking turn and sideways eye dart are removed.
+
+Leg targets are solved with two-bone IK and the actual boot support hull; arm targets use shoulder/elbow/wrist IK. Running implies a moving ground, while task foot targets hold in model-root space. Root translation and body lift use authored model units directly; no height-based rescaling is applied to the IK results.
+
+`robot-materials.ts` runs once after cape setup. It preserves authored vertex colors and normal/roughness maps while remapping roughness into matte ceramic, soft antique metal and cloth ranges, reducing environmental reflections and display glow. Its shader callback and cache identity compose with the cape deformation. The neutral GLB and editable sculpture stay unchanged. Softer key/fill lighting preserves the warm palette without broad glossy highlights.
 
 `robot-secondary-motion.ts` adds bounded GPU cloth movement to both cape fabric and trim, including the inverse-transpose normal correction and padded culling bounds. Five instanced ground streaks taper at their reset; a brief ring/dust cue starts at actual touchdown. Physical eye, brow and smile controls use continuous expression weights and timed blinks. All secondary motion uses the paused story clock.
 
 Workstations in `robot-task-props.ts` have a hinged laptop, progressively typed code, and workflow nodes/wires that follow hand actions. The activated node responds before packets travel, and completion follows the packet result. Code uploads are bucketed; geometry is built once. The fixed camera measures all character, prop and instanced-effect poses across the full story.
 
-Playback follows native display cadence instead of the old 30fps cap. DPR starts at the lower of the display ratio and 1.25, and drops after sustained rendering pressure. Shader programs are warmed before the live canvas is revealed. Pause freezes the whole story, including props; reduced motion, offscreen and hidden-tab suspension remain supported.
+Playback follows native display cadence instead of the old 30fps cap. DPR starts at the lower of the display ratio and 1.25, and drops after sustained rendering pressure. Shader programs are warmed before the live canvas is revealed. System reduced motion holds the whole story, including props; offscreen and hidden-tab suspension remain supported. There is no visible pause control.
 
-For local QA, `?robot-debug=1` exposes measured cadence, CPU render submission time, draw calls, pose time and resolution as data attributes on `.kl-robot-canvas`. Add `&robot-start=7` for typing, `4.05` for the jump, `11.8` for workflow dragging or `14.5` for acknowledgment. `&robot-rate=0.25` slows playback for feel checks. Fully reload after changing these parameters. They add no visible controls and do not affect normal visitors. Run the motion, actual exported-foot contact, hand reach, causal timing and dense quaternion checks with `node --experimental-strip-types scripts/test-robot-choreography.ts`.
+For local QA, `?robot-debug=1` exposes measured cadence, CPU render submission time, draw calls, pose time and resolution as data attributes on `.kl-robot-canvas`. Add `&robot-start=7` for typing, `4.05` for the jump, `11.8` for workflow dragging or `14.5` for acknowledgment. `&robot-rate=0.25` slows playback for feel checks; `&robot-freeze=1` holds the selected pose in the real renderer for frame inspection. Fully reload after changing these parameters. They add no visible controls and do not affect normal visitors.
+
+Run `node --experimental-strip-types scripts/test-robot-choreography.ts`, `scripts/test-robot-hurdle.ts`, `scripts/test-robot-natural-motion.ts` and `scripts/test-robot-materials.ts` separately. These check actual exported-foot contact, hand reach, causal timing, dense quaternion continuity, stride-boundary flow, fixed-rest gaze alignment, opposing hand/foot arcs and preserved material maps/cape shaders.
+
+Refresh only the matte loading/fallback image with:
+
+```sh
+/Applications/Blender.app/Contents/MacOS/Blender --background --factory-startup --python tools/robot-king/render_matte_poster.py
+```
 
 ## Builder sample pose
 
