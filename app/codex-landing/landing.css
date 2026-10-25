@@ -123,7 +123,8 @@
 .kl-page .kl-project-caption h3 { font-size: 19px; font-weight: 500; letter-spacing: -.04em; }
 .kl-page .kl-project-caption p { color: var(--kl-muted); font-size: 12px; line-height: 1.8; margin-top: 3px; }
 .kl-page .kl-project-caption > span { color: var(--kl-muted); font-size: 10px; letter-spacing: .06em; margin-top: 5px; white-space: nowrap; }
-.kl-page .kl-faq { display: grid; grid-template-columns: 1fr 1.5fr; gap: 70px; padding-top: 0; }
+.kl-page .kl-faq { display: grid; grid-template-columns: 1fr 1.5fr; gap: 70px; }
+.kl-page .kl-work + .kl-faq { padding-top: 0; }
 .kl-page .kl-faq h2 { margin-top: 25px; }
 .kl-page .kl-faq > div > p { font-size: 14px; color: var(--kl-muted); line-height: 1.8; margin-top: 20px; }
 .kl-page .kl-faq-item { border-top: 1px solid var(--kl-line); }
@@ -228,7 +229,7 @@
   .kl-page .kl-approach-heading > p { max-width: 215px; font-size: 12px; }
   .kl-page .kl-process p { font-size: 12px; padding-right: 15px; }
   .kl-page .kl-project-image { height: 240px; }
-  .kl-page .kl-faq { padding-top: 0; gap: 40px; }
+  .kl-page .kl-faq { gap: 40px; }
   .kl-page .kl-faq-item > summary { font-size: 13px; gap: 10px; padding-block: 21px; }
   .kl-page .kl-contact-grid { gap: 40px; }
   .kl-page .kl-form-grid, .kl-page .kl-form-row { gap: 20px 12px; }
@@ -289,7 +290,7 @@
   .kl-page .kl-project-caption h3 { font-size: 19px; }
   .kl-page .kl-project-caption p { font-size: 11px; }
   .kl-page .kl-project-caption > span { font-size: 10px; }
-  .kl-page .kl-faq { grid-template-columns: 1fr; gap: 30px; padding-top: 0; }
+  .kl-page .kl-faq { grid-template-columns: 1fr; gap: 30px; }
   .kl-page .kl-faq h2 { margin-top: 20px; }
   .kl-page .kl-faq > div > p { font-size: 13px; margin-top: 15px; }
   .kl-page .kl-faq-item > summary { font-size: 14px; padding-block: 23px; }

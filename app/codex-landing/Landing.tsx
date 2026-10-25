@@ -6,6 +6,8 @@ import RobotKing from "./RobotKing";
 import { landingCopy, type LandingLocale } from "./landing-copy";
 
 const serviceIcons = [Search, Network, Compass];
+// Restore after the current examples are replaced with relevant use cases.
+const showSelectedWork = false;
 
 export default function Landing({ locale = "en" }: { locale?: LandingLocale }) {
   const copy = landingCopy[locale];
@@ -19,7 +21,7 @@ export default function Landing({ locale = "en" }: { locale?: LandingLocale }) {
         <nav className="kl-nav" aria-label={copy.navigationLabel}>
           <a href="#services">{copy.navigation.services}</a>
           <a href="#approach">{copy.navigation.approach}</a>
-          <a href="#work">{copy.navigation.work}</a>
+          {showSelectedWork && <a href="#work">{copy.navigation.work}</a>}
         </nav>
         <div className="kl-header-actions">
           <a href="#contact" className="kl-nav-contact">{copy.contactShort}<ArrowUpRight size={17} /></a>
@@ -77,15 +79,17 @@ export default function Landing({ locale = "en" }: { locale?: LandingLocale }) {
           </div>
         </section>
 
-        <section className="kl-work kl-container kl-section" id="work" aria-labelledby="kl-work-title">
-          <div className="kl-work-heading"><div><div className="kl-eyebrow"><span className="kl-square" />{copy.work.eyebrow}</div><h2 id="kl-work-title">{copy.work.title[0]} <em>{copy.work.title[1]}</em></h2></div><p>{copy.work.description[0]}<br />{copy.work.description[1]}</p></div>
-          <div className="kl-projects">
-            {copy.work.projects.map((project) => <a className="kl-project" key={project.key} href={project.href} target="_blank" rel="noopener noreferrer" aria-label={project.visitLabel}>
-              <div className={`kl-project-image kl-project-image-${project.key}`}><div className="kl-project-browser"><div className="kl-browser-bar"><span /><span /><span /><p dir="ltr">{project.domain}</p></div><Image src={project.image} alt={project.alt} width={1265} height={project.height} sizes="(max-width: 700px) 90vw, 45vw" /></div><span className="kl-project-visit"><ArrowUpRight size={21} /></span></div>
-              <div className="kl-project-caption"><div><h3>{project.title}</h3><p>{project.description}</p></div><span>{project.category}</span></div>
-            </a>)}
-          </div>
-        </section>
+        {showSelectedWork && (
+          <section className="kl-work kl-container kl-section" id="work" aria-labelledby="kl-work-title">
+            <div className="kl-work-heading"><div><div className="kl-eyebrow"><span className="kl-square" />{copy.work.eyebrow}</div><h2 id="kl-work-title">{copy.work.title[0]} <em>{copy.work.title[1]}</em></h2></div><p>{copy.work.description[0]}<br />{copy.work.description[1]}</p></div>
+            <div className="kl-projects">
+              {copy.work.projects.map((project) => <a className="kl-project" key={project.key} href={project.href} target="_blank" rel="noopener noreferrer" aria-label={project.visitLabel}>
+                <div className={`kl-project-image kl-project-image-${project.key}`}><div className="kl-project-browser"><div className="kl-browser-bar"><span /><span /><span /><p dir="ltr">{project.domain}</p></div><Image src={project.image} alt={project.alt} width={1265} height={project.height} sizes="(max-width: 700px) 90vw, 45vw" /></div><span className="kl-project-visit"><ArrowUpRight size={21} /></span></div>
+                <div className="kl-project-caption"><div><h3>{project.title}</h3><p>{project.description}</p></div><span>{project.category}</span></div>
+              </a>)}
+            </div>
+          </section>
+        )}
 
         <section className="kl-faq kl-container kl-section" aria-labelledby="kl-faq-title">
           <div><div className="kl-eyebrow"><span className="kl-square" />{copy.faq.eyebrow}</div><h2 id="kl-faq-title">{copy.faq.title[0]}<br /><em>{copy.faq.title[1]}</em></h2><p>{copy.faq.description[0]}<br className="kl-desktop-break" />{" "}{copy.faq.description[1]}</p></div>
