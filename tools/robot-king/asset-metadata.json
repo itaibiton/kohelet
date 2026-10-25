@@ -28,25 +28,35 @@
       0.8303955793380737
     ]
   },
-  "triangles": 39676,
-  "editableMeshObjects": 231,
-  "exportedMeshObjects": 17,
-  "materialDrawCalls": 35,
-  "exportedNodes": 35,
-  "bytes": 1521284,
+  "triangles": 40892,
+  "editableMeshObjects": 247,
+  "exportedMeshObjects": 27,
+  "materialDrawCalls": 49,
+  "exportedNodes": 55,
+  "bytes": 1607940,
   "pivots": [
     "Robot_Root",
     "Body_Pivot",
-    "Arm_L_Pivot",
-    "Arm_R_Pivot",
-    "Cape_Pivot",
-    "Head_Pivot",
     "Leg_L_Pivot",
     "Knee_L_Pivot",
     "Boot_L_Pivot",
     "Leg_R_Pivot",
     "Knee_R_Pivot",
     "Boot_R_Pivot",
+    "Torso_Pivot",
+    "Arm_L_Pivot",
+    "Elbow_L_Pivot",
+    "Wrist_L_Pivot",
+    "Arm_R_Pivot",
+    "Elbow_R_Pivot",
+    "Wrist_R_Pivot",
+    "Cape_Pivot",
+    "Head_Pivot",
+    "Brow_L_Pivot",
+    "Brow_R_Pivot",
+    "Eye_L_Pivot",
+    "Eye_R_Pivot",
+    "Smile_Pivot",
     "Data_Tile_01",
     "Data_Tile_02",
     "Data_Tile_03",
@@ -55,82 +65,6 @@
     "Data_Tile_06"
   ],
   "neutralNodeTransforms": {
-    "Arm_L_Pivot": {
-      "parent": "Body_Pivot",
-      "translation": [
-        0.6499999761581421,
-        0.29000020027160645,
-        0
-      ],
-      "quaternion": [
-        0,
-        0,
-        0,
-        1
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    "Arm_R_Pivot": {
-      "parent": "Body_Pivot",
-      "translation": [
-        -0.6499999761581421,
-        0.29000020027160645,
-        0
-      ],
-      "quaternion": [
-        0,
-        0,
-        0,
-        1
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    "Cape_Pivot": {
-      "parent": "Body_Pivot",
-      "translation": [
-        0,
-        0.45000016689300537,
-        -0.28999993205070496
-      ],
-      "quaternion": [
-        0,
-        0,
-        0,
-        1
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
-    "Head_Pivot": {
-      "parent": "Body_Pivot",
-      "translation": [
-        0,
-        1.2600001096725464,
-        0
-      ],
-      "quaternion": [
-        -0.04102100431919098,
-        -0.06431831419467926,
-        0.10215108841657639,
-        0.991839587688446
-      ],
-      "scale": [
-        1,
-        1,
-        1
-      ]
-    },
     "Boot_L_Pivot": {
       "parent": "Knee_L_Pivot",
       "translation": [
@@ -231,6 +165,272 @@
       "translation": [
         -0.3899999260902405,
         -0.4199998378753662,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Wrist_L_Pivot": {
+      "parent": "Elbow_L_Pivot",
+      "translation": [
+        0,
+        0,
+        0.3699999451637268
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Elbow_L_Pivot": {
+      "parent": "Arm_L_Pivot",
+      "translation": [
+        0.15999996662139893,
+        -0.3599998950958252,
+        -0.010000001639127731
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Arm_L_Pivot": {
+      "parent": "Torso_Pivot",
+      "translation": [
+        0.6499999761581421,
+        0.4700000286102295,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Wrist_R_Pivot": {
+      "parent": "Elbow_R_Pivot",
+      "translation": [
+        0,
+        0,
+        0.3699999153614044
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Elbow_R_Pivot": {
+      "parent": "Arm_R_Pivot",
+      "translation": [
+        -0.1600000262260437,
+        -0.3599998950958252,
+        -0.010000001639127731
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Arm_R_Pivot": {
+      "parent": "Torso_Pivot",
+      "translation": [
+        -0.6499999761581421,
+        0.4700000286102295,
+        0
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Cape_Pivot": {
+      "parent": "Torso_Pivot",
+      "translation": [
+        0,
+        0.6299999952316284,
+        -0.28999993205070496
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Brow_L_Pivot": {
+      "parent": "Head_Pivot",
+      "translation": [
+        0.40000012516975403,
+        0.3750000298023224,
+        0.7779998779296875
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Brow_R_Pivot": {
+      "parent": "Head_Pivot",
+      "translation": [
+        -0.3999999463558197,
+        0.3749999403953552,
+        0.7779998183250427
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Eye_L_Pivot": {
+      "parent": "Head_Pivot",
+      "translation": [
+        0.4000001549720764,
+        0.16000056266784668,
+        0.7719999551773071
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Eye_R_Pivot": {
+      "parent": "Head_Pivot",
+      "translation": [
+        -0.3999998867511749,
+        0.16000047326087952,
+        0.7720000147819519
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Smile_Pivot": {
+      "parent": "Head_Pivot",
+      "translation": [
+        0,
+        -0.3799997568130493,
+        0.6549997329711914
+      ],
+      "quaternion": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Head_Pivot": {
+      "parent": "Torso_Pivot",
+      "translation": [
+        0,
+        1.4399999380111694,
+        0
+      ],
+      "quaternion": [
+        -0.04102100431919098,
+        -0.06431831419467926,
+        0.10215108841657639,
+        0.991839587688446
+      ],
+      "scale": [
+        1,
+        1,
+        1
+      ]
+    },
+    "Torso_Pivot": {
+      "parent": "Body_Pivot",
+      "translation": [
+        0,
+        -0.17999982833862305,
         0
       ],
       "quaternion": [
@@ -398,16 +598,55 @@
       ]
     }
   },
+  "articulation": {
+    "controls": 28,
+    "rigidMeshes": 27,
+    "meshChildrenHaveIdentityTransform": true,
+    "torsoSeparatesUpperBodyFromHips": true,
+    "independentElbowsAndWrists": true,
+    "neutralEyes": "two open digital eyes",
+    "faceControls": [
+      "Eye_R_Pivot",
+      "Eye_L_Pivot",
+      "Brow_R_Pivot",
+      "Brow_L_Pivot",
+      "Smile_Pivot"
+    ]
+  },
+  "capeDeformation": {
+    "mesh": "Cape_Pivot__RigidGeometry",
+    "localBounds": {
+      "min": [
+        -2.0756044387817383,
+        -1.7714080810546875,
+        -0.841993510723114
+      ],
+      "max": [
+        1.33060622215271,
+        0.08971261978149414,
+        0.4002644121646881
+      ]
+    },
+    "hinge": [
+      0,
+      0,
+      0
+    ],
+    "hemDirection": "negative local Y",
+    "widthAxis": "local X",
+    "aftDirection": "negative local Z",
+    "fabricAndTrimShareCoordinates": true
+  },
   "runningGltfBounds": {
     "min": [
-      -1.9588744640350342,
+      -1.9412504434585571,
       -0.0035121520049870014,
-      -2.5001838207244873
+      -2.605252504348755
     ],
     "max": [
-      2.4121954441070557,
-      4.456142902374268,
-      1.372335433959961
+      2.376152753829956,
+      4.381566524505615,
+      1.4517951011657715
     ]
   },
   "gaitContactSweep": [
@@ -558,8 +797,7 @@
   ],
   "posterPose": {
     "phaseRadians": 1.5707963267948966,
-    "referenceCycleSeconds": 0.82,
-    "rootYawRadians": -0.55,
+    "rootYawRadians": -0.62,
     "exportRemainsNeutral": true
   },
   "runtimeAxes": {
@@ -609,15 +847,15 @@
     "Visor \u00b7 satin cobalt edge"
   ],
   "deliveryMaterials": [
-    "Delivery \u00b7 brushed antique metal palette",
     "Delivery \u00b7 matte mineral palette",
+    "Delivery \u00b7 brushed antique metal palette",
     "Delivery \u00b7 warm display pixels"
   ],
   "embeddedTextureImages": 4,
-  "surfaceFinish": "Warm matte sand ceramic, mineral cobalt and brushed antique gold. Embedded 128px normal/roughness maps with vertex-tinted palette; no clearcoat; all closed meshes use backface culling.",
-  "animation": "Neutral articulated glTF rig for runtime action choreography. No baked animation. Saved Blender studio and poster show a three-quarter running stride.",
   "textureDimensions": [
     128,
     128
-  ]
+  ],
+  "surfaceFinish": "Warm matte sand ceramic, mineral cobalt and brushed antique gold. Embedded 128px normal/roughness maps with vertex-tinted palette; no clearcoat; all closed meshes use backface culling.",
+  "animation": "Neutral articulated glTF rig for runtime action choreography. No baked animation. Saved Blender studio and poster show a three-quarter running stride."
 }

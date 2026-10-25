@@ -2,7 +2,7 @@
 
 import {
   ACESFilmicToneMapping, Box3, CanvasTexture, DirectionalLight, Group, HemisphereLight, Material,
-  Mesh, MeshBasicMaterial, Object3D, OrthographicCamera, PlaneGeometry, PMREMGenerator,
+  InstancedMesh, Mesh, MeshBasicMaterial, Object3D, OrthographicCamera, PlaneGeometry, PMREMGenerator,
   Scene, Sphere, SRGBColorSpace, Texture, Vector3, WebGLRenderer,
   type BufferGeometry, type WebGLRenderTarget,
 } from "three";
@@ -10,10 +10,11 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { getRobotActionPose, ACTION_CYCLE_SECONDS, type RunJoint } from "./robot-run-cycle";
 import { createRobotTaskProps } from "./robot-task-props";
+import { createRobotGroundEffects, prepareRobotCape } from "./robot-secondary-motion";
 
 type SceneOptions = { playing: boolean; visible: boolean; onReady: () => void; onError: () => void };
 export type RobotKingController = { setPlaying: (playing: boolean) => void; setVisible: (visible: boolean) => void; dispose: () => void };
-type MovingPart = { object: Object3D; position: Vector3; rotation: Object3D["rotation"]; index: number };
+type MovingPart = { object: Object3D; position: Vector3; rotation: Object3D["rotation"]; scale: Vector3; index: number };
 
 function disposeObject(root: Object3D) {
   const geometries = new Set<BufferGeometry>();
@@ -22,6 +23,7 @@ function disposeObject(root: Object3D) {
   root.traverse((object) => {
     if (object instanceof DirectionalLight) object.shadow.dispose();
     if (!(object instanceof Mesh)) return;
+    if (object instanceof InstancedMesh) object.dispose();
     geometries.add(object.geometry);
     const meshMaterials = Array.isArray(object.material) ? object.material : [object.material];
     meshMaterials.forEach((material: Material) => {
@@ -46,8 +48,11 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
   const framing = new Group();
   const actionRoot = new Group();
   const tasks = createRobotTaskProps();
+  const ground = createRobotGroundEffects();
   actionRoot.add(tasks.root);
   framing.add(actionRoot);
+  framing.add(ground.root);
+  let cape: ReturnType<typeof prepareRobotCape> | undefined;
   const abort = new AbortController();
   let environment: WebGLRenderTarget | undefined;
   let resizeObserver: ResizeObserver | undefined;
@@ -61,6 +66,8 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
   const parameters = new URLSearchParams(window.location.search);
   const diagnostics = parameters.has("robot-debug");
   const requestedStart = Number(parameters.get("robot-start"));
+  const requestedRate = Number(parameters.get("robot-rate") ?? 1);
+  const playbackRate = diagnostics && Number.isFinite(requestedRate) ? Math.max(0.1, Math.min(2, requestedRate)) : 1;
   let elapsed = diagnostics && Number.isFinite(requestedStart) ? Math.max(0, requestedStart) % ACTION_CYCLE_SECONDS : 0;
   let radius = 2;
   let modelHeight = 4;
@@ -76,6 +83,7 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
   let stableWindows = 0;
   let action = "";
   const movingParts: MovingPart[] = [];
+  const faceParts: MovingPart[] = [];
   const poseEnvelope = new Box3();
   const viewDirection = new Vector3(5.22, 3.08, 9.5).normalize();
 
@@ -94,6 +102,7 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
     scene.clear();
     framing.clear();
     movingParts.length = 0;
+    faceParts.length = 0;
     renderer.renderLists.dispose();
     renderer.dispose();
     renderer.forceContextLoss();
@@ -124,31 +133,53 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
   function animateParts(time: number) {
     const pose = getRobotActionPose(time);
     const { phase, bodyLift, joints, root, squash, trail } = pose;
-    const scale = modelHeight / 4.4;
     framing.position.y = -centerY;
-    actionRoot.position.set(root.x * scale, root.y * scale, root.z * scale);
+    actionRoot.position.set(root.x, root.y, root.z);
     actionRoot.rotation.y = root.yaw;
     // Only the body squashes; the workstation stays rigid while the robot works.
     tasks.update(pose.props);
+    cape?.update(time, pose);
+    ground.update(time, pose, 1);
     if (shadow) {
-      shadow.position.set(-centerX + root.x * scale, -centerY - 0.025, -centerZ + root.z * scale);
+      shadow.position.set(-centerX + root.x, -centerY - 0.025, -centerZ + root.z);
       const distance = Math.min(1, root.y / 0.8);
       shadow.scale.setScalar(1 + distance * 0.25);
       shadow.material.opacity = 1 - distance * 0.62;
     }
     if (pose.action !== action) { action = pose.action; host.dataset.action = action; }
+    if (diagnostics) host.dataset.poseTime = (time % ACTION_CYCLE_SECONDS).toFixed(3);
     movingParts.forEach(({ object, position, rotation, index }) => {
       if (object.name.startsWith("Data_Tile_")) {
         const offset = index * 0.8;
-        object.position.y = position.y + Math.sin(phase + offset) * (0.025 + trail.speed * 0.045) * scale;
-        object.position.z = position.z + Math.cos(phase + offset) * (0.03 + trail.speed * 0.09) * scale;
-        object.rotation.z = rotation.z + Math.sin(phase + offset) * 0.07;
+        const headingLag = pose.effects.turn * (0.65 + index * 0.09);
+        object.position.x = position.x + headingLag * (0.02 + index * 0.025);
+        object.position.y = position.y + Math.sin(phase + offset) * (0.012 + trail.speed * 0.038);
+        object.position.z = position.z + Math.cos(phase + offset) * (0.02 + trail.speed * 0.07);
+        object.rotation.set(rotation.x + headingLag * 0.13, rotation.y + trail.speed * Math.sin(phase + offset) * 0.12, rotation.z + Math.sin(phase + offset) * 0.065);
       } else {
         const joint = joints[object.name as RunJoint];
         if (!joint) return;
         object.rotation.set(rotation.x + joint.x, rotation.y + joint.y, rotation.z + joint.z);
-        object.position.y = position.y + (object.name === "Body_Pivot" ? bodyLift * scale : 0);
+        object.position.y = position.y + (object.name === "Body_Pivot" ? bodyLift : 0);
         if (object.name === "Body_Pivot") object.scale.set(1 / Math.sqrt(squash), squash, 1 / Math.sqrt(squash));
+      }
+    });
+    faceParts.forEach(({ object, position, rotation, scale }) => {
+      object.position.copy(position);
+      object.rotation.copy(rotation);
+      object.scale.copy(scale);
+      const side = object.name.includes("_R_") ? -1 : 1;
+      if (object.name.startsWith("Eye_")) {
+        object.position.x += pose.eyes.lookX * 0.035;
+        object.position.y += pose.eyes.lookY * 0.025;
+        const aperture = 1 - pose.eyes.pleasure * 0.28 + pose.eyes.surprise * 0.12;
+        object.scale.y *= Math.max(0.035, (1 - pose.eyes.blink) * aperture);
+        object.scale.x *= 1 + pose.eyes.pleasure * 0.06;
+      } else if (object.name.startsWith("Brow_")) {
+        object.rotation.z += side * (pose.eyes.focus * 0.08 - pose.eyes.pleasure * 0.09 - pose.eyes.surprise * 0.04);
+        object.position.y += pose.eyes.surprise * 0.06 + pose.eyes.pleasure * 0.025 - pose.eyes.focus * 0.005;
+      } else if (object.name === "Smile_Pivot") {
+        object.scale.x *= 1 + pose.eyes.pleasure * 0.15 - pose.eyes.surprise * 0.3;
       }
     });
   }
@@ -158,7 +189,7 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
     if (!canRender() || !playing) return;
     frame = requestAnimationFrame(tick);
     const delta = now - lastTick;
-    elapsed += Math.min(delta / 1000, 0.1);
+    elapsed += Math.min(delta / 1000, 0.1) * playbackRate;
     lastTick = now;
     const started = performance.now();
     animateParts(elapsed);
@@ -237,13 +268,14 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
     camera.lookAt(0, 0, 0);
     camera.updateMatrixWorld();
     poseEnvelope.makeEmpty();
-    for (let sample = 0; sample < 144; sample++) {
-      animateParts((sample / 144) * ACTION_CYCLE_SECONDS);
+    for (let sample = 0; sample < 360; sample++) {
+      animateParts((sample / 360) * ACTION_CYCLE_SECONDS);
       framing.updateMatrixWorld(true);
       framing.traverseVisible((object) => {
         if (!(object instanceof Mesh)) return;
-        if (!object.geometry.boundingBox) object.geometry.computeBoundingBox();
-        const bounds = object.geometry.boundingBox;
+        if (object instanceof InstancedMesh) object.computeBoundingBox();
+        else if (!object.geometry.boundingBox) object.geometry.computeBoundingBox();
+        const bounds = object instanceof InstancedMesh ? object.boundingBox : object.geometry.boundingBox;
         if (!bounds) return;
         for (const x of [bounds.min.x, bounds.max.x]) {
           for (const y of [bounds.min.y, bounds.max.y]) {
@@ -288,7 +320,7 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
     resize();
 
     void (async () => {
-      const response = await fetch("/models/kohelet-robot-king.glb?v=actions", { signal: abort.signal });
+      const response = await fetch("/models/kohelet-robot-king.glb?v=performance", { signal: abort.signal });
       if (!response.ok) throw new Error("Robot model unavailable");
       const buffer = await response.arrayBuffer();
       if (disposed) return;
@@ -304,9 +336,14 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
       centerZ = center.z;
       framing.position.copy(center).negate();
       actionRoot.add(gltf.scene);
+      cape = prepareRobotCape(gltf.scene);
       gltf.scene.traverse((object) => {
-        if (/^(Body_Pivot|Head_Pivot|Arm_[RL]_Pivot|Leg_[RL]_Pivot|Knee_[RL]_Pivot|Boot_[RL]_Pivot|Cape_Pivot|Data_Tile_\d+)$/.test(object.name)) {
-          movingParts.push({ object, position: object.position.clone(), rotation: object.rotation.clone(), index: movingParts.length });
+        const rest = { object, position: object.position.clone(), rotation: object.rotation.clone(), scale: object.scale.clone(), index: movingParts.length };
+        if (/^(Body_Pivot|Torso_Pivot|Head_Pivot|Arm_[RL]_Pivot|Elbow_[RL]_Pivot|Wrist_[RL]_Pivot|Leg_[RL]_Pivot|Knee_[RL]_Pivot|Boot_[RL]_Pivot|Cape_Pivot|Data_Tile_\d+)$/.test(object.name)) {
+          rest.index = object.name.startsWith("Data_Tile_") ? Number(object.name.slice(-2)) - 1 : 0;
+          movingParts.push(rest);
+        } else if (/^((Eye|Brow)_[RL]_Pivot|Smile_Pivot)$/.test(object.name)) {
+          faceParts.push(rest);
         }
       });
       measureRunEnvelope();
@@ -328,7 +365,7 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
         shadow.position.set(-center.x, -modelHeight / 2 - 0.025, -center.z);
         scene.add(shadow);
       }
-      tasks.update({ laptop: 1, automation: 1, codeProgress: 0, automationProgress: 0 });
+      tasks.update({ ...getRobotActionPose(7).props, laptop: 1, automation: 1, laptopLid: 1 });
       await renderer.compileAsync(scene, camera);
       if (disposed) return;
       animateParts(elapsed);

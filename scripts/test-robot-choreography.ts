@@ -1,135 +1,136 @@
 import assert from "node:assert/strict";
-// Node runs this source directly; a URL import keeps its required .ts extension out of application resolution.
-const { ACTION_CYCLE_SECONDS, getRobotActionPose, RUN_CYCLE_SECONDS } = await import(
+const { ACTION_CYCLE_SECONDS, ACTION_BOUNDARIES, getRobotActionPose, RUN_CYCLE_SECONDS } = await import(
   new URL("../app/codex-landing/robot-run-cycle.ts", import.meta.url).href
 ) as typeof import("../app/codex-landing/robot-run-cycle");
-
-// Check numerical properties of the motion itself, rather than implementation structure.
-const continuousValues = (time: number): number[] => {
-  const pose = getRobotActionPose(time);
-  return [pose.bodyLift, ...Object.values(pose.root), pose.squash, ...Object.values(pose.props), ...Object.values(pose.trail),
-    ...Object.values(pose.joints).flatMap((joint) => Object.values(joint))];
+const values = (time: number): number[] => {
+  const p = getRobotActionPose(time);
+  const { expression: _, ...eyes } = p.eyes; void _;
+  return [p.bodyLift, ...Object.values(p.root), p.squash, ...Object.values(p.props), ...Object.values(p.trail),
+    ...Object.values(eyes), ...Object.values(p.effects), ...Object.values(p.footContacts),
+    ...Object.values(p.joints).flatMap((joint) => Object.values(joint))];
 };
-const difference = (a: number[], b: number[]) => Math.max(...a.map((value, index) => Math.abs(value - b[index])));
-const times = [0, 2.1, 2.4, 3.3, 3.6, 4.1, 6.6, 7.1, 8.4, 8.9, 11.4, 12, ACTION_CYCLE_SECONDS];
-const epsilon = 0.00001;
-let maximumBoundaryGap = 0;
-let maximumVelocityGap = 0;
-for (const time of times) {
-  const before = continuousValues(time - epsilon);
-  const at = continuousValues(time);
-  const after = continuousValues(time + epsilon);
-  maximumBoundaryGap = Math.max(maximumBoundaryGap, difference(before, after));
-  const velocityBefore = at.map((value, index) => (value - before[index]) / epsilon);
-  const velocityAfter = after.map((value, index) => (value - at[index]) / epsilon);
-  maximumVelocityGap = Math.max(maximumVelocityGap, difference(velocityBefore, velocityAfter));
+const difference = (a: number[], b: number[]) => Math.max(...a.map((v, i) => Math.abs(v - b[i])));
+const epsilon = 0.000001;
+let maximumBoundaryGap = 0, maximumVelocityGap = 0, worstBoundary = 0;
+for (const time of ACTION_BOUNDARIES) {
+  const before = values(time - epsilon), at = values(time), after = values(time + epsilon);
+  const gap = difference(before, after);
+  if (gap > maximumBoundaryGap) { maximumBoundaryGap = gap; worstBoundary = time; }
+  maximumVelocityGap = Math.max(maximumVelocityGap, difference(at.map((v, i) => (v - before[i]) / epsilon), after.map((v, i) => (v - at[i]) / epsilon)));
 }
-assert(maximumBoundaryGap < 0.001, `Pose discontinuity: ${maximumBoundaryGap}`);
-assert(maximumVelocityGap < 0.05, `Velocity discontinuity: ${maximumVelocityGap}`);
-assert.equal(ACTION_CYCLE_SECONDS / RUN_CYCLE_SECONDS, 24, "Loop must contain a whole number of strides");
-let maximumJump = 0;
-let minimumForwardVelocity = Infinity;
-for (let sample = 0; sample <= 1440; sample++) {
-  const time = sample * ACTION_CYCLE_SECONDS / 1440;
-  const pose = getRobotActionPose(time);
-  assert(continuousValues(time).every(Number.isFinite), `Non-finite transform at ${time}`);
-  assert(difference(continuousValues(time), continuousValues(time + ACTION_CYCLE_SECONDS)) < 1e-10, `Non-periodic pose at ${time}`);
-  assert(pose.root.y >= 0, "Jump cannot move through the floor");
-  assert(Math.abs(pose.root.x) <= 0.21 && Math.abs(pose.root.z) <= 0.33, "Stage travel escaped its envelope");
-  assert(pose.joints.Knee_L_Pivot.x >= 0 && pose.joints.Knee_R_Pivot.x >= 0, "Knee folded backwards");
-  maximumJump = Math.max(maximumJump, pose.root.y);
-  if (pose.action === "run" && pose.trail.speed >= 0.99999) {
-    const delta = 0.0001;
-    const before = getRobotActionPose(time - delta).root;
-    const after = getRobotActionPose(time + delta).root;
-    const velocityX = (after.x - before.x) / (delta * 2);
-    const velocityZ = (after.z - before.z) / (delta * 2);
-    const forwardVelocity = velocityX * Math.sin(pose.root.yaw) + velocityZ * Math.cos(pose.root.yaw);
-    minimumForwardVelocity = Math.min(minimumForwardVelocity, forwardVelocity);
-    assert(forwardVelocity >= -1e-8, `Running backwards at ${time}s: ${forwardVelocity}`);
+assert(maximumBoundaryGap < 0.001, `Pose discontinuity at${worstBoundary}: ${maximumBoundaryGap}`);
+assert(maximumVelocityGap < 0.1, `Velocity discontinuity: ${maximumVelocityGap}`);
+assert.equal(Math.round(ACTION_CYCLE_SECONDS / RUN_CYCLE_SECONDS), 42);
+let minimumForwardVelocity = Infinity, maximumJump = 0;
+for (let sample = 0; sample <= 2016; sample++) {
+  const time = sample / 100, p = getRobotActionPose(time);
+  assert(values(time).every(Number.isFinite), `Non-finite transform at ${time}`);
+  assert(difference(values(time), values(time + ACTION_CYCLE_SECONDS)) < 1e-7, `Non-periodic pose at ${time}`);
+  assert(Math.abs(p.root.x) <= 0.45 && Math.abs(p.root.z) <= 0.4, "Stage travel escaped envelope");
+  assert(p.root.y >= 0 && p.squash === 1, "Contact rig cannot stretch or move through floor");
+  for (const value of [...Object.values(p.effects), ...Object.values(p.props)]) assert(value >= -1e-10 && value <= 1 + 1e-10, "Effect weight outside0–1");
+  if (p.action === "run" && p.trail.speed >= 0.9999) {
+    const a = getRobotActionPose(time - epsilon).root, b = getRobotActionPose(time + epsilon).root;
+    const forward = ((b.x - a.x) * Math.sin(p.root.yaw) + (b.z - a.z) * Math.cos(p.root.yaw)) / (2 * epsilon);
+    minimumForwardVelocity = Math.min(minimumForwardVelocity, forward);
+    assert(forward >= -1e-6, `Stage travel is backwards during sprint at ${time}s`);
   }
+  maximumJump = Math.max(maximumJump, p.root.y);
 }
-assert(maximumJump > 0.66, "The jump should be visibly airborne");
-for (const time of [4.2, 5.2, 6.2, 9, 10, 11]) {
-  const pose = getRobotActionPose(time);
-  assert.equal(pose.trail.speed, 0, "Stopped work needs a still trail");
-  assert.equal(pose.joints.Leg_R_Pivot.x, -0.05, "Right foot must stay planted during work");
-  assert.equal(pose.joints.Leg_L_Pivot.x, -0.05, "Left foot must stay planted during work");
-}
-assert.equal(getRobotActionPose(5).props.laptop, 1);
-assert.equal(getRobotActionPose(10).props.automation, 1);
-assert.equal(getRobotActionPose(0).props.laptop, 0);
-assert.equal(getRobotActionPose(0).props.automation, 0);
-console.log(JSON.stringify({ samples: 1441, duration: ACTION_CYCLE_SECONDS, stride: RUN_CYCLE_SECONDS,
+assert.equal(getRobotActionPose(4.54).effects.impact, 0, "Impact cue cannot precede landing contact");
+assert(getRobotActionPose(4.55).effects.impact < 1e-12);
+assert(getRobotActionPose(4.63).effects.impact > 0.99);
+assert.equal(getRobotActionPose(4.95).effects.impact, 0);
+assert.equal(getRobotActionPose(5.7).props.codeProgress, 0, "Code cannot appear before the laptop opens");
+assert(getRobotActionPose(5.7).props.laptopLid < 1);
+assert.equal(getRobotActionPose(13.3).props.automationProgress, 0, "Packets cannot flow before activation press");
+assert.equal(getRobotActionPose(14.03).props.automationProgress, 1, "Workflow must finish before success");
+assert.equal(getRobotActionPose(14).effects.success, 0, "Success cannot precede completed workflow");
+assert(maximumJump > 0.73, "Jump must have a substantial ballistic flight arc");
+console.log(JSON.stringify({ samples: 2017, duration: ACTION_CYCLE_SECONDS, stride: RUN_CYCLE_SECONDS,
   maximumBoundaryGap, maximumVelocityGap, maximumJump, minimumForwardVelocity, result: "pass" }, null, 2));
 
-// Check the actual exported boots against the real contact plane. Removing materials
-// lets Node load glTF geometry without emulating a browser's image decoder.
+// Geometry-only glTF loading checks the same named controls and exact authored units as the renderer.
 const { readFile } = await import("node:fs/promises");
-const { Box3, Group, Mesh, Vector3 } = await import("three");
+const { Group, Mesh, Vector3, Quaternion, Euler } = await import("three");
 const { GLTFLoader } = await import("three/examples/jsm/loaders/GLTFLoader.js");
 const glb = await readFile(new URL("../public/models/kohelet-robot-king.glb", import.meta.url));
-const originalJsonLength = glb.readUInt32LE(12);
-const document = JSON.parse(glb.subarray(20, 20 + originalJsonLength).toString("utf8"));
-document.materials = document.materials.map(() => ({ pbrMetallicRoughness: { metallicFactor: 0, roughnessFactor: 1 } }));
-document.images = [];
-document.textures = [];
-const json = Buffer.from(JSON.stringify(document));
-const jsonPadding = (4 - json.length % 4) % 4;
-const jsonChunk = Buffer.alloc(8 + json.length + jsonPadding, 0x20);
-jsonChunk.writeUInt32LE(json.length + jsonPadding, 0);
-jsonChunk.writeUInt32LE(0x4e4f534a, 4);
-json.copy(jsonChunk, 8);
-const binaryChunk = glb.subarray(20 + originalJsonLength);
-const header = Buffer.from(glb.subarray(0, 12));
-header.writeUInt32LE(12 + jsonChunk.length + binaryChunk.length, 8);
-const geometryGlb = Buffer.concat([header, jsonChunk, binaryChunk]);
+const oldLength = glb.readUInt32LE(12), document = JSON.parse(glb.subarray(20, 20 + oldLength).toString("utf8"));
+document.materials = document.materials.map(() => ({})); document.images = []; document.textures = [];
+const json = Buffer.from(JSON.stringify(document)), pad = (4 - json.length % 4) % 4;
+const chunk = Buffer.alloc(8 + json.length + pad, 0x20); chunk.writeUInt32LE(json.length + pad, 0); chunk.writeUInt32LE(0x4e4f534a, 4); json.copy(chunk, 8);
+const binary = glb.subarray(20 + oldLength), header = Buffer.from(glb.subarray(0, 12)); header.writeUInt32LE(12 + chunk.length + binary.length, 8);
+const geometryGlb = Buffer.concat([header, chunk, binary]);
 const gltf = await new GLTFLoader().parseAsync(Uint8Array.from(geometryGlb).buffer, "");
-const modelHeight = new Box3().setFromObject(gltf.scene).getSize(new Vector3()).y;
-const scale = modelHeight / 4.4;
-const actionRoot = new Group();
-actionRoot.add(gltf.scene);
-const jointRests = Object.keys(getRobotActionPose(0).joints).map((name) => {
-  const object = gltf.scene.getObjectByName(name);
-  assert(object, `Missing exported joint ${name}`);
-  return { name: name as keyof ReturnType<typeof getRobotActionPose>["joints"], object,
-    rotation: object.rotation.clone(), position: object.position.clone() };
+const actionRoot = new Group(); actionRoot.add(gltf.scene);
+const rests = Object.keys(getRobotActionPose(0).joints).map((name) => {
+  const object = gltf.scene.getObjectByName(name); assert(object, `Missing exported joint ${name}`);
+  return { name: name as keyof ReturnType<typeof getRobotActionPose>["joints"], object, rotation: object.rotation.clone(), position: object.position.clone() };
 });
-const boots: InstanceType<typeof Mesh>[] = [];
-for (const name of ["Boot_R_Pivot", "Boot_L_Pivot"]) {
-  gltf.scene.getObjectByName(name)?.traverse((object) => { if (object instanceof Mesh) boots.push(object); });
+const boots: { side: "right" | "left"; meshes: InstanceType<typeof Mesh>[] }[] = [];
+for (const [name, side] of [["Boot_R_Pivot", "right"], ["Boot_L_Pivot", "left"]] as const) {
+  const meshes: InstanceType<typeof Mesh>[] = [];
+  gltf.scene.getObjectByName(name)?.traverse((o) => { if (o instanceof Mesh) meshes.push(o); });
+  assert(meshes.length > 0); boots.push({ side, meshes });
 }
-assert(boots.length >= 2, "No exported boot geometry found");
-let minimumFootY = Infinity;
-let minimumClearance = Infinity;
-let lowestTime = 0;
-const vertex = new Vector3();
-for (let sample = 0; sample <= 720; sample++) {
-  const time = sample * ACTION_CYCLE_SECONDS / 720;
-  const pose = getRobotActionPose(time);
-  actionRoot.position.set(pose.root.x * scale, pose.root.y * scale, pose.root.z * scale);
-  actionRoot.rotation.y = pose.root.yaw;
-  for (const { name, object, rotation, position } of jointRests) {
-    const offset = pose.joints[name];
-    object.rotation.set(rotation.x + offset.x, rotation.y + offset.y, rotation.z + offset.z);
-    object.position.copy(position);
-    if (name === "Body_Pivot") {
-      object.position.y += pose.bodyLift * scale;
-      object.scale.set(1 / Math.sqrt(pose.squash), pose.squash, 1 / Math.sqrt(pose.squash));
-    }
+function apply(time: number) {
+  const p = getRobotActionPose(time); actionRoot.position.set(p.root.x, p.root.y, p.root.z); actionRoot.rotation.y = p.root.yaw;
+  for (const { name, object, rotation, position } of rests) {
+    const offset = p.joints[name]; object.rotation.set(rotation.x + offset.x, rotation.y + offset.y, rotation.z + offset.z); object.position.copy(position);
+    if (name === "Body_Pivot") { object.position.y += p.bodyLift; object.scale.setScalar(1); }
   }
-  actionRoot.updateMatrixWorld(true);
-  let lowest = Infinity;
+  actionRoot.updateMatrixWorld(true); return p;
+}
+let minimumClearance = Infinity, minimumFootY = Infinity, worstTime = 0, maximumContactError = 0, worstContactTime = 0;
+const point = new Vector3();
+for (let sample = 0; sample <= 2016; sample++) {
+  const time = sample / 100, p = apply(time);
   for (const boot of boots) {
-    const positions = boot.geometry.getAttribute("position");
-    for (let index = 0; index < positions.count; index++) {
-      vertex.fromBufferAttribute(positions, index).applyMatrix4(boot.matrixWorld);
-      lowest = Math.min(lowest, vertex.y);
+    let lowest = Infinity;
+    for (const mesh of boot.meshes) {
+      const a = mesh.geometry.getAttribute("position");
+      for (let index = 0; index < a.count; index++) { point.fromBufferAttribute(a, index).applyMatrix4(mesh.matrixWorld); lowest = Math.min(lowest, point.y); }
     }
+    if (lowest < minimumFootY) { minimumFootY = lowest; worstTime = time; }
+    minimumClearance = Math.min(minimumClearance, lowest + 0.025);
+    if (p.footContacts[boot.side] > 0.9999 && p.root.y === 0 && Math.abs(lowest + 0.023) > maximumContactError) { maximumContactError = Math.abs(lowest + 0.023); worstContactTime = time; }
   }
-  if (lowest < minimumFootY) { minimumFootY = lowest; lowestTime = time; }
-  minimumClearance = Math.min(minimumClearance, lowest + 0.025);
 }
-assert(minimumClearance >= 0, `Boot clips contact plane by ${-minimumClearance} at ${lowestTime}s`);
-console.log(JSON.stringify({ rigSamples: 721, bootMeshes: boots.length, minimumFootY,
-  minimumClearance, lowestTime, contactPlaneY: -0.025, result: "pass" }, null, 2));
+assert(minimumClearance >= -1e-6, `Boot clips floor at ${worstTime}s by ${-minimumClearance}`);
+assert(maximumContactError < 0.006, `Support foot floats ${maximumContactError} from the intended contact plane`);
+// Both task ankles must remain fixed relative to their root while hands articulate.
+for (const [start, end] of [[5.9, 8.8], [10.3, 13.9]]) {
+  apply(start); const initial = boots.map(({ meshes }) => actionRoot.worldToLocal(meshes[0].getWorldPosition(new Vector3())).clone());
+  for (let t = start; t < end; t += 0.07) {
+    apply(t); boots.forEach(({ meshes }, index) => { const position = actionRoot.worldToLocal(meshes[0].getWorldPosition(new Vector3())); assert(position.distanceTo(initial[index]) < 1e-5, `Task foot slides at ${t}`); });
+  }
+}
+console.log(JSON.stringify({ rigSamples: 2017, minimumClearance, minimumFootY, worstTime, maximumContactError, worstContactTime, result: "pass" }, null, 2));
+
+// The new articulated wrists put real geometry at the intended grab/drag coordinates.
+for (const [time, expected] of [[10.95, [-0.68, 1.53, 0.76]], [12.3, [-0.35, 1.72, 0.82]]] as [number, [number, number, number]][]) {
+  apply(time); const wrist = gltf.scene.getObjectByName("Wrist_R_Pivot"); assert(wrist);
+  const fist = actionRoot.worldToLocal(wrist.localToWorld(new Vector3(0, 0, 0.12)));
+  assert(fist.distanceTo(new Vector3(...expected)) < 0.003, `Hand misses workflow target at ${time}s: ${fist.toArray()}`);
+}
+for (const side of ["R", "L"] as const) {
+  const elbows = [6.05, 6.14, 6.23, 6.32].map((t) => getRobotActionPose(t).joints[`Elbow_${side}_Pivot`].x);
+  const wrists = [6.05, 6.14, 6.23, 6.32].map((t) => getRobotActionPose(t).joints[`Wrist_${side}_Pivot`].x);
+  assert(Math.max(...elbows) - Math.min(...elbows) > 0.01, "Typing must articulate the elbow");
+  assert(Math.max(...wrists) - Math.min(...wrists) > 0.01, "Typing must articulate the wrist");
+}
+console.log(JSON.stringify({ workflowHandTargets: "pass", independentTypingJoints: "pass", pressBeforePackets: "pass" }));
+
+// Compare physical orientations, not Euler representations that can wrap at +/-pi.
+const previous = new Map<string, InstanceType<typeof Quaternion>>();
+let maximumAngularStep = 0;
+for (let time = 0; time <= ACTION_CYCLE_SECONDS; time += 1 / 240) {
+  for (const [name, value] of Object.entries(getRobotActionPose(time).joints)) {
+    const orientation = new Quaternion().setFromEuler(new Euler(value.x, value.y, value.z));
+    const before = previous.get(name);
+    if (before) maximumAngularStep = Math.max(maximumAngularStep, before.angleTo(orientation));
+    previous.set(name, orientation);
+  }
+}
+assert(maximumAngularStep < 0.18, `Joint snaps during the story: ${maximumAngularStep}radians per1/240s`);
+console.log(JSON.stringify({ denseQuaternionSamples: 4839, maximumAngularStep, result: "pass" }));

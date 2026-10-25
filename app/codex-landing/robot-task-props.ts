@@ -4,127 +4,144 @@ import {
   type BufferGeometry, type Material,
 } from "three";
 import { mergeGeometries } from "three/addons/utils/BufferGeometryUtils.js";
+import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
+import type { RobotActionPose } from "./robot-run-cycle";
 
-type TaskState = { laptop: number; automation: number; codeProgress: number; automationProgress: number };
+type TaskState = RobotActionPose["props"];
+const clamp = (n: number) => Math.max(0, Math.min(1, n));
 
-/** Small, real 3D workstations. Geometry and screen artwork are built once. */
+/** Workstations are assembled once; transforms and a small screen texture tell the story. */
 export function createRobotTaskProps() {
   const root = new Group();
   root.name = "Robot_Workstations";
   const laptop = new Group();
   const workflow = new Group();
-  laptop.position.z = -0.07;
-  workflow.position.z = -0.23;
   root.add(laptop, workflow);
+  const makeMaterial = (color: string) => new MeshStandardMaterial({ color, roughness: 0.78, metalness: 0.16, transparent: true });
+  const graphite = makeMaterial("#303b4a");
+  const keysMat = makeMaterial("#a3adba");
+  const blue = makeMaterial("#2549d6");
+  const screenMat = new MeshBasicMaterial({ transparent: true });
+  const laptopMaterials: Material[] = [graphite, keysMat, blue, screenMat];
 
-  function material(color: string) {
-    return new MeshStandardMaterial({ color, roughness: 0.82, metalness: 0.08, transparent: true });
-  }
-  const graphite = material("#303b4a");
-  const blue = material("#2549d6");
-  const sand = material("#c5b18a");
-  const cyan = new MeshBasicMaterial({ color: "#8fcbd5", transparent: true });
-  const laptopMaterials: Material[] = [graphite, blue, sand];
-  const workflowMaterials: Material[] = [];
-
-  function box(w: number, h: number, d: number, x: number, y: number, z: number) {
-    return new BoxGeometry(w, h, d).translate(x, y, z);
-  }
-  function merged(parent: Group, pieces: BufferGeometry[], mat: Material) {
+  function merge(parent: Group, pieces: BufferGeometry[], material: Material) {
     const geometry = mergeGeometries(pieces);
     pieces.forEach((piece) => piece.dispose());
-    const mesh = new Mesh(geometry, mat);
+    const mesh = new Mesh(geometry, material);
     parent.add(mesh);
     return mesh;
   }
-
-  // A compact floating laptop; twin displays keep the code legible at this angle.
-  merged(laptop, [box(1.88, 0.075, 0.86, 0, 1.29, 0.99), box(1.84, 0.88, 0.065, 0, 1.74, 1.37)], graphite);
-  const keys: BufferGeometry[] = [];
+  function box(w: number, h: number, d: number, x: number, y: number, z: number) {
+    return new BoxGeometry(w, h, d).translate(x, y, z);
+  }
+  const base = new Mesh(new RoundedBoxGeometry(1.88, 0.08, 0.86, 2, 0.025), graphite);
+  base.position.set(0, 1.49, 0.92);
+  laptop.add(base);
+  const keyParts: BufferGeometry[] = [];
   for (let row = 0; row < 3; row++) {
-    for (let col = 0; col < 9; col++) keys.push(box(0.13, 0.018, 0.105, (col - 4) * 0.178, 1.34, 0.75 + row * 0.14));
+    for (let col = 0; col < 9; col++) keyParts.push(box(0.13, 0.018, 0.105, (col - 4) * 0.178, 1.54, 0.62 + row * 0.14));
   }
-  keys.push(box(0.53, 0.018, 0.085, 0, 1.34, 1.16));
-  merged(laptop, keys, sand);
-  merged(laptop, [box(1.88, 0.022, 0.035, 0, 1.34, 1.39)], blue);
-
-  const screenCanvas = document.createElement("canvas");
-  screenCanvas.width = 512;
-  screenCanvas.height = 256;
-  const ctx = screenCanvas.getContext("2d");
-  if (ctx) {
-    ctx.fillStyle = "#101e35";
-    ctx.fillRect(0, 0, 512, 256);
-    ctx.fillStyle = "#71809a";
-    ctx.font = "14px monospace";
-    ctx.fillText("KOHELET / WORKSPACE", 24, 29);
-    const lines = ["const idea = discover();", "const plan = connect(idea);", "await build(plan);", "// make it useful."];
-    lines.forEach((line, i) => {
-      ctx.fillStyle = i === 3 ? "#8292a6" : i % 2 ? "#c5b18a" : "#9ed2dc";
-      ctx.font = "19px monospace";
-      ctx.fillText(line, 27 + (i === 1 ? 14 : 0), 76 + i * 43);
-    });
-  }
-  const screenMap = new CanvasTexture(screenCanvas);
-  screenMap.colorSpace = SRGBColorSpace;
-  const screenMat = new MeshBasicMaterial({ map: screenMap, transparent: true });
-  laptopMaterials.push(screenMat, cyan);
+  keyParts.push(box(0.53, 0.018, 0.085, 0, 1.54, 1.05));
+  merge(laptop, keyParts, keysMat);
+  const hinge = new Group();
+  hinge.position.set(0, 1.53, 1.32);
+  laptop.add(hinge);
+  const lid = new Mesh(new RoundedBoxGeometry(1.84, 0.88, 0.065, 2, 0.025), graphite);
+  lid.position.y = 0.44;
+  hinge.add(lid);
+  const bezel = new Mesh(new RoundedBoxGeometry(1.75, 0.8, 0.071, 2, 0.018), blue);
+  bezel.position.y = 0.44;
+  hinge.add(bezel);
+  // Illustrative code, not a client result or live terminal.
+  const canvas = document.createElement("canvas");
+  canvas.width = 512; canvas.height = 256;
+  const context = canvas.getContext("2d");
+  const map = new CanvasTexture(canvas);
+  map.colorSpace = SRGBColorSpace;
+  screenMat.map = map;
   for (const facing of [1, -1]) {
-    const display = new Mesh(new PlaneGeometry(1.71, 0.77), screenMat);
-    display.position.set(0, 1.74, 1.37 + facing * 0.034);
+    const display = new Mesh(new PlaneGeometry(1.68, 0.74), screenMat);
+    display.position.set(0, 0.44, facing * 0.037);
     display.rotation.y = facing < 0 ? Math.PI : 0;
-    laptop.add(display);
+    hinge.add(display);
   }
-  const cursor = new Mesh(new BoxGeometry(0.025, 0.045, 0.005), cyan);
-  cursor.position.set(0.26, 1.44, 1.408);
-  laptop.add(cursor);
+  const codeLines = ["const question = discover();", "const plan = connect(question);", "await build(plan);", "return somethingUseful;"];
+  let paintedProgress = -1;
+  function paintCode(progress: number) {
+    const bucket = Math.floor(clamp(progress) * 64);
+    if (!context || bucket === paintedProgress) return;
+    paintedProgress = bucket;
+    context.fillStyle = "#101e35"; context.fillRect(0, 0, 512, 256);
+    context.font = "13px monospace"; context.fillStyle = "#7f91a8";
+    context.fillText("KOHELET / BUILD", 25, 28);
+    let remaining = Math.floor(bucket / 64 * codeLines.join("").length);
+    codeLines.forEach((line, i) => {
+      context.font = "17px monospace"; context.fillStyle = i % 2 ? "#cbb98b" : "#9ed2dc";
+      context.fillText(line.slice(0, Math.max(0, remaining)), 26, 73 + i * 42);
+      remaining -= line.length;
+    });
+    if (bucket === 64) { context.fillStyle = "#94bcb5"; context.fillRect(26, 234, 460, 2); }
+    map.needsUpdate = true;
+  }
+  paintCode(0);
 
-  // A three-node automation chain with a single packet passing between nodes.
-  const points = [new Vector3(-0.77, 1.47, 1.04), new Vector3(0, 1.82, 1.04), new Vector3(0.77, 1.47, 1.04)];
-  const nodeMaterials = points.map(() => material("#2549d6"));
-  workflowMaterials.push(...nodeMaterials);
-  points.forEach((position, i) => {
-    const node = new Mesh(new BoxGeometry(0.39, 0.39, 0.11), nodeMaterials[i]);
-    node.position.copy(position);
-    node.rotation.z = Math.PI / 4;
-    workflow.add(node);
+  const points = [new Vector3(-0.68, 1.53, 0.76), new Vector3(0, 1.8, 0.82), new Vector3(0.68, 1.53, 0.76)];
+  const workingPoints = points.map((p) => p.clone());
+  const dragTarget = new Vector3(-0.35, 1.72, 0.82);
+  const wireDirection = new Vector3();
+  const wireAxis = new Vector3(1, 0, 0);
+  const nodeMaterials = points.map(() => makeMaterial("#2549d6"));
+  const nodes = points.map((point, i) => {
+    const node = new Mesh(new RoundedBoxGeometry(0.31, 0.31, 0.13, 2, 0.035), nodeMaterials[i]);
+    node.position.copy(point); workflow.add(node); return node;
   });
-  const wireMat = material("#6a7c9a");
-  const wires: BufferGeometry[] = [];
-  for (let i = 0; i < 2; i++) {
-    const a = points[i];
-    const b = points[i + 1];
-    const geometry = new BoxGeometry(a.distanceTo(b), 0.025, 0.025);
-    geometry.rotateZ(Math.atan2(b.y - a.y, b.x - a.x));
-    geometry.translate((a.x + b.x) / 2, (a.y + b.y) / 2, 1.04);
-    wires.push(geometry);
-  }
-  merged(workflow, wires, wireMat);
+  const wireMat = makeMaterial("#7c8fac");
+  const wires = [0, 1].map(() => {
+    const mesh = new Mesh(new BoxGeometry(1, 0.025, 0.025), wireMat);
+    workflow.add(mesh); return mesh;
+  });
   const packetMat = new MeshBasicMaterial({ color: "#d7bf86", transparent: true });
-  const packet = new Mesh(new BoxGeometry(0.105, 0.105, 0.105), packetMat);
+  const packet = new Mesh(new RoundedBoxGeometry(0.09, 0.09, 0.09, 1, 0.015), packetMat);
   workflow.add(packet);
-  workflowMaterials.push(wireMat, packetMat);
-  const inactive = new Color("#2549d6");
-  const active = new Color("#73a9bc");
-
+  const checkMat = new MeshBasicMaterial({ color: "#d5dfd2", transparent: true });
+  const check = merge(workflow, [box(0.11, 0.026, 0.018, -0.04, 0, 0).rotateZ(-0.7), box(0.19, 0.026, 0.018, 0.05, 0.026, 0).rotateZ(0.75)], checkMat);
+  const workflowMaterials: Material[] = [...nodeMaterials, wireMat, packetMat, checkMat];
+  const idleColor = new Color("#2549d6"); const readyColor = new Color("#548a96");
   function show(group: Group, materials: Material[], opacity: number) {
     group.visible = opacity > 0.002;
     materials.forEach((mat) => { mat.opacity = opacity; mat.depthWrite = opacity > 0.99; });
-    group.position.y = (group === laptop ? 0.2 : 0) + (1 - opacity) * -0.08;
+    group.position.y = (1 - opacity) * -0.1; group.scale.setScalar(0.94 + opacity * 0.06);
   }
-
   return {
     root,
     update(state: TaskState) {
-      show(laptop, laptopMaterials, state.laptop);
-      show(workflow, workflowMaterials, state.automation);
-      // No flashing: the cursor travels gently along the final line.
-      cursor.position.x = 0.26 + 0.11 * Math.sin(state.codeProgress * Math.PI * 12);
-      const travel = Math.min(1, Math.max(0, state.automationProgress)) * 2;
-      const index = Math.min(1, Math.floor(travel));
-      packet.position.lerpVectors(points[index], points[index + 1], travel - index);
-      packet.position.z += 0.09;
-      nodeMaterials.forEach((mat, i) => mat.color.copy(inactive).lerp(active, Math.max(0, 1 - Math.abs(travel - i))));
+      show(laptop, laptopMaterials, state.laptop); show(workflow, workflowMaterials, state.automation);
+      hinge.rotation.x = -Math.PI / 2 + clamp(state.laptopLid) * (Math.PI / 2 + 0.08);
+      if (laptop.visible) paintCode(state.codeProgress);
+      const assemble = clamp(state.automationAssemble); const drag = clamp(state.automationDrag);
+      const press = clamp(state.automationPress); const complete = clamp((state.automationProgress - 0.85) / 0.15);
+      workingPoints.forEach((point, i) => {
+        point.copy(points[i]); point.x += (1 - assemble) * (i - 1) * 0.3;
+        point.y -= (1 - assemble) * (i % 2 ? 0.27 : -0.12);
+      });
+      workingPoints[0].lerp(dragTarget, drag);
+      nodes.forEach((node, i) => {
+        node.position.copy(workingPoints[i]); node.rotation.z = (1 - assemble) * (i % 2 ? -0.7 : 0.7);
+        node.scale.setScalar(1 - (i === 0 ? press * 0.07 : 0));
+        nodeMaterials[i].color.copy(idleColor).lerp(readyColor, Math.max(complete, i === 0 ? press * 0.35 : 0));
+      });
+      wires.forEach((wire, i) => {
+        const a = workingPoints[i]; const b = workingPoints[i + 1];
+        const reveal = clamp(drag * 1.8 - i * 0.3);
+        wire.position.copy(a).lerp(b, reveal / 2);
+        wire.quaternion.setFromUnitVectors(wireAxis, wireDirection.subVectors(b, a).normalize());
+        wire.scale.x = Math.max(0.001, a.distanceTo(b) * reveal); wire.visible = workflow.visible && reveal > 0.01;
+      });
+      const travel = clamp(state.automationProgress) * 2; const segment = Math.min(1, Math.floor(travel));
+      packet.position.lerpVectors(workingPoints[segment], workingPoints[segment + 1], travel - segment);
+      packet.position.z += 0.09; packet.visible = workflow.visible && state.automationProgress > 0.01 && state.automationProgress < 0.98;
+      check.visible = workflow.visible && complete > 0.01; check.position.copy(workingPoints[2]); check.position.z += 0.075;
+      checkMat.opacity = state.automation * complete;
     },
   };
 }

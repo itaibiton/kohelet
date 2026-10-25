@@ -12,13 +12,13 @@ import math
 import struct
 import numpy as np
 from pathlib import Path
-from mathutils import Vector
+from mathutils import Vector, Matrix
 
 BASE = Path(__file__).resolve().parents[2]
 OUT = BASE / "public/models/kohelet-robot-king.glb"
 SOURCE = Path(__file__).resolve().parent / "kohelet-robot-king.blend"
 PREVIEW = Path(__file__).resolve().parent / "preview.png"
-POSTER = BASE / "public/images/codex-landing/robot-king-action-poster.webp"
+POSTER = BASE / "public/images/codex-landing/robot-king-performance-poster.webp"
 
 bpy.ops.object.select_all(action='SELECT')
 bpy.ops.object.delete(use_global=False)
@@ -141,10 +141,22 @@ def empty(name, loc=(0,0,0), parent=None):
 
 root = empty('Robot_Root')
 body_pivot = empty('Body_Pivot', (0,0,1.56), root)
-head_pivot = empty('Head_Pivot', (0,0,2.82), body_pivot)
-arm_r = empty('Arm_R_Pivot', (-.65,0,1.85), body_pivot)
-arm_l = empty('Arm_L_Pivot', (.65,0,1.85), body_pivot)
-cape_pivot = empty('Cape_Pivot', (0,.29,2.01), body_pivot)
+torso_pivot = empty('Torso_Pivot', (0,0,1.38), body_pivot)
+head_pivot = empty('Head_Pivot', (0,0,2.82), torso_pivot)
+arm_r = empty('Arm_R_Pivot', (-.65,0,1.85), torso_pivot)
+arm_l = empty('Arm_L_Pivot', (.65,0,1.85), torso_pivot)
+elbow_pivots = {}
+wrist_pivots = {}
+for side,label,shoulder in [(-1,'R',arm_r),(1,'L',arm_l)]:
+    elbow_pivots[label] = empty('Elbow_'+label+'_Pivot', (side*.81,.01,1.49), shoulder)
+    wrist_pivots[label] = empty('Wrist_'+label+'_Pivot', (side*.81,-.36,1.49), elbow_pivots[label])
+cape_pivot = empty('Cape_Pivot', (0,.29,2.01), torso_pivot)
+eye_pivots = {}
+brow_pivots = {}
+for side,label in [(-1,'R'),(1,'L')]:
+    eye_pivots[label] = empty('Eye_'+label+'_Pivot', (side*.40,-.772,2.98), head_pivot)
+    brow_pivots[label] = empty('Brow_'+label+'_Pivot', (side*.40,-.778,3.195), head_pivot)
+smile_pivot = empty('Smile_Pivot', (0,-.655,2.44), head_pivot)
 leg_pivots = {}
 for side,label in [(-1,'R'),(1,'L')]:
     hip = empty('Leg_'+label+'_Pivot', (side*.39,0,1.14), body_pivot)
@@ -263,16 +275,19 @@ for side in [-1,1]:
     for offset in [-.06,0,.06]:
         box('Ear · vent '+str(side)+' '+str(offset),(side*1.102,.015+offset,2.86),(.01,.019,.13),joint,head_pivot,.007,segments=2)
 
-# A warm dot-matrix wink, made from emissive physical pixels rather than a decal.
-def pixels(name, center, pattern):
+# Two neutral open eyes have their own rigid controls. Runtime can blink, glance,
+# focus and wink deliberately; the model no longer has a permanent expression.
+def pixels(name, center, pattern, parent):
     spacing=.039
     for row,line in enumerate(pattern):
         for col,cell in enumerate(line):
             if cell=='1':
-                box(name+' '+str(row)+'-'+str(col),(center[0]+(col-(len(line)-1)/2)*spacing,-.772,center[1]-(row-(len(pattern)-1)/2)*spacing),(.031,.018,.031),led,head_pivot,.004,segments=1)
-pixels('Eye · friendly wink',(-.40,2.98),['000000000','000000000','111111110','111111110','000011110','000011100','000001000'])
-pixels('Eye · open sapphire display',(.40,2.98),['011110','111111','110011','110011','110011','110011','111111','011110'])
-tube('Smile · warm gold arc',[(-.16,-.624,2.475),(-.09,-.648,2.44),(0,-.655,2.43),(.09,-.648,2.44),(.16,-.624,2.475)],.015,led,head_pivot,8)
+                box(name+' '+str(row)+'-'+str(col),(center[0]+(col-(len(line)-1)/2)*spacing,-.772,center[1]-(row-(len(pattern)-1)/2)*spacing),(.031,.018,.031),led,parent,.004,segments=1)
+open_eye=['011110','111111','110011','110011','110011','110011','111111','011110']
+for side,label in [(-1,'R'),(1,'L')]:
+    pixels('Eye '+label+' · open digital display',(side*.40,2.98),open_eye,eye_pivots[label])
+    box('Brow '+label+' · expressive warm display',(side*.40,-.778,3.195),(.245,.018,.027),led,brow_pivots[label],.009,segments=2)
+tube('Smile · warm gold arc',[(-.16,-.624,2.475),(-.09,-.648,2.44),(0,-.655,2.43),(.09,-.648,2.44),(.16,-.624,2.475)],.015,led,smile_pivot,8)
 box('Chin · champagne frame',(0,-.595,2.20),(.32,.15,.32),gold_light,head_pivot,.045,segments=3)
 box('Chin · brushed gold plate',(0,-.684,2.22),(.24,.045,.245),gold,head_pivot,.025,segments=3)
 for x in [-.74,.74]:
@@ -291,18 +306,20 @@ for side in [-1,1]:
     box('Crown · side accent '+str(side),(side*.99,.09,3.60),(.05,.55,.10),ivory_light,head_pivot,.02)
 
 # Torso: tapered shell with inlaid borders, chest gem, belly plate and side vents.
-cylinder('Neck · chrome swivel',(0,0,1.98),(0,0,2.16),.24,chrome,body_pivot,28)
-cylinder('Neck · cobalt collar',(0,0,2.02),(0,0,2.12),.285,cobalt,body_pivot,28)
+cylinder('Neck · chrome swivel',(0,0,1.98),(0,0,2.16),.24,chrome,torso_pivot,28)
+cylinder('Neck · cobalt collar',(0,0,2.02),(0,0,2.12),.285,cobalt,torso_pivot,28)
 chest=[(-.62,1.96),(.62,1.96),(.56,1.55),(.36,1.18),(-.36,1.18),(-.56,1.55)]
-profile('Body · outer gold seam',chest,-.43,.34,gold,body_pivot,.13)
-profile('Body · ivory chest shell',[(x*.95,1.6+(z-1.6)*.95) for x,z in chest],-.467,.31,ivory,body_pivot,.12)
-box('Body · sapphire chest frame',(0,-.523,1.72),(.30,.12,.32),gold_light,body_pivot,.055)
-gem('Body · faceted sapphire chest',(0,-.608,1.73),(.22,.08,.24),body_pivot)
+profile('Body · outer gold seam',chest,-.43,.34,gold,torso_pivot,.13)
+profile('Body · ivory chest shell',[(x*.95,1.6+(z-1.6)*.95) for x,z in chest],-.467,.31,ivory,torso_pivot,.12)
+box('Body · sapphire chest frame',(0,-.523,1.72),(.30,.12,.32),gold_light,torso_pivot,.055)
+gem('Body · faceted sapphire chest',(0,-.608,1.73),(.22,.08,.24),torso_pivot)
 profile('Body · lower abdomen shield',[(-.27,1.46),(.27,1.46),(.21,1.16),(-.21,1.16)],-.57,-.44,ivory_light,body_pivot,.075)
-box('Body · back service hatch',(0,.354,1.65),(.62,.055,.42),cobalt,body_pivot,.08)
+cylinder('Waist · articulated graphite swivel',(0,0,1.11),(0,0,1.30),.27,joint,body_pivot,24)
+cylinder('Waist · brass hip collar',(0,0,1.12),(0,0,1.18),.29,gold,body_pivot,24)
+box('Body · back service hatch',(0,.354,1.65),(.62,.055,.42),cobalt,torso_pivot,.08)
 for side in [-1,1]:
     for z in [1.51,1.60,1.69]:
-        box('Body · side vent '+str(side)+' '+str(z),(side*.54,.025,z),(.035,.32,.038),joint,body_pivot,.01,rotation=(0,side*.15,0))
+        box('Body · side vent '+str(side)+' '+str(z),(side*.54,.025,z),(.035,.32,.038),joint,torso_pivot,.01,rotation=(0,side*.15,0))
 
 # Articulated legs: hip -> knee -> ankle, with meaningful local X pitch axes.
 # The glTF neutral rig is straight and unanimated; the poster gets a sample stride.
@@ -330,19 +347,19 @@ def limb(prefix, a, b, radius, parent):
     cylinder(prefix+' · ivory sleeve',a.lerp(b,.16),a.lerp(b,.84),radius,ivory,parent,24,.035)
     cylinder(prefix+' · gold seam',a.lerp(b,.80),a.lerp(b,.85),radius*1.02,gold_light,parent,24,.008)
 
-for side,parent in [(-1,arm_r),(1,arm_l)]:
+for side,label,parent in [(-1,'R',arm_r),(1,'L',arm_l)]:
     shoulder=(side*.67,0,1.86)
     sphere('Shoulder · chrome swivel '+str(side),shoulder,(.20,.20,.20),chrome,parent)
     cylinder('Shoulder · sapphire socket '+str(side),(side*.56,0,1.86),(side*.72,0,1.86),.22,cobalt,parent,28)
     elbow=(side*.81,.01,1.49)
     wrist=(side*.81,-.36,1.49)
     limb('Arm '+str(side)+' upper',shoulder,elbow,.17,parent)
-    sphere('Elbow · titanium ball '+str(side),elbow,(.155,.155,.155),chrome,parent)
-    limb('Arm '+str(side)+' lower',elbow,wrist,.195,parent)
-    sphere('Wrist · titanium ball '+str(side),wrist,(.12,.12,.12),chrome,parent)
+    sphere('Elbow · titanium ball '+str(side),elbow,(.155,.155,.155),chrome,elbow_pivots[label])
+    limb('Arm '+str(side)+' lower',elbow,wrist,.195,elbow_pivots[label])
+    sphere('Wrist · titanium ball '+str(side),wrist,(.12,.12,.12),chrome,wrist_pivots[label])
 
 # Compact ceramic fists keep four articulated fingers and a distinct thumb.
-for side,label,parent in [(-1,'R',arm_r),(1,'L',arm_l)]:
+for side,label,parent in [(-1,'R',wrist_pivots['R']),(1,'L',wrist_pivots['L'])]:
     center=side*.81
     box('Palm_'+label+' · compact fist',(center,-.48,1.49),(.34,.29,.29),ivory_light,parent,.075,segments=4)
     box('Palm_'+label+' · sapphire back inset',(center,-.49,1.65),(.14,.13,.025),cobalt,parent,.035)
@@ -392,10 +409,10 @@ for name,indices in [
     ('Cape · gold scalloped hem',[nv*(nu+1)+i for i in range(nu+1)]),
 ]:
     tube(name,[verts[i] for i in indices],.022,gold_light,cape_pivot,3)
-profile('Cape · shoulder clasp outer',[(-.82,2.04),(-.31,2.13),(-.10,1.96),(-.74,1.91)],-.43,.16,gold_light,body_pivot,.035)
-profile('Cape · shoulder blue enamel',[(-.79,2.04),(-.33,2.105),(-.15,1.98),(-.72,1.94)],-.465,-.43,cape_mat,body_pivot,.025)
-cylinder('Cape · gold circular brooch',(-.34,-.47,2.035),(-.34,-.515,2.035),.085,gold_light,body_pivot,28)
-sphere('Cape · brooch dome',(-.34,-.535,2.035),(.064,.023,.064),gold_light,body_pivot,20,10)
+profile('Cape · shoulder clasp outer',[(-.82,2.04),(-.31,2.13),(-.10,1.96),(-.74,1.91)],-.43,.16,gold_light,torso_pivot,.035)
+profile('Cape · shoulder blue enamel',[(-.79,2.04),(-.33,2.105),(-.15,1.98),(-.72,1.94)],-.465,-.43,cape_mat,torso_pivot,.025)
+cylinder('Cape · gold circular brooch',(-.34,-.47,2.035),(-.34,-.515,2.035),.085,gold_light,torso_pivot,28)
+sphere('Cape · brooch dome',(-.34,-.535,2.035),(.064,.023,.064),gold_light,torso_pivot,20,10)
 
 # Floating squares stream behind the runner rather than hovering over a palm.
 tile_positions=[(1.05,.30,1.15),(1.24,.40,1.34),(1.45,.50,1.52),(1.64,.60,1.70),(1.84,.70,1.86),(2.04,.80,2.03)]
@@ -463,6 +480,14 @@ for pivot in pivots:
         bpy.ops.object.join()
         merged=bpy.context.object
         merged.name=source_names[pivot]+'__RigidGeometry'
+        # Identity child transforms put local vertex coordinates at the actual
+        # articulation hinge, useful for runtime cape deformation and IK audits.
+        relative=mapping[pivot].matrix_world.inverted()@merged.matrix_world
+        merged.data.transform(relative)
+        merged.matrix_parent_inverse=Matrix.Identity(4)
+        merged.matrix_basis=Matrix.Identity(4)
+        merged.data.update()
+        bpy.context.view_layer.update()
         previous_materials=list(merged.data.materials)
         tint=merged.data.color_attributes.new(name='SurfaceTint',type='FLOAT_COLOR',domain='CORNER')
         merged.data.color_attributes.active_color=tint
@@ -519,6 +544,9 @@ replacement_views={}
 color_accessors={primitive['attributes']['COLOR_0'] for mesh in delivery_document['meshes'] for primitive in mesh['primitives'] if 'COLOR_0' in primitive['attributes']}
 for index in color_accessors:
     accessor=delivery_document['accessors'][index]
+    if accessor['componentType']==5121:
+        assert accessor['type']=='VEC4' and accessor.get('normalized')
+        continue
     view=delivery_document['bufferViews'][accessor['bufferView']]
     assert accessor['componentType']==5126 and accessor['type']=='VEC3'
     assert not accessor.get('byteOffset') and not view.get('byteStride')
@@ -603,6 +631,12 @@ neutral_nodes={node['name']:{
     'quaternion':node.get('rotation',[0,0,0,1]),
     'scale':node.get('scale',[1,1,1]),
 } for index,node in enumerate(glb_document['nodes']) if node.get('name') in source_names.values()}
+cape_geometry=next(node for node in glb_document['nodes'] if node.get('name')=='Cape_Pivot__RigidGeometry')
+cape_positions=[glb_document['accessors'][primitive['attributes']['POSITION']] for primitive in glb_document['meshes'][cape_geometry['mesh']]['primitives']]
+cape_local_bounds={
+    'min':[min(position['min'][axis] for position in cape_positions) for axis in range(3)],
+    'max':[max(position['max'][axis] for position in cape_positions) for axis in range(3)],
+}
 
 # Match the runtime's literal running-in-place cycle for the saved studio pose.
 # This happens AFTER the neutral glTF export and never bakes its gait into GLB.
@@ -612,7 +646,7 @@ def sample_running_pose(phase):
         pivot.location=location.copy()
         pivot.rotation_euler=rotation.copy()
     stride=math.sin(phase)
-    root.rotation_euler.z=-.55
+    root.rotation_euler.z=-.62
     for label,value in [('R',stride),('L',-stride)]:
         hip,knee,boot=leg_pivots[label]
         hip_x=-.72*value
@@ -621,14 +655,22 @@ def sample_running_pose(phase):
         hip.rotation_euler.x+=hip_x
         knee.rotation_euler.x+=knee_x
         boot.rotation_euler.x+=boot_x
-    arm_r.rotation_euler.x+=.64*stride
-    arm_l.rotation_euler.x-=.64*stride
+    arm_r.rotation_euler.x+=.82*stride
+    arm_l.rotation_euler.x-=.82*stride
+    elbow_pivots['R'].rotation_euler.x+=-.28-.16*stride
+    elbow_pivots['L'].rotation_euler.x+=-.28+.16*stride
+    wrist_pivots['R'].rotation_euler.y+=-.10
+    wrist_pivots['L'].rotation_euler.y+=.10
     body_pivot.rotation_euler.x+=.16
     body_pivot.rotation_euler.z+=.045*stride
     body_pivot.rotation_euler.y-=.025*stride
     body_pivot.location.z+=.033+.09*math.cos(2*phase)
+    torso_pivot.rotation_euler.x+=.09
+    torso_pivot.rotation_euler.z+=-.12*stride
     head_pivot.rotation_euler.x+=-.09+.035*math.cos(2*phase)
     cape_pivot.rotation_euler.x+=.16+.08*math.sin(2*phase-.7)
+    brow_pivots['R'].rotation_euler.y+=-.12
+    brow_pivots['L'].rotation_euler.y+=.10
     bpy.context.view_layer.update()
 
 contact_sweep=[]
@@ -657,9 +699,11 @@ metadata={
     'bytes':OUT.stat().st_size,
     'pivots':list(source_names.values()),
     'neutralNodeTransforms':neutral_nodes,
+    'articulation':{'controls':len(pivots),'rigidMeshes':optimized_meshes,'meshChildrenHaveIdentityTransform':True,'torsoSeparatesUpperBodyFromHips':True,'independentElbowsAndWrists':True,'neutralEyes':'two open digital eyes','faceControls':['Eye_R_Pivot','Eye_L_Pivot','Brow_R_Pivot','Brow_L_Pivot','Smile_Pivot']},
+    'capeDeformation':{'mesh':'Cape_Pivot__RigidGeometry','localBounds':cape_local_bounds,'hinge':[0,0,0],'hemDirection':'negative local Y','widthAxis':'local X','aftDirection':'negative local Z','fabricAndTrimShareCoordinates':True},
     'runningGltfBounds':{'min':[running_min[0],running_min[2],-running_max[1]],'max':[running_max[0],running_max[2],-running_min[1]]},
     'gaitContactSweep':contact_sweep,
-    'posterPose':{'phaseRadians':math.pi/2,'referenceCycleSeconds':.82,'rootYawRadians':-.55,'exportRemainsNeutral':True},
+    'posterPose':{'phaseRadians':math.pi/2,'rootYawRadians':-.62,'exportRemainsNeutral':True},
     'runtimeAxes':{'pitch':'local +X','yaw':'local +Y','roll':'local +Z','forward':'glTF +Z','hipForward':'negative X','kneeHeelBack':'positive X'},
     'camera':{'blenderPosition':list(camera.location),'blenderTarget':list(target),'orthographicScale':camera_data.ortho_scale,'gltfPosition':[camera.location.x,camera.location.z,-camera.location.y],'gltfTarget':[target.x,target.z,-target.y]},
     'materials':sorted({mat.name for obj in model_objects if obj.type=='MESH' for mat in obj.data.materials}),
