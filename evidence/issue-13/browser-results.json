@@ -1,0 +1,98 @@
+[
+  {
+    "columns": "269.238px",
+    "contentTop": 519.55078125,
+    "dir": "ltr",
+    "gap": "22px",
+    "labelBottom": 497.55859375,
+    "lang": "en",
+    "overflow": false,
+    "route": "/codex-landing",
+    "stacked": true,
+    "width": 320
+  },
+  {
+    "columns": "331.25px",
+    "contentTop": 520.37109375,
+    "dir": "ltr",
+    "gap": "22px",
+    "labelBottom": 498.37890625,
+    "lang": "en",
+    "overflow": false,
+    "route": "/codex-landing",
+    "stacked": true,
+    "width": 390
+  },
+  {
+    "columns": "677.988px",
+    "contentTop": 417.265625,
+    "dir": "ltr",
+    "gap": "24px",
+    "labelBottom": 393.28125,
+    "lang": "en",
+    "overflow": false,
+    "route": "/codex-landing",
+    "stacked": true,
+    "width": 768
+  },
+  {
+    "columns": "1280px",
+    "contentTop": 383.06640625,
+    "dir": "ltr",
+    "gap": "24px",
+    "labelBottom": 359.08203125,
+    "lang": "en",
+    "overflow": false,
+    "route": "/codex-landing",
+    "stacked": true,
+    "width": 1440
+  },
+  {
+    "columns": "284.238px",
+    "contentTop": 481.796875,
+    "dir": "rtl",
+    "gap": "22px",
+    "labelBottom": 459.8046875,
+    "lang": "he",
+    "overflow": false,
+    "route": "/he/codex-landing",
+    "stacked": true,
+    "width": 320
+  },
+  {
+    "columns": "346.25px",
+    "contentTop": 510.4296875,
+    "dir": "rtl",
+    "gap": "22px",
+    "labelBottom": 488.4375,
+    "lang": "he",
+    "overflow": false,
+    "route": "/he/codex-landing",
+    "stacked": true,
+    "width": 390
+  },
+  {
+    "columns": "692.988px",
+    "contentTop": 411.11328125,
+    "dir": "rtl",
+    "gap": "24px",
+    "labelBottom": 387.12890625,
+    "lang": "he",
+    "overflow": false,
+    "route": "/he/codex-landing",
+    "stacked": true,
+    "width": 768
+  },
+  {
+    "columns": "1280px",
+    "contentTop": 373.06640625,
+    "dir": "rtl",
+    "gap": "24px",
+    "labelBottom": 349.08203125,
+    "lang": "he",
+    "overflow": false,
+    "route": "/he/codex-landing",
+    "stacked": true,
+    "width": 1440
+  }
+]

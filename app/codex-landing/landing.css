@@ -78,8 +78,7 @@
 .kl-page .kl-section { padding-block: 110px; }
 .kl-page h2 { font-size: clamp(40px, 4.5vw, 62px); line-height: 1.05; font-weight: 500; letter-spacing: -.055em; }
 .kl-page h2 em { font-size: 1.12em; }
-.kl-page .kl-section-heading { display: grid; grid-template-columns: 1fr 2.3fr; gap: 40px; align-items: start; padding-bottom: 66px; }
-.kl-page .kl-section-heading > .kl-eyebrow { padding-top: 10px; }
+.kl-page .kl-section-heading { display: grid; grid-template-columns: 1fr; gap: 24px; align-items: start; padding-bottom: 66px; }
 .kl-page .kl-section-heading > div > p { color: var(--kl-muted); margin-top: 25px; font-size: 14px; line-height: 1.7; }
 .kl-page .kl-service { display: grid; grid-template-columns: 65px 1fr 1.1fr; gap: 30px; padding: 46px 0 48px; border-top: 1px solid var(--kl-line); }
 .kl-page .kl-service:last-child { border-bottom: 1px solid var(--kl-line); }
@@ -218,7 +217,7 @@
   .kl-page .kl-intro-strip > div { font-size: 12px; gap: 7px; }
   .kl-page .kl-intro-strip > p { font-size: 10px; }
   .kl-page .kl-section { padding-block: 80px; }
-  .kl-page .kl-section-heading { grid-template-columns: .8fr 2.3fr; gap: 25px; padding-bottom: 45px; }
+  .kl-page .kl-section-heading { padding-bottom: 45px; }
   .kl-page .kl-service { grid-template-columns: 40px 1fr 1.2fr; gap: 18px; padding-block: 35px; }
   .kl-page .kl-service-title h3 { font-size: 28px; }
   .kl-page .kl-label { font-size: 10px; }
@@ -257,8 +256,7 @@
   .kl-page .kl-intro-strip > div svg { width: 16px; }
   .kl-page .kl-section { padding-block: 65px; }
   .kl-page h2 { font-size: 42px; line-height: 1.06; }
-  .kl-page .kl-section-heading { grid-template-columns: 1fr; gap: 22px; padding-bottom: 35px; }
-  .kl-page .kl-section-heading > .kl-eyebrow { padding-top: 0; }
+  .kl-page .kl-section-heading { gap: 22px; padding-bottom: 35px; }
   .kl-page .kl-section-heading > div > p { font-size: 14px; margin-top: 20px; }
   .kl-page .kl-service { grid-template-columns: 35px 1fr; gap: 15px; padding-block: 31px; }
   .kl-page .kl-service-title h3 { font-size: 31px; margin-top: 13px; }
