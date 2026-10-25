@@ -11,6 +11,8 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { getRobotActionPose, ACTION_CYCLE_SECONDS, type RunJoint } from "./robot-run-cycle";
 import { createRobotTaskProps } from "./robot-task-props";
 import { createRobotGroundEffects, prepareRobotCape } from "./robot-secondary-motion";
+import { createRobotSceneAtmosphere } from "./robot-scene-atmosphere";
+import { createRobotTechHurdle } from "./robot-tech-hurdle";
 
 type SceneOptions = { playing: boolean; visible: boolean; onReady: () => void; onError: () => void };
 export type RobotKingController = { setPlaying: (playing: boolean) => void; setVisible: (visible: boolean) => void; dispose: () => void };
@@ -40,7 +42,7 @@ function disposeObject(root: Object3D) {
   });
 }
 
-/** A looping run / jump / work story with a fixed camera and explicit playback. */
+/** A looping run / jump / work story with a fixed camera and system motion preferences. */
 export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions): RobotKingController {
   const renderer = new WebGLRenderer({ alpha: true, antialias: true });
   const scene = new Scene();
@@ -49,9 +51,12 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
   const actionRoot = new Group();
   const tasks = createRobotTaskProps();
   const ground = createRobotGroundEffects();
+  const atmosphere = createRobotSceneAtmosphere();
+  const hurdle = createRobotTechHurdle();
   actionRoot.add(tasks.root);
   framing.add(actionRoot);
   framing.add(ground.root);
+  framing.add(atmosphere.root, hurdle.root);
   let cape: ReturnType<typeof prepareRobotCape> | undefined;
   const abort = new AbortController();
   let environment: WebGLRenderTarget | undefined;
@@ -140,6 +145,8 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
     tasks.update(pose.props);
     cape?.update(time, pose);
     ground.update(time, pose, 1);
+    atmosphere.update(time, pose);
+    hurdle.update(time, pose);
     if (shadow) {
       shadow.position.set(-centerX + root.x, -centerY - 0.025, -centerZ + root.z);
       const distance = Math.min(1, root.y / 0.8);
@@ -366,6 +373,8 @@ export function createRobotKingScene(host: HTMLDivElement, options: SceneOptions
         scene.add(shadow);
       }
       tasks.update({ ...getRobotActionPose(7).props, laptop: 1, automation: 1, laptopLid: 1 });
+      // Include the hurdle's materials even when normal playback starts before its entrance.
+      hurdle.update(4, getRobotActionPose(4));
       await renderer.compileAsync(scene, camera);
       if (disposed) return;
       animateParts(elapsed);
