@@ -1,0 +1,22 @@
+[
+  {
+    "controls": 0,
+    "overflow": false,
+    "robot": {
+      "playing": "true",
+      "robotState": "ready"
+    },
+    "route": "/codex-landing",
+    "width": 1600
+  },
+  {
+    "controls": 0,
+    "overflow": false,
+    "robot": {
+      "playing": "true",
+      "robotState": "ready"
+    },
+    "route": "/he/codex-landing",
+    "width": 390
+  }
+]

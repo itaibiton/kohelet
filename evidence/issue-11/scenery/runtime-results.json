@@ -1,0 +1,21 @@
+{
+  "state": {
+    "height": 900,
+    "renderer": {
+      "action": "run",
+      "cycleTime": "1.50",
+      "drawCalls": "60",
+      "fps": "144.0",
+      "pixelRatio": "0.80",
+      "poseTime": "2.130",
+      "renderMs": "0.59",
+      "triangles": "44096"
+    },
+    "root": {
+      "playing": "true",
+      "robotState": "ready"
+    },
+    "width": 1600
+  },
+  "logs": []
+}

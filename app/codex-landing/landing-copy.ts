@@ -39,7 +39,7 @@ export const landingCopy: Record<LandingLocale, LandingCopy> = {
       cta: "Let’s talk about your business",
       explore: "Explore our services",
       note: "Human thinking. Useful technology.",
-      imageAlt: "Kohelet’s robot king in a crown and cobalt cape, arranging floating data tiles.",
+      imageAlt: "Kohelet’s crowned robot king leaps over a circuit-board hurdle, writes code and connects an automation workflow, with a cobalt cape, flying documents and technology parts trailing behind.",
     },
     strip: { title: ["BIG POSSIBILITIES.", "PRACTICAL STARTING POINTS."], benefits: ["Stronger visibility", "Smarter workflows", "Clearer decisions"] },
     services: {
@@ -104,7 +104,7 @@ export const landingCopy: Record<LandingLocale, LandingCopy> = {
       cta: "בואו נדבר על העסק שלכם",
       explore: "לכל השירותים שלנו",
       note: "חשיבה אנושית. טכנולוגיה שימושית.",
-      imageAlt: "המלך הרובוטי של קהלת, עם כתר וגלימה כחולה, מסדר אריחי מידע מרחפים.",
+      imageAlt: "המלך הרובוטי של קהלת קופץ מעל מחסום של מעגל מודפס, כותב קוד ומחבר תהליך אוטומציה, עם גלימה כחולה, מסמכים ורכיבים טכנולוגיים המתעופפים מאחוריו.",
     },
     strip: { title: ["אפשרויות גדולות.", "צעדים מעשיים."], benefits: ["נראות חזקה יותר", "תהליכים חכמים יותר", "החלטות ברורות יותר"] },
     services: {

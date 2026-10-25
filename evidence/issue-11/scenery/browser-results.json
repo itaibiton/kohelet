@@ -1,0 +1,138 @@
+[
+  {
+    "dir": "ltr",
+    "height": 1250,
+    "lang": "en",
+    "playbackButtons": 0,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.012"
+    },
+    "robot": {
+      "playing": "true",
+      "robotState": "ready"
+    },
+    "route": "/codex-landing",
+    "scrollWidth": 301,
+    "width": 320
+  },
+  {
+    "dir": "ltr",
+    "height": 1250,
+    "lang": "en",
+    "playbackButtons": 0,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.011"
+    },
+    "robot": {
+      "playing": "true",
+      "robotState": "ready"
+    },
+    "route": "/codex-landing",
+    "scrollWidth": 371,
+    "width": 390
+  },
+  {
+    "dir": "ltr",
+    "height": 1000,
+    "lang": "en",
+    "playbackButtons": 0,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.012"
+    },
+    "robot": {
+      "playing": "true",
+      "robotState": "ready"
+    },
+    "route": "/codex-landing",
+    "scrollWidth": 750,
+    "width": 768
+  },
+  {
+    "dir": "ltr",
+    "height": 1000,
+    "lang": "en",
+    "playbackButtons": 0,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.012"
+    },
+    "robot": {
+      "playing": "true",
+      "robotState": "ready"
+    },
+    "route": "/codex-landing",
+    "scrollWidth": 1421,
+    "width": 1440
+  },
+  {
+    "dir": "rtl",
+    "height": 1250,
+    "lang": "he",
+    "playbackButtons": 0,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.010"
+    },
+    "robot": {
+      "playing": "true",
+      "robotState": "ready"
+    },
+    "route": "/he/codex-landing",
+    "scrollWidth": 316,
+    "width": 320
+  },
+  {
+    "dir": "rtl",
+    "height": 1250,
+    "lang": "he",
+    "playbackButtons": 0,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.011"
+    },
+    "robot": {
+      "playing": "true",
+      "robotState": "ready"
+    },
+    "route": "/he/codex-landing",
+    "scrollWidth": 386,
+    "width": 390
+  },
+  {
+    "dir": "rtl",
+    "height": 1000,
+    "lang": "he",
+    "playbackButtons": 0,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.012"
+    },
+    "robot": {
+      "playing": "true",
+      "robotState": "ready"
+    },
+    "route": "/he/codex-landing",
+    "scrollWidth": 765,
+    "width": 768
+  },
+  {
+    "dir": "rtl",
+    "height": 1000,
+    "lang": "he",
+    "playbackButtons": 0,
+    "pose": {
+      "action": "jump",
+      "poseTime": "4.011"
+    },
+    "robot": {
+      "playing": "true",
+      "robotState": "ready"
+    },
+    "route": "/he/codex-landing",
+    "scrollWidth": 1436,
+    "width": 1440
+  }
+]

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ArrowDown, ArrowRight, ArrowUpRight, Check, Compass, Network, Plus, Search } from "lucide-react";
 import ContactForm from "./ContactForm";
 import LanguageMenu from "./LanguageMenu";
+import RobotKing from "./RobotKing";
 import { landingCopy, type LandingLocale } from "./landing-copy";
 
 const serviceIcons = [Search, Network, Compass];
@@ -38,16 +39,7 @@ export default function Landing({ locale = "en" }: { locale?: LandingLocale }) {
             </div>
             <div className="kl-hero-note"><span />{copy.hero.note}</div>
           </div>
-          <div className="kl-hero-art">
-            <Image
-              src="/images/codex-landing/kohelet-robot-king-transparent.webp"
-              alt={copy.hero.imageAlt}
-              width={1254}
-              height={1254}
-              sizes="(max-width: 700px) 100vw, (max-width: 1392px) 44vw, 573px"
-              priority
-            />
-          </div>
+          <RobotKing label={copy.hero.imageAlt} />
         </section>
 
         <div className="kl-intro-strip kl-container">
