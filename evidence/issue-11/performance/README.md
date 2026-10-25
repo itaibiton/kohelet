@@ -2,6 +2,8 @@
 
 Implementation: `238e1be`. Replaces the previous 14.4-second action story with a **20.16-second infinite performance**, on both `/codex-landing` and `/he/codex-landing`.
 
+Subsequent UI refinement: the visible playback button was [removed at Itai’s request](../no-playback-control/README.md). The control screenshots and keyboard tests below document the preceding version. Automatic reduced-motion handling remains.
+
 ## What changed
 
 - Rebuilt the Blender rig with **28 controls**, including independent torso, elbows, wrists, eyes, brows and smile. The matte sandstone, mineral cobalt and brushed antique gold identity remains.

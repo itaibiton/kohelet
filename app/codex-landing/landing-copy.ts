@@ -13,7 +13,7 @@ export type LandingCopy = {
   navigation: { services: string; approach: string; work: string };
   contactShort: string;
   languageSwitchLabel: string;
-  hero: { eyebrow: string; title: ThreeLines; description: TwoLines; cta: string; explore: string; note: string; imageAlt: string; animationControlLabel: string; playAnimation: string; pauseAnimation: string };
+  hero: { eyebrow: string; title: ThreeLines; description: TwoLines; cta: string; explore: string; note: string; imageAlt: string };
   strip: { title: TwoLines; benefits: ThreeLines };
   services: { eyebrow: string; title: TwoLines; description: TwoLines; areasLabel: string; items: ServiceCopy[] };
   approach: { eyebrow: string; title: TwoLines; description: ThreeLines; steps: { number: string; title: string; text: string }[]; foot: string };
@@ -39,9 +39,6 @@ export const landingCopy: Record<LandingLocale, LandingCopy> = {
       cta: "Let’s talk about your business",
       explore: "Explore our services",
       note: "Human thinking. Useful technology.",
-      animationControlLabel: "Kohelet’s robot king",
-      playAnimation: "Play animation",
-      pauseAnimation: "Pause animation",
       imageAlt: "Kohelet’s crowned robot king runs, jumps, writes code and connects an automation workflow, wearing a flowing cobalt cape.",
     },
     strip: { title: ["BIG POSSIBILITIES.", "PRACTICAL STARTING POINTS."], benefits: ["Stronger visibility", "Smarter workflows", "Clearer decisions"] },
@@ -107,9 +104,6 @@ export const landingCopy: Record<LandingLocale, LandingCopy> = {
       cta: "בואו נדבר על העסק שלכם",
       explore: "לכל השירותים שלנו",
       note: "חשיבה אנושית. טכנולוגיה שימושית.",
-      animationControlLabel: "המלך הרובוטי של קהלת",
-      playAnimation: "הפעלת האנימציה",
-      pauseAnimation: "השהיית האנימציה",
       imageAlt: "המלך הרובוטי של קהלת רץ, קופץ, כותב קוד ומחבר תהליך אוטומציה, עם כתר וגלימה כחולה מתנופפת.",
     },
     strip: { title: ["אפשרויות גדולות.", "צעדים מעשיים."], benefits: ["נראות חזקה יותר", "תהליכים חכמים יותר", "החלטות ברורות יותר"] },

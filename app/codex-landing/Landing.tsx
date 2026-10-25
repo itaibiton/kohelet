@@ -39,7 +39,7 @@ export default function Landing({ locale = "en" }: { locale?: LandingLocale }) {
             </div>
             <div className="kl-hero-note"><span />{copy.hero.note}</div>
           </div>
-          <RobotKing label={copy.hero.imageAlt} controlLabel={copy.hero.animationControlLabel} playLabel={copy.hero.playAnimation} pauseLabel={copy.hero.pauseAnimation} />
+          <RobotKing label={copy.hero.imageAlt} />
         </section>
 
         <div className="kl-intro-strip kl-container">

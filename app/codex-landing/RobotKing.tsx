@@ -1,27 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import { Pause, Play } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import type { RobotKingController } from "./RobotKingScene";
 
 type RobotKingProps = {
   label: string;
-  controlLabel: string;
-  playLabel: string;
-  pauseLabel: string;
 };
 
-export default function RobotKing({ label, controlLabel, playLabel, pauseLabel }: RobotKingProps) {
-  const [manualPlaying, setManualPlaying] = useState<boolean | null>(null);
+export default function RobotKing({ label }: RobotKingProps) {
   const subscribeToMotionPreference = useCallback((callback: () => void) => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const onChange = () => {
-      setManualPlaying(null);
-      callback();
-    };
-    preference.addEventListener("change", onChange);
-    return () => preference.removeEventListener("change", onChange);
+    preference.addEventListener("change", callback);
+    return () => preference.removeEventListener("change", callback);
   }, []);
   const reducedMotion = useSyncExternalStore(
     subscribeToMotionPreference,
@@ -29,7 +20,7 @@ export default function RobotKing({ label, controlLabel, playLabel, pauseLabel }
     () => true,
   );
   const [status, setStatus] = useState<"loading" | "ready" | "fallback">("loading");
-  const playing = manualPlaying ?? !reducedMotion;
+  const playing = !reducedMotion;
   const stageRef = useRef<HTMLDivElement>(null);
   const mountRef = useRef<HTMLDivElement>(null);
   const controllerRef = useRef<RobotKingController | null>(null);
@@ -95,21 +86,6 @@ export default function RobotKing({ label, controlLabel, playLabel, pauseLabel }
         />
         <div className="kl-robot-canvas" ref={mountRef} aria-hidden="true" />
       </div>
-      {status === "ready" && (
-        <button
-          type="button"
-          className="kl-robot-control"
-          aria-label={`${playing ? pauseLabel : playLabel} — ${controlLabel}`}
-          aria-pressed={playing}
-          onClick={() => {
-            controllerRef.current?.setPlaying(!playing);
-            setManualPlaying(!playing);
-          }}
-        >
-          {playing ? <Pause size={14} aria-hidden="true" /> : <Play size={14} aria-hidden="true" />}
-          <span>{playing ? pauseLabel : playLabel}</span>
-        </button>
-      )}
     </div>
   );
 }
