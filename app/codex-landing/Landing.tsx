@@ -1,11 +1,12 @@
 import Image from "next/image";
-import { ArrowDown, ArrowRight, ArrowUpRight, Check, Compass, Network, Plus, Search } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight, Check, Code2, Compass, Network, Plus, Search } from "lucide-react";
 import ContactForm from "./ContactForm";
 import LanguageMenu from "./LanguageMenu";
 import RobotKing from "./RobotKing";
 import { landingCopy, type LandingLocale } from "./landing-copy";
 
-const serviceIcons = [Search, Network, Compass];
+const benefitIcons = [Search, Network, Compass];
+const serviceIcons = [...benefitIcons, Code2];
 // Restore after the current examples are replaced with relevant use cases.
 const showSelectedWork = false;
 
@@ -47,7 +48,7 @@ export default function Landing({ locale = "en" }: { locale?: LandingLocale }) {
         <div className="kl-intro-strip kl-container">
           <p>{copy.strip.title[0]}<br /><span>{copy.strip.title[1]}</span></p>
           {copy.strip.benefits.map((benefit, index) => {
-            const Icon = serviceIcons[index];
+            const Icon = benefitIcons[index];
             return <div key={benefit}><Icon size={18} /><span>{benefit}</span></div>;
           })}
         </div>
