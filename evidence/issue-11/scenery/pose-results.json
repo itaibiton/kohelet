@@ -1,0 +1,29 @@
+{
+  "jump": {
+    "pose": {
+      "action": "jump",
+      "poseTime": "3.998"
+    },
+    "ready": {
+      "playing": "true",
+      "robotState": "ready"
+    }
+  },
+  "poses": [
+    {
+      "name": "approach",
+      "action": "run",
+      "poseTime": "3.149"
+    },
+    {
+      "name": "landing",
+      "action": "jump",
+      "poseTime": "4.690"
+    },
+    {
+      "name": "coding",
+      "action": "code",
+      "poseTime": "7.111"
+    }
+  ]
+}
