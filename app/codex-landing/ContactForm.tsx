@@ -100,6 +100,7 @@ export default function ContactForm({ locale = "en" }: { locale?: "en" | "he" })
           <option value="AI search optimization">{copy.search}</option>
           <option value="AI implementation and automation">{copy.implementation}</option>
           <option value="AI consulting and training">{copy.consulting}</option>
+          <option value="App and website development">{copy.development}</option>
         </select>
       </div>
       <div className="kl-field">

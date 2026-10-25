@@ -35,7 +35,7 @@ export const landingCopy: Record<LandingLocale, LandingCopy> = {
     hero: {
       eyebrow: "PRACTICAL AI. REAL BUSINESS.",
       title: ["Make AI", "work for", "your business."],
-      description: ["Be easier to find. Make everyday work flow.", "Move forward with a clear plan."],
+      description: ["Custom apps and websites. Practical AI and automation.", "Built around the way your business works."],
       cta: "Let’s talk about your business",
       explore: "Explore our services",
       note: "Human thinking. Useful technology.",
@@ -45,12 +45,13 @@ export const landingCopy: Record<LandingLocale, LandingCopy> = {
     services: {
       eyebrow: "WHAT WE DO",
       title: ["Less AI noise.", "More forward motion."],
-      description: ["We connect the possibilities of AI to the things", "your business actually needs."],
+      description: ["From apps and websites to AI and automation,", "we build the tools your business needs."],
       areasLabel: "Example areas of work",
       items: [
         { number: "/01", eyebrow: "AI SEO & AI SEARCH OPTIMIZATION", title: ["Get discovered.", "Be understood."], problem: "Great work deserves to be found.", description: "Your customers are searching in new ways. We make your website easier for search engines and AI systems to understand, with useful content and a strong technical foundation.", tags: ["Technical SEO", "Content structure", "Structured data", "AI search visibility"], outcome: "A clearer path from a customer’s question to your business." },
         { number: "/02", eyebrow: "AI IMPLEMENTATION & AUTOMATION", title: ["Less busywork.", "More possibility."], problem: "Your team’s time is too valuable for copy-paste.", description: "We find the handoffs and repeat tasks that slow you down, then build practical AI workflows around the way you work. The right solution should make the day simpler.", tags: ["AI assistants", "Knowledge workflows", "Lead handling", "CRM connections"], outcome: "More time for the work that needs a human." },
         { number: "/03", eyebrow: "AI CONSULTING & TEAM TRAINING", title: ["A clear plan.", "A confident team."], problem: "You don’t need another list of AI tools.", description: "You need to know what’s useful for your business. We help you assess the opportunities, choose where to start, and give your team the skills to put the plan into practice.", tags: ["Opportunity discovery", "Tool evaluation", "Practical roadmaps", "Team enablement"], outcome: "Better decisions about where AI belongs in your business." },
+        { number: "/04", eyebrow: "APP & WEBSITE DEVELOPMENT", title: ["Apps and websites.", "Built for your business."], problem: "Turn your idea into a product people can use.", description: "We plan, design and develop websites, apps and custom business platforms. From the user experience and frontend to backend systems, testing and launch, we handle the complete build.", tags: ["Business websites", "Web apps", "Custom platforms", "Design to launch"], outcome: "A complete digital product, shaped around your customers and the way you work." },
       ],
     },
     approach: {
@@ -81,7 +82,7 @@ export const landingCopy: Record<LandingLocale, LandingCopy> = {
       questions: [
         { number: "01", question: "We’re interested in AI, but don’t know where to start.", answer: "That’s a good place to begin. We start with your business goals and current workflows, then identify a focused opportunity worth exploring. You don’t need a technical brief or a preferred tool." },
         { number: "02", question: "Can you work with the tools we already use?", answer: "We start by understanding your existing setup. Where suitable access and integrations are available, we can work with your current tools. We assess compatibility and any constraints before recommending an approach." },
-        { number: "03", question: "What does an implementation project include?", answer: "The scope depends on the problem. A project can include discovery, workflow design, building and testing, documentation, and team training. We agree on the deliverables and responsibilities before work begins." },
+        { number: "03", question: "What can a development or AI project include?", answer: "The scope depends on your goals. A full development project can cover planning, design, frontend and backend development, testing and launch. AI projects can include workflow design, implementation, documentation and team training. We agree on the deliverables and responsibilities before work begins." },
         { number: "04", question: "Can you guarantee rankings or mentions in AI answers?", answer: "No one controls how a search engine ranks pages or how an AI system selects its sources. We focus on the parts we can improve: technical accessibility, clear information, useful content, and a sound measurement approach." },
         { number: "05", question: "Do you offer support after launch?", answer: "Ongoing support and improvement can be included in the engagement. We discuss the level of help you need and agree on it as part of the project scope." },
       ],
@@ -100,7 +101,7 @@ export const landingCopy: Record<LandingLocale, LandingCopy> = {
     hero: {
       eyebrow: "בינה מלאכותית. ערך לעסק.",
       title: ["AI שעובד", "בשביל", "העסק שלכם."],
-      description: ["שימצאו אתכם בקלות. שהעבודה היומיומית תזרום.", "שתדעו מה הצעד הבא."],
+      description: ["פיתוח אפליקציות ואתרים. בינה מלאכותית ואוטומציה.", "פתרונות שנבנים סביב הדרך שבה העסק שלכם עובד."],
       cta: "בואו נדבר על העסק שלכם",
       explore: "לכל השירותים שלנו",
       note: "חשיבה אנושית. טכנולוגיה שימושית.",
@@ -110,12 +111,13 @@ export const landingCopy: Record<LandingLocale, LandingCopy> = {
     services: {
       eyebrow: "מה אנחנו עושים",
       title: ["פחות רעש סביב AI.", "יותר התקדמות בעסק."],
-      description: ["מחברים את האפשרויות של הבינה המלאכותית", "למה שהעסק שלכם באמת צריך."],
+      description: ["מאתרים ואפליקציות ועד בינה מלאכותית ואוטומציה,", "בונים את הכלים שהעסק שלכם צריך."],
       areasLabel: "דוגמאות לתחומי עבודה",
       items: [
         { number: "/01", eyebrow: "קידום במנועי חיפוש ובמערכות AI", title: ["שימצאו אתכם.", "שיבינו אתכם."], problem: "לעבודה טובה מגיע שיגלו אותה.", description: "הלקוחות שלכם מחפשים בדרכים חדשות. אנחנו עוזרים למנועי חיפוש ולמערכות AI להבין את האתר שלכם, באמצעות תוכן מועיל ותשתית טכנית נכונה.", tags: ["קידום טכני", "מבנה תוכן", "נתונים מובנים", "נראות בחיפוש AI"], outcome: "דרך ברורה יותר מהשאלה של הלקוח לעסק שלכם." },
         { number: "/02", eyebrow: "הטמעת בינה מלאכותית ואוטומציה", title: ["פחות עבודה חוזרת.", "יותר מקום לצמוח."], problem: "הזמן של הצוות יקר מדי להעתק־הדבק.", description: "מזהים את המשימות החוזרות ואת המעברים בין מערכות שמאטים אתכם, ובונים סביבם תהליכי AI מעשיים. פתרון טוב צריך להפוך את יום העבודה לפשוט יותר.", tags: ["עוזרי AI", "תהליכי ניהול ידע", "טיפול בפניות", "חיבור למערכות CRM"], outcome: "יותר זמן לעבודה שצריכה בני אדם." },
         { number: "/03", eyebrow: "ייעוץ AI והדרכת צוותים", title: ["תוכנית ברורה.", "צוות שיודע לפעול."], problem: "עוד רשימה של כלי AI לא תקדם אתכם.", description: "צריך להבין מה מתאים לעסק שלכם. אנחנו עוזרים לזהות הזדמנויות, לבחור מאיפה להתחיל ולתת לצוות את הידע והכלים להפוך את התוכנית לעבודה יומיומית.", tags: ["זיהוי הזדמנויות", "בחירת כלים", "תוכנית פעולה", "הדרכת צוותים"], outcome: "החלטות טובות יותר על המקום של AI בעסק שלכם." },
+        { number: "/04", eyebrow: "פיתוח אפליקציות ואתרים", title: ["אתרים ואפליקציות.", "בדיוק לעסק שלכם."], problem: "הופכים רעיון למוצר שאנשים יכולים להשתמש בו.", description: "מתכננים, מעצבים ומפתחים אתרים, אפליקציות ופלטפורמות עסקיות בהתאמה אישית. מחוויית המשתמש והממשק ועד המערכות שמאחוריו, הבדיקות והעלייה לאוויר, מטפלים בפיתוח המלא.", tags: ["אתרים עסקיים", "אפליקציות רשת", "פלטפורמות בהתאמה אישית", "מעיצוב ועד השקה"], outcome: "מוצר דיגיטלי שלם, שנבנה סביב הלקוחות ודרך העבודה שלכם." },
       ],
     },
     approach: {
@@ -146,7 +148,7 @@ export const landingCopy: Record<LandingLocale, LandingCopy> = {
       questions: [
         { number: "01", question: "אנחנו רוצים להתחיל עם AI, אבל לא יודעים מאיפה.", answer: "זה מקום מצוין להתחיל ממנו. נכיר את המטרות ואת תהליכי העבודה שלכם, ואז נזהה הזדמנות ממוקדת ששווה לבדוק. אין צורך באפיון טכני או בכלי שכבר בחרתם." },
         { number: "02", question: "אפשר לעבוד עם הכלים שכבר יש לנו?", answer: "מתחילים בהבנת המערכות הקיימות. כשיש גישה ואפשרויות חיבור מתאימות, אפשר לשלב את הכלים שאתם כבר משתמשים בהם. נבדוק התאמה ומגבלות לפני שנמליץ על פתרון." },
-        { number: "03", question: "מה כולל פרויקט הטמעה?", answer: "ההיקף תלוי באתגר. פרויקט יכול לכלול אפיון, תכנון תהליכים, בנייה ובדיקות, תיעוד והדרכת צוות. מסכימים מראש על התוצרים ועל תחומי האחריות, לפני שמתחילים." },
+        { number: "03", question: "מה יכול לכלול פרויקט פיתוח או AI?", answer: "ההיקף תלוי במטרות שלכם. פרויקט פיתוח מלא יכול לכלול אפיון, עיצוב, פיתוח הממשק והמערכות שמאחוריו, בדיקות ועלייה לאוויר. פרויקט AI יכול לכלול תכנון תהליכים, הטמעה, תיעוד והדרכת צוות. מסכימים מראש על התוצרים ועל תחומי האחריות, לפני שמתחילים." },
         { number: "04", question: "אתם מבטיחים דירוג בחיפוש או אזכור בתשובות AI?", answer: "אין לנו שליטה על הדירוג של מנועי חיפוש או על בחירת המקורות של מערכות AI. אנחנו מתמקדים במה שאפשר לשפר: נגישות טכנית, מידע ברור, תוכן מועיל ושיטת מדידה מתאימה." },
         { number: "05", question: "יש תמיכה גם אחרי העלייה לאוויר?", answer: "אפשר לכלול ליווי ושיפור מתמשך במסגרת העבודה המשותפת. נבין איזו תמיכה דרושה לכם ונסכם אותה כחלק מהיקף הפרויקט." },
       ],
