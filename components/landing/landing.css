@@ -683,30 +683,6 @@
   line-height: 1.05;
 }
 
-/* Founder */
-.kd-portrait {
-  position: relative;
-  aspect-ratio: 4 / 5;
-  border-radius: 1.5rem;
-  overflow: hidden;
-  background:
-    linear-gradient(135deg, rgba(37, 71, 232, 0.12), transparent 60%),
-    #e9e6dc;
-  border: 1px solid var(--kd-line);
-}
-
-.kd-portrait-placeholder {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  font-weight: 900;
-  font-size: clamp(5rem, 14vw, 10rem);
-  letter-spacing: -0.05em;
-  color: var(--kd-blue);
-  opacity: 0.9;
-}
-
 /* Contact form */
 .kd-field {
   display: grid;

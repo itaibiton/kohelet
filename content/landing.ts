@@ -4,8 +4,6 @@
  *
  * TODO placeholders (search for "TODO"):
  *  - contact.whatsapp: real WhatsApp number (wa.me/972XXXXXXXXX)
- *  - founder.personal: one personal, human line about Itai
- *  - founder photo: /public/images/itai-biton.jpg (see components/landing/Founder.tsx)
  */
 
 export type LandingLocale = "he" | "en";
@@ -79,15 +77,6 @@ export interface LandingContent {
     title: string;
     items: Outcome[];
   };
-  founder: {
-    kicker: string;
-    title: string;
-    name: string;
-    role: string;
-    bio: string;
-    personal: string;
-    photoAlt: string;
-  };
   contact: {
     kicker: string;
     title: string;
@@ -128,7 +117,7 @@ const he: LandingContent = {
     links: [
       { label: "שירותים", href: "#services" },
       { label: "איך אנחנו עובדים", href: "#approach" },
-      { label: "מי מאחורי זה", href: "#founder" },
+      { label: "מה יוצא מזה", href: "#outcomes" },
       { label: "דברו איתנו", href: "#contact" },
     ],
     menuOpen: "פתיחת תפריט",
@@ -237,17 +226,6 @@ const he: LandingContent = {
       },
     ],
   },
-  founder: {
-    kicker: "מי מאחורי זה",
-    title: "נעים להכיר, איתי",
-    name: "איתי ביטון",
-    role: "מהנדס Full-Stack ו-AI, שותף-מייסד ו-CTO בסטארטאפ",
-    bio:
-      "איתי בנה מוצרים מהרעיון הראשון ועד הלקוחות המשלמים, גם כמהנדס וגם כמי שאחראי על הטכנולוגיה כולה. בקהלת הוא מביא את אותה גישה לעסקים: להבין מה באמת צריך לקרות, לבנות את זה בעצמו, ולמדוד שזה עובד.",
-    // TODO: replace with one real personal line (e.g. what Itai does when he is not in front of a screen).
-    personal: "TODO: שורה אישית אחת על איתי, משהו שלא קשור למחשבים.",
-    photoAlt: "איתי ביטון, מייסד קהלת דיגיטל",
-  },
   contact: {
     kicker: "דברו איתנו",
     title: "בואו נדבר",
@@ -292,7 +270,7 @@ const en: LandingContent = {
     links: [
       { label: "Services", href: "#services" },
       { label: "How we work", href: "#approach" },
-      { label: "Founder", href: "#founder" },
+      { label: "Outcomes", href: "#outcomes" },
       { label: "Contact", href: "#contact" },
     ],
     menuOpen: "Open menu",
@@ -400,17 +378,6 @@ const en: LandingContent = {
           "When a customer asks an AI who is the right fit, your name shows up in the answer, with the right explanation.",
       },
     ],
-  },
-  founder: {
-    kicker: "Founder",
-    title: "Meet Itai",
-    name: "Itai Biton",
-    role: "Full-stack and AI engineer, startup co-founder and CTO",
-    bio:
-      "Itai has taken products from the first idea to paying customers, both as the engineer and as the person responsible for the whole technology stack. At Kohelet he brings the same approach to businesses: understand what really needs to happen, build it himself, and measure that it works.",
-    // TODO: replace with one real personal line (e.g. what Itai does when he is not in front of a screen).
-    personal: "TODO: one personal line about Itai that has nothing to do with computers.",
-    photoAlt: "Itai Biton, founder of Kohelet Digital",
   },
   contact: {
     kicker: "Contact",

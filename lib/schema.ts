@@ -25,12 +25,6 @@ export function getOrganizationSchema() {
     slogan: "חשיבה אנושית. טכנולוגיה שימושית.",
     description:
       "Custom software development, AI integration, AI consulting, AI SEO (GEO/AEO) and websites for businesses.",
-    founder: {
-      "@type": "Person",
-      "@id": `${BASE_URL}/#founder`,
-      name: "Itai Biton",
-      jobTitle: "Founder, Full-Stack & AI Engineer",
-    },
     address: {
       "@type": "PostalAddress",
       addressCountry: "IL",
@@ -83,7 +77,6 @@ export function getProfessionalServiceSchema(
       : "Custom software, AI integration, AI consulting, AI SEO and websites for businesses.",
     email: "info@kohelet.digital",
     parentOrganization: { "@id": `${BASE_URL}/#organization` },
-    founder: { "@id": `${BASE_URL}/#founder` },
     areaServed: { "@type": "Country", name: "Israel" },
     availableLanguage: ["Hebrew", "English"],
     priceRange: "$",

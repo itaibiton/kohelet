@@ -139,50 +139,6 @@ export function Outcomes({ outcomes }: { outcomes: LandingContent["outcomes"] })
   );
 }
 
-/* 5. Founder ------------------------------------------------------------- */
-
-export function Founder({ founder }: { founder: LandingContent["founder"] }) {
-  const isTodo = founder.personal.startsWith("TODO");
-  return (
-    <section id="founder" className="kd-section" aria-labelledby="founder-heading">
-      <div className="grid gap-10 md:grid-cols-12 md:gap-12 lg:items-center">
-        <div className="md:col-span-5 lg:col-span-4" data-reveal>
-          <figure className="kd-portrait">
-            {/* TODO: add /public/images/itai-biton.jpg (4:5 portrait) and swap the placeholder for:
-                <Image src="/images/itai-biton.jpg" alt={founder.photoAlt} fill sizes="(min-width: 768px) 40vw, 100vw" className="object-cover" /> */}
-            <div className="kd-portrait-placeholder" role="img" aria-label={founder.photoAlt}>
-              <span aria-hidden="true">{founder.name.split(" ").map((w) => w[0]).join("")}</span>
-            </div>
-          </figure>
-        </div>
-        <div className="md:col-span-7 lg:col-span-7 lg:col-start-6">
-          <p className="kd-kicker mb-4" data-reveal>
-            {founder.kicker}
-          </p>
-          <h2 id="founder-heading" className="kd-title mb-6" data-reveal>
-            {founder.title}
-          </h2>
-          <p className="text-lg font-extrabold tracking-tight md:text-xl" data-reveal>
-            {founder.name}
-            <span className="font-normal text-[var(--kd-mute)]"> · {founder.role}</span>
-          </p>
-          <p className="kd-lead mt-6" data-reveal>
-            {founder.bio}
-          </p>
-          <p
-            className={`mt-6 max-w-[44ch] font-bold ${
-              isTodo ? "rounded-lg border border-dashed border-[var(--kd-blue)] px-3 py-2 text-[var(--kd-blue)]" : ""
-            }`}
-            data-reveal
-          >
-            {founder.personal}
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 /* 7. Footer -------------------------------------------------------------- */
 
 export function Footer({

@@ -1,7 +1,7 @@
 import { getLanding } from "@/content/landing";
 import { Header } from "@/components/landing/Header";
 import { Hero } from "@/components/landing/Hero";
-import { Intro, Solutions, Pillars, Outcomes, Founder, Footer } from "@/components/landing/Sections";
+import { Intro, Solutions, Pillars, Outcomes, Footer } from "@/components/landing/Sections";
 import { Contact } from "@/components/landing/Contact";
 import { RevealObserver } from "@/components/landing/RevealObserver";
 import { getProfessionalServiceSchema, jsonLdScriptProps } from "@/lib/schema";
@@ -28,8 +28,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       <Solutions solutions={t.solutions} />
       <Pillars pillars={t.pillars} />
       <Outcomes outcomes={t.outcomes} />
-      <hr className="kd-rule" />
-      <Founder founder={t.founder} />
       <hr className="kd-rule" />
       <Contact contact={t.contact} />
       <Footer brand={t.brand} footer={t.footer} nav={t.nav} localeHref={`/${locale}`} />
