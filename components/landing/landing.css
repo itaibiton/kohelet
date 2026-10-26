@@ -270,9 +270,10 @@
   --kd-gap: 2vw;
   --kd-cut: calc(50% + var(--kd-fh) / 2 + var(--kd-gap));
   --kd-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  /* Step 1: whole mark scales in. Step 2: frame scales up from its center while
-     the cut tracks its edges. Both step-2 animations share this exact timing. */
-  --kd-cut-anim: 1.2s var(--kd-ease) 0.9s both;
+  /* The mark appears at --kd-s0 of its size. After 1s, in one motion with one
+     timing: the mark scales to full size, is cut, and the frame scales up. */
+  --kd-s0: 0.6;
+  --kd-cut-anim: 1.2s var(--kd-ease) 1s both;
 
   position: relative;
   height: 100svh;
@@ -285,7 +286,10 @@
 .kd-hero-logo {
   position: absolute;
   inset: 0;
-  animation: kd-logo-in 0.9s var(--kd-ease) both;
+  transform-origin: 50% 50%;
+  animation:
+    kd-logo-appear 0.35s ease-out both,
+    kd-logo-grow var(--kd-cut-anim);
 }
 
 .kd-logo-copy {
@@ -330,15 +334,21 @@
   animation: kd-frame-in var(--kd-cut-anim);
 }
 
-/* Step 1: the whole mark scales up. Step 2: it is cut while the frame opens. */
-@keyframes kd-logo-in {
+@keyframes kd-logo-appear {
   from {
     opacity: 0;
-    transform: scale(0.3);
   }
   to {
     opacity: 1;
-    transform: none;
+  }
+}
+
+@keyframes kd-logo-grow {
+  from {
+    transform: scale(var(--kd-s0));
+  }
+  to {
+    transform: scale(1);
   }
 }
 

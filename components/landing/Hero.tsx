@@ -116,21 +116,22 @@ function Visual({ visual }: { visual: HeroVisual }) {
 export function Hero({ brand, hero }: HeroProps) {
   return (
     <section id="top" className="kd-hero on-dark" aria-label={brand.name}>
-      {/* Two full copies of the mark, clipped above/below the frame so it reads as one
-          giant logo cut by the frame. */}
+      {/* One scaled container holds two full copies of the mark (clipped above/below
+          the frame, so it reads as one giant logo cut by the frame) AND the frame
+          itself, so the cut and the frame grow in the same coordinate space. */}
       <div className="kd-hero-logo">
         <KoheletLogo part="full" className="kd-logo-copy kd-logo-top" />
         <KoheletLogo part="full" className="kd-logo-copy kd-logo-bottom" />
-      </div>
-      <div className="kd-hero-stage">
-        <HeroStage
-          lead={hero.headline.lead}
-          words={hero.headline.words}
-          fitVw={hero.headline.fitVw}
-          frames={hero.visuals.map((visual) => (
-            <Visual key={visual.kind} visual={visual} />
-          ))}
-        />
+        <div className="kd-hero-stage">
+          <HeroStage
+            lead={hero.headline.lead}
+            words={hero.headline.words}
+            fitVw={hero.headline.fitVw}
+            frames={hero.visuals.map((visual) => (
+              <Visual key={visual.kind} visual={visual} />
+            ))}
+          />
+        </div>
       </div>
     </section>
   );
