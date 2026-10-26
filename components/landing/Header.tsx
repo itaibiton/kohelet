@@ -3,103 +3,88 @@
 import { useEffect, useId, useState } from "react";
 import { Link } from "@/i18n/routing";
 import type { LandingContent } from "@/content/landing";
+import { KoheletLogo } from "./KoheletLogo";
 
 interface HeaderProps {
   brand: LandingContent["brand"];
   nav: LandingContent["nav"];
 }
 
+/**
+ * Floating pill header (360i style): logo + 4 links on desktop; on mobile the
+ * links expand inside the pill under an animated 3-line button. The pill is
+ * dark over the hero and flips to ivory once the hero scrolls away.
+ */
 export function Header({ brand, nav }: HeaderProps) {
   const [open, setOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
   const menuId = useId();
 
-  // Lock scroll + close on Escape while the mobile menu is open.
+  useEffect(() => {
+    const id = window.setTimeout(() => setVisible(true), 150);
+    return () => window.clearTimeout(id);
+  }, []);
+
+  useEffect(() => {
+    const hero = document.getElementById("top");
+    if (!hero || !("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver(
+      ([entry]) => setTheme(entry.isIntersecting ? "dark" : "light"),
+      { rootMargin: "-80px 0px 0px 0px", threshold: 0 }
+    );
+    io.observe(hero);
+    return () => io.disconnect();
+  }, []);
+
   useEffect(() => {
     if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") setOpen(false);
     };
     window.addEventListener("keydown", onKey);
-    return () => {
-      document.body.style.overflow = prev;
-      window.removeEventListener("keydown", onKey);
-    };
+    return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
   return (
-    <>
-      <header className="kd-header">
-        <div className="flex items-center justify-between gap-6 px-[var(--kd-gutter)] py-5">
-          <a
-            href="#top"
-            className="text-xl font-black tracking-tight"
-            aria-label={brand.name}
-          >
-            {brand.name}
-            <span aria-hidden="true">.</span>
+    <header
+      className={`kd-header${visible ? " is-visible" : ""}${open ? " is-expanded" : ""}`}
+      data-theme={theme}
+    >
+      <nav className="kd-nav" aria-label="Primary">
+        <div className="kd-navbar">
+          <a href="#top" className="kd-logo-link" aria-label={brand.name}>
+            <KoheletLogo className="kd-logo-mark" />
           </a>
-
-          <nav aria-label="Main" className="hidden items-center gap-8 md:flex">
-            {nav.links.map((link) => (
-              <a key={link.href} href={link.href} className="kd-nav-link">
-                {link.label}
-              </a>
-            ))}
-            <Link
-              href="/"
-              locale={nav.switchLocale.locale}
-              className="kd-nav-link"
-              aria-label={nav.switchLocale.locale === "en" ? "English" : "עברית"}
-            >
-              {nav.switchLocale.label}
-            </Link>
-          </nav>
-
           <button
             type="button"
-            className="kd-burger md:hidden"
+            className="kd-burger"
             aria-expanded={open}
             aria-controls={menuId}
             aria-label={open ? nav.menuClose : nav.menuOpen}
             onClick={() => setOpen((v) => !v)}
           >
-            <span />
-            <span />
-            <span />
+            <span className="kd-burger-line" />
+            <span className="kd-burger-line" />
+            <span className="kd-burger-line" />
           </button>
         </div>
-      </header>
-
-      <div
-        id={menuId}
-        className="kd-menu md:hidden"
-        data-open={open}
-        aria-hidden={!open}
-      >
-        <nav aria-label="Mobile" className="flex flex-col">
+        <div id={menuId} className={`kd-links${open ? " is-open" : ""}`}>
           {nav.links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              tabIndex={open ? 0 : -1}
-              onClick={() => setOpen(false)}
-            >
+            <a key={link.href} href={link.href} className="kd-link" onClick={() => setOpen(false)}>
               {link.label}
             </a>
           ))}
           <Link
             href="/"
             locale={nav.switchLocale.locale}
-            tabIndex={open ? 0 : -1}
-            className="mt-6 text-base! font-bold! tracking-normal! opacity-70"
+            className="kd-link kd-link--locale"
+            aria-label={nav.switchLocale.locale === "en" ? "English" : "עברית"}
           >
-            {nav.switchLocale.locale === "en" ? "English" : "עברית"}
+            {nav.switchLocale.label}
           </Link>
-        </nav>
-        <p className="mt-10 text-sm text-white/60">{brand.tagline}</p>
-      </div>
-    </>
+        </div>
+      </nav>
+    </header>
   );
 }

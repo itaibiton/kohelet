@@ -1,0 +1,52 @@
+/**
+ * Kohelet wordmark (from public/logo-horizontal-no-digital.svg) inlined so it
+ * takes `currentColor` and can be sliced horizontally like the 360i hero:
+ * `part="top"` shows the upper half of the glyphs, `part="bottom"` the lower half.
+ */
+
+const VIEW_W = 205;
+const VIEW_H = 84;
+/** y where the glyphs are cut; the letters span roughly y=1…70, the ק tail to 83. */
+const CUT_Y = 36;
+
+const PATHS = [
+  "M31.456 16.111q10.353 0 15.639 5.022 5.33 5.021 5.33 14.978v32.73H39.21l-.09-33.831q.001-4.317-1.894-6.432-1.85-2.115-5.726-2.114h-6.873q-.792 2.422-1.19 5.418a43 43 0 0 0-.395 5.683v15.374q0 7.974-4.185 12.335-4.142 4.317-11.63 4.317-1.806 0-3.304-.176-1.498-.133-3.216-.397V58.754q.704.045 1.454.088h1.453q3.217 0 4.846-1.674t1.63-5.242V38.754q0-2.775.749-6.3.75-3.524 2.379-5.99H4.805V16.11zM57.76 26.464V1.178h13.259V16.11h24.933v10.353zm42.818-1.895L82.913 68.842H68.86l21.674-52.73h10.044zm36.17 44.273V34.878q0-4.275-2.202-6.344-2.16-2.07-6.652-2.07h-21.498V16.11h22.423q10.176.001 15.682 5.066 5.507 5.022 5.507 14.317v33.348zm-30.484 0V50.78q0-5.374 1.145-7.842 1.146-2.511 1.939-3.48h10.572q-.396 1.718-.617 4.141t-.22 5.77v19.472zm72.269 1.33V59.823q5.74-.226 8.903-3.525 3.208-3.345 3.208-9.716V26.698h-31.633v-10.62h45.281v30.278q0 7.457-3.118 12.699-3.119 5.197-8.903 8.044-5.739 2.802-13.738 3.073",
+  "m159.553 36.284.087 46.636h13.105l-.087-48.037q0-3.435.226-5.92.272-2.486.678-4.248h-10.891q-.768.994-1.943 3.57t-1.175 7.999m-2.124-28.887c-1.765-.198-3.739-.91-5.607-2.123-1.802-1.171-3.216-2.622-4.121-4.1-.181 1.792-.896 3.807-2.134 5.712-1.255 1.932-2.831 3.418-4.418 4.308 1.728.22 3.643.925 5.459 2.105 1.883 1.223 3.342 2.752 4.239 4.297.151-1.834.872-3.917 2.149-5.883 1.26-1.938 2.842-3.428 4.433-4.316",
+];
+
+const VIEWBOX = {
+  full: `0 0 ${VIEW_W} ${VIEW_H}`,
+  top: `0 0 ${VIEW_W} ${CUT_Y}`,
+  bottom: `0 ${CUT_Y} ${VIEW_W} ${VIEW_H - CUT_Y}`,
+};
+
+/** Ratio of bottom-slice height to top-slice height, so both render at the same scale. */
+export const LOGO_BOTTOM_TO_TOP = (VIEW_H - CUT_Y) / CUT_Y;
+
+export function KoheletLogo({
+  part = "full",
+  className,
+  title,
+}: {
+  part?: "full" | "top" | "bottom";
+  className?: string;
+  title?: string;
+}) {
+  const decorative = !title;
+  return (
+    <svg
+      viewBox={VIEWBOX[part]}
+      preserveAspectRatio={part === "top" ? "xMidYMax meet" : part === "bottom" ? "xMidYMin meet" : "xMidYMid meet"}
+      fill="currentColor"
+      className={className}
+      aria-hidden={decorative || undefined}
+      role={decorative ? undefined : "img"}
+      focusable="false"
+    >
+      {title ? <title>{title}</title> : null}
+      {PATHS.map((d, i) => (
+        <path key={i} d={d} />
+      ))}
+    </svg>
+  );
+}

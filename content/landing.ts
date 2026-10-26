@@ -39,8 +39,6 @@ export interface LandingContent {
   };
   brand: {
     name: string;
-    wordmarkTop: string;
-    wordmarkBottom: string;
     tagline: string;
   };
   nav: {
@@ -50,10 +48,14 @@ export interface LandingContent {
     switchLocale: { label: string; locale: LandingLocale };
   };
   hero: {
-    headline: string;
-    sub: string;
-    cta: string;
-    scrollHint: string;
+    headline: {
+      /** Fixed first line(s); use \n for a manual break. */
+      lead: string;
+      /** Last line, swapped every 2.5s in sync with the visuals. Keep them short. */
+      words: string[];
+      /** vw cap for the headline font so the longest line fits the 50vw frame. */
+      fitVw: number;
+    };
     visuals: HeroVisual[];
   };
   intro: {
@@ -119,8 +121,6 @@ const he: LandingContent = {
   },
   brand: {
     name: "קהלת דיגיטל",
-    wordmarkTop: "קהלת",
-    wordmarkBottom: "דיגיטל",
     tagline: "חשיבה אנושית. טכנולוגיה שימושית.",
   },
   nav: {
@@ -135,10 +135,11 @@ const he: LandingContent = {
     switchLocale: { label: "EN", locale: "en" },
   },
   hero: {
-    headline: "AI שעובד\nבשביל העסק שלך",
-    sub: "חשיבה אנושית. טכנולוגיה שימושית.",
-    cta: "בואו נדבר",
-    scrollHint: "גללו",
+    headline: {
+      lead: "AI שעובד",
+      words: ["בשבילך", "לעסק שלך", "למכירות", "לשירות", "לצוות"],
+      fitVw: 10,
+    },
     visuals: [
       { kind: "robot", alt: "רובוט קינג, הקמע של קהלת דיגיטל, רץ קדימה עם גלימה כחולה" },
       { kind: "tagline", text: "חשיבה אנושית.\nטכנולוגיה שימושית." },
@@ -288,8 +289,6 @@ const en: LandingContent = {
   },
   brand: {
     name: "Kohelet Digital",
-    wordmarkTop: "Kohelet",
-    wordmarkBottom: "Digital",
     tagline: "Human thinking. Useful technology.",
   },
   nav: {
@@ -304,10 +303,11 @@ const en: LandingContent = {
     switchLocale: { label: "עב", locale: "he" },
   },
   hero: {
-    headline: "AI that works\nfor your business",
-    sub: "Human thinking. Useful technology.",
-    cta: "Let's talk",
-    scrollHint: "Scroll",
+    headline: {
+      lead: "AI that\nworks",
+      words: ["for you", "for sales", "for teams", "for growth"],
+      fitVw: 8,
+    },
     visuals: [
       { kind: "robot", alt: "Robot King, the Kohelet Digital mascot, running forward in a blue cape" },
       { kind: "tagline", text: "Human thinking.\nUseful technology." },

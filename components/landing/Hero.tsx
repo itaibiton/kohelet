@@ -1,13 +1,14 @@
 import Image from "next/image";
 import type { HeroVisual, LandingContent } from "@/content/landing";
+import { KoheletLogo } from "./KoheletLogo";
+import { HeroStage } from "./HeroStage";
 
 interface HeroProps {
   brand: LandingContent["brand"];
   hero: LandingContent["hero"];
 }
 
-const CYCLE_SECONDS = 2.5;
-
+/* Visuals that cycle inside the frame (pure CSS/SVG except the mascot render). */
 function Visual({ visual }: { visual: HeroVisual }) {
   switch (visual.kind) {
     case "robot":
@@ -20,7 +21,7 @@ function Visual({ visual }: { visual: HeroVisual }) {
             width={1024}
             height={1024}
             priority
-            sizes="(min-width: 1280px) 60vw, (min-width: 768px) 70vw, 92vw"
+            sizes="50vw"
             className="h-full w-auto max-h-full object-contain drop-shadow-[0_30px_40px_rgba(0,0,0,0.35)]"
           />
         </div>
@@ -34,13 +35,7 @@ function Visual({ visual }: { visual: HeroVisual }) {
     case "workflow":
       return (
         <div className="kd-tile kd-tile--workflow" aria-hidden="true">
-          <svg
-            viewBox="0 0 400 300"
-            className="h-full w-full"
-            fill="none"
-            stroke="#F6F4ED"
-            strokeWidth="2"
-          >
+          <svg viewBox="0 0 400 300" className="h-full w-full" fill="none" stroke="#F6F4ED" strokeWidth="2">
             <path d="M60 150 H140" />
             <path d="M200 150 H260 V80 H300" />
             <path d="M200 150 H260 V220 H300" />
@@ -74,49 +69,20 @@ function Visual({ visual }: { visual: HeroVisual }) {
 }
 
 export function Hero({ brand, hero }: HeroProps) {
-  const count = hero.visuals.length;
-
   return (
     <section id="top" className="kd-hero on-dark" aria-label={brand.name}>
-      <p className="kd-wordmark kd-wordmark--top" aria-hidden="true">
-        {brand.wordmarkTop}
-      </p>
-
-      <div className="kd-hero-stage">
-        <div className="kd-hero-frame" role="group" aria-label={brand.tagline}>
-          {hero.visuals.map((visual, i) => (
-            <div
-              key={visual.kind}
-              className="kd-hero-visual"
-              style={
-                {
-                  // Negative delay so item i becomes visible at i × 2.5s without a flash.
-                  "--kd-delay": `${-(count - i) * CYCLE_SECONDS}s`,
-                } as React.CSSProperties
-              }
-            >
-              <Visual visual={visual} />
-            </div>
+      <div className="kd-hero-logo">
+        <KoheletLogo part="top" className="kd-logo-top" />
+        <HeroStage
+          lead={hero.headline.lead}
+          words={hero.headline.words}
+          fitVw={hero.headline.fitVw}
+          frames={hero.visuals.map((visual) => (
+            <Visual key={visual.kind} visual={visual} />
           ))}
-        </div>
-
-        <div className="kd-hero-headline">
-          <h1>{hero.headline}</h1>
-        </div>
+        />
+        <KoheletLogo part="bottom" className="kd-logo-bottom" />
       </div>
-
-      <div className="kd-hero-meta">
-        <p className="max-w-[18ch] text-sm font-bold leading-snug text-white/80 md:text-base">
-          {hero.sub}
-        </p>
-        <a href="#contact" className="kd-btn kd-btn--light">
-          {hero.cta}
-        </a>
-      </div>
-
-      <p className="kd-wordmark kd-wordmark--bottom" aria-hidden="true">
-        {brand.wordmarkBottom}
-      </p>
     </section>
   );
 }

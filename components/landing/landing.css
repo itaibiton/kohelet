@@ -69,198 +69,278 @@
   text-wrap: pretty;
 }
 
-/* Header ---------------------------------------------------------------- */
+/* Header: floating pill ------------------------------------------------- */
 
 .kd-header {
+  --kd-hd-bg: var(--kd-dark);
+  --kd-hd-fg: var(--kd-ivory);
   position: fixed;
-  inset-inline: 0;
-  top: 0;
-  z-index: 60;
-  color: #fff;
-  mix-blend-mode: difference;
-  pointer-events: none;
+  top: 20px;
+  left: 50%;
+  z-index: 1000;
+  width: calc(100% - 24px);
+  max-width: 880px;
+  padding: 6px;
+  border: 1px solid var(--kd-hd-fg);
+  border-radius: 30px;
+  background: var(--kd-hd-bg);
+  color: var(--kd-hd-fg);
+  opacity: 0;
+  transform: translate(-50%, -200%);
+  transition:
+    opacity 0.35s,
+    border-radius 0.3s,
+    transform 0.35s ease-out,
+    background-color 0.3s,
+    color 0.3s,
+    border-color 0.3s;
 }
 
-.kd-header a,
-.kd-header button {
-  pointer-events: auto;
+.kd-header[data-theme="light"] {
+  --kd-hd-bg: var(--kd-ivory);
+  --kd-hd-fg: var(--kd-dark);
 }
 
-.kd-nav-link {
-  position: relative;
-  font-weight: 800;
-  font-size: 0.9375rem;
-  letter-spacing: -0.01em;
-  padding-block: 0.25rem;
+.kd-header.is-visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
 }
 
-.kd-nav-link::after {
-  content: "";
-  position: absolute;
-  inset-inline: 0;
-  bottom: 0;
-  height: 2px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: var(--kd-origin, left);
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+.kd-header.is-expanded {
+  border-radius: 28px;
 }
 
-[dir="rtl"] .kd-nav-link::after {
-  --kd-origin: right;
+.kd-nav {
+  display: block;
 }
 
-.kd-nav-link:hover::after,
-.kd-nav-link:focus-visible::after {
-  transform: scaleX(1);
+.kd-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* Hamburger: three lines that morph into an X */
+.kd-logo-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border-radius: 999px;
+  line-height: 0;
+  color: inherit;
+  transition:
+    color 0.2s ease-in-out,
+    background-color 0.2s ease-in-out;
+}
+
+.kd-logo-mark {
+  display: block;
+  height: 24px;
+  width: auto;
+}
+
+.kd-logo-link:hover,
+.kd-link:hover,
+.kd-burger:hover {
+  background: var(--kd-hd-fg);
+  color: var(--kd-hd-bg);
+}
+
 .kd-burger {
-  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
   width: 44px;
   height: 44px;
-  display: inline-grid;
-  place-items: center;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition:
+    color 0.2s ease-in-out,
+    background-color 0.2s ease-in-out;
 }
 
-.kd-burger span {
-  position: absolute;
-  width: 24px;
+.kd-burger-line {
+  width: 18px;
   height: 2px;
+  border-radius: 999px;
   background: currentColor;
-  border-radius: 2px;
+  transform-origin: 50% center;
   transition:
-    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.2s ease;
+    transform 0.25s,
+    opacity 0.2s;
 }
 
-.kd-burger span:nth-child(1) {
-  transform: translateY(-7px);
+.kd-burger[aria-expanded="true"] .kd-burger-line:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
 }
-.kd-burger span:nth-child(3) {
-  transform: translateY(7px);
-}
-
-.kd-burger[aria-expanded="true"] span:nth-child(1) {
-  transform: rotate(45deg);
-}
-.kd-burger[aria-expanded="true"] span:nth-child(2) {
+.kd-burger[aria-expanded="true"] .kd-burger-line:nth-child(2) {
   opacity: 0;
-  transform: scaleX(0);
 }
-.kd-burger[aria-expanded="true"] span:nth-child(3) {
-  transform: rotate(-45deg);
+.kd-burger[aria-expanded="true"] .kd-burger-line:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
-.kd-menu {
-  position: fixed;
-  inset: 0;
-  z-index: 50;
-  background: var(--kd-dark);
-  color: #fff;
-  display: grid;
-  align-content: center;
-  padding: var(--kd-gutter);
+.kd-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 0;
+  padding: 0 4px;
+  overflow: hidden;
   opacity: 0;
-  visibility: hidden;
-  transform: translateY(-2%);
-  transition:
-    opacity 0.3s ease,
-    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-    visibility 0s linear 0.4s;
-}
-
-.kd-menu[data-open="true"] {
-  opacity: 1;
-  visibility: visible;
-  transform: none;
-  transition-delay: 0s;
-}
-
-.kd-menu a {
+  transform: translateY(-8px);
+  font-size: 1.5rem;
   font-weight: 900;
-  font-size: clamp(2.5rem, 11vw, 4.5rem);
-  letter-spacing: -0.03em;
-  line-height: 1.05;
-  padding-block: 0.15em;
-  transition: color 0.2s ease;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  transition:
+    max-height 0.35s,
+    opacity 0.25s,
+    transform 0.35s,
+    padding 0.35s;
 }
 
-.kd-menu a:hover {
-  color: var(--kd-blue);
+.kd-links.is-open {
+  max-height: 360px;
+  padding: 12px 4px 4px;
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* Hero ------------------------------------------------------------------ */
+.kd-link {
+  padding: 8px 16px 10px;
+  border-radius: 50px;
+  white-space: nowrap;
+  color: inherit;
+  text-decoration: none;
+  transition:
+    color 0.2s ease-in-out,
+    background-color 0.2s ease-in-out;
+}
+
+@media (min-width: 768px) {
+  .kd-header {
+    width: auto;
+    max-width: none;
+    padding: 5px 4px;
+  }
+  .kd-nav {
+    display: flex;
+    align-items: center;
+    gap: 1.75em;
+  }
+  .kd-navbar {
+    gap: 16px;
+  }
+  .kd-logo-link {
+    padding: 7px 16px;
+  }
+  .kd-burger {
+    display: none;
+  }
+  .kd-links {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.25em;
+    max-height: none;
+    padding: 0;
+    overflow: visible;
+    opacity: 1;
+    transform: none;
+    font-size: 1.0625rem;
+  }
+  .kd-link {
+    padding: 4px 20px 6px;
+  }
+}
+
+/* Hero: split logo + framed visuals (360i anatomy) ----------------------- */
 
 .kd-hero {
-  position: relative;
   min-height: 100svh;
   background: var(--kd-dark);
-  color: #fff;
-  display: grid;
-  grid-template-rows: auto 1fr auto auto;
-  padding-inline: var(--kd-gutter);
+  color: var(--kd-ivory);
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
 }
 
-.kd-wordmark {
+.kd-hero-logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+.kd-logo-top,
+.kd-logo-bottom {
   display: block;
-  font-weight: 900;
-  letter-spacing: -0.04em;
-  line-height: 0.82;
-  font-size: min(26vw, 16vh, 340px);
-  text-transform: uppercase;
-  user-select: none;
-  color: rgba(246, 244, 237, 0.92);
+  width: auto;
+  max-width: 95vw;
+  color: var(--kd-ivory);
 }
 
-[lang="he"] .kd-wordmark {
-  letter-spacing: -0.02em;
-  line-height: 0.95;
+/* Top slice is 36/84 of the logo, bottom slice 48/84: heights keep one scale. */
+.kd-logo-top {
+  height: 18vh;
+  animation: kd-logo-top 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.kd-wordmark--top {
-  padding-top: clamp(4.5rem, 9vh, 6rem);
-  text-align: start;
+.kd-logo-bottom {
+  height: 24vh;
+  animation: kd-logo-bottom 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.kd-wordmark--bottom {
-  padding-bottom: clamp(0.5rem, 2vh, 1.5rem);
-  text-align: end;
+/* Entrance: the two halves part to reveal the frame. Transform/clip only, so
+   nothing reflows (no layout shift). */
+@keyframes kd-logo-top {
+  from {
+    transform: translateY(calc(20vh + 2vw));
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
-.kd-hero-stage {
-  position: relative;
-  display: grid;
-  place-items: center;
-  min-height: 0;
-  padding-block: clamp(0.75rem, 2vh, 1.5rem);
+@keyframes kd-logo-bottom {
+  from {
+    transform: translateY(calc(-20vh - 2vw));
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 .kd-hero-frame {
   position: relative;
-  width: min(100%, 92vw, 78vh, 720px);
-  aspect-ratio: 1 / 1;
-  border-radius: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 40vh;
+  margin-block: 2vw;
+  border-radius: 20px;
   overflow: hidden;
   isolation: isolate;
+  background: var(--kd-blue);
+  animation: kd-frame-open 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@media (min-width: 768px) {
-  /* Height-driven so the hero always fits in 100svh next to the two wordmarks. */
-  .kd-hero-frame {
-    width: auto;
-    height: clamp(240px, 40vh, 520px);
-    max-width: 100%;
-    aspect-ratio: 4 / 3;
+@keyframes kd-frame-open {
+  from {
+    clip-path: inset(50% 0 50% 0 round 20px);
   }
-}
-
-@media (min-width: 1280px) {
-  .kd-hero-frame {
-    height: clamp(260px, 42vh, 600px);
-    aspect-ratio: 16 / 10;
+  to {
+    clip-path: inset(0 0 0 0 round 20px);
   }
 }
 
@@ -268,72 +348,42 @@
   position: absolute;
   inset: 0;
   opacity: 0;
-  animation: kd-cycle 10s linear infinite;
-  animation-delay: var(--kd-delay, 0s);
-  will-change: opacity;
+  transition: opacity 0.6s ease;
 }
 
-/* 4 visuals × 2.5s = 10s cycle; each one fades in, holds, fades out. */
-@keyframes kd-cycle {
-  0% {
-    opacity: 1;
-  }
-  21% {
-    opacity: 1;
-  }
-  27% {
-    opacity: 0;
-  }
-  94% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+.kd-hero-visual.is-active {
+  opacity: 1;
 }
 
-.kd-hero-headline {
+.kd-hero-title {
   position: absolute;
   inset: 0;
   z-index: 2;
   display: grid;
   place-items: center;
-  padding-inline: var(--kd-gutter);
-  pointer-events: none;
+  padding-inline: 3%;
+  margin: 0;
   text-align: center;
+  color: #fff;
+  font-weight: 900;
+  /* 360i: min(210px, 20vh, 15vw). The per-locale vw cap keeps the longest
+     line inside the 50vw frame with Heebo (which is not condensed). */
+  font-size: min(210px, 20vh, 15vw, calc(var(--kd-h1-fit, 8) * 1vw));
+  line-height: 0.82;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  white-space: pre-line;
+  pointer-events: none;
 }
 
-.kd-hero-headline h1 {
-  /* Spec: min(210px, 20vh, 15vw). The extra 10vw cap keeps the two-line
-     headline from wrapping to three lines and colliding with the wordmarks. */
-  font-size: min(210px, 20vh, 15vw);
-  font-weight: 900;
-  line-height: 0.92;
-  letter-spacing: -0.04em;
-  white-space: pre-line;
-  text-wrap: balance;
-  color: #fff;
-  text-shadow: 0 2px 40px rgba(32, 33, 30, 0.35);
+.kd-hero-text {
+  display: block;
   max-width: 100%;
 }
 
-[lang="he"] .kd-hero-headline h1 {
+[lang="he"] .kd-hero-title {
+  line-height: 0.95;
   letter-spacing: -0.02em;
-  line-height: 1.02;
-}
-
-@media (min-width: 768px) {
-  .kd-hero-headline h1 {
-    font-size: min(210px, 20vh, 15vw, 10vw);
-  }
-}
-
-.kd-hero-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 1rem;
-  padding-block: clamp(0.5rem, 1.5vh, 1rem);
 }
 
 /* Hero visual tiles (pure CSS/SVG, no image assets) */
@@ -342,7 +392,7 @@
   inset: 0;
   display: grid;
   place-items: center;
-  padding: 8%;
+  padding: 6%;
 }
 
 .kd-tile--robot {
@@ -356,7 +406,7 @@
 
 .kd-tile--tagline p {
   font-weight: 900;
-  font-size: clamp(1.75rem, 6vw, 4.5rem);
+  font-size: clamp(1.25rem, 4vw, 3.5rem);
   letter-spacing: -0.03em;
   line-height: 1;
   white-space: pre-line;
@@ -383,7 +433,7 @@
   border: 1px solid rgba(246, 244, 237, 0.2);
   color: #fff;
   font-weight: 800;
-  font-size: clamp(0.9rem, 2.2vw, 1.5rem);
+  font-size: clamp(0.75rem, 1.6vw, 1.25rem);
   letter-spacing: -0.01em;
 }
 
@@ -628,15 +678,6 @@
   color: var(--kd-ivory);
 }
 
-.kd-btn--light {
-  background: var(--kd-ivory);
-  color: var(--kd-dark);
-}
-
-.kd-btn--light:hover {
-  background: #fff;
-}
-
 .kd-spinner {
   width: 1.1rem;
   height: 1.1rem;
@@ -671,12 +712,16 @@
 /* Motion preferences ---------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-  .kd-hero-visual {
+  .kd-logo-top,
+  .kd-logo-bottom,
+  .kd-hero-frame {
     animation: none;
-    opacity: 0;
   }
-  .kd-hero-visual:first-child {
-    opacity: 1;
+  .kd-hero-visual {
+    transition: none;
+  }
+  .kd-header {
+    transition: none;
   }
   .kd.js [data-reveal] {
     opacity: 1;
@@ -687,9 +732,8 @@
   .kd-btn:hover {
     transform: none;
   }
-  .kd-menu,
-  .kd-burger span,
-  .kd-nav-link::after,
+  .kd-links,
+  .kd-burger-line,
   .kd-service {
     transition: none;
   }
