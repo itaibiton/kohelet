@@ -270,6 +270,9 @@
   --kd-gap: 2vw;
   --kd-cut: calc(50% + var(--kd-fh) / 2 + var(--kd-gap));
   --kd-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Step 1: whole mark scales in. Step 2: frame scales up from its center while
+     the cut tracks its edges. Both step-2 animations share this exact timing. */
+  --kd-cut-anim: 1.2s var(--kd-ease) 0.9s both;
 
   position: relative;
   height: 100svh;
@@ -282,7 +285,7 @@
 .kd-hero-logo {
   position: absolute;
   inset: 0;
-  animation: kd-logo-in 1s var(--kd-ease) both;
+  animation: kd-logo-in 0.9s var(--kd-ease) both;
 }
 
 .kd-logo-copy {
@@ -298,12 +301,12 @@
 /* Desktop: the band behind the frame is removed from one giant, centered mark. */
 .kd-logo-top {
   clip-path: inset(0 0 var(--kd-cut) 0);
-  animation: kd-cut-top 1s var(--kd-ease) 1s both;
+  animation: kd-cut-top var(--kd-cut-anim);
 }
 
 .kd-logo-bottom {
   clip-path: inset(var(--kd-cut) 0 0 0);
-  animation: kd-cut-bottom 1s var(--kd-ease) 1s both;
+  animation: kd-cut-bottom var(--kd-cut-anim);
 }
 
 .kd-hero-stage {
@@ -323,8 +326,8 @@
   overflow: hidden;
   isolation: isolate;
   background: var(--kd-blue);
-  clip-path: inset(0 0 0 0 round 20px);
-  animation: kd-frame-open 1s var(--kd-ease) 1s both;
+  transform-origin: 50% 50%;
+  animation: kd-frame-in var(--kd-cut-anim);
 }
 
 /* Step 1: the whole mark scales up. Step 2: it is cut while the frame opens. */
@@ -357,12 +360,12 @@
   }
 }
 
-@keyframes kd-frame-open {
+@keyframes kd-frame-in {
   from {
-    clip-path: inset(50% 0 50% 0 round 20px);
+    transform: scale(0.02);
   }
   to {
-    clip-path: inset(0 0 0 0 round 20px);
+    transform: scale(1);
   }
 }
 
@@ -378,12 +381,12 @@
   .kd-logo-top {
     clip-path: inset(0 0 50% 0);
     translate: -50% calc(-50% - var(--kd-shift));
-    animation: kd-part-top 1s var(--kd-ease) 1s both;
+    animation: kd-part-top var(--kd-cut-anim);
   }
   .kd-logo-bottom {
     clip-path: inset(50% 0 0 0);
     translate: -50% calc(-50% + var(--kd-shift));
-    animation: kd-part-bottom 1s var(--kd-ease) 1s both;
+    animation: kd-part-bottom var(--kd-cut-anim);
   }
   @keyframes kd-part-top {
     from {
