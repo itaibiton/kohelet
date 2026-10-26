@@ -10,11 +10,12 @@
 
 export type LandingLocale = "he" | "en";
 
+/** Illustrations that cycle in the hero frame (drawn in components/landing/Hero.tsx). */
 export type HeroVisual =
   | { kind: "robot"; alt: string }
-  | { kind: "tagline"; text: string }
-  | { kind: "workflow"; label: string }
-  | { kind: "engines"; label: string; engines: string[] };
+  | { kind: "automation" }
+  | { kind: "answers" }
+  | { kind: "build" };
 
 export interface Service {
   title: string;
@@ -53,7 +54,7 @@ export interface LandingContent {
       lead: string;
       /** Last line, swapped every 2.5s in sync with the visuals. Keep them short. */
       words: string[];
-      /** vw cap for the headline font so the longest line fits the 50vw frame. */
+      /** vw size of the headline (clamped in CSS); keep lines short so the illustration stays visible. */
       fitVw: number;
     };
     visuals: HeroVisual[];
@@ -138,17 +139,13 @@ const he: LandingContent = {
     headline: {
       lead: "AI שעובד",
       words: ["בשבילך", "לעסק שלך", "למכירות", "לשירות", "לצוות"],
-      fitVw: 10,
+      fitVw: 4.2,
     },
     visuals: [
       { kind: "robot", alt: "רובוט קינג, הקמע של קהלת דיגיטל, רץ קדימה עם גלימה כחולה" },
-      { kind: "tagline", text: "חשיבה אנושית.\nטכנולוגיה שימושית." },
-      { kind: "workflow", label: "אוטומציה" },
-      {
-        kind: "engines",
-        label: "העסק שלכם בתשובות של",
-        engines: ["ChatGPT", "Gemini", "Perplexity", "Grok"],
-      },
+      { kind: "automation" },
+      { kind: "answers" },
+      { kind: "build" },
     ],
   },
   intro: {
@@ -306,17 +303,13 @@ const en: LandingContent = {
     headline: {
       lead: "AI that\nworks",
       words: ["for you", "for sales", "for teams", "for growth"],
-      fitVw: 8,
+      fitVw: 3.8,
     },
     visuals: [
       { kind: "robot", alt: "Robot King, the Kohelet Digital mascot, running forward in a blue cape" },
-      { kind: "tagline", text: "Human thinking.\nUseful technology." },
-      { kind: "workflow", label: "Automation" },
-      {
-        kind: "engines",
-        label: "Your business in the answers of",
-        engines: ["ChatGPT", "Gemini", "Perplexity", "Grok"],
-      },
+      { kind: "automation" },
+      { kind: "answers" },
+      { kind: "build" },
     ],
   },
   intro: {

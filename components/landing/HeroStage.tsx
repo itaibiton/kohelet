@@ -2,7 +2,7 @@
 
 import { useEffect, useState, type ReactNode } from "react";
 
-const INTERVAL_MS = 2500;
+const INTERVAL_MS = 4000;
 
 interface HeroStageProps {
   lead: string;
@@ -14,7 +14,7 @@ interface HeroStageProps {
 
 /**
  * The rounded frame in the middle of the split logo: visuals crossfade and the
- * last headline line swaps in sync, every 2.5s. Static under prefers-reduced-motion.
+ * last headline line swaps in sync, every 4s. Static under prefers-reduced-motion.
  */
 export function HeroStage({ lead, words, fitVw, frames }: HeroStageProps) {
   const [tick, setTick] = useState(0);

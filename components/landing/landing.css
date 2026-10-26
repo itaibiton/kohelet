@@ -136,7 +136,7 @@
 
 .kd-logo-mark {
   display: block;
-  height: 24px;
+  height: 30px;
   width: auto;
 }
 
@@ -261,78 +261,100 @@
   }
 }
 
-/* Hero: split logo + framed visuals (360i anatomy) ----------------------- */
+/* Hero: giant logo cut by the frame (360i anatomy, scaled up) ----------- */
 
 .kd-hero {
-  min-height: 100svh;
+  /* Logo size, frame height and the gap between frame and cut edges. */
+  --kd-S: min(94vw, 88vh);
+  --kd-fh: 40vh;
+  --kd-gap: 2vw;
+  --kd-cut: calc(50% + var(--kd-fh) / 2 + var(--kd-gap));
+  --kd-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
   background: var(--kd-dark);
   color: var(--kd-ivory);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
 }
 
 .kd-hero-logo {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 50%;
+  position: absolute;
+  inset: 0;
+  animation: kd-logo-in 1s var(--kd-ease) both;
 }
 
-.kd-logo-top,
-.kd-logo-bottom {
-  display: block;
-  width: auto;
-  max-width: 95vw;
+.kd-logo-copy {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--kd-S);
+  height: var(--kd-S);
+  translate: -50% -50%;
   color: var(--kd-ivory);
 }
 
-/* Top slice is 36/84 of the logo, bottom slice 48/84: heights keep one scale. */
+/* Desktop: the band behind the frame is removed from one giant, centered mark. */
 .kd-logo-top {
-  height: 18vh;
-  animation: kd-logo-top 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  clip-path: inset(0 0 var(--kd-cut) 0);
+  animation: kd-cut-top 1s var(--kd-ease) 1s both;
 }
 
 .kd-logo-bottom {
-  height: 24vh;
-  animation: kd-logo-bottom 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  clip-path: inset(var(--kd-cut) 0 0 0);
+  animation: kd-cut-bottom 1s var(--kd-ease) 1s both;
 }
 
-/* Entrance: the two halves part to reveal the frame. Transform/clip only, so
-   nothing reflows (no layout shift). */
-@keyframes kd-logo-top {
-  from {
-    transform: translateY(calc(20vh + 2vw));
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-
-@keyframes kd-logo-bottom {
-  from {
-    transform: translateY(calc(-20vh - 2vw));
-  }
-  to {
-    transform: translateY(0);
-  }
+.kd-hero-stage {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  width: 50%;
+  height: var(--kd-fh);
 }
 
 .kd-hero-frame {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100%;
-  height: 40vh;
-  margin-block: 2vw;
+  height: 100%;
   border-radius: 20px;
   overflow: hidden;
   isolation: isolate;
   background: var(--kd-blue);
-  animation: kd-frame-open 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  clip-path: inset(0 0 0 0 round 20px);
+  animation: kd-frame-open 1s var(--kd-ease) 1s both;
+}
+
+/* Step 1: the whole mark scales up. Step 2: it is cut while the frame opens. */
+@keyframes kd-logo-in {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes kd-cut-top {
+  from {
+    clip-path: inset(0 0 50% 0);
+  }
+  to {
+    clip-path: inset(0 0 var(--kd-cut) 0);
+  }
+}
+
+@keyframes kd-cut-bottom {
+  from {
+    clip-path: inset(50% 0 0 0);
+  }
+  to {
+    clip-path: inset(var(--kd-cut) 0 0 0);
+  }
 }
 
 @keyframes kd-frame-open {
@@ -344,11 +366,48 @@
   }
 }
 
+/* Mobile: the square mark is cut at its midline and the halves are pushed
+   apart by the frame (same as the reference's mobile hero). */
+@media (max-width: 767px) {
+  .kd-hero {
+    --kd-S: min(94vw, 48vh);
+    --kd-fh: 38vh;
+    --kd-gap: 3vw;
+    --kd-shift: calc(var(--kd-fh) / 2 + var(--kd-gap));
+  }
+  .kd-logo-top {
+    clip-path: inset(0 0 50% 0);
+    translate: -50% calc(-50% - var(--kd-shift));
+    animation: kd-part-top 1s var(--kd-ease) 1s both;
+  }
+  .kd-logo-bottom {
+    clip-path: inset(50% 0 0 0);
+    translate: -50% calc(-50% + var(--kd-shift));
+    animation: kd-part-bottom 1s var(--kd-ease) 1s both;
+  }
+  @keyframes kd-part-top {
+    from {
+      translate: -50% -50%;
+    }
+    to {
+      translate: -50% calc(-50% - var(--kd-shift));
+    }
+  }
+  @keyframes kd-part-bottom {
+    from {
+      translate: -50% -50%;
+    }
+    to {
+      translate: -50% calc(-50% + var(--kd-shift));
+    }
+  }
+}
+
 .kd-hero-visual {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 0.6s ease;
+  transition: opacity 0.9s ease;
 }
 
 .kd-hero-visual.is-active {
@@ -357,22 +416,22 @@
 
 .kd-hero-title {
   position: absolute;
-  inset: 0;
+  inset-inline-start: 6%;
+  inset-inline-end: 6%;
+  bottom: 8%;
+  max-width: 44%;
   z-index: 2;
-  display: grid;
-  place-items: center;
-  padding-inline: 3%;
   margin: 0;
-  text-align: center;
+  text-align: start;
   color: #fff;
   font-weight: 900;
-  /* 360i: min(210px, 20vh, 15vw). The per-locale vw cap keeps the longest
-     line inside the 50vw frame with Heebo (which is not condensed). */
-  font-size: min(210px, 20vh, 15vw, calc(var(--kd-h1-fit, 8) * 1vw));
-  line-height: 0.82;
+  /* Small on purpose: the illustration is the hero, the title is its caption. */
+  font-size: clamp(1.375rem, calc(var(--kd-h1-fit, 4.2) * 1vw), 4.75rem);
+  line-height: 0.95;
   letter-spacing: -0.03em;
   text-transform: uppercase;
   white-space: pre-line;
+  text-shadow: 0 2px 24px rgba(32, 33, 30, 0.35);
   pointer-events: none;
 }
 
@@ -382,59 +441,101 @@
 }
 
 [lang="he"] .kd-hero-title {
-  line-height: 0.95;
+  line-height: 1.05;
   letter-spacing: -0.02em;
 }
 
-/* Hero visual tiles (pure CSS/SVG, no image assets) */
+@media (max-width: 767px) {
+  .kd-hero-title {
+    max-width: 88%;
+  }
+}
+
+/* Readability scrim under the caption. */
+.kd-hero-frame::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 45%;
+  z-index: 1;
+  background: linear-gradient(to top, rgba(32, 33, 30, 0.45), transparent);
+  pointer-events: none;
+}
+
+/* Hero illustrations (inline SVG; only the mascot is a raster) */
 .kd-tile {
   position: absolute;
   inset: 0;
-  display: grid;
-  place-items: center;
-  padding: 6%;
+  overflow: hidden;
+}
+
+/* Drawings sit on the end side of the frame; the caption owns the bottom-start corner. */
+.kd-illu {
+  position: absolute;
+  top: 8%;
+  bottom: 10%;
+  inset-inline-start: 46%;
+  inset-inline-end: 5%;
+  width: auto;
+  height: auto;
+}
+
+@media (max-width: 767px) {
+  .kd-illu {
+    top: 6%;
+    bottom: 40%;
+    inset-inline: 6%;
+  }
 }
 
 .kd-tile--robot {
   background: radial-gradient(120% 100% at 50% 100%, #3b5cff 0%, var(--kd-blue) 45%, #162a9a 100%);
 }
 
-.kd-tile--tagline {
-  background: linear-gradient(135deg, #2f55ff 0%, var(--kd-blue) 40%, #162a9a 100%);
-  color: rgba(246, 244, 237, 0.55);
+.kd-robot {
+  position: absolute;
+  bottom: -4%;
+  inset-inline-end: 6%;
+  height: 104%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 30px 40px rgba(0, 0, 0, 0.35));
 }
 
-.kd-tile--tagline p {
-  font-weight: 900;
-  font-size: clamp(1.25rem, 4vw, 3.5rem);
-  letter-spacing: -0.03em;
-  line-height: 1;
-  white-space: pre-line;
-  text-align: center;
+@media (max-width: 767px) {
+  .kd-robot {
+    inset-inline: 0;
+    margin-inline: auto;
+    bottom: auto;
+    top: 4%;
+    height: 62%;
+  }
 }
 
-.kd-tile--workflow {
+.kd-tile--automation {
   background:
-    linear-gradient(rgba(246, 244, 237, 0.07) 1px, transparent 1px) 0 0 / 40px 40px,
-    linear-gradient(90deg, rgba(246, 244, 237, 0.07) 1px, transparent 1px) 0 0 / 40px 40px,
+    linear-gradient(rgba(246, 244, 237, 0.06) 1px, transparent 1px) 0 0 / 40px 40px,
+    linear-gradient(90deg, rgba(246, 244, 237, 0.06) 1px, transparent 1px) 0 0 / 40px 40px,
     #2a2c28;
 }
 
-.kd-tile--engines {
-  background: #2a2c28;
-  color: var(--kd-ivory);
+.kd-flow path {
+  stroke-dasharray: 10 12;
+  animation: kd-flow 1.6s linear infinite;
 }
 
-.kd-chip {
-  display: inline-block;
-  padding: 0.35em 0.9em;
-  border-radius: 999px;
-  background: var(--kd-blue);
-  border: 1px solid rgba(246, 244, 237, 0.2);
-  color: #fff;
-  font-weight: 800;
-  font-size: clamp(0.75rem, 1.6vw, 1.25rem);
-  letter-spacing: -0.01em;
+@keyframes kd-flow {
+  to {
+    stroke-dashoffset: -22;
+  }
+}
+
+.kd-tile--answers {
+  background: linear-gradient(160deg, #2f55ff 0%, var(--kd-blue) 45%, #162a9a 100%);
+}
+
+.kd-tile--build {
+  background: linear-gradient(160deg, #1b36b8 0%, #162a9a 60%, #10206f 100%);
 }
 
 /* Sections -------------------------------------------------------------- */
@@ -712,6 +813,7 @@
 /* Motion preferences ---------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
+  .kd-hero-logo,
   .kd-logo-top,
   .kd-logo-bottom,
   .kd-hero-frame {
@@ -719,6 +821,9 @@
   }
   .kd-hero-visual {
     transition: none;
+  }
+  .kd-flow path {
+    animation: none;
   }
   .kd-header {
     transition: none;
