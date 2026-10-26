@@ -272,11 +272,11 @@
   --kd-fh: 32vh;
   --kd-g: 3vw;
   --kd-edge-x: 3vw;
-  --kd-edge-y: 4vh;
+  --kd-edge-y: 8.5vh; /* keeps the ק sparkle clear of the header pill */
   --kd-room-v: calc(50vh - var(--kd-fh) / 2 - var(--kd-g) - var(--kd-edge-y));
   --kd-room-h: calc(50vw - var(--kd-fw) / 2 - var(--kd-g) - var(--kd-edge-x));
-  /* One body height for all four letters; 0.78 leaves room for the ק sparkle. */
-  --kd-L: calc(var(--kd-room-v) * 0.78);
+  /* One body height for all four letters; 0.8 leaves room for the ק sparkle. */
+  --kd-L: calc(var(--kd-room-v) * 0.8);
   /* Inner edges of the four letters, measured from the frame. */
   --kd-x-in: calc(50% + var(--kd-fw) / 2 + var(--kd-g));
   --kd-y-in: calc(50% + var(--kd-fh) / 2 + var(--kd-g));
@@ -298,7 +298,7 @@
     --kd-edge-x: 3vw;
     --kd-edge-y: 11vh;
     /* Narrow screens are width-bound: give ק ה ת the same (tightest) height. */
-    --kd-L: min(calc(var(--kd-room-v) * 0.78), calc(var(--kd-room-h) / 0.98));
+    --kd-L: min(calc(var(--kd-room-v) * 0.8), calc(var(--kd-room-h) / 0.98));
   }
 }
 
