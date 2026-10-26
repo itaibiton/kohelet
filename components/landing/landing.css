@@ -272,7 +272,7 @@
   --kd-fh: 32vh;
   --kd-g: 3vw;
   --kd-edge-x: 3vw;
-  --kd-edge-y: 8.5vh; /* keeps the ק sparkle clear of the header pill */
+  --kd-edge-y: 10vh; /* keeps the ק sparkle clear of the header pill */
   --kd-room-v: calc(50vh - var(--kd-fh) / 2 - var(--kd-g) - var(--kd-edge-y));
   --kd-room-h: calc(50vw - var(--kd-fw) / 2 - var(--kd-g) - var(--kd-edge-x));
   /* One body height for all four letters; 0.8 leaves room for the ק sparkle. */
