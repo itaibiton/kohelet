@@ -128,7 +128,7 @@ const he: LandingContent = {
     headline: {
       lead: "AI שעובד",
       words: ["בשבילך", "לעסק שלך", "למכירות", "לשירות", "לצוות"],
-      fitVw: 4.2,
+      fitVw: 3.4,
     },
     visuals: [
       { kind: "robot", alt: "רובוט קינג, הקמע של קהלת דיגיטל, רץ קדימה עם גלימה כחולה" },
@@ -281,7 +281,7 @@ const en: LandingContent = {
     headline: {
       lead: "AI that\nworks",
       words: ["for you", "for sales", "for teams", "for growth"],
-      fitVw: 3.8,
+      fitVw: 3.1,
     },
     visuals: [
       { kind: "robot", alt: "Robot King, the Kohelet Digital mascot, running forward in a blue cape" },

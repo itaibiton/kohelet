@@ -264,9 +264,20 @@
 /* Hero: giant logo cut by the frame (360i anatomy, scaled up) ----------- */
 
 .kd-hero {
-  /* --kd-S: size of the reassembled mark before the entrance. --kd-fh: frame height. */
+  /* --kd-S: size of the reassembled mark before the entrance.
+     --kd-fw / --kd-fh: frame size. --kd-g: the one gap between the frame and
+     every letter (same on both axes). Letters fill the remaining room. */
   --kd-S: 34vh;
-  --kd-fh: 40vh;
+  --kd-fw: 40vw;
+  --kd-fh: 32vh;
+  --kd-g: 3vw;
+  --kd-edge-x: 3vw;
+  --kd-edge-y: 4vh;
+  --kd-room-v: calc(50vh - var(--kd-fh) / 2 - var(--kd-g) - var(--kd-edge-y));
+  --kd-room-h: calc(50vw - var(--kd-fw) / 2 - var(--kd-g) - var(--kd-edge-x));
+  /* Inner edges of the four letters, measured from the frame. */
+  --kd-x-in: calc(50% + var(--kd-fw) / 2 + var(--kd-g));
+  --kd-y-in: calc(50% + var(--kd-fh) / 2 + var(--kd-g));
 
   position: relative;
   height: 100svh;
@@ -274,6 +285,17 @@
   background: var(--kd-dark);
   color: var(--kd-ivory);
   overflow: hidden;
+}
+
+@media (max-width: 767px) {
+  .kd-hero {
+    --kd-S: min(70vw, 30vh);
+    --kd-fw: 42vw;
+    --kd-fh: 30vh;
+    --kd-g: 4vw;
+    --kd-edge-x: 3vw;
+    --kd-edge-y: 11vh;
+  }
 }
 
 .kd-hero-logo {
@@ -289,7 +311,8 @@
   visibility: hidden;
 }
 
-/* Final layout: one letter per corner, so the mark spans the whole page.
+/* Final layout: each letter sits diagonally off its frame corner, at the same
+   gap --kd-g on both axes, sized to the room left toward the page edge.
    Physical sides on purpose: the logo is an image, it does not mirror in RTL. */
 .kd-glyph {
   position: absolute;
@@ -299,55 +322,36 @@
   will-change: transform;
 }
 
+/* ק: top-right (aspect 0.68) */
 .kd-glyph--kuf {
-  top: 4vh;
-  right: 3vw;
-  height: min(46vh, 30vw);
+  left: var(--kd-x-in);
+  bottom: var(--kd-y-in);
+  height: min(var(--kd-room-v), calc(var(--kd-room-h) / 0.68));
   aspect-ratio: 57.7 / 84.9;
 }
 
+/* ה: top-left (aspect 0.84) */
 .kd-glyph--he {
-  top: 5vh;
-  left: 3vw;
-  height: min(42vh, 26vw);
+  right: var(--kd-x-in);
+  bottom: var(--kd-y-in);
+  height: min(var(--kd-room-v), calc(var(--kd-room-h) / 0.84));
   aspect-ratio: 42.8 / 51.1;
 }
 
+/* ל: bottom-right (aspect 1.59, wide) */
 .kd-glyph--lamed {
-  bottom: 4vh;
-  right: 3vw;
-  height: min(24vh, 14vw);
+  left: var(--kd-x-in);
+  top: var(--kd-y-in);
+  height: min(var(--kd-room-v), calc(var(--kd-room-h) / 1.59));
   aspect-ratio: 67.8 / 42.6;
 }
 
+/* ת: bottom-left (aspect 0.98) */
 .kd-glyph--tav {
-  bottom: 5vh;
-  left: 3vw;
-  height: min(36vh, 21vw);
+  right: var(--kd-x-in);
+  top: var(--kd-y-in);
+  height: min(var(--kd-room-v), calc(var(--kd-room-h) / 0.98));
   aspect-ratio: 51.8 / 53.1;
-}
-
-@media (max-width: 767px) {
-  .kd-hero {
-    --kd-S: min(70vw, 30vh);
-    --kd-fh: 36vh;
-  }
-  .kd-glyph--kuf {
-    top: 10vh;
-    height: min(21vh, 46vw);
-  }
-  .kd-glyph--he {
-    top: 10vh;
-    height: min(20vh, 42vw);
-  }
-  .kd-glyph--lamed {
-    bottom: 6vh;
-    height: min(14vh, 28vw);
-  }
-  .kd-glyph--tav {
-    bottom: 6vh;
-    height: min(20vh, 42vw);
-  }
 }
 
 .kd-hero-stage {
@@ -355,7 +359,7 @@
   left: 50%;
   top: 50%;
   translate: -50% -50%;
-  width: 50%;
+  width: var(--kd-fw);
   height: var(--kd-fh);
 }
 
