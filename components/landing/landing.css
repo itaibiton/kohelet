@@ -272,7 +272,7 @@
   --kd-fh: 32vh;
   --kd-g: 3vw;
   --kd-edge-x: 3vw;
-  --kd-edge-y: 10vh; /* keeps the ק sparkle clear of the header pill */
+  --kd-edge-y: max(10vh, 92px); /* keeps the ק sparkle clear of the header pill */
   --kd-room-v: calc(50vh - var(--kd-fh) / 2 - var(--kd-g) - var(--kd-edge-y));
   --kd-room-h: calc(50vw - var(--kd-fw) / 2 - var(--kd-g) - var(--kd-edge-x));
   /* One body height for all four letters; 0.8 leaves room for the ק sparkle. */
@@ -305,7 +305,45 @@
 .kd-hero-logo {
   position: absolute;
   inset: 0;
-  opacity: 0; /* HeroIntro fades it in once the letters are reassembled */
+  z-index: 1;
+  opacity: 0; /* HeroIntro shows it (no fade) once the letters are reassembled */
+}
+
+/* Background field of floating letter copies, shown after the entrance. */
+.kd-swarm {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1.6s ease;
+}
+
+.kd-swarm.is-on {
+  opacity: 1;
+}
+
+.kd-swarm-glyph {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  height: var(--h);
+  width: auto;
+  color: var(--kd-ivory);
+  opacity: var(--o);
+  rotate: var(--r);
+  overflow: visible;
+  animation: kd-float var(--dur) ease-in-out var(--delay) infinite alternate;
+}
+
+@keyframes kd-float {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: var(--dx) var(--dy);
+  }
 }
 
 .kd-logo-sizer {
@@ -383,7 +421,8 @@
 /* Without JS there is no choreography: show the final layout. */
 @media (scripting: none) {
   .kd-hero-logo,
-  .kd-hero-frame {
+  .kd-hero-frame,
+  .kd-swarm {
     opacity: 1;
   }
 }
@@ -776,6 +815,12 @@
 @media (prefers-reduced-motion: reduce) {
   .kd-hero-visual {
     transition: none;
+  }
+  .kd-swarm {
+    transition: none;
+  }
+  .kd-swarm-glyph {
+    animation: none;
   }
   .kd-flow path {
     animation: none;

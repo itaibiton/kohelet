@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { HeroVisual, LandingContent } from "@/content/landing";
-import { GLYPH_ORDER, KoheletGlyph } from "./KoheletGlyphs";
+import { GLYPH_ORDER, KoheletGlyph, type GlyphName } from "./KoheletGlyphs";
 import { HeroStage } from "./HeroStage";
 import { HeroIntro } from "./HeroIntro";
 
@@ -114,12 +114,56 @@ function Visual({ visual }: { visual: HeroVisual }) {
   }
 }
 
+/* Deterministic layout for the background field of letter copies (same on
+   server and client, so no hydration mismatch). */
+function seeded(seed: number) {
+  let t = seed >>> 0;
+  return () => {
+    t = (t + 0x6d2b79f5) >>> 0;
+    let r = Math.imul(t ^ (t >>> 15), 1 | t);
+    r = (r + Math.imul(r ^ (r >>> 7), 61 | r)) ^ r;
+    return ((r ^ (r >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+const SWARM_COUNT = 22;
+
+function swarmLayout() {
+  const rnd = seeded(20261026);
+  const items: { name: GlyphName; style: React.CSSProperties }[] = [];
+  for (let i = 0; i < SWARM_COUNT; i++) {
+    const name = GLYPH_ORDER[i % GLYPH_ORDER.length];
+    const sign = () => (rnd() < 0.5 ? -1 : 1);
+    items.push({
+      name,
+      style: {
+        "--x": `${(-6 + rnd() * 104).toFixed(1)}vw`,
+        "--y": `${(-6 + rnd() * 104).toFixed(1)}vh`,
+        "--h": `${(5 + rnd() * 11).toFixed(1)}vh`,
+        "--o": (0.1 + rnd() * 0.18).toFixed(2),
+        "--r": `${(sign() * (6 + rnd() * 22)).toFixed(0)}deg`,
+        "--dx": `${(sign() * (1.5 + rnd() * 3)).toFixed(1)}vw`,
+        "--dy": `${(sign() * (1.5 + rnd() * 3)).toFixed(1)}vh`,
+        "--dur": `${(9 + rnd() * 9).toFixed(1)}s`,
+        "--delay": `${(-rnd() * 12).toFixed(1)}s`,
+      } as React.CSSProperties,
+    });
+  }
+  return items;
+}
+
 export function Hero({ brand, hero }: HeroProps) {
+  const swarm = swarmLayout();
   return (
     <section id="top" className="kd-hero on-dark" aria-label={brand.name}>
       {/* The mark is split into its four letters, each its own SVG. CSS lays them out
           in the four corners; HeroIntro first reassembles the whole mark at --kd-S,
           then flies every letter to its corner while the frame scales up. */}
+      <div className="kd-swarm" aria-hidden="true">
+        {swarm.map((item, i) => (
+          <KoheletGlyph key={i} name={item.name} className="kd-swarm-glyph" style={item.style} />
+        ))}
+      </div>
       <div className="kd-hero-logo" aria-label={brand.name} role="img">
         <span className="kd-logo-sizer" aria-hidden="true" />
         {GLYPH_ORDER.map((name) => (

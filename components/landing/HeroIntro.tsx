@@ -10,8 +10,9 @@ const LOGO_UNITS = 122;
 /**
  * Hero entrance. The four letters are laid out (by CSS) in their final corner
  * positions; this effect first pulls them together into the whole mark at
- * `--kd-S` size, shows it, then after 1s animates every letter to its corner
- * while the frame scales up, all on one timing. Transforms only: no layout shift.
+ * `--kd-S` size and shows it (no fade), then after 1s animates every letter to
+ * its corner while the frame scales up, all on one timing. When that ends, the
+ * background field of floating letter copies fades in. Transforms only: no layout shift.
  */
 export function HeroIntro() {
   useEffect(() => {
@@ -19,14 +20,16 @@ export function HeroIntro() {
     const logo = hero?.querySelector<HTMLElement>(".kd-hero-logo");
     const frame = hero?.querySelector<HTMLElement>(".kd-hero-frame");
     const sizer = hero?.querySelector<HTMLElement>(".kd-logo-sizer");
+    const swarm = hero?.querySelector<HTMLElement>(".kd-swarm");
     if (!hero || !logo || !frame || !sizer) return;
 
-    const glyphs = Array.from(hero.querySelectorAll<SVGSVGElement>(".kd-glyph"));
+    const glyphs = Array.from(logo.querySelectorAll<SVGSVGElement>(".kd-glyph"));
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (reduce || typeof logo.animate !== "function") {
       logo.style.opacity = "1";
       frame.style.opacity = "1";
+      swarm?.classList.add("is-on");
       return;
     }
 
@@ -54,7 +57,8 @@ export function HeroIntro() {
       );
     }
 
-    animations.push(logo.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 350, fill: "both" }));
+    // The reassembled mark simply appears once the transforms are in place.
+    logo.style.opacity = "1";
     animations.push(
       frame.animate(
         [
@@ -66,7 +70,17 @@ export function HeroIntro() {
       )
     );
 
-    return () => animations.forEach((a) => a.cancel());
+    let cancelled = false;
+    Promise.all(animations.map((a) => a.finished))
+      .then(() => {
+        if (!cancelled) swarm?.classList.add("is-on");
+      })
+      .catch(() => {});
+
+    return () => {
+      cancelled = true;
+      animations.forEach((a) => a.cancel());
+    };
   }, []);
 
   return null;

@@ -48,7 +48,15 @@ export const GLYPHS: Record<GlyphName, Glyph> = {
 /** Order of the letters in the mark: top row ק ה (right to left), bottom row ל ת. */
 export const GLYPH_ORDER: GlyphName[] = ["kuf", "he", "lamed", "tav"];
 
-export function KoheletGlyph({ name, className }: { name: GlyphName; className?: string }) {
+export function KoheletGlyph({
+  name,
+  className,
+  style,
+}: {
+  name: GlyphName;
+  className?: string;
+  style?: React.CSSProperties;
+}) {
   const g = GLYPHS[name];
   const [x, y, w, h] = g.box;
   return (
@@ -57,6 +65,7 @@ export function KoheletGlyph({ name, className }: { name: GlyphName; className?:
       preserveAspectRatio="xMidYMid meet"
       fill="currentColor"
       className={className}
+      style={style}
       data-box={g.box.join(",")}
       aria-hidden="true"
       focusable="false"
