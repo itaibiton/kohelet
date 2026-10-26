@@ -264,17 +264,9 @@
 /* Hero: giant logo cut by the frame (360i anatomy, scaled up) ----------- */
 
 .kd-hero {
-  /* Logo size, frame height and the gap between frame and cut edges. */
-  --kd-S: min(94vw, 88vh);
+  /* --kd-S: size of the reassembled mark before the entrance. --kd-fh: frame height. */
+  --kd-S: 34vh;
   --kd-fh: 40vh;
-  --kd-gap: 2vw;
-  --kd-cut: calc(50% + var(--kd-fh) / 2 + var(--kd-gap));
-  --kd-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  /* The mark appears at --kd-s0 of its size. After 1s, in one motion with one
-     timing: the mark scales to full size, is cut, and the frame scales up. */
-  --kd-s0: 0.55;
-  --kd-smooth: cubic-bezier(0.65, 0, 0.35, 1);
-  --kd-cut-anim: 1.8s var(--kd-smooth) 1s both;
 
   position: relative;
   height: 100svh;
@@ -287,31 +279,75 @@
 .kd-hero-logo {
   position: absolute;
   inset: 0;
-  transform-origin: 50% 50%;
-  animation:
-    kd-logo-appear 0.35s ease-out both,
-    kd-logo-grow var(--kd-cut-anim);
+  opacity: 0; /* HeroIntro fades it in once the letters are reassembled */
 }
 
-.kd-logo-copy {
+.kd-logo-sizer {
   position: absolute;
-  left: 50%;
-  top: 50%;
   width: var(--kd-S);
-  height: var(--kd-S);
-  translate: -50% -50%;
+  height: 0;
+  visibility: hidden;
+}
+
+/* Final layout: one letter per corner, so the mark spans the whole page.
+   Physical sides on purpose: the logo is an image, it does not mirror in RTL. */
+.kd-glyph {
+  position: absolute;
+  width: auto;
   color: var(--kd-ivory);
+  transform-origin: 50% 50%;
+  will-change: transform;
 }
 
-/* Desktop: the band behind the frame is removed from one giant, centered mark. */
-.kd-logo-top {
-  clip-path: inset(0 0 var(--kd-cut) 0);
-  animation: kd-cut-top var(--kd-cut-anim);
+.kd-glyph--kuf {
+  top: 4vh;
+  right: 3vw;
+  height: min(46vh, 30vw);
+  aspect-ratio: 57.7 / 84.9;
 }
 
-.kd-logo-bottom {
-  clip-path: inset(var(--kd-cut) 0 0 0);
-  animation: kd-cut-bottom var(--kd-cut-anim);
+.kd-glyph--he {
+  top: 5vh;
+  left: 3vw;
+  height: min(42vh, 26vw);
+  aspect-ratio: 42.8 / 51.1;
+}
+
+.kd-glyph--lamed {
+  bottom: 4vh;
+  right: 3vw;
+  height: min(24vh, 14vw);
+  aspect-ratio: 67.8 / 42.6;
+}
+
+.kd-glyph--tav {
+  bottom: 5vh;
+  left: 3vw;
+  height: min(36vh, 21vw);
+  aspect-ratio: 51.8 / 53.1;
+}
+
+@media (max-width: 767px) {
+  .kd-hero {
+    --kd-S: min(70vw, 30vh);
+    --kd-fh: 36vh;
+  }
+  .kd-glyph--kuf {
+    top: 10vh;
+    height: min(21vh, 46vw);
+  }
+  .kd-glyph--he {
+    top: 10vh;
+    height: min(20vh, 42vw);
+  }
+  .kd-glyph--lamed {
+    bottom: 6vh;
+    height: min(14vh, 28vw);
+  }
+  .kd-glyph--tav {
+    bottom: 6vh;
+    height: min(20vh, 42vw);
+  }
 }
 
 .kd-hero-stage {
@@ -332,93 +368,14 @@
   isolation: isolate;
   background: var(--kd-blue);
   transform-origin: 50% 50%;
-  animation: kd-frame-in var(--kd-cut-anim);
+  opacity: 0; /* HeroIntro scales it in */
 }
 
-@keyframes kd-logo-appear {
-  from {
-    opacity: 0;
-  }
-  to {
+/* Without JS there is no choreography: show the final layout. */
+@media (scripting: none) {
+  .kd-hero-logo,
+  .kd-hero-frame {
     opacity: 1;
-  }
-}
-
-@keyframes kd-logo-grow {
-  from {
-    transform: scale(var(--kd-s0));
-  }
-  to {
-    transform: scale(1);
-  }
-}
-
-@keyframes kd-cut-top {
-  from {
-    clip-path: inset(0 0 50% 0);
-  }
-  to {
-    clip-path: inset(0 0 var(--kd-cut) 0);
-  }
-}
-
-@keyframes kd-cut-bottom {
-  from {
-    clip-path: inset(50% 0 0 0);
-  }
-  to {
-    clip-path: inset(var(--kd-cut) 0 0 0);
-  }
-}
-
-@keyframes kd-frame-in {
-  0% {
-    opacity: 0;
-    transform: scale(0.02);
-  }
-  12% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* Mobile: the square mark is cut at its midline and the halves are pushed
-   apart by the frame (same as the reference's mobile hero). */
-@media (max-width: 767px) {
-  .kd-hero {
-    --kd-S: min(94vw, 48vh);
-    --kd-fh: 38vh;
-    --kd-gap: 3vw;
-    --kd-shift: calc(var(--kd-fh) / 2 + var(--kd-gap));
-  }
-  .kd-logo-top {
-    clip-path: inset(0 0 50% 0);
-    translate: -50% calc(-50% - var(--kd-shift));
-    animation: kd-part-top var(--kd-cut-anim);
-  }
-  .kd-logo-bottom {
-    clip-path: inset(50% 0 0 0);
-    translate: -50% calc(-50% + var(--kd-shift));
-    animation: kd-part-bottom var(--kd-cut-anim);
-  }
-  @keyframes kd-part-top {
-    from {
-      translate: -50% -50%;
-    }
-    to {
-      translate: -50% calc(-50% - var(--kd-shift));
-    }
-  }
-  @keyframes kd-part-bottom {
-    from {
-      translate: -50% -50%;
-    }
-    to {
-      translate: -50% calc(-50% + var(--kd-shift));
-    }
   }
 }
 
@@ -808,12 +765,6 @@
 /* Motion preferences ---------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-  .kd-hero-logo,
-  .kd-logo-top,
-  .kd-logo-bottom,
-  .kd-hero-frame {
-    animation: none;
-  }
   .kd-hero-visual {
     transition: none;
   }

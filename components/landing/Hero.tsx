@@ -1,7 +1,8 @@
 import Image from "next/image";
 import type { HeroVisual, LandingContent } from "@/content/landing";
-import { KoheletLogo } from "./KoheletLogo";
+import { GLYPH_ORDER, KoheletGlyph } from "./KoheletGlyphs";
 import { HeroStage } from "./HeroStage";
+import { HeroIntro } from "./HeroIntro";
 
 interface HeroProps {
   brand: LandingContent["brand"];
@@ -116,12 +117,14 @@ function Visual({ visual }: { visual: HeroVisual }) {
 export function Hero({ brand, hero }: HeroProps) {
   return (
     <section id="top" className="kd-hero on-dark" aria-label={brand.name}>
-      {/* One scaled container holds two full copies of the mark (clipped above/below
-          the frame, so it reads as one giant logo cut by the frame) AND the frame
-          itself, so the cut and the frame grow in the same coordinate space. */}
-      <div className="kd-hero-logo">
-        <KoheletLogo part="full" className="kd-logo-copy kd-logo-top" />
-        <KoheletLogo part="full" className="kd-logo-copy kd-logo-bottom" />
+      {/* The mark is split into its four letters, each its own SVG. CSS lays them out
+          in the four corners; HeroIntro first reassembles the whole mark at --kd-S,
+          then flies every letter to its corner while the frame scales up. */}
+      <div className="kd-hero-logo" aria-label={brand.name} role="img">
+        <span className="kd-logo-sizer" aria-hidden="true" />
+        {GLYPH_ORDER.map((name) => (
+          <KoheletGlyph key={name} name={name} className={`kd-glyph kd-glyph--${name}`} />
+        ))}
         <div className="kd-hero-stage">
           <HeroStage
             lead={hero.headline.lead}
@@ -133,6 +136,7 @@ export function Hero({ brand, hero }: HeroProps) {
           />
         </div>
       </div>
+      <HeroIntro />
     </section>
   );
 }
