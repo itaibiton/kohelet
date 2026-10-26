@@ -74,7 +74,7 @@ export function Solutions({ solutions }: { solutions: LandingContent["solutions"
               {String(i + 1).padStart(2, "0")}
             </span>
             <h3>{service.title}</h3>
-            <p className="text-[var(--kd-mute)] md:col-start-3 md:max-w-[40ch]">{service.description}</p>
+            <p className="text-[var(--kd-mute)] md:max-w-[40ch]">{service.description}</p>
           </li>
         ))}
       </ol>

@@ -209,7 +209,7 @@
   font-weight: 900;
   letter-spacing: -0.04em;
   line-height: 0.82;
-  font-size: min(26vw, 22vh, 340px);
+  font-size: min(26vw, 16vh, 340px);
   text-transform: uppercase;
   user-select: none;
   color: rgba(246, 244, 237, 0.92);
@@ -221,7 +221,7 @@
 }
 
 .kd-wordmark--top {
-  padding-top: clamp(4.5rem, 10vh, 7rem);
+  padding-top: clamp(4.5rem, 9vh, 6rem);
   text-align: start;
 }
 
@@ -248,15 +248,18 @@
 }
 
 @media (min-width: 768px) {
+  /* Height-driven so the hero always fits in 100svh next to the two wordmarks. */
   .kd-hero-frame {
-    width: min(70vw, 64vh, 760px);
+    width: auto;
+    height: clamp(240px, 40vh, 520px);
+    max-width: 100%;
     aspect-ratio: 4 / 3;
   }
 }
 
 @media (min-width: 1280px) {
   .kd-hero-frame {
-    width: min(60vw, 66vh, 900px);
+    height: clamp(260px, 42vh, 600px);
     aspect-ratio: 16 / 10;
   }
 }
@@ -301,6 +304,8 @@
 }
 
 .kd-hero-headline h1 {
+  /* Spec: min(210px, 20vh, 15vw). The extra 10vw cap keeps the two-line
+     headline from wrapping to three lines and colliding with the wordmarks. */
   font-size: min(210px, 20vh, 15vw);
   font-weight: 900;
   line-height: 0.92;
@@ -315,6 +320,12 @@
 [lang="he"] .kd-hero-headline h1 {
   letter-spacing: -0.02em;
   line-height: 1.02;
+}
+
+@media (min-width: 768px) {
+  .kd-hero-headline h1 {
+    font-size: min(210px, 20vh, 15vw, 10vw);
+  }
 }
 
 .kd-hero-meta {
@@ -339,8 +350,8 @@
 }
 
 .kd-tile--tagline {
-  background: var(--kd-ivory);
-  color: var(--kd-dark);
+  background: linear-gradient(135deg, #2f55ff 0%, var(--kd-blue) 40%, #162a9a 100%);
+  color: rgba(246, 244, 237, 0.55);
 }
 
 .kd-tile--tagline p {
@@ -360,16 +371,17 @@
 }
 
 .kd-tile--engines {
-  background: var(--kd-blue);
-  color: #fff;
+  background: #2a2c28;
+  color: var(--kd-ivory);
 }
 
 .kd-chip {
   display: inline-block;
   padding: 0.35em 0.9em;
   border-radius: 999px;
-  background: rgba(246, 244, 237, 0.14);
-  border: 1px solid rgba(246, 244, 237, 0.35);
+  background: var(--kd-blue);
+  border: 1px solid rgba(246, 244, 237, 0.2);
+  color: #fff;
   font-weight: 800;
   font-size: clamp(0.9rem, 2.2vw, 1.5rem);
   letter-spacing: -0.01em;
@@ -400,6 +412,10 @@
   padding-block: clamp(1.5rem, 3vw, 2.5rem);
   border-top: 1px solid var(--kd-line);
   transition: padding-inline-start 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.kd-service p {
+  grid-column: 2;
 }
 
 .kd-service:last-child {
@@ -438,6 +454,8 @@
     align-items: start;
   }
   .kd-service p {
+    grid-column: 3;
+    grid-row: 1;
     padding-top: 0.4em;
   }
 }
