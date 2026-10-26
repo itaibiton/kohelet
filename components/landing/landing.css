@@ -272,7 +272,7 @@
   --kd-ease: cubic-bezier(0.22, 1, 0.36, 1);
   /* The mark appears at --kd-s0 of its size. After 1s, in one motion with one
      timing: the mark scales to full size, is cut, and the frame scales up. */
-  --kd-s0: 0.8;
+  --kd-s0: 0.55;
   --kd-smooth: cubic-bezier(0.65, 0, 0.35, 1);
   --kd-cut-anim: 1.8s var(--kd-smooth) 1s both;
 
