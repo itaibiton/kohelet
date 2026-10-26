@@ -1,8 +1,8 @@
 /**
  * The four letters of the stacked Kohelet mark (public/logo-vertical-no-digital.svg),
  * each as its own SVG so the hero can really split the logo per character.
- * `box` is the letter's bounding box inside the original 122×122 viewBox, used to
- * reassemble the whole mark before the entrance animation.
+ * `box` is the letter body's bounding box inside the original 122×122 viewBox, used
+ * both as the SVG viewBox and to reassemble the whole mark before the entrance.
  */
 
 export type GlyphName = "kuf" | "he" | "lamed" | "tav";
@@ -15,7 +15,8 @@ export interface Glyph {
 
 export const GLYPHS: Record<GlyphName, Glyph> = {
   kuf: {
-    box: [55.7, 0.1, 57.7, 84.9],
+    // Body of ק only; the sparkle path sits above-left of this box (SVG overflow visible).
+    box: [69.2, 18.4, 44.2, 66.6],
     paths: [
       "M88.258 70.827V60.805q5.603 -0.219 8.692 -3.414q3.132 -3.238 3.133 -9.41V28.726H69.196V18.441h44.212v29.322q0 7.22 -3.045 12.298q-3.044 5.033 -8.692 7.79q-5.604 2.713 -13.414 2.976",
       "M69.726 38.008v46.968H82.52V36.651q0 -3.327 0.221 -5.733q0.264 -2.407 0.662 -4.114H72.77q-0.75 0.963 -1.897 3.457t-1.147 7.747",
