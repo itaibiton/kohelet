@@ -17,11 +17,12 @@ const BASE_URL = "https://kohelet.digital";
 
 // Hebrew locale font - includes Hebrew characters + Latin for numbers/common terms
 const heeboHebrew = Heebo({
-  subsets: ["hebrew"],
+  subsets: ["hebrew", "latin"],
   display: "swap",
   variable: "--font-heebo",
   preload: true,
-  weight: ["400", "500", "600", "700"],
+  // Variable font: one file covers 100–900 (display weights 800/900 + body 400).
+  weight: "variable",
 });
 
 // English locale font - Latin only (smaller subset)
@@ -30,7 +31,7 @@ const heeboLatin = Heebo({
   display: "swap",
   variable: "--font-heebo",
   preload: true,
-  weight: ["400", "500", "600", "700"],
+  weight: "variable",
 });
 
 // Monospace font for code and UI accents - lower priority

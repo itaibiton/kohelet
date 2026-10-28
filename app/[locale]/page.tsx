@@ -1,51 +1,37 @@
-import Navigation from "@/components/sections/Navigation";
-import Hero from "@/components/sections/Hero";
-import Solutions from "@/components/sections/Solutions";
-import Capabilities from "@/components/sections/Capabilities";
-import Portfolio from "@/components/sections/Portfolio";
-import { ContactWrapper } from "@/components/sections/ContactWrapper";
-import Footer from "@/components/sections/Footer";
-import { ThreeBackgroundWrapper } from "@/components/effects/ThreeBackgroundWrapper";
-import { EffectsWrapper } from "@/components/effects/EffectsWrapper";
-import { getServiceSchema, jsonLdScriptProps } from "@/lib/schema";
+import { getLanding } from "@/content/landing";
+import { Header } from "@/components/landing/Header";
+import { Hero } from "@/components/landing/Hero";
+import { Intro, Solutions, Pillars, Outcomes, Footer } from "@/components/landing/Sections";
+import { Contact } from "@/components/landing/Contact";
+import { RevealObserver } from "@/components/landing/RevealObserver";
+import { getProfessionalServiceSchema, jsonLdScriptProps } from "@/lib/schema";
+import "@/components/landing/landing.css";
 
-// Service definitions for JSON-LD structured data
-const services = [
-  {
-    name: "Custom Software Development",
-    description:
-      "Bespoke web and mobile applications built for your exact workflows. Scalable, secure, and designed for rapid deployment using React, Next.js, and React Native.",
-    serviceType: "Software Development",
-  },
-  {
-    name: "Business Automation",
-    description:
-      "Intelligent workflows that eliminate manual work. From data processing to lead routing, automation systems that run 24/7 so your team can focus on strategic growth.",
-    serviceType: "Business Process Automation",
-  },
-  {
-    name: "AI Agents",
-    description:
-      "Deploy AI agents that work 24/7—handling customer inquiries, qualifying leads, processing data, and executing workflows. Reduce manual work by 60-80% within 90 days.",
-    serviceType: "Artificial Intelligence Services",
-  },
-];
+export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
+  const t = getLanding(locale);
 
-export default function Home() {
   return (
-    <main className="min-h-screen relative selection:bg-blue-500/30 selection:text-white">
+    <main className="kd relative">
       <script
-        {...jsonLdScriptProps(services.map((s) => getServiceSchema(s)))}
+        {...jsonLdScriptProps(
+          getProfessionalServiceSchema(
+            locale,
+            t.solutions.services.map((s) => ({ name: s.title, description: s.description }))
+          )
+        )}
       />
-      <EffectsWrapper />
-      <ThreeBackgroundWrapper />
-      <Navigation />
-      <Hero />
-      <Solutions />
-      <Capabilities />
-      <Portfolio />
-      <ContactWrapper />
-      <Footer />
+      <Header brand={t.brand} nav={t.nav} />
+      <Hero brand={t.brand} hero={t.hero} />
+      <Intro intro={t.intro} />
+      <hr className="kd-rule" />
+      <Solutions solutions={t.solutions} />
+      <Pillars pillars={t.pillars} />
+      <Outcomes outcomes={t.outcomes} />
+      <hr className="kd-rule" />
+      <Contact contact={t.contact} />
+      <Footer brand={t.brand} footer={t.footer} nav={t.nav} localeHref={`/${locale}`} />
+      <RevealObserver />
     </main>
   );
 }

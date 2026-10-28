@@ -22,26 +22,18 @@ export function getOrganizationSchema() {
       width: 512,
       height: 512,
     },
+    slogan: "חשיבה אנושית. טכנולוגיה שימושית.",
     description:
-      "Business automation and custom software development company specializing in AI agents, workflow automation, and web/mobile applications.",
-    foundingDate: "2019",
-    founders: [
-      {
-        "@type": "Person",
-        name: "Yonatan Levi",
-      },
-    ],
+      "Custom software development, AI integration, AI consulting, AI SEO (GEO/AEO) and websites for businesses.",
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Tel Aviv",
       addressCountry: "IL",
     },
     contactPoint: {
       "@type": "ContactPoint",
-      telephone: "+972-52-341-0467",
       contactType: "sales",
       email: "info@kohelet.digital",
-      availableLanguage: ["English", "Hebrew"],
+      availableLanguage: ["Hebrew", "English"],
     },
     sameAs: [
       // Add social media profiles when available
@@ -50,16 +42,57 @@ export function getOrganizationSchema() {
     ],
     // Keywords and topics for AI understanding
     knowsAbout: [
-      "Business Automation",
-      "AI Agents",
       "Custom Software Development",
-      "Web Application Development",
-      "Mobile App Development",
+      "AI Integration",
+      "AI Agents",
+      "AI Consulting",
+      "Generative Engine Optimization",
+      "Answer Engine Optimization",
+      "Web Development",
       "Workflow Automation",
       "Next.js",
       "React",
-      "Node.js",
     ],
+  };
+}
+
+// ProfessionalService Schema - the landing page as a local-business-style entity
+export function getProfessionalServiceSchema(
+  locale: string,
+  services: { name: string; description: string }[]
+) {
+  const he = locale === "he";
+  return {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "@id": `${BASE_URL}/#service`,
+    name: he ? "קהלת דיגיטל" : "Kohelet Digital",
+    alternateName: he ? "Kohelet Digital" : "קהלת דיגיטל",
+    url: `${BASE_URL}/${locale}`,
+    image: `${BASE_URL}/images/robot-king.png`,
+    logo: `${BASE_URL}/favicon.svg`,
+    slogan: he ? "חשיבה אנושית. טכנולוגיה שימושית." : "Human thinking. Useful technology.",
+    description: he
+      ? "פיתוח תוכנה, הטמעת AI, ייעוץ AI, AI SEO ואתרים לעסקים."
+      : "Custom software, AI integration, AI consulting, AI SEO and websites for businesses.",
+    email: "info@kohelet.digital",
+    parentOrganization: { "@id": `${BASE_URL}/#organization` },
+    areaServed: { "@type": "Country", name: "Israel" },
+    availableLanguage: ["Hebrew", "English"],
+    priceRange: "$",
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: he ? "שירותים" : "Services",
+      itemListElement: services.map((svc) => ({
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: svc.name,
+          description: svc.description,
+          provider: { "@id": `${BASE_URL}/#organization` },
+        },
+      })),
+    },
   };
 }
 
@@ -226,7 +259,6 @@ export function getLocalBusinessSchema() {
     email: "info@kohelet.digital",
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Tel Aviv",
       addressCountry: "IL",
     },
     priceRange: "$$",
