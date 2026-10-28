@@ -21,14 +21,20 @@ const PUSH_RADIUS = 200;
 /** How much of the cursor's motion a letter under it picks up, along the motion
     and sideways away from the cursor's path (both scale with cursor speed, so a
     still cursor never moves anything). */
-const SWEEP_GAIN = 0.5;
+const SWEEP_GAIN = 0.4;
+/** Pointer speed (px per frame) above which a flick counts as no faster. */
+const MAX_POINTER_SPEED = 30;
 const SPREAD_GAIN = 0.3;
-/** Per-frame velocity friction and exponential return toward rest. Both real,
-    positive factors below 1, so the motion can never oscillate. */
-const FRICTION = 0.82;
-const RETURN = 0.045;
+/** A collision does not move a letter instantly: it adds to a "drive" (target
+    velocity) that the letter accelerates into (ACCEL per frame) while the drive
+    itself fades (DRIVE_DECAY per frame). The result is ease-in, peak, ease-out.
+    RETURN is the exponential pull back to rest. All factors are real and below
+    1, so the motion can never oscillate. */
+const ACCEL = 0.1;
+const DRIVE_DECAY = 0.9;
+const RETURN = 0.04;
 /** Max displacement (px), approached softly. */
-const MAX_PUSH = 150;
+const MAX_PUSH = 170;
 /** Letter centres are re-measured every N frames (the drift is slow, so this is plenty). */
 const MEASURE_EVERY = 6;
 
@@ -65,8 +71,8 @@ const SWARM = swarmLayout();
 
 /**
  * Background field of floating letters. A moving cursor brushes nearby letters
- * along with it (plus a slight spread away from its path); they coast on
- * friction and ease back to rest. No springs and no radial "orbit" around the
+ * along with it (plus a slight spread away from its path); they accelerate
+ * into the push, coast, and ease back to rest. No springs and no radial "orbit" around the
  * cursor, so the motion is smooth and never circles. The slow CSS drift keeps
  * running underneath.
  */
@@ -87,6 +93,8 @@ export function HeroSwarm() {
     const py = new Float32Array(n);
     const vx = new Float32Array(n); // current velocity
     const vy = new Float32Array(n);
+    const tvx = new Float32Array(n); // drive: velocity the letter accelerates toward
+    const tvy = new Float32Array(n);
     let pointer: { x: number; y: number } | null = null;
     const sp = { x: 0, y: 0, vx: 0, vy: 0, live: false }; // low-passed pointer + velocity
     let raf = 0;
@@ -122,7 +130,13 @@ export function HeroSwarm() {
           sp.y = ny;
         }
       }
-      const speed = sp.live ? Math.hypot(sp.vx, sp.vy) : 0;
+      let speed = sp.live ? Math.hypot(sp.vx, sp.vy) : 0;
+      if (speed > MAX_POINTER_SPEED) {
+        const k = MAX_POINTER_SPEED / speed;
+        sp.vx *= k;
+        sp.vy *= k;
+        speed = MAX_POINTER_SPEED;
+      }
 
       let moving = false;
       for (let i = 0; i < n; i++) {
@@ -132,34 +146,45 @@ export function HeroSwarm() {
           const d = Math.hypot(dx, dy);
           if (d < PUSH_RADIUS) {
             const t = 1 - d / PUSH_RADIUS;
-            const w = t * t; // squared falloff, zero at the edge
+            // Squared falloff (zero at the edge), tapered as the letter nears its
+            // max displacement so it eases into the limit instead of hitting a wall.
+            const headroom = Math.max(0, 1 - Math.hypot(px[i], py[i]) / MAX_PUSH);
+            const w = t * t * headroom;
             const inv = 1 / Math.max(d, 16);
             // Brushed along the cursor's motion, plus a sideways spread away from its path.
-            vx[i] += (sp.vx * SWEEP_GAIN + dx * inv * speed * SPREAD_GAIN) * w;
-            vy[i] += (sp.vy * SWEEP_GAIN + dy * inv * speed * SPREAD_GAIN) * w;
+            tvx[i] += (sp.vx * SWEEP_GAIN + dx * inv * speed * SPREAD_GAIN) * w;
+            tvy[i] += (sp.vy * SWEEP_GAIN + dy * inv * speed * SPREAD_GAIN) * w;
           }
         }
-        vx[i] *= FRICTION;
-        vy[i] *= FRICTION;
+        // Accelerate toward the drive while the drive fades out.
+        vx[i] += (tvx[i] - vx[i]) * ACCEL;
+        vy[i] += (tvy[i] - vy[i]) * ACCEL;
+        tvx[i] *= DRIVE_DECAY;
+        tvy[i] *= DRIVE_DECAY;
         px[i] += vx[i];
         py[i] += vy[i];
-        // Soft clamp, then exponential return toward rest.
+        // Safety clamp (the taper above normally keeps this from triggering).
         const m = Math.hypot(px[i], py[i]);
         if (m > MAX_PUSH) {
           const k = MAX_PUSH / m;
           px[i] *= k;
           py[i] *= k;
+          vx[i] = vy[i] = tvx[i] = tvy[i] = 0;
         }
         px[i] -= px[i] * RETURN;
         py[i] -= py[i] * RETURN;
 
         const el = glyphs[i];
-        if (Math.abs(px[i]) > 0.15 || Math.abs(py[i]) > 0.15 || Math.abs(vx[i]) > 0.05 || Math.abs(vy[i]) > 0.05) {
+        if (
+          Math.abs(px[i]) > 0.15 || Math.abs(py[i]) > 0.15 ||
+          Math.abs(vx[i]) > 0.05 || Math.abs(vy[i]) > 0.05 ||
+          Math.abs(tvx[i]) > 0.05 || Math.abs(tvy[i]) > 0.05
+        ) {
           moving = true;
           el.style.setProperty("--px", `${px[i].toFixed(2)}px`);
           el.style.setProperty("--py", `${py[i].toFixed(2)}px`);
         } else if (px[i] !== 0 || py[i] !== 0) {
-          px[i] = py[i] = vx[i] = vy[i] = 0;
+          px[i] = py[i] = vx[i] = vy[i] = tvx[i] = tvy[i] = 0;
           el.style.removeProperty("--px");
           el.style.removeProperty("--py");
         }
