@@ -332,7 +332,9 @@
   width: auto;
   color: var(--kd-ivory);
   opacity: var(--o);
-  rotate: var(--r);
+  /* Cursor push (--px/--py, set by HeroSwarm) is applied before the tilt so it
+     moves the letter in screen space; the slow drift animates `translate`. */
+  transform: translate(var(--px, 0px), var(--py, 0px)) rotate(var(--r));
   overflow: visible;
   animation: kd-float var(--dur) ease-in-out var(--delay) infinite alternate;
 }
