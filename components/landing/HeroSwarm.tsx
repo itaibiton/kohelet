@@ -15,10 +15,15 @@ function seeded(seed: number) {
   };
 }
 
-const SWARM_COUNT = 220;
+const SWARM_COUNT = 320;
 /** Cursor influence radius (px) and how far a letter right under it is pushed (px). */
-const PUSH_RADIUS = 170;
-const PUSH_STRENGTH = 110;
+const PUSH_RADIUS = 190;
+const PUSH_STRENGTH = 120;
+/** Per-frame easing: toward the push target, and back to rest once the cursor is gone. */
+const EASE_OUT = 0.16;
+const EASE_BACK = 0.07;
+/** Letter centres are re-measured every N frames (the drift is slow, so this is plenty). */
+const MEASURE_EVERY = 6;
 
 /* Many small letter copies, random glyph, size, tilt, drift and opacity. Sizes are
    skewed small with a low cap so the field reads as texture, not a second logo. */
@@ -53,7 +58,8 @@ const SWARM = swarmLayout();
 
 /**
  * Background field of floating letters. Letters near the cursor are pushed away
- * and spring back once it leaves; the slow CSS drift keeps running underneath.
+ * and ease back once it leaves; the slow CSS drift keeps running underneath.
+ * Pure exponential easing (no spring) so nothing overshoots or jitters.
  */
 export function HeroSwarm() {
   const ref = useRef<HTMLDivElement>(null);
@@ -66,52 +72,74 @@ export function HeroSwarm() {
 
     const glyphs = Array.from(layer.querySelectorAll<HTMLElement>(".kd-swarm-glyph"));
     const n = glyphs.length;
-    const px = new Float32Array(n);
+    const cx = new Float32Array(n); // rest centre (drift included, push excluded)
+    const cy = new Float32Array(n);
+    const px = new Float32Array(n); // current push offset
     const py = new Float32Array(n);
-    const vx = new Float32Array(n);
-    const vy = new Float32Array(n);
     let pointer: { x: number; y: number } | null = null;
+    const sp = { x: 0, y: 0, live: false }; // low-passed pointer
     let raf = 0;
+    let frame = 0;
     let idleFrames = 0;
+
+    const measure = () => {
+      for (let i = 0; i < n; i++) {
+        const r = glyphs[i].getBoundingClientRect();
+        cx[i] = r.left + r.width / 2 - px[i];
+        cy[i] = r.top + r.height / 2 - py[i];
+      }
+    };
 
     const step = () => {
       raf = 0;
+      frame++;
+      if (frame % MEASURE_EVERY === 1) measure();
+
+      if (pointer) {
+        if (!sp.live) {
+          sp.x = pointer.x;
+          sp.y = pointer.y;
+          sp.live = true;
+        } else {
+          sp.x += (pointer.x - sp.x) * 0.3;
+          sp.y += (pointer.y - sp.y) * 0.3;
+        }
+      }
+
       let moving = false;
       for (let i = 0; i < n; i++) {
-        const el = glyphs[i];
         let tx = 0;
         let ty = 0;
         if (pointer) {
-          const r = el.getBoundingClientRect();
-          // Base centre = current centre minus the push already applied.
-          const cx = r.left + r.width / 2 - px[i];
-          const cy = r.top + r.height / 2 - py[i];
-          const dx = cx - pointer.x;
-          const dy = cy - pointer.y;
+          const dx = cx[i] - sp.x;
+          const dy = cy[i] - sp.y;
           const d = Math.hypot(dx, dy);
-          if (d < PUSH_RADIUS && d > 0.001) {
-            const f = ((PUSH_RADIUS - d) / PUSH_RADIUS) * PUSH_STRENGTH;
-            tx = (dx / d) * f;
-            ty = (dy / d) * f;
+          if (d < PUSH_RADIUS) {
+            // Squared falloff: strong near the cursor, fades to zero at the radius edge.
+            const t = 1 - d / PUSH_RADIUS;
+            const f = t * t * PUSH_STRENGTH;
+            const inv = 1 / Math.max(d, 12); // soft core so the direction never blows up
+            tx = dx * inv * f;
+            ty = dy * inv * f;
           }
         }
-        // Critically-damped-ish spring toward the target offset.
-        vx[i] = (vx[i] + (tx - px[i]) * 0.14) * 0.78;
-        vy[i] = (vy[i] + (ty - py[i]) * 0.14) * 0.78;
-        px[i] += vx[i];
-        py[i] += vy[i];
-        if (Math.abs(vx[i]) > 0.02 || Math.abs(vy[i]) > 0.02 || Math.abs(px[i]) > 0.1 || Math.abs(py[i]) > 0.1) {
+        const ease = tx || ty ? EASE_OUT : EASE_BACK;
+        px[i] += (tx - px[i]) * ease;
+        py[i] += (ty - py[i]) * ease;
+        const el = glyphs[i];
+        if (Math.abs(px[i]) > 0.15 || Math.abs(py[i]) > 0.15) {
           moving = true;
-          el.style.setProperty("--px", `${px[i].toFixed(1)}px`);
-          el.style.setProperty("--py", `${py[i].toFixed(1)}px`);
+          el.style.setProperty("--px", `${px[i].toFixed(2)}px`);
+          el.style.setProperty("--py", `${py[i].toFixed(2)}px`);
         } else if (px[i] !== 0 || py[i] !== 0) {
-          px[i] = py[i] = vx[i] = vy[i] = 0;
+          px[i] = py[i] = 0;
           el.style.removeProperty("--px");
           el.style.removeProperty("--py");
         }
       }
       idleFrames = moving || pointer ? 0 : idleFrames + 1;
       if (idleFrames < 2) raf = requestAnimationFrame(step);
+      else sp.live = false;
     };
     const kick = () => {
       if (!raf) raf = requestAnimationFrame(step);
@@ -125,13 +153,19 @@ export function HeroSwarm() {
       pointer = null;
       kick();
     };
+    const onResize = () => {
+      frame = 0; // force a re-measure on the next frame
+      kick();
+    };
     hero.addEventListener("pointermove", onMove, { passive: true });
     hero.addEventListener("pointerleave", onLeave);
     hero.addEventListener("pointercancel", onLeave);
+    window.addEventListener("resize", onResize);
     return () => {
       hero.removeEventListener("pointermove", onMove);
       hero.removeEventListener("pointerleave", onLeave);
       hero.removeEventListener("pointercancel", onLeave);
+      window.removeEventListener("resize", onResize);
       if (raf) cancelAnimationFrame(raf);
     };
   }, []);
