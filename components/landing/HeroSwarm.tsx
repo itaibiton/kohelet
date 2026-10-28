@@ -16,12 +16,19 @@ function seeded(seed: number) {
 }
 
 const SWARM_COUNT = 320;
-/** Cursor influence radius (px) and how far a letter right under it is pushed (px). */
-const PUSH_RADIUS = 190;
-const PUSH_STRENGTH = 120;
-/** Per-frame easing: toward the push target, and back to rest once the cursor is gone. */
-const EASE_OUT = 0.16;
-const EASE_BACK = 0.07;
+/** Cursor influence radius (px). */
+const PUSH_RADIUS = 200;
+/** How much of the cursor's motion a letter under it picks up, along the motion
+    and sideways away from the cursor's path (both scale with cursor speed, so a
+    still cursor never moves anything). */
+const SWEEP_GAIN = 0.5;
+const SPREAD_GAIN = 0.3;
+/** Per-frame velocity friction and exponential return toward rest. Both real,
+    positive factors below 1, so the motion can never oscillate. */
+const FRICTION = 0.82;
+const RETURN = 0.045;
+/** Max displacement (px), approached softly. */
+const MAX_PUSH = 150;
 /** Letter centres are re-measured every N frames (the drift is slow, so this is plenty). */
 const MEASURE_EVERY = 6;
 
@@ -57,9 +64,11 @@ function swarmLayout() {
 const SWARM = swarmLayout();
 
 /**
- * Background field of floating letters. Letters near the cursor are pushed away
- * and ease back once it leaves; the slow CSS drift keeps running underneath.
- * Pure exponential easing (no spring) so nothing overshoots or jitters.
+ * Background field of floating letters. A moving cursor brushes nearby letters
+ * along with it (plus a slight spread away from its path); they coast on
+ * friction and ease back to rest. No springs and no radial "orbit" around the
+ * cursor, so the motion is smooth and never circles. The slow CSS drift keeps
+ * running underneath.
  */
 export function HeroSwarm() {
   const ref = useRef<HTMLDivElement>(null);
@@ -74,10 +83,12 @@ export function HeroSwarm() {
     const n = glyphs.length;
     const cx = new Float32Array(n); // rest centre (drift included, push excluded)
     const cy = new Float32Array(n);
-    const px = new Float32Array(n); // current push offset
+    const px = new Float32Array(n); // current displacement
     const py = new Float32Array(n);
+    const vx = new Float32Array(n); // current velocity
+    const vy = new Float32Array(n);
     let pointer: { x: number; y: number } | null = null;
-    const sp = { x: 0, y: 0, live: false }; // low-passed pointer
+    const sp = { x: 0, y: 0, vx: 0, vy: 0, live: false }; // low-passed pointer + velocity
     let raf = 0;
     let frame = 0;
     let idleFrames = 0;
@@ -95,44 +106,60 @@ export function HeroSwarm() {
       frame++;
       if (frame % MEASURE_EVERY === 1) measure();
 
+      // Smooth the pointer and derive its velocity (px per frame).
       if (pointer) {
         if (!sp.live) {
           sp.x = pointer.x;
           sp.y = pointer.y;
+          sp.vx = sp.vy = 0;
           sp.live = true;
         } else {
-          sp.x += (pointer.x - sp.x) * 0.3;
-          sp.y += (pointer.y - sp.y) * 0.3;
+          const nx = sp.x + (pointer.x - sp.x) * 0.35;
+          const ny = sp.y + (pointer.y - sp.y) * 0.35;
+          sp.vx = nx - sp.x;
+          sp.vy = ny - sp.y;
+          sp.x = nx;
+          sp.y = ny;
         }
       }
+      const speed = sp.live ? Math.hypot(sp.vx, sp.vy) : 0;
 
       let moving = false;
       for (let i = 0; i < n; i++) {
-        let tx = 0;
-        let ty = 0;
-        if (pointer) {
-          const dx = cx[i] - sp.x;
-          const dy = cy[i] - sp.y;
+        if (pointer && speed > 0.05) {
+          const dx = cx[i] + px[i] - sp.x;
+          const dy = cy[i] + py[i] - sp.y;
           const d = Math.hypot(dx, dy);
           if (d < PUSH_RADIUS) {
-            // Squared falloff: strong near the cursor, fades to zero at the radius edge.
             const t = 1 - d / PUSH_RADIUS;
-            const f = t * t * PUSH_STRENGTH;
-            const inv = 1 / Math.max(d, 12); // soft core so the direction never blows up
-            tx = dx * inv * f;
-            ty = dy * inv * f;
+            const w = t * t; // squared falloff, zero at the edge
+            const inv = 1 / Math.max(d, 16);
+            // Brushed along the cursor's motion, plus a sideways spread away from its path.
+            vx[i] += (sp.vx * SWEEP_GAIN + dx * inv * speed * SPREAD_GAIN) * w;
+            vy[i] += (sp.vy * SWEEP_GAIN + dy * inv * speed * SPREAD_GAIN) * w;
           }
         }
-        const ease = tx || ty ? EASE_OUT : EASE_BACK;
-        px[i] += (tx - px[i]) * ease;
-        py[i] += (ty - py[i]) * ease;
+        vx[i] *= FRICTION;
+        vy[i] *= FRICTION;
+        px[i] += vx[i];
+        py[i] += vy[i];
+        // Soft clamp, then exponential return toward rest.
+        const m = Math.hypot(px[i], py[i]);
+        if (m > MAX_PUSH) {
+          const k = MAX_PUSH / m;
+          px[i] *= k;
+          py[i] *= k;
+        }
+        px[i] -= px[i] * RETURN;
+        py[i] -= py[i] * RETURN;
+
         const el = glyphs[i];
-        if (Math.abs(px[i]) > 0.15 || Math.abs(py[i]) > 0.15) {
+        if (Math.abs(px[i]) > 0.15 || Math.abs(py[i]) > 0.15 || Math.abs(vx[i]) > 0.05 || Math.abs(vy[i]) > 0.05) {
           moving = true;
           el.style.setProperty("--px", `${px[i].toFixed(2)}px`);
           el.style.setProperty("--py", `${py[i].toFixed(2)}px`);
         } else if (px[i] !== 0 || py[i] !== 0) {
-          px[i] = py[i] = 0;
+          px[i] = py[i] = vx[i] = vy[i] = 0;
           el.style.removeProperty("--px");
           el.style.removeProperty("--py");
         }
